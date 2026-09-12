@@ -27,7 +27,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [x] 14 aktör, 20 use case (ana/alternatif/istisna akışlarıyla), 8 uçtan uca senaryo
 - [x] ~140 fonksiyonel gereksinim, 16 NFR, 25 iş kuralı (parametre tablosuyla)
 - [x] Veri modeli (ER + alanlar + enum'lar), API taslağı (uç noktalar + senk sözleşmesi + olay sözlüğü)
-- [x] 24 ekran (11 mobil, 13 web) envanteri, tel-çerçeveler, navigasyon haritası, tasarım token'ları
+- [x] 25 ekran (11 mobil, 14 web) envanteri, 21 tel-çerçeve, navigasyon haritası, tasarım token'ları
 - [x] 112 kabul testi (UC/FR/BR bağlı, otomasyon düzeyi), test stratejisi, test verisi, cihaz matrisi, UAT planı
 - [x] Mimari, depolar/CI/ortamlar, 138 hikâyelik 12 sprint planı, DoR/DoD, 7 ADR
 - [ ] Hi-fi tasarım (F8) — tel-çerçeve yeterli, Sprint 4'e kadar hi-fi gerekli (kamera ve madde bileşenleri)

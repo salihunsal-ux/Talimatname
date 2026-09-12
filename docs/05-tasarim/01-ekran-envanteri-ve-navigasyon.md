@@ -39,6 +39,8 @@ Mobil sekmeler: **Bugün · Aksiyonlar · (Yönetici: Şubem/Bölgem) · Menü**
 | SCR-W-12 | Denetim izi | Olay listesi (filtre), okunabilir olay metni, zincir doğrulama, günlük kök ve RFC 3161 | Tablo + doğrulama paneli | FR-1301…1304 |
 | SCR-W-13 | Ayarlar | Hesap, marka, bildirim varsayılanları, eskalasyon şablonları, sebep/kategori setleri, tatil takvimi, saklama, KVKK talepleri, aydınlatma metni, faturalama sayacı, API/webhook (Should) | Sekmeli ayar sayfaları | FR-1402, 1403, 1307, 1309…1312 |
 
+Tel-çerçevesi çizilmeyen web ekranları: SCR-W-00 (standart giriş formu + TOTP), SCR-W-04 (tablo + kütüphane kartları), SCR-W-10 (duyuru formu + onay raporu tablosu) — envanterdeki bileşen tanımı geliştirme için yeterli; hi-fi aşamasında (F8) çizilir.
+
 Web ana gezinme (sol menü): **Pano · Şubeler · Personel · Şablonlar · Planlar · Aksiyonlar · Duyurular · Raporlar · Denetim izi · Ayarlar**. Rol kapsamı menüyü daraltır (bölge müdürü: Pano, Aksiyonlar, Duyurular, Raporlar).
 
 ## Navigasyon haritası
