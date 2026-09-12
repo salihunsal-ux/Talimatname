@@ -1,0 +1,475 @@
+<title>Talimatname MVP Kapsamı</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f4; --sf:#ffffff; --sf2:#eef2ef; --ink:#151c22; --ink2:#46525c; --mut:#77838c; --line:#d6ddd9; --line2:#e7ece9;
+  --acc:#0e6b6b; --accs:#dcecea; --acct:#0a5252; --stamp:#b8412f; --stamps:#f6e3df; --good:#1f7a3d; --goods:#e0f0e4; --warn:#9a6300; --warns:#f7ead0; --blue:#2a5fb8; --blues:#e1e9f7;
+  --fd:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif; --fb:"Source Serif 4",Georgia,"Times New Roman",serif; --fu:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f; --blue:#7fa6e8; --blues:#182640;
+}}
+:root[data-theme="dark"]{
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f; --blue:#7fa6e8; --blues:#182640;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--acct);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+header.top{border-bottom:1px solid var(--line);padding:40px 0 28px;margin-bottom:12px}
+.eyebrow{font-family:var(--fu);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.01em;margin:10px 0 14px;text-wrap:balance;max-width:20ch}
+.lede{font-size:20px;line-height:1.5;max-width:62ch;color:var(--ink2);margin:0 0 18px}
+.meta{font-family:var(--fu);font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px 22px}
+.layout{display:grid;grid-template-columns:1fr;gap:0 40px}
+@media (min-width:1080px){.layout{grid-template-columns:220px minmax(0,1fr)}}
+nav.toc{display:none}
+@media (min-width:1080px){nav.toc{display:block;position:sticky;top:20px;align-self:start;padding-top:28px}}
+nav.toc ol{list-style:none;margin:0;padding:0;font-family:var(--fu);font-size:13px;line-height:1.35}
+nav.toc li{padding:5px 0;border-left:2px solid var(--line2);padding-left:12px}
+nav.toc li a{color:var(--ink2);text-decoration:none}
+nav.toc li a:hover{color:var(--acct)}
+nav.toc .n{display:inline-block;width:22px;color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums}
+main{min-width:0}
+section.item{padding:34px 0 8px;border-top:1px solid var(--line)}
+section.item:first-of-type{border-top:0}
+.ih{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.num{flex:none;font-family:var(--fd);font-weight:700;font-size:15px;color:var(--mut);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+h2{font-family:var(--fd);font-weight:700;font-size:30px;line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h3{font-family:var(--fd);font-weight:700;font-size:20px;margin:28px 0 8px;letter-spacing:-.005em}
+h4{font-family:var(--fu);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);margin:20px 0 6px}
+p,ul,ol{max-width:68ch}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin-bottom:5px}
+strong{font-weight:600}
+code{font-family:var(--fu);font-size:.9em;background:var(--sf2);padding:1px 5px;border-radius:3px}
+.note{font-family:var(--fu);font-size:14px;color:var(--ink2);background:var(--sf2);border-left:3px solid var(--acc);padding:10px 14px;margin:14px 0 18px;max-width:80ch}
+.note.warn{border-left-color:var(--warn)}
+.note.stamp{border-left-color:var(--stamp)}
+.decision{border:2px solid var(--acc);border-radius:6px;padding:18px 22px;margin:18px 0 10px;max-width:980px;background:var(--sf);position:relative}
+.decision .st{position:absolute;top:-13px;left:18px;background:var(--sf);padding:0 8px;font-family:var(--fu);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.decision h3{margin:4px 0 8px;font-size:22px}
+.decision p{max-width:80ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 8px;max-width:980px}
+.kpi{background:var(--sf);padding:14px 16px}
+.kpi .l{font-family:var(--fu);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.kpi .v{font-family:var(--fd);font-weight:700;font-size:24px;line-height:1.1;margin-top:6px}
+.kpi .s{font-family:var(--fu);font-size:12px;color:var(--ink2);margin-top:4px}
+.tw{overflow-x:auto;margin:12px 0 20px;max-width:980px}
+table.data{border-collapse:collapse;width:100%;font-family:var(--fu);font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--sf)}
+table.data caption{text-align:left;font-weight:600;font-size:13px;color:var(--ink2);padding:0 0 8px}
+table.data th{font-weight:600;text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);border-bottom:1.5px solid var(--ink);padding:8px 10px;white-space:nowrap}
+table.data td{border-bottom:1px solid var(--line2);padding:8px 10px;vertical-align:top}
+table.data td:first-child{color:var(--ink);font-weight:500}
+table.data.wide td{white-space:normal;min-width:130px}
+table.data.wide td:first-child{min-width:160px}
+table.data .sub{color:var(--mut);font-size:12px;font-weight:400}
+.tag{font-family:var(--fu);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--sf2);color:var(--ink2);white-space:nowrap;display:inline-block}
+.tag.m{background:var(--stamps);color:var(--stamp)} .tag.s{background:var(--warns);color:var(--warn)} .tag.c{background:var(--blues);color:var(--blue)} .tag.w{background:var(--sf2);color:var(--mut)}
+.tag.src{background:var(--accs);color:var(--acct);font-weight:600;text-transform:none;letter-spacing:0}
+.legend{font-family:var(--fu);font-size:13px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:8px 16px;margin:6px 0 14px;align-items:center}
+.persona{display:grid;grid-template-columns:1fr;gap:12px;max-width:980px;margin:12px 0 18px}
+@media (min-width:820px){.persona{grid-template-columns:1fr 1fr}}
+.pc{background:var(--sf);border:1px solid var(--line);padding:14px 16px}
+.pc .r{font-family:var(--fd);font-weight:700;font-size:17px}
+.pc .d{font-family:var(--fu);font-size:13px;color:var(--mut);margin-bottom:6px}
+.pc p{font-size:15px;margin:0 0 6px}
+.pc ul{font-size:14.5px;margin:0;padding-left:18px}
+.story{background:var(--sf);border:1px solid var(--line);padding:14px 16px;margin:0 0 12px;max-width:980px}
+.story .t{font-family:var(--fd);font-weight:700;font-size:16px}
+.story .u{font-family:var(--fu);font-size:13px;color:var(--ink2);margin:2px 0 8px}
+.story ul{font-family:var(--fu);font-size:14px;margin:0;padding-left:18px}
+.story ul li{margin-bottom:3px}
+pre.mermaid{background:var(--sf);border:1px solid var(--line);padding:12px;overflow-x:auto;max-width:980px;margin:12px 0 18px;font-family:var(--fu);font-size:13px}
+.arch{font-family:var(--fu);font-size:13px;background:var(--sf2);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.45;max-width:980px;border:1px solid var(--line2)}
+.timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;max-width:980px;margin:12px 0 18px}
+.tl{background:var(--sf);border:1px solid var(--line);padding:12px 14px}
+.tl .w{font-family:var(--fu);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.tl .t{font-family:var(--fd);font-weight:700;font-size:15px;margin:4px 0 6px}
+.tl ul{font-family:var(--fu);font-size:13px;margin:0;padding-left:16px}
+.tl ul li{margin-bottom:2px}
+.src{font-family:var(--fu);font-size:13.5px;line-height:1.5;max-width:90ch}
+.src li{margin-bottom:4px}
+sup a{text-decoration:none;font-family:var(--fu);font-size:11px;color:var(--acct)}
+</style>
+
+<div class="wrap">
+<header class="top">
+<div class="eyebrow">Ürün kapsamı · MVP v1 · İş analizi · Eylül 2026</div>
+<h1>Talimatname MVP kapsamı</h1>
+<p class="lede">Yeme-içme zincirleri için kanıtlı, tekrarlı talimat listesi ürününün ilk sürümü: rakiplerin (Mitti/SafetyCulture, Connecteam, Jolt, Xenia, Yoobic) işe yarayan özelliklerinden ne alındığı, ne alınmadığı; modül modül kapsam, veri modeli, kabul kriterleri ve 6 aylık sürüm planı.</p>
+<div class="meta"><span>Hazırlayan: iş analisti rolünde Claude</span><span>Fizibilite raporunun devamı</span><span>Karar günlüğü §1 · Açık sorular §12</span></div>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="İçindekiler"><ol>
+<li><span class="n">01</span><a href="#karar">Karar günlüğü</a></li>
+<li><span class="n">02</span><a href="#hedef">Hedef müşteri ve personalar</a></li>
+<li><span class="n">03</span><a href="#rakip">Rakiplerden alınanlar</a></li>
+<li><span class="n">04</span><a href="#kapsam">Kapsam (modül modül)</a></li>
+<li><span class="n">05</span><a href="#disari">Kapsam dışı</a></li>
+<li><span class="n">06</span><a href="#yolculuk">Kullanıcı yolculukları</a></li>
+<li><span class="n">07</span><a href="#durum">Liste yaşam döngüsü</a></li>
+<li><span class="n">08</span><a href="#veri">Veri modeli</a></li>
+<li><span class="n">09</span><a href="#nfr">Fonksiyonel olmayan gereksinimler</a></li>
+<li><span class="n">10</span><a href="#kabul">Kabul kriterleri</a></li>
+<li><span class="n">11</span><a href="#plan">Sürüm planı ve metrikler</a></li>
+<li><span class="n">12</span><a href="#sorular">Açık sorular</a></li>
+<li><span class="n">13</span><a href="#kaynak">Kaynaklar</a></li>
+</ol></nav>
+<main>
+
+<section class="item" id="karar"><div class="ih"><span class="num">01</span><h2>Karar günlüğü</h2></div>
+<div class="decision"><span class="st">Verilen kararlar</span>
+<h3>Yeme-içme zinciri merkezi için, WhatsApp'sız, tam MVP</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Karar</th><th>Seçim</th><th>Kapsama etkisi</th></tr></thead><tbody>
+<tr><td>İlk dikey</td><td>Yeme-içme zincirleri (kafe, restoran, fırın, hızlı servis)</td><td>Şablon kütüphanesi gıda güvenliği odaklı; sıcaklık, son kullanma, hijyen madde türleri; denetim PDF'i (gıda müfettişi için) MVP'de</td></tr>
+<tr><td>İlk müşteri</td><td>Çok şubeli zincir merkezi (5–100 şube)</td><td>Merkez › bölge › şube › istasyon hiyerarşisi ve rol bazlı yetki zorunlu; self-servis kayıt ve kartla ödeme MVP dışı</td></tr>
+<tr><td>WhatsApp</td><td>MVP'de yok; push + SMS yedek</td><td>Bildirim motoru push-öncelikli; kritik olaylarda SMS; benimseme riski onboarding ve ortak-cihaz moduyla karşılanır</td></tr>
+<tr><td>Boyut</td><td>Tam MVP, 5–6 ay</td><td>Tekrarlı planlama, kanıt, "yapılamadı", düzeltici aksiyon/eskalasyon, duyuru-onay, raporlar, denetim izi dahil; sohbet, vardiya, eğitim dışarıda</td></tr>
+<tr><td>Marka adı (geçici)</td><td>"Talimatname"; isim testi kartları: yap lütfen, tamamlist, tembihle</td><td>Uygulama adı, bildirim başlığı ve şablon kütüphanesi metinleri bu adla yazılır; isim değişirse yalnızca marka sabitleri değişir (kod ve veri modelinde ürün adı geçmez). Kesin karar pilot sonrası</td></tr>
+<tr><td>Performans skoru</td><td>Şube düzeyinde; kişi düzeyinde skor ve sıralama yok</td><td>Puan ve sıralama yalnızca şube/bölge/liste bazında (R-2, R-3); kişi düzeyinde sadece yöneticiye görünen "gecikme/eksik" listesi (R-9); personel puanı, lig tablosu ve gamification kapsam dışı — KVKK ve iş barışı gerekçesiyle</td></tr>
+</tbody></table></div>
+<p><strong>Kapsam ilkesi:</strong> her özellik şu üç soruya "evet" demeli — (1) pilot zincirin kapanış/açılış/hijyen listelerini WhatsApp'tan taşımak için gerekli mi, (2) kanıt ve log değerini artırıyor mu, (3) personel tarafında ekran sayısını artırmıyor mu? Rakiplerden alınan her özellik bu süzgeçten geçirildi; geçemeyenler "Sonra" kolonunda.</p>
+</div>
+<div class="kpis">
+<div class="kpi"><div class="l">Modül</div><div class="v">9</div><div class="s">+ entegrasyon iskeleti</div></div>
+<div class="kpi"><div class="l">Zorunlu (Must)</div><div class="v">57</div><div class="s">özellik satırı, §4</div></div>
+<div class="kpi"><div class="l">Olmalı (Should)</div><div class="v">10</div><div class="s">süre izin verirse</div></div>
+<div class="kpi"><div class="l">Sonra (Could)</div><div class="v">5</div><div class="s">+ 9 kalem bilinçli dışarıda, §5</div></div>
+<div class="kpi"><div class="l">Süre</div><div class="v">12 sprint</div><div class="s">2'şer hafta, GA 6. ay</div></div>
+</div>
+</section>
+
+<section class="item" id="hedef"><div class="ih"><span class="num">02</span><h2>Hedef müşteri ve personalar</h2></div>
+<p>Hedef hesap: 5–100 şubeli, merkezî operasyon ekibi olan yeme-içme zinciri (franchise veren markalar dahil). Ürünü satın alan merkez, kullanan şube; bu ikilik tasarımın her yerinde var: merkez standart koyar, şube uygular, kanıt yukarı akar.</p>
+<div class="persona">
+<div class="pc"><div class="r">Operasyon müdürü (merkez)</div><div class="d">Satın alma kararı · web paneli · günde 2–3 kez</div><p>"Elli şubede kapanış gerçekten yapılıyor mu, bilmiyorum."</p><ul><li>Şablonu bir kez kurar, tüm şubelere yayar</li><li>Şube karşılaştırması, tekrar eden sorunlar</li><li>Denetim geldiğinde kayıt çıkarır</li></ul></div>
+<div class="pc"><div class="r">Bölge müdürü</div><div class="d">8–15 şube · mobil + web · her sabah</div><p>"Şube ziyaretinde vaktim eksik arayarak geçiyor."</p><ul><li>Sabah: dün gece kaçırılanlar ve başarısız maddeler</li><li>Eskalasyon alıcısı; aksiyon atar, kapatır</li><li>Ziyaret öncesi şubenin son 7 gününü görür</li></ul></div>
+<div class="pc"><div class="r">Şube müdürü / vardiya amiri</div><div class="d">1 şube · mobil (kendi telefonu veya şube tableti) · vardiya boyunca</div><p>"Merkez üç gruptan aynı şeyi soruyor; ben de personele WhatsApp'tan yazıyorum."</p><ul><li>Günün listelerini kimin yapacağını atar</li><li>Yapılamayanları görür, sebep girer/onaylar</li><li>Sorun bildirir (arıza, eksik ürün)</li></ul></div>
+<div class="pc"><div class="r">Personel (barista, garson, mutfak, kasa)</div><div class="d">Vardiyada · genellikle şube tableti/ortak cihaz · 3 ekran</div><p>"Telefonumu mutfağa sokamıyorum; hızlı olsun, düşünmeyeyim."</p><ul><li>PIN ile kimlik, bugünkü liste, madde madde tamamla</li><li>Fotoğraf çek, sayı gir, "yapılamadı" seç</li><li>Okuma-yazma yükü düşük; ikon ve büyük dokunma alanı</li></ul></div>
+<div class="pc"><div class="r">Kalite / gıda güvenliği sorumlusu</div><div class="d">Merkez · web · haftalık + denetim anı</div><p>"Soğuk zincir kaydını denetçiye 5 dakikada verebilmeliyim."</p><ul><li>Sıcaklık ve hijyen kayıtlarının eksiksizliği</li><li>Sınır dışı ölçümlerde otomatik aksiyon</li><li>Şube/dönem bazlı imzalı PDF</li></ul></div>
+<div class="pc"><div class="r">Hesap yöneticisi (BT/İK)</div><div class="d">Merkez · web · kurulumda ve işe giriş/çıkışta</div><p>"Personel değişimi yüksek; her hafta hesap açıp kapatıyoruz."</p><ul><li>Excel'den toplu şube/personel yükleme</li><li>Rol ve yetki, cihaz yönetimi</li><li>KVKK aydınlatma ve silme talepleri</li></ul></div>
+</div>
+</section>
+
+<section class="item" id="rakip"><div class="ih"><span class="num">03</span><h2>Rakiplerden alınanlar (ve alınmayanlar)</h2></div>
+<p>Beş üründe işe yaradığı görülen özellikler tek tek değerlendirildi. Kaynak: ürünlerin kendi yardım merkezleri ve özellik sayfaları<sup><a href="#k-mitti">[M]</a> <a href="#k-ct">[C]</a> <a href="#k-x">[X]</a> <a href="#k-y">[Y]</a></sup>. İki güncel bağlam notu: SafetyCulture 11 Ağustos 2026'da <strong>Mitti</strong> adını aldı (2 milyon+ saha çalışanı, 80.000 kuruluş)<sup><a href="#k-mitti">[M]</a></sup>; Jolt, Ağustos 2025'te Digi/SmartSense tarafından <strong>145,5 M$</strong>'a satın alındı (26.000+ lokasyon, 60 ülke)<sup><a href="#k-jolt">[J]</a></sup> — kategori olgunlaşıyor, sensör/IoT ile birleşiyor.</p>
+<div class="legend"><span class="tag m">Must</span> MVP'de zorunlu <span class="tag s">Should</span> süre izin verirse MVP'de <span class="tag c">Could</span> v1.x <span class="tag w">Won't</span> bilinçli olarak dışarıda</div>
+<div class="tw"><table class="data wide"><thead><tr><th>Özellik</th><th>Nerede iyi yapılmış</th><th>Neden / nasıl uyarlıyoruz</th><th>Karar</th></tr></thead><tbody>
+<tr><td>Zengin madde türleri</td><td>Mitti: metin, sayı, onay, tarih-saat, medya, kaydırıcı, açıklama (annotation), imza, konum, talimat; Connecteam: tarayıcı (barkod/QR), video, formül, açıklama alanı, grup alanı; Xenia: sıcaklık (°C/°F) ve birimli sayı</td><td>Yeme-içme için: onay, çoktan seçmeli (küresel yanıt setleri), sayı+birim, <strong>sıcaklık (kabul aralığı, aralık dışı = başarısız)</strong>, fotoğraf, kısa video, imza, barkod/QR, tarih-saat, talimat (metin/görsel/PDF). Formül ve kaydırıcı sonra.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Koşullu mantık</td><td>Mitti mantık alanları: soru sor, bildir, not iste, medya iste, aksiyon iste, tamamlamaya atla; Connecteam koşullu alanlar (Advanced plan)</td><td>Aynı altı eylem; en kritik olanı "Hayır/Uygun değil" cevabında <strong>fotoğraf + sebep zorunlu, aksiyon otomatik</strong>. Şablon editöründe kural = (madde, cevap) → eylem listesi.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Kamera-içi çekim, galeri kapalı</td><td>Connecteam: görsel kaynağı kamera/galeri seçilebilir</td><td>Kanıt bütünlüğünün temeli: şablon başına "yalnızca kamera" zorunlu ayarı; zaman ve konum damgası sunucu tarafında.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Planlama ve pencereler</td><td>Mitti Schedules: 5 dakikalık artışlar, özel haftalık/aylık desenler, bitiş tarihi; kişi/grup/site üyeliğine atama; "tek gönderim" ya da "herkes tamamlasın"; durumlar: gecikmiş, geç gönderim, kaçırıldı, "yapılmayacak"</td><td>Birebir alınıyor + yeme-içmeye özgü: gece yarısını aşan kapanış penceresi (22:00–01:30), vardiya bazlı tekrar, tatil/kapalı gün takvimi. "Yapılmayacak" sebep zorunlu.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Düzeltici aksiyonlar</td><td>Mitti Actions: denetimden, sorundan, varlıktan veya bağımsız oluşturma; özel tipler, durum akışı, önceliğe göre vade, yerleşik sohbet, tekrarlı aksiyon</td><td>Başarısız madde / "yapılamadı" → aksiyon; atanan, vade, öncelik, durum; kapatırken kanıt fotoğrafı. Yerleşik yorum dizisi var; özel tipler ve tekrarlı aksiyon sonra.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Zamana bağlı eskalasyon</td><td>Xenia/Operandio: hiyerarşiye göre yükseltme</td><td>Kural: liste pencere sonunda tamamlanmadıysa şube müdürüne, +2 saatte bölgeye, +24 saatte merkeze bildirim. Merdiven şablon bazında ayarlanır.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Sorun bildirimi (ad-hoc)</td><td>Mitti Issues: liste dışı gözlem/tehlike bildirimi, aksiyona dönüşür</td><td>Personel "Sorun bildir": kategori + fotoğraf + not; şube müdürüne düşer. WhatsApp'tan taşınacak ikinci büyük trafik bu.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Duyuru + okundu onayı</td><td>Mitti Heads Up: onay takibi, hatırlatma, bağlı dosyada imza, yorum/tepki; Connecteam Updates: okundu onayı</td><td>Merkezden hedefli duyuru (rol/bölge/şube), "okudum" onayı, onaylamayanlara hatırlatma, PDF'e imza ("yeni hijyen prosedürünü okudum"). Yorum/tepki yok — sohbete kapı açmamak için.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Puanlama ve başarısız madde raporu</td><td>Mitti/Yoobic: uyum skoru, soru düzeyinde raporlama</td><td>Liste puanı = ağırlıklı geçen madde oranı; şube × liste × dönem; en çok başarısız 10 madde. Kişi puanlaması ve lig tablosu bilinçli olarak yok (karar, §1).</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Markalı PDF rapor</td><td>Mitti: denetim raporu PDF/Web; Connecteam: giriş indirme, toplu dışa aktarım</td><td>Liste çalıştırması başına PDF (fotoğraflar küçük resim, imza, zaman damgaları); dönem raporu (örn. "Mart ayı soğuk zincir"); Excel dışa aktarım.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Yönetici notu / giriş durumu</td><td>Connecteam: yönetici girişe dahili/harici not ve durum ekler</td><td>Tamamlanan listeye şube/bölge müdürü onayı ("gözden geçirildi") ve not; kalite ekibi için ikinci imza.</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Akıllı gruplar</td><td>Connecteam: rol/lokasyon/departman/şube/yönetici ile dinamik gruplar</td><td>Atama ve duyuru hedefleme için gerekli; "tüm bölge müdürleri", "İstanbul Avrupa şubelerinin mutfak personeli".</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Şablon kütüphanesi</td><td>Mitti: 100 bin+ genel şablon (Türkçe mağaza denetim şablonları dahil)</td><td>Küresel kütüphane yerine <strong>30 Türkçe yeme-içme şablonu</strong> (açılış, kapanış, saatlik hijyen, soğuk zincir, yağ değişimi, kasa devri, haftalık derin temizlik, alerjen, zararlı kontrolü…) ilk günden yüklü.</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>SOP/PDF'ten şablon üretimi (AI)</td><td>Xenia Template Agent</td><td>Zincirin mevcut Word/PDF prosedürünü yükle → taslak şablon. Claude API ile 1–2 sprintlik iş; onboarding süresini kısaltır.</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>QR ile istasyondan başlatma</td><td>Xenia: QR kod ile görev başlatma</td><td>Buzdolabı/fritöz/tuvalet kapısındaki QR → o istasyonun listesi açılır; kanıt otomatik istasyona bağlanır.</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Ortak cihaz (kiosk) modu</td><td>Jolt'un tablet-öncelikli kullanımı; kendi tasarım kararımız</td><td>Şube tabletinde PIN ile kullanıcı değiştirme; personelin telefon indirmesine gerek kalmaz. Benimseme riskine ana cevap (WhatsApp yokken).</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Görev alt maddeleri, ekler, tekrar</td><td>Connecteam Tasks: alt görev, son tarih, açıklama, dosya eki, görev içi kontrol listesi, tekrarlı görev</td><td>Bizde "liste" zaten görev; tekil görevler için aksiyon modülü kullanılır. Ayrı görev modülü açılmaz.</td><td><span class="tag w">Won't</span></td></tr>
+<tr><td>Fotoğraf geri bildirimi ve açıklama çizimi</td><td>Yoobic: fotoğrafa çizerek onay/ret; Mitti: annotation</td><td>Bölge müdürü kanıt fotoğrafına daire çizip "burası temizlenmemiş" der → aksiyon. v1.x.</td><td><span class="tag c">Could</span></td></tr>
+<tr><td>AI fotoğraf denetimi</td><td>Xenia AI Photo Rollouts; Yoobic görsel uyum</td><td>Kanıt fotoğraflarının otomatik değerlendirmesi. Veri birikince (v2); MVP'de insan gözü.</td><td><span class="tag w">Won't</span></td></tr>
+<tr><td>Sıcaklık sensörleri / Bluetooth prob</td><td>Jolt/SmartSense, Xenia, Mitti Sensors</td><td>Elle sıcaklık girişi MVP; prob entegrasyonu ve sensör alarmı v2 — donanım tedariki ayrı iş.</td><td><span class="tag c">Could</span></td></tr>
+<tr><td>Ekip sohbeti</td><td>Connecteam Chat, Mitti Communications, Xenia messaging</td><td>WhatsApp'ın yerine geçmenin en yapışkan yolu ama moderasyon, bildirim gürültüsü ve kapsam yükü büyük. Karar: MVP dışı; aksiyon ve liste yorumları ihtiyacın %80'ini karşılar.</td><td><span class="tag w">Won't</span></td></tr>
+<tr><td>Mesai (time clock), vardiya planı, eğitim/LMS, belge & e-imza, ödül</td><td>Connecteam hub'ları, Mitti Training</td><td>Komşu kategoriler; PDKS ve İK yazılımlarıyla entegrasyon tercih edilir. Yalnızca kullanıcı dizini ve rol içe aktarımı yapılır.</td><td><span class="tag w">Won't</span></td></tr>
+<tr><td>Varlık/bakım iş emri</td><td>Xenia work orders, Mitti Assets</td><td>Yeme-içmede arıza bildirimi "sorun" olarak açılır; ekipman kartı ve bakım takvimi v1.x.</td><td><span class="tag c">Could</span></td></tr>
+<tr><td>Ücretsiz katman (10 kullanıcı)</td><td>Connecteam ve Mitti'nin ücretsiz planı</td><td>Ürün kararı değil fiyat kararı: zincir odaklı satışta ücretsiz katman yerine 14 günlük pilot; tekil işletme self-servisi §12'de açık soru.</td><td><span class="tag w">Won't</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="item" id="kapsam"><div class="ih"><span class="num">04</span><h2>Kapsam — modül modül</h2></div>
+<p>Aşağıdaki liste geliştirme ekibinin "bitti" diyeceği satırlardır; her satır bir veya birkaç kullanıcı hikâyesine karşılık gelir. Numaralar referans içindir (örn. <code>P-4</code>), öncelik sırası değil.</p>
+
+<h3>M1 · Organizasyon, kimlik ve yetki</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>O-1</td><td>Çok kiracılı hesap</td><td>Zincir = hesap; veriler hesap düzeyinde yalıtılır</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-2</td><td>Hiyerarşi</td><td>Marka › Bölge › Şube › İstasyon (mutfak, bar, kasa, tuvalet, depo); şube meta verisi (adres, konum, çalışma saatleri, saat dilimi)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-3</td><td>Roller</td><td>Hesap yöneticisi, Merkez operasyon, Kalite, Bölge müdürü, Şube müdürü, Personel, Gözlemci (salt okunur, örn. franchise sahibi). Yetkiler kapsam (hangi şubeler) × eylem (gör/çalıştır/düzenle/onayla) matrisi</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-4</td><td>Telefonla giriş</td><td>Personel için e-posta yok: telefon + SMS OTP; yöneticiler için e-posta + şifre + isteğe bağlı 2FA</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-5</td><td>Ortak cihaz (kiosk) modu</td><td>Şube tableti "şube cihazı" olarak kaydedilir; personel 4 haneli PIN ile geçiş yapar; 2 dk hareketsizlikte kilit; her kanıt PIN sahibine yazılır</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-6</td><td>Toplu içe aktarma</td><td>Excel şablonu ile şube, istasyon, personel ve rol yükleme; hata raporu</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-7</td><td>Akıllı gruplar</td><td>Rol × bölge × şube × istasyon kurallarıyla dinamik gruplar; atama ve duyuru hedefleme</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-8</td><td>İşten ayrılma akışı</td><td>Pasifleştirme; geçmiş kanıtlar ve loglar kalır, kişisel veri maskeleme seçeneği (KVKK)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>O-9</td><td>SSO / dizin senkronu</td><td>Kolay İK, PDKS vb. ile kullanıcı senkronu</td><td><span class="tag c">Could</span></td></tr>
+</tbody></table></div>
+
+<h3>M2 · Şablon tasarımı</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>Ş-1</td><td>Şablon editörü (web)</td><td>Bölümler, maddeler, sürükle-bırak sıralama; sürümleme (yayınlanan sürüm değişmez, yeni sürüm yayınlanır); taslak/yayında/arşiv</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-2</td><td>Madde türleri</td><td>Onay; çoktan seçmeli (küresel yanıt setleri: Evet/Hayır/Uygun değil, Temiz/Kirli, Var/Yok); sayı + birim; <strong>sıcaklık</strong> (°C, min–maks kabul aralığı); metin; fotoğraf (1–5 adet, yalnızca kamera seçeneği); kısa video (≤20 sn); imza; barkod/QR; tarih-saat; talimat (metin, görsel, PDF, video bağlantısı)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-3</td><td>Madde ayarları</td><td>Zorunlu; kanıt zorunlu; puan ağırlığı; "kritik" bayrağı (başarısızsa liste geçmez); açıklama/ipucu; istasyon bağlama</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-4</td><td>Koşullu mantık</td><td>(madde, cevap) → eylemler: ek soru göster, not iste, fotoğraf iste, aksiyon oluştur (atanan+vade), bildir (rol/kişi), bölüm atla</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-5</td><td>Puanlama</td><td>Liste puanı = ağırlıklı geçen madde / toplam; eşik (örn. %90 altı "başarısız çalıştırma"); kritik madde kuralı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-6</td><td>Türkçe yeme-içme kütüphanesi</td><td>30 hazır şablon; kopyala-düzenle; kütüphane merkezî güncellenir, kopyalar bağımsız</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Ş-7</td><td>Şube başına varyant</td><td>Aynı şablon; şube türüne (drive-thru, AVM, cadde) göre madde açma/kapama</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Ş-8</td><td>SOP/PDF'ten taslak şablon (AI)</td><td>Belge yükle → madde listesi ve türleri önerilir; editörde düzenlenir; otomatik yayınlanmaz</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Ş-9</td><td>Formül alanı, kaydırıcı, tekrarlanan bölüm</td><td>Örn. kasa sayımı toplamı; 1–5 değerlendirme</td><td><span class="tag c">Could</span></td></tr>
+</tbody></table></div>
+
+<h3>M3 · Planlama (tekrar ve pencereler)</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>P-1</td><td>Tekrar kuralları</td><td>Günlük (birden çok saat), saatlik/her N saat, haftanın günleri, aylık (ayın N'inci günü / ilk Pazartesi), bitiş tarihi; RRULE tabanlı, şube saat diliminde</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-2</td><td>Açılış/kapanış pencereleri</td><td>Başlangıç ve son saat; <strong>gece yarısını aşan pencere</strong> (22:00 → 01:30 ertesi gün "aynı iş günü" sayılır); şube çalışma saatlerinden türetme</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-3</td><td>Atama</td><td>Rol (o vardiyadaki "kapanış sorumlusu"), kişi, grup veya istasyon; "biri tamamlasın" / "herkes tamamlasın"; şube müdürü günlük yeniden atama</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-4</td><td>Otomatik çalıştırma üretimi</td><td>Kural her pencere için bir "çalıştırma" kaydı üretir (şube × şablon × pencere); üretim 7 gün ileriye, düzenlemede yeniden hesap</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-5</td><td>Tatil / kapalı gün</td><td>Zincir ve şube takvimi; kapalı günde çalıştırma üretilmez, rapora "kapalı" düşer</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-6</td><td>Tek seferlik liste</td><td>"Bugün 14:00'e kadar bu 5 şubede vitrin değişimi" — plan dışı, hedefli, son tarihli</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-7</td><td>Hatırlatma politikası</td><td>Pencere açılışında, bitişe 30 dk kala, bitişte; kanal push → SMS (kritik listelerde)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>P-8</td><td>Vardiya bazlı tekrar</td><td>PDKS/vardiya verisi yoksa şube "vardiya saatleri" tanımıyla; "her vardiya devrinde"</td><td><span class="tag s">Should</span></td></tr>
+</tbody></table></div>
+
+<h3>M4 · Yürütme (mobil)</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>Y-1</td><td>Bugün ekranı</td><td>Bana/şubeme atanan çalıştırmalar; durum renkleri; pencere geri sayımı; tek dokunuşla başla</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-2</td><td>Madde tamamlama</td><td>Tür bazlı giriş; ilerleme çubuğu; kaldığı yerden devam; birden çok kişi aynı listede (madde bazlı kilit)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-3</td><td>Kanıt yakalama</td><td>Kamera-içi çekim (şablon izin verirse galeri), 1–5 fotoğraf, ≤20 sn video; cihazda sıkıştırma (~300 KB); sunucu zaman damgası; konum (izin varsa) ve şube mesafesi; fotoğrafa görünür damga (şube, tarih-saat, kullanıcı)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-4</td><td>"Yapılamadı" akışı</td><td>Sebep seti (malzeme yok, ekipman arızalı, zaman yetmedi, yetkim yok, diğer) + not + isteğe bağlı fotoğraf; şablon "yapılamadı"yı yasaklayabilir (kritik maddeler)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-5</td><td>Çevrimdışı öncelikli</td><td>Liste ve şablon önbellekte; kanıtlar yerel kuyrukta; bağlantı gelince arka planda senk; çakışma kuralı: sunucu zamanı esas, madde bazlı son yazan kazanır, kanıt asla silinmez</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-6</td><td>Gönderim ve kilit</td><td>Zorunlu maddeler tamamlanmadan gönderilemez; gönderim sonrası salt okunur; düzeltme ancak yeni "ek" kaydıyla (log korunur)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-7</td><td>Sorun bildir</td><td>Liste dışı: kategori, fotoğraf, not, istasyon; şube müdürüne düşer; aksiyona çevrilebilir</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-8</td><td>Bildirimler</td><td>Push (FCM/APNs); SMS yedek yalnızca kritik/eskalasyon; bildirim tercihleri rol bazlı; sessiz saatler</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-9</td><td>Düşük okuryazarlık tasarımı</td><td>İkon + kısa etiket, 44 px dokunma alanı, tek elle kullanım, Türkçe sesli okuma desteğiyle uyumlu etiketler</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>Y-10</td><td>Vardiya devri notu</td><td>Kapanış listesinin sonunda "sabahçıya not" alanı; açılış listesinde gösterilir</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Y-11</td><td>QR ile istasyondan başlatma</td><td>İstasyon QR'ı tarayınca o istasyonun açık listesi/maddeleri</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>Y-12</td><td>Yönetici mobil görünümü</td><td>Şube/bölge müdürü için özet, aksiyon kapatma, kanıt görüntüleme (web panelinin mobil özeti)</td><td><span class="tag m">Must</span></td></tr>
+</tbody></table></div>
+
+<h3>M5 · Aksiyon ve eskalasyon</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>A-1</td><td>Aksiyon kaydı</td><td>Başlık, açıklama, kaynak (madde/sorun/elle), şube-istasyon, atanan, vade, öncelik (düşük/orta/yüksek/kritik), durum (açık, devam, kapatma bekliyor, kapalı, reddedildi)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-2</td><td>Otomatik oluşturma</td><td>Koşullu mantık ve "yapılamadı" tetikler; atanan varsayılanı rol kuralıyla (örn. şube müdürü), vade önceliğe göre (kritik 4 saat, yüksek 24, orta 72)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-3</td><td>Kapanış kanıtı</td><td>Kapatırken fotoğraf/not; şablon "onaylı kapanış" isterse bölge müdürü onaylar</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-4</td><td>Eskalasyon merdiveni</td><td>Kaçırılan liste ve gecikmiş aksiyon için zamanlı yükseltme: şube → bölge → merkez; adımlar ve süreler şablon/öncelik bazında; her adım logda</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-5</td><td>Yorum dizisi</td><td>Aksiyon üzerinde yorum ve fotoğraf; @bahsetme; sohbet değil, kayda bağlı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-6</td><td>Aksiyon listesi ve filtreler</td><td>Bana atananlar, şubem, gecikmişler; toplu kapatma yok (tek tek kanıt)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>A-7</td><td>Özel aksiyon tipleri, tekrarlı aksiyon</td><td>Bakım, tedarik, İK gibi tipler; "her ay filtre değişimi"</td><td><span class="tag c">Could</span></td></tr>
+</tbody></table></div>
+
+<h3>M6 · Duyuru ve onay</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>D-1</td><td>Hedefli duyuru</td><td>Metin + görsel/PDF; hedef: hesap, bölge, şube, rol, akıllı grup; yayın zamanı planlama</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>D-2</td><td>Okundu onayı</td><td>"Okudum ve anladım" onayı; kim onayladı/onaylamadı; onaylamayanlara hatırlatma</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>D-3</td><td>İmzalı belge</td><td>PDF'e imza zorunluluğu (prosedür değişikliği, alerjen listesi); imza kaydı personel dosyasında</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>D-4</td><td>Duyuru → liste bağlantısı</td><td>"Yeni kapanış prosedürü" duyurusu ilgili şablon sürümüne bağlanır; onaylamayan personele liste açılmaz seçeneği</td><td><span class="tag s">Should</span></td></tr>
+</tbody></table></div>
+
+<h3>M7 · Raporlama ve analitik</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>R-1</td><td>Operasyon panosu</td><td>Bugün: şube × liste durum ızgarası (tamamlandı / geç / kaçırıldı / devam); canlı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-2</td><td>Tamamlanma ve zamanındalık</td><td>Şube, bölge, liste, dönem bazında; trend; şube sıralaması</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-3</td><td>Başarısız madde analizi</td><td>En çok başarısız 10 madde; şube × madde ısı haritası; "yapılamadı" sebepleri dağılımı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-4</td><td>Sıcaklık / ölçüm günlüğü</td><td>Ekipman bazlı zaman serisi; aralık dışı işaretli; denetim formatında dönem raporu</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-5</td><td>Kanıt galerisi</td><td>Şube/istasyon/madde/tarih filtreli fotoğraf-video arşivi; tam boy görüntüleme ve damga bilgisi</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-6</td><td>PDF ve Excel</td><td>Çalıştırma PDF'i (markalı), dönem PDF'i, Excel ham veri; paylaşılabilir bağlantı (süreli)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-7</td><td>Aksiyon raporu</td><td>Açık/gecikmiş aksiyonlar, ortalama kapanış süresi, şube/kişi bazında</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-8</td><td>Planlı e-posta raporu</td><td>Bölge müdürüne her sabah 07:00 "dün gece" özeti; merkeze haftalık</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>R-9</td><td>Kişi düzeyi takip (skor yok)</td><td>Yalnızca şube/bölge müdürüne: kişinin gecikmiş ve eksik bıraktığı maddeler, açık aksiyonları; puan, sıralama, karşılaştırma ve rozet yok; personel kendi kaydını görür (karar, §1)</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>R-10</td><td>Özel pano oluşturucu</td><td>Sürükle-bırak metrik/grafik</td><td><span class="tag c">Could</span></td></tr>
+</tbody></table></div>
+
+<h3>M8 · Denetim izi, uyum ve güvenlik</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>U-1</td><td>Değiştirilemez olay günlüğü</td><td>Her olay (oluşturma, cevap, kanıt, gönderim, düzenleme, atama, eskalasyon, görüntüleme) ekle-yalnız; hash zinciri; günlük kök özeti dış zaman damgası servisine</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>U-2</td><td>Denetim izi görüntüleyici</td><td>Çalıştırma/aksiyon bazında "kim, ne zaman, nereden, hangi cihazdan"; PDF eki</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>U-3</td><td>KVKK akışı</td><td>İlk girişte aydınlatma metni (hesap yöneticisi özelleştirir), konum izni ayrı açıklama; veri işleme sözleşmesi şablonu; kişi bazlı dışa aktarma ve silme/maskeleme talebi</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>U-4</td><td>Saklama politikası</td><td>Kanıt ve log saklama süresi (varsayılan 24 ay, hesap ayarı); süre sonunda kanıt silinir, özet log kalır</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>U-5</td><td>Güvenlik</td><td>Aktarımda ve depoda şifreleme; imzalı, süreli kanıt URL'leri; rol bazlı erişim; yönetici 2FA; oturum/cihaz yönetimi; hız sınırlama</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>U-6</td><td>Biyometri yok</td><td>Yüz/parmak izi tanıma bilinçli olarak yok (Kurul 2026/921 ilke kararı); kimlik PIN/OTP</td><td><span class="tag m">Must</span></td></tr>
+</tbody></table></div>
+
+<h3>M9 · Yönetim paneli (web) ve platform</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kod</th><th>Özellik</th><th>Ayrıntı</th><th>Öncelik</th></tr></thead><tbody>
+<tr><td>W-1</td><td>Kurulum sihirbazı</td><td>Şube yükle → şablon seç → plan kur → personel davet; 1 saatte ilk liste</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>W-2</td><td>Şube ve personel yönetimi</td><td>CRUD, toplu işlemler, davet SMS'i, cihaz kaydı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>W-3</td><td>Bildirim ve eskalasyon ayarları</td><td>Rol bazlı kanal ve saat tercihleri; merdiven şablonları</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>W-4</td><td>Faturalama</td><td>MVP'de manuel (sözleşme + e-fatura); panelde aktif şube sayacı</td><td><span class="tag m">Must</span></td></tr>
+<tr><td>W-5</td><td>Dışa aktarım API'si ve webhook</td><td>Salt okunur REST (çalıştırmalar, aksiyonlar, ölçümler); olay webhook'ları (liste kaçırıldı, kritik madde başarısız)</td><td><span class="tag s">Should</span></td></tr>
+<tr><td>W-6</td><td>Entegrasyon iskeleti</td><td>PDKS/vardiya (kim vardiyada), POS (satış yoğunluğuna göre hatırlatma), İK dizini — bağlayıcılar v1.x; veri modeli bugünden uyumlu</td><td><span class="tag c">Could</span></td></tr>
+<tr><td>W-7</td><td>Çok dillilik</td><td>Arayüz Türkçe; metinler kaynak dosyada (i18n hazır), İngilizce v1.x</td><td><span class="tag s">Should</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="item" id="disari"><div class="ih"><span class="num">05</span><h2>Kapsam dışı (bilerek)</h2></div>
+<ul>
+<li><strong>Ekip sohbeti</strong> — aksiyon yorumları ve duyuru ihtiyacı karşılar; sohbet moderasyon ve gürültü getirir.</li>
+<li><strong>WhatsApp entegrasyonu</strong> — karar gereği MVP dışı; bildirim katmanı kanal-bağımsız yazılır, v1.x'te eklenebilir.</li>
+<li><strong>Mesai/PDKS, vardiya planlama, izin</strong> — komşu kategori; entegrasyonla.</li>
+<li><strong>Eğitim/LMS, sınav, belge yönetimi, e-imza (duyuru imzası hariç)</strong>.</li>
+<li><strong>Sensörler, Bluetooth problar, etiket yazıcı</strong> — donanım işi; v2.</li>
+<li><strong>Varlık/bakım modülü, iş emri</strong> — "sorun" akışı yeter; v1.x.</li>
+<li><strong>AI fotoğraf değerlendirme, doğal dilde analitik</strong> — veri birikmeden anlamsız.</li>
+<li><strong>Self-servis kayıt, kartla ödeme, ücretsiz katman</strong> — zincir satışı önce; tekil işletme §12.</li>
+<li><strong>Franchise sahibine ayrı portal</strong> — Gözlemci rolü yeter.</li>
+</ul>
+</section>
+
+<section class="item" id="yolculuk"><div class="ih"><span class="num">06</span><h2>Kullanıcı yolculukları</h2></div>
+<h3>Y1 · Merkez kapanış listesini kurar ve yayar (ilk gün)</h3>
+<ol>
+<li>Operasyon müdürü sihirbazdan şubeleri Excel'le yükler (O-6), "Kapanış — kafe" şablonunu kütüphaneden kopyalar (Ş-6), üç maddeyi düzenler: "Kahve makinesi temizlendi" → fotoğraf zorunlu; "Buzdolabı sıcaklığı" → 0–4 °C, aralık dışı = kritik, aksiyon şube müdürüne 4 saat vadeli (Ş-2, Ş-4, A-2).</li>
+<li>Plan: her gün 22:00–01:30 penceresi, atanan "kapanış sorumlusu" rolü, "biri tamamlasın" (P-1, P-2, P-3). Eskalasyon: pencere sonu → şube müdürü, +2 sa → bölge, +24 sa → merkez (A-4).</li>
+<li>Personele davet SMS'i; her şube tabletini kiosk moduna alır (O-4, O-5). Merkez, ertesi sabah R-1 ızgarasında 50 şubeyi görür.</li>
+</ol>
+<h3>Y2 · Personel kapanışı yapar (her gece)</h3>
+<ol>
+<li>22:00'de tablet ve telefona push: "Kapanış listesi açıldı, 01:30'a kadar". Personel PIN ile geçer; Bugün ekranında tek liste (Y-1).</li>
+<li>Maddeleri sırayla yapar; fotoğraf kamera-içi çekilir, damgalanır (Y-3). Buzdolabı 6 °C girer → uygulama "aralık dışı" uyarır, fotoğraf ve not ister, aksiyon otomatik açılır (Ş-4, A-2).</li>
+<li>"Zemin yıkandı" için deterjan bitmiş → "Yapılamadı: malzeme yok" (Y-4). Wi-Fi kesik; liste yerelde tamamlanır, sabah senk (Y-5). Gönderir; liste puanı %88, eşik altı "başarısız çalıştırma" (Ş-5).</li>
+</ol>
+<h3>Y3 · Şube ve bölge müdürü sabahı (her gün)</h3>
+<ol>
+<li>Şube müdürü 08:00'de push: 1 kritik aksiyon (buzdolabı), 1 yapılamadı (deterjan). Buzdolabını kontrol eder, servisi arar, aksiyona fotoğraf ekleyip "devam"a alır (A-3, A-5). Deterjan için tedarik sorunu açar (Y-7).</li>
+<li>Bölge müdürü 07:00 e-posta özetinde (R-8) 12 şubeden 2'sinin listeyi kaçırdığını görür; ızgaradan şubeye tıklar, kanıt galerisinde dünkü fotoğrafları kontrol eder (R-5), kaçıran şubeye aksiyon atar.</li>
+</ol>
+<h3>Y4 · Denetim günü (ayda bir / plansız)</h3>
+<ol>
+<li>Gıda müfettişi soğuk zincir kaydı ister. Kalite sorumlusu R-4'ten şube × son 30 gün sıcaklık raporunu markalı PDF olarak indirir; denetim izi eki "kim, ne zaman, hangi cihazdan" gösterir (U-2). Süre: 3 dakika.</li>
+</ol>
+<h3>Y5 · Prosedür değişikliği (çeyrekte bir)</h3>
+<ol>
+<li>Merkez yeni alerjen prosedürünü duyurur, PDF'e imza ister (D-1, D-3); onaylamayanlara 48 saat sonra hatırlatma (D-2). Şablon v3 yayınlanır; eski çalıştırmalar v2 ile arşivde kalır (Ş-1).</li>
+</ol>
+</section>
+
+<section class="item" id="durum"><div class="ih"><span class="num">07</span><h2>Liste çalıştırması yaşam döngüsü</h2></div>
+<p>Mitti'nin durum seti (gecikmiş, geç gönderim, kaçırıldı, yapılmayacak) temel alındı; yeme-içme için "pencere" kavramı eklendi. Her geçiş olay günlüğüne yazılır.</p>
+<pre class="mermaid">
+stateDiagram-v2
+    [*] --> Planlandi: kural üretti
+    Planlandi --> Acik: pencere başladı
+    Acik --> DevamEdiyor: ilk madde cevaplandı
+    Acik --> Kacirildi: pencere bitti, cevap yok
+    DevamEdiyor --> Tamamlandi: gönderildi (pencere içinde)
+    DevamEdiyor --> GecTamamlandi: gönderildi (pencere sonrası, tolerans içinde)
+    DevamEdiyor --> Kacirildi: tolerans doldu
+    Planlandi --> Yapilmayacak: yönetici + sebep
+    Acik --> Yapilmayacak: yönetici + sebep
+    Tamamlandi --> Basarisiz: puan eşik altı / kritik madde
+    GecTamamlandi --> Basarisiz: puan eşik altı / kritik madde
+    Kacirildi --> [*]: eskalasyon merdiveni
+    Basarisiz --> [*]: aksiyonlar açık
+    Tamamlandi --> [*]
+    GecTamamlandi --> [*]
+    Yapilmayacak --> [*]
+</pre>
+<p class="note">Tolerans (geç gönderim süresi) şablon ayarı; kapanış listesinde varsayılan 2 saat, saatlik hijyende 0. "Kaçırıldı" kesindir, sonradan tamamlanamaz — kayıt, WhatsApp'taki "sabah çektim" davranışını ortadan kaldırır.</p>
+</section>
+
+<section class="item" id="veri"><div class="ih"><span class="num">08</span><h2>Veri modeli (özet)</h2></div>
+<div class="arch">Hesap ─┬─ Bölge ─┬─ Şube ─┬─ İstasyon
+       │         │        ├─ Cihaz (kiosk)
+       │         │        └─ Takvim (çalışma saatleri, kapalı günler)
+       ├─ Kullanıcı ─ Rol atamaları (kapsam: hesap/bölge/şube) ─ Grup üyeliği (akıllı gruplar)
+       ├─ Şablon ─┬─ ŞablonSürümü ─┬─ Bölüm ─ Madde (tür, ayarlar, ağırlık, kritik, istasyon)
+       │          │                └─ Kural (madde, cevap → eylemler)
+       │          └─ YanıtSeti (küresel: Evet/Hayır/Uygun değil …)   SebepSeti (yapılamadı)
+       ├─ Plan (şablon sürümü, RRULE, pencere, atama kuralı, hatırlatma, eskalasyon merdiveni)
+       │     └─ Çalıştırma (şube, pencere başlangıç/bitiş, durum, puan, atananlar)
+       │            ├─ MaddeCevabı (değer, kullanıcı, sunucu zamanı, cihaz, konum, yapılamadı+sebep)
+       │            │      └─ Kanıt (dosya, hash, damga meta, boyut, EXIF alt kümesi)
+       │            └─ Gözden geçirme (onaylayan, not)
+       ├─ Aksiyon (kaynak: madde/sorun/elle; atanan, vade, öncelik, durum) ─ Yorum ─ Kanıt
+       ├─ Sorun (kategori, şube/istasyon, bildiren, fotoğraf) → Aksiyon
+       ├─ Duyuru (hedef kuralı, içerik, imza gerekli mi) ─ Onay (kullanıcı, zaman, imza)
+       ├─ Bildirim (kanal, alıcı, olay, gönderim/okunma)
+       └─ OlayGünlüğü (ekle-yalnız: aktör, olay, nesne, önce/sonra özeti, IP/cihaz, önceki_hash, hash)</div>
+<p>Kritik tasarım kararları: (1) <strong>Çalıştırma, şablonun sürümüne bağlanır</strong>; şablon değişince geçmiş bozulmaz. (2) <strong>Kanıt asla üzerine yazılmaz</strong>; düzeltme yeni kayıt + logdur. (3) Kullanıcı pasifleştirilince kayıtlar kalır, kimlik alanları maskelenebilir. (4) Konum yalnızca cevap anında, nokta olarak; iz yok.</p>
+</section>
+
+<section class="item" id="nfr"><div class="ih"><span class="num">09</span><h2>Fonksiyonel olmayan gereksinimler</h2></div>
+<div class="tw"><table class="data wide"><thead><tr><th>Alan</th><th>Gereksinim</th><th>Ölçüt</th></tr></thead><tbody>
+<tr><td>Çevrimdışı</td><td>Liste tamamlama ve kanıt yakalama bağlantısız çalışır</td><td>72 saat çevrimdışı; senk çakışması veri kaybetmez; kuyruk 500 kanıt</td></tr>
+<tr><td>Performans</td><td>Personel akışı hızlı</td><td>Liste açılışı &lt; 1 sn (önbellek); fotoğraf çekim→sonraki madde &lt; 1,5 sn; yükleme arka planda</td></tr>
+<tr><td>Cihaz</td><td>Düşük segment Android ve şube tabletleri</td><td>Android 9+, iOS 15+, 2 GB RAM cihazda akıcı; uygulama &lt; 40 MB</td></tr>
+<tr><td>Veri kullanımı</td><td>Mobil veriyle çalışan şubeler</td><td>Fotoğraf ≤ 300 KB, video ≤ 3 MB; günlük şube trafiği &lt; 15 MB</td></tr>
+<tr><td>Kanıt bütünlüğü</td><td>Fotoğrafın zaman ve yerinin sonradan değiştirilemezliği</td><td>Sunucu zamanı esas; dosya hash'i cevaba bağlı; olay zinciri doğrulanabilir; kamera-içi çekim şablonla zorlanabilir</td></tr>
+<tr><td>Erişilebilirlik</td><td>Düşük okuryazarlık ve gürültülü ortam</td><td>44 px hedefler, ikonlu etiketler, yüksek kontrast, tek elle akış; ekran okuyucu etiketleri</td></tr>
+<tr><td>Güvenlik</td><td>Kiracı yalıtımı ve erişim kontrolü</td><td>Rol tabanlı yetki her uç noktada; imzalı süreli kanıt URL'leri (15 dk); yönetici 2FA; OWASP MASVS-L1</td></tr>
+<tr><td>KVKK</td><td>Türkiye'de barındırma veya standart sözleşme; aydınlatma; silme</td><td>Veri Türkiye'de (yerel bulut) ya da AB + standart sözleşme; silme talebi 30 gün; biyometri yok</td></tr>
+<tr><td>Kullanılabilirlik</td><td>Kapanış saatinde kesinti kabul edilemez</td><td>%99,5 aylık; bakım penceresi 04:00–06:00; çevrimdışı mod kesintiyi örter</td></tr>
+<tr><td>Ölçek</td><td>İlk 2 yıl</td><td>2.000 şube, 20.000 kullanıcı, günde 100.000 kanıt; yatay ölçeklenebilir depolama</td></tr>
+<tr><td>Gözlemlenebilirlik</td><td>Destek yükünü düşürmek</td><td>Cihaz tarafı hata ve senk günlükleri; "bildirim gelmedi" için teslimat izi</td></tr>
+<tr><td>Yedekleme</td><td>Kanıt kaybı = ürün kaybı</td><td>Günlük yedek, 35 gün nokta-zaman geri dönüş; nesne depoda sürümleme</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="item" id="kabul"><div class="ih"><span class="num">10</span><h2>Kabul kriterleri (örnek hikâyeler)</h2></div>
+<p>Geliştirme ekibiyle "bitti" tanımını sabitlemek için en riskli on hikâye. Tamamı için kabul kriteri, sprint planlamada yazılır.</p>
+<div class="story"><div class="t">H-1 · Gece yarısını aşan kapanış penceresi</div><div class="u">Operasyon müdürü olarak, 22:00–01:30 kapanış listesinin "aynı iş gününe" yazılmasını istiyorum.</div><ul><li>Pencere 22:00'de açılır, ertesi gün 01:30'da kapanır; rapor tarihi açılış günüdür</li><li>01:20'de gönderilen liste "zamanında"; 01:31–03:30 arası "geç" (tolerans 2 sa); sonrası kabul edilmez, durum "kaçırıldı"</li><li>Şube saat dilimi ve yaz saati değişimi doğru işlenir (test: 26 Ekim)</li></ul></div>
+<div class="story"><div class="t">H-2 · Kamera-içi kanıt</div><div class="u">Kalite sorumlusu olarak, kanıt fotoğrafının o anda ve o şubede çekildiğinden emin olmak istiyorum.</div><ul><li>Şablonda "yalnızca kamera" açıksa galeri seçeneği görünmez (iOS ve Android)</li><li>Fotoğraf sunucu zamanıyla damgalanır; cihaz saati farklıysa fark logda</li><li>Konum izni varsa şubeye mesafe kaydedilir; 500 m üstü "uzak" bayrağı raporda görünür; izin yoksa "konum yok" bayrağı</li><li>Görünür damga (şube adı, tarih-saat, kullanıcı) PDF'te ve galeride</li></ul></div>
+<div class="story"><div class="t">H-3 · Yapılamadı ve otomatik aksiyon</div><div class="u">Personel olarak, yapamadığım maddeyi sebebiyle bildirmek; şube müdürü olarak bunu aksiyon olarak görmek istiyorum.</div><ul><li>Sebep seçmeden "yapılamadı" kaydedilemez; "diğer" seçilirse not zorunlu</li><li>Kritik maddede "yapılamadı" kapalıysa buton görünmez, madde atlanamaz</li><li>Kayıt anında aksiyon açılır: atanan = şube müdürü, vade = öncelik kuralı; push gider; 60 sn içinde panelde görünür</li></ul></div>
+<div class="story"><div class="t">H-4 · Çevrimdışı tamamlama ve senk</div><div class="u">Personel olarak, Wi-Fi kesikken listeyi bitirip sonra göndermek istiyorum.</div><ul><li>Uçak modunda 20 maddelik liste 5 fotoğrafla tamamlanır, "gönderildi (bekliyor)" görünür</li><li>Bağlantı gelince 2 dk içinde senk; sunucu zaman damgası = gerçek çekim zamanı (cihaz zamanı + sunucu farkı düzeltmesi, logda)</li><li>Aynı listeye iki cihazdan cevap: madde bazlı birleştirme; kanıt kaybı sıfır (test: 100 tekrar)</li></ul></div>
+<div class="story"><div class="t">H-5 · Aralık dışı sıcaklık</div><div class="u">Kalite sorumlusu olarak, 0–4 °C dışı ölçümün anında aksiyona dönüşmesini istiyorum.</div><ul><li>6 °C girişinde madde kırmızı, fotoğraf + not istenir, liste puanı kritik kuralıyla "başarısız"</li><li>Aksiyon "kritik, 4 saat" açılır; şube müdürüne push + SMS; 4 saatte kapanmazsa bölgeye eskalasyon</li><li>R-4 raporunda ölçüm işaretli görünür</li></ul></div>
+<div class="story"><div class="t">H-6 · Eskalasyon merdiveni</div><div class="u">Bölge müdürü olarak, yalnızca şubenin çözemediği şeylerden haberdar olmak istiyorum.</div><ul><li>Kaçırılan liste: pencere sonunda şube müdürüne; +2 sa bölgeye; +24 sa merkeze; her adım logda ve aksiyon dizisinde</li><li>Şube müdürü listeyi "yapılmayacak + sebep" yaparsa merdiven durur, karar logda</li></ul></div>
+<div class="story"><div class="t">H-7 · Kiosk modu</div><div class="u">Şube müdürü olarak, tek tablette 8 personelin ayrı ayrı kanıt bırakmasını istiyorum.</div><ul><li>PIN ekranı 2 dk hareketsizlikte döner; yanlış PIN 5 denemede 1 dk kilit</li><li>Her cevap PIN sahibine yazılır; "şube cihazı" bilgisi logda</li><li>Personel kendi telefonundan da girebilir; iki cihazda aynı kullanıcı çakışmaz</li></ul></div>
+<div class="story"><div class="t">H-8 · Şablon sürümleme</div><div class="u">Operasyon müdürü olarak, şablonu değiştirdiğimde geçmiş kayıtların bozulmamasını istiyorum.</div><ul><li>Yayındaki sürüm salt okunur; düzenleme taslak sürüm açar; yayın anı seçilir (hemen / yarın 06:00)</li><li>Eski çalıştırmalar ve PDF'ler eski sürümle görüntülenir; raporlarda sürüm filtresi</li></ul></div>
+<div class="story"><div class="t">H-9 · Denetim PDF'i</div><div class="u">Kalite sorumlusu olarak, 30 günlük soğuk zincir kaydını denetçiye 5 dakikada vermek istiyorum.</div><ul><li>Şube + şablon + tarih aralığı seçimiyle PDF 30 sn içinde; markalı; sayfa başına imza/zaman damgası; kanıt küçük resimleri</li><li>PDF'in son sayfasında denetim izi özeti ve doğrulama kodu (hash)</li></ul></div>
+<div class="story"><div class="t">H-10 · Okundu onayı</div><div class="u">Merkez olarak, yeni prosedürü kimin okuduğunu bilmek istiyorum.</div><ul><li>Hedef gruptaki her kullanıcıda duyuru "onay bekliyor" ile açılır; onay zaman damgalı</li><li>48 saatte onaylamayanlara otomatik hatırlatma; yönetici panelinde onay oranı ve liste</li><li>İmza zorunluysa onay ancak imzayla tamamlanır</li></ul></div>
+</section>
+
+<section class="item" id="plan"><div class="ih"><span class="num">11</span><h2>Sürüm planı ve başarı metrikleri</h2></div>
+<p>12 sprint × 2 hafta. Ekip: 1 mobil (Flutter), 1 backend/web, kurucu-ürün sahibi, yarı zamanlı tasarımcı; 7. sprintten itibaren yarı zamanlı QA. Her sprint sonunda pilot zincire gösterim.</p>
+<div class="timeline">
+<div class="tl"><div class="w">Sprint 1–2</div><div class="t">Temel</div><ul><li>Hesap, hiyerarşi, roller, OTP giriş</li><li>Şablon editörü v1 (madde türleri)</li><li>Mobil iskelet, Bugün ekranı</li></ul></div>
+<div class="tl"><div class="w">Sprint 3–4</div><div class="t">Plan ve yürütme</div><ul><li>RRULE, pencereler, çalıştırma üretimi</li><li>Madde tamamlama, kanıt yakalama</li><li>Push bildirimleri</li></ul></div>
+<div class="tl"><div class="w">Sprint 5–6</div><div class="t">Kanıt ve aksiyon</div><ul><li>Çevrimdışı kuyruk ve senk</li><li>Yapılamadı, koşullu mantık, puan</li><li>Aksiyonlar, eskalasyon merdiveni</li></ul></div>
+<div class="tl"><div class="w">Sprint 7–8</div><div class="t">Yönetim ve rapor</div><ul><li>Operasyon panosu, ızgara, galeri</li><li>PDF/Excel, sıcaklık günlüğü</li><li>Kiosk modu, sorun bildir</li></ul></div>
+<div class="tl"><div class="w">Sprint 9–10</div><div class="t">Uyum ve kütüphane</div><ul><li>Olay günlüğü, denetim izi görüntüleyici</li><li>KVKK akışı, saklama, 2FA</li><li>30 Türkçe şablon; duyuru + onay</li></ul></div>
+<div class="tl"><div class="w">Sprint 11–12</div><div class="t">Pilot ve lansman</div><ul><li>3 pilot zincir geri bildirimi</li><li>Should maddeleri (kalan süreye göre)</li><li>Sertleştirme, yük testi, GA</li></ul></div>
+</div>
+<h3>Kilometre taşları</h3>
+<ul>
+<li><strong>Alfa (3. ay sonu):</strong> 1 tasarım-ortağı zincirde 5 şube, tek şablon (kapanış), gerçek kanıtlar.</li>
+<li><strong>Beta (4,5. ay):</strong> 3 pilot zincir, 30+ şube, açılış + kapanış + soğuk zincir; eskalasyon canlı.</li>
+<li><strong>GA (6. ay):</strong> Must satırlarının tamamı; ilk ödeyen sözleşme; destek ve onboarding oyun kitabı.</li>
+</ul>
+<h3>Başarı metrikleri (fizibilite kapılarıyla uyumlu)</h3>
+<div class="tw"><table class="data"><thead><tr><th>Metrik</th><th>Hedef (GA + 8 hafta)</th><th>Neden</th></tr></thead><tbody>
+<tr><td>Aktivasyon</td><td>Şubelerin %90'ı ilk 7 günde ≥ 1 liste tamamladı</td><td>Onboarding işliyor mu</td></tr>
+<tr><td>Haftalık tamamlanma</td><td>≥ %80 (pencere içinde)</td><td>Ürün WhatsApp'ın yerine geçti mi</td></tr>
+<tr><td>Kanıt yoğunluğu</td><td>Fotoğraf zorunlu maddelerin %95'inde kanıt</td><td>Değer önerisinin özü</td></tr>
+<tr><td>Yönetici alışkanlığı</td><td>Bölge müdürlerinin %70'i haftada ≥ 3 gün panele giriyor</td><td>Merkez tarafı değer görüyor mu</td></tr>
+<tr><td>Aksiyon kapanışı</td><td>Kritik aksiyonların %80'i vadesinde kapalı</td><td>Eskalasyon işliyor mu</td></tr>
+<tr><td>Destek yükü</td><td>≤ 1 destek talebi / şube / ay</td><td>Operasyonel fizibilite varsayımı</td></tr>
+<tr><td>Kayıp</td><td>Zincir aylık kaybı ≤ %2,5 (12. ay)</td><td>Fizibilite kapısı</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="item" id="sorular"><div class="ih"><span class="num">12</span><h2>Açık sorular (kararını bekleyen)</h2></div>
+<ol>
+<li><strong>Ortak cihaz mı, kişisel telefon mu?</strong> Kiosk modu Must olarak kondu; pilot zincirlerde şubelerin kaçında tablet var? Tablet yoksa şube müdürünün telefonu ortak cihaz olur — bu durumda "yalnızca kamera" ve PIN akışı yeterli mi?</li>
+<li><strong>Tekil işletme self-servisi:</strong> Fizibilitede ancak sıfıra yakın CAC ile ayakta duruyordu. MVP'den tamamen çıkarıldı; v1.x'te "tek şube, kartla, ₺390/ay" planı düşünülsün mü?</li>
+<li><strong>Franchise sahibi rolü:</strong> Franchise veren markalarda bayi sahibi "Gözlemci" mi olmalı, yoksa kendi şubesinde "Şube müdürü" yetkisiyle mi? (Kanıtları kim görebilir sorusu satışta çıkacak.)</li>
+<li><strong>Barındırma:</strong> Türkiye'de yerel bulut mu (KVKK basit, maliyet biraz yüksek), AB bölgesi + standart sözleşme mi? Pilot zincirlerin BT/hukuk ekibi ne ister?</li>
+<li><strong>Sıcaklık probu:</strong> Elle giriş MVP; pilotlarda Bluetooth prob talebi çıkarsa Should'a alınsın mı (2 sprint)?</li>
+<li><strong>Marka adı:</strong> geçici karar <strong>"Talimatname"</strong> (önceki: Talimat, yap lütfen); pilot görüşmelerindeki isim testinde Talimatname her görüşmede, yanında yap lütfen / tamamlist / tembihle'den ikisi dönüşümlü; kesin karar 20 tepkiden sonra. Bekleyenler: talimatname.com / .com.tr / .app kaydı, TÜRKPATENT 9/35/42 sorgusu, sosyal hesaplar.</li>
+</ol>
+<p class="note">Karara bağlanan: kişi bazlı performans skoru → şube düzeyinde kalıyor, kişi düzeyinde yalnızca gecikme/eksik görünümü (§1, R-9).</p>
+<p class="note warn">Kalan kararların hiçbiri Sprint 1–4'ü bloke etmiyor; en geç Sprint 5 planlamasına kadar (2,5. ay) alınmalı.</p>
+</section>
+
+<section class="item" id="kaynak"><div class="ih"><span class="num">13</span><h2>Kaynaklar</h2></div>
+<ol class="src">
+<li id="k-mitti"><strong>[M] Mitti / SafetyCulture:</strong> <a href="https://mitti.com/platform/">Mitti platform</a>; <a href="https://help.mitti.com/en-US/000093/">şablon yanıt türleri</a>; <a href="https://help.safetyculture.com/en-US/002285/">mantık alanları</a>; <a href="https://help.mitti.com/en-US/003102/">Schedules</a>; <a href="https://help.safetyculture.com/000157">kaçırılan ve geç denetimler</a>, <a href="https://help.safetyculture.com/000158">"Won't do"</a>; <a href="https://help.mitti.com/en-US/003186/">Actions</a>; <a href="https://help.mitti.com/003101">Heads Up</a>; rebrand: <a href="https://www.forbes.com.au/news/entrepreneurs/safetyculture-becomes-mitti-as-unicorn-bets-on-insurance-and-ai/">Forbes Australia</a>, <a href="https://cfotech.com.au/story/safetyculture-rebrands-as-mitti-in-frontline-software-push">CFOtech</a>, <a href="https://brand.mitti.com/">brand.mitti.com</a>.</li>
+<li id="k-ct"><strong>[C] Connecteam:</strong> <a href="https://connecteam.com/features/">özellikler</a>; <a href="https://help.connecteam.com/en/articles/4225197-starting-guide-to-forms">Forms başlangıç rehberi</a> (alan türleri, kamera/galeri kaynağı, koşullu alanlar, yönetici notu, dışa aktarım); <a href="https://connecteam.com/daily-checklist-app/">Connecteam – görevler ve alt görevler</a>; <a href="https://connecteam.com/pricing/">fiyatlandırma ve ücretsiz plan</a>.</li>
+<li id="k-jolt"><strong>[J] Jolt / SmartSense:</strong> <a href="https://www.businesswire.com/news/home/20250818839282/en/Digi-Acquires-Jolt-to-Accelerate-ARR-Growth-and-Strengthen-SmartSenses-Market-Leading-Offerings">Digi, Jolt'u satın aldı (BusinessWire, 18 Ağustos 2025)</a>; <a href="https://www.jolt.com/jolt-acquisition-by-smart-sense/">Jolt duyurusu</a>; <a href="https://www.smartsense.co/system-overview">SmartSense sistem özeti</a>.</li>
+<li id="k-x"><strong>[X] Xenia:</strong> <a href="https://www.xenia.team/">xenia.team</a> (soru türleri, Template Agent, AI Photo Rollouts, QR ile başlatma, lokasyon hiyerarşisi); <a href="https://www.xenia.team/pricing">fiyatlandırma</a>.</li>
+<li id="k-y"><strong>[Y] Yoobic / Operandio:</strong> <a href="https://yoobic.com/task-management/">Yoobic görev yönetimi</a> (fotoğraf geri bildirimi, uyum skoru, soru düzeyinde rapor); <a href="https://operandio.com/hotelier/">Operandio</a>.</li>
+<li><strong>KVKK:</strong> <a href="https://www.kvkk.gov.tr/Icerik/8762/mesai-takibi-amaciyla-biyometrik-veri-islenmesi-hakkinda-kisisel-verileri-koruma-kurulunun-29-04-2026-tarihli-ve-2026-921-sayili-ilke-karari-iliskin-kamuoyu-duyurusu">Kurul 2026/921 ilke kararı</a>.</li>
+<li><strong>Önceki çalışma:</strong> <a href="https://claude.ai/code/artifact/7624c049-c18f-45d6-b7c5-c750bcd7798f">Talimat Fizibilitesi</a> (pazar, rekabet, finansal model).</li>
+</ol>
+</section>
+
+</main>
+</div>
+</div>

@@ -1,0 +1,429 @@
+<title>Talimatname Pilot Görüşme Rehberi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f4; --sf:#ffffff; --sf2:#eef2ef; --ink:#151c22; --ink2:#46525c; --mut:#77838c; --line:#d6ddd9; --line2:#e7ece9;
+  --acc:#0e6b6b; --accs:#dcecea; --acct:#0a5252; --stamp:#b8412f; --stamps:#f6e3df; --good:#1f7a3d; --goods:#e0f0e4; --warn:#9a6300; --warns:#f7ead0; --blue:#2a5fb8; --blues:#e1e9f7;
+  --fd:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif; --fb:"Source Serif 4",Georgia,"Times New Roman",serif; --fu:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f; --blue:#7fa6e8; --blues:#182640;
+}}
+:root[data-theme="dark"]{
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f; --blue:#7fa6e8; --blues:#182640;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--acct);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+header.top{border-bottom:1px solid var(--line);padding:40px 0 28px;margin-bottom:12px}
+.eyebrow{font-family:var(--fu);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.01em;margin:10px 0 14px;text-wrap:balance;max-width:20ch}
+.lede{font-size:20px;line-height:1.5;max-width:62ch;color:var(--ink2);margin:0 0 18px}
+.meta{font-family:var(--fu);font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px 22px}
+.layout{display:grid;grid-template-columns:1fr;gap:0 40px}
+@media (min-width:1080px){.layout{grid-template-columns:220px minmax(0,1fr)}}
+nav.toc{display:none}
+@media (min-width:1080px){nav.toc{display:block;position:sticky;top:20px;align-self:start;padding-top:28px}}
+nav.toc ol{list-style:none;margin:0;padding:0;font-family:var(--fu);font-size:13px;line-height:1.35}
+nav.toc li{padding:5px 0;border-left:2px solid var(--line2);padding-left:12px}
+nav.toc li a{color:var(--ink2);text-decoration:none}
+nav.toc li a:hover{color:var(--acct)}
+nav.toc .n{display:inline-block;width:22px;color:var(--mut);font-weight:600;font-variant-numeric:tabular-nums}
+main{min-width:0}
+section.item{padding:34px 0 8px;border-top:1px solid var(--line)}
+section.item:first-of-type{border-top:0}
+.ih{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.num{flex:none;font-family:var(--fd);font-weight:700;font-size:15px;color:var(--mut);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+h2{font-family:var(--fd);font-weight:700;font-size:30px;line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h3{font-family:var(--fd);font-weight:700;font-size:20px;margin:28px 0 8px;letter-spacing:-.005em}
+p,ul,ol{max-width:68ch}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin-bottom:5px}
+strong{font-weight:600}
+code{font-family:var(--fu);font-size:.9em;background:var(--sf2);padding:1px 5px;border-radius:3px}
+.note{font-family:var(--fu);font-size:14px;color:var(--ink2);background:var(--sf2);border-left:3px solid var(--acc);padding:10px 14px;margin:14px 0 18px;max-width:80ch}
+.note.warn{border-left-color:var(--warn)}
+.note.stamp{border-left-color:var(--stamp)}
+.decision{border:2px solid var(--acc);border-radius:6px;padding:18px 22px;margin:18px 0 10px;max-width:980px;background:var(--sf);position:relative}
+.decision .st{position:absolute;top:-13px;left:18px;background:var(--sf);padding:0 8px;font-family:var(--fu);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.decision h3{margin:4px 0 8px;font-size:22px}
+.decision p{max-width:80ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 8px;max-width:980px}
+.kpi{background:var(--sf);padding:14px 16px}
+.kpi .l{font-family:var(--fu);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.kpi .v{font-family:var(--fd);font-weight:700;font-size:24px;line-height:1.1;margin-top:6px}
+.kpi .s{font-family:var(--fu);font-size:12px;color:var(--ink2);margin-top:4px}
+.tw{overflow-x:auto;margin:12px 0 20px;max-width:980px}
+table.data{border-collapse:collapse;width:100%;font-family:var(--fu);font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--sf)}
+table.data th{font-weight:600;text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);border-bottom:1.5px solid var(--ink);padding:8px 10px;white-space:nowrap}
+table.data td{border-bottom:1px solid var(--line2);padding:8px 10px;vertical-align:top}
+table.data td:first-child{color:var(--ink);font-weight:500}
+table.data.wide td{white-space:normal;min-width:130px}
+table.data.wide td:first-child{min-width:150px}
+table.data tr.tot td{font-weight:600;border-top:1.5px solid var(--ink);border-bottom:0}
+table.data .sub{color:var(--mut);font-size:12px;font-weight:400}
+.tag{font-family:var(--fu);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--sf2);color:var(--ink2);white-space:nowrap;display:inline-block}
+.tag.core{background:var(--stamps);color:var(--stamp)} .tag.opt{background:var(--sf2);color:var(--mut)} .tag.time{background:var(--accs);color:var(--acct)} .tag.q{background:var(--blues);color:var(--blue)}
+.tag.good{background:var(--goods);color:var(--good)} .tag.bad{background:var(--stamps);color:var(--stamp)}
+.block{background:var(--sf);border:1px solid var(--line);padding:16px 18px;margin:0 0 16px;max-width:980px}
+.block .bh{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:6px}
+.block .bh h3{margin:0;font-size:19px}
+.block .why{font-family:var(--fu);font-size:13.5px;color:var(--ink2);margin:0 0 10px;max-width:80ch}
+ol.q{list-style:none;padding:0;margin:0;max-width:none;counter-reset:q}
+ol.q>li{counter-increment:q;display:grid;grid-template-columns:44px 1fr;gap:0 8px;padding:8px 0;border-top:1px solid var(--line2);margin:0}
+ol.q>li::before{content:counter(q,decimal-leading-zero);font-family:var(--fu);font-weight:600;font-size:12px;color:var(--mut);padding-top:5px;font-variant-numeric:tabular-nums}
+ol.q .qt{font-size:16.5px;line-height:1.45}
+ol.q .qt .core{color:var(--stamp);font-weight:700;margin-right:4px}
+ol.q .qn{grid-column:2;font-family:var(--fu);font-size:13px;color:var(--mut);margin-top:3px;max-width:80ch}
+.sig{display:grid;grid-template-columns:1fr;gap:10px;max-width:980px;margin:10px 0 16px}
+@media (min-width:760px){.sig{grid-template-columns:1fr 1fr}}
+.sig div{font-family:var(--fu);font-size:13.5px;padding:10px 12px;border-left:3px solid var(--good);background:var(--sf2);color:var(--ink2)}
+.sig div.bad{border-left-color:var(--stamp)}
+.sig b{display:block;font-weight:600;color:var(--ink);margin-bottom:3px}
+.chk{list-style:none;padding:0;margin:0 0 14px;max-width:none;font-family:var(--fu);font-size:14.5px}
+.chk li{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:5px 0;border-bottom:1px solid var(--line2)}
+.chk li::before{content:"";width:15px;height:15px;border:1.5px solid var(--ink2);border-radius:3px;margin-top:4px}
+.form{font-family:var(--fu);font-size:13.5px;background:var(--sf);border:1px solid var(--line);padding:14px 16px;max-width:980px;margin:12px 0 18px;line-height:1.75}
+.form .f{display:grid;grid-template-columns:200px 1fr;gap:6px;border-bottom:1px dashed var(--line);padding:3px 0}
+.form .f span:first-child{color:var(--mut);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding-top:3px}
+.src{font-family:var(--fu);font-size:13.5px;line-height:1.5;max-width:90ch}
+.src li{margin-bottom:4px}
+</style>
+
+<div class="wrap">
+<header class="top">
+<div class="eyebrow">Pilot görüşmeleri · Doğrulama sprinti · İş analizi · Eylül 2026</div>
+<h1>Talimatname pilot görüşme rehberi</h1>
+<p class="lede">90 günlük doğrulama sprintinin ilk 8 haftası için: yeme-içme zincirlerinin merkez ve şube ekipleriyle yapılacak keşif görüşmelerinin soru seti, şube ziyareti gözlem listesi, pilot uyum puanlaması ve niyet mektubu iskeleti. Amaç ürünü anlatmak değil, fizibilitenin üç belirsiz girdisini — ödeme isteği, benimseme, edinme hızı — sahadan ölçmek.</p>
+<div class="meta"><span>Hazırlayan: iş analisti rolünde Claude</span><span>Fizibilite §10 ve MVP kapsamı §12'nin devamı</span><span>Süre: 55 dk (merkez), 20 dk (şube), 5 dk (personel)</span></div>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="İçindekiler"><ol>
+<li><span class="n">01</span><a href="#amac">Amaç ve kapılar</a></li>
+<li><span class="n">02</span><a href="#kural">Görüşme kuralları</a></li>
+<li><span class="n">03</span><a href="#kim">Kiminle, kaç görüşme</a></li>
+<li><span class="n">04</span><a href="#merkez">A · Merkez görüşmesi (55 dk)</a></li>
+<li><span class="n">05</span><a href="#sube">B · Şube müdürü (20 dk)</a></li>
+<li><span class="n">06</span><a href="#personel">C · Personel (5 dk)</a></li>
+<li><span class="n">07</span><a href="#gozlem">Şube ziyareti gözlem listesi</a></li>
+<li><span class="n">08</span><a href="#puan">Pilot uyum puanı</a></li>
+<li><span class="n">09</span><a href="#not">Görüşme notu şablonu</a></li>
+<li><span class="n">10</span><a href="#loi">Niyet mektubu iskeleti</a></li>
+<li><span class="n">11</span><a href="#hata">Kaçınılacak hatalar</a></li>
+<li><span class="n">12</span><a href="#kaynak">Kaynaklar</a></li>
+</ol></nav>
+<main>
+
+<section class="item" id="amac"><div class="ih"><span class="num">01</span><h2>Amaç ve sprint kapıları</h2></div>
+<div class="decision"><span class="st">Ne öğrenmek istiyoruz</span>
+<h3>Beş soru, yirmi görüşme, üç kapı</h3>
+<p>Her görüşme şu beş soruya kanıt toplar: <strong>(1)</strong> Zincir bugün talimatları hangi kanalla yürütüyor ve nerede kırılıyor? <strong>(2)</strong> Kanıt ve kayıt eksikliğinin somut, parayla ifade edilen bir bedeli var mı? <strong>(3)</strong> Personel tarafında ürün fiziksel olarak kullanılabilir mi (cihaz, telefon politikası, Wi-Fi, dil)? <strong>(4)</strong> Şube başına aylık kaç TL "uygun" bulunur, kararı kim verir? <strong>(5)</strong> Ücretli pilota ve ardından yıllık sözleşmeye geçer mi?</p>
+<p>Fizibilitedeki sprint ölçütleri: <strong>Hafta 1–4</strong> — 20 görüşmeden en az 12'si, bugün WhatsApp'la yürüttüğü ve kanıt gerektiren en az 3 tekrarlı listeyi sayabiliyor ve mevcut yöntemle ilgili somut acı anlatıyor. <strong>Hafta 3–8</strong> — en az 5 zincir ücretli pilot niyet mektubu imzalıyor. <strong>Hafta 6–12</strong> — 3 zincirde pilot: 4. haftada tamamlanma ≥ %80, en az 2 zincir yıllık sözleşmeye geçiyor. Üçten ikisi tutmazsa proje burada biter.</p>
+</div>
+<div class="kpis">
+<div class="kpi"><div class="l">Görüşme</div><div class="v">20</div><div class="s">merkez düzeyi, 55 dk</div></div>
+<div class="kpi"><div class="l">Şube ziyareti</div><div class="v">≥ 8</div><div class="s">tercihen kapanış vardiyası</div></div>
+<div class="kpi"><div class="l">Kapı 1</div><div class="v">12 / 20</div><div class="s">≥ 3 kanıtlı liste + somut acı</div></div>
+<div class="kpi"><div class="l">Kapı 2</div><div class="v">5 LOI</div><div class="s">ücretli pilot niyet mektubu</div></div>
+<div class="kpi"><div class="l">Kapı 3</div><div class="v">3 pilot</div><div class="s">≥ %80 tamamlanma, 2 yıllık sözleşme</div></div>
+</div>
+<p class="note">MVP kapsamındaki altı açık soru (tablet/ortak cihaz, tekil işletme self-servisi, franchise sahibi rolü, barındırma, sıcaklık probu, marka adı) bu rehberde <span class="tag q">Kapsam</span> etiketiyle işaretli sorularla cevaplanır; bloğun sonunda hangi karara beslediği yazılıdır.</p>
+</section>
+
+<section class="item" id="kural"><div class="ih"><span class="num">02</span><h2>Görüşme kuralları</h2></div>
+<ul>
+<li><strong>Geçmiş davranış, gelecek fikir değil.</strong> "Böyle bir ürün kullanır mısınız?" sorulmaz; "Dün gece kapanışın yapıldığını nasıl anladınız?" sorulur. İnsanlar ne yapacaklarını değil, ne yaptıklarını doğru anlatır<sup><a href="#k-mom">[1]</a></sup>.</li>
+<li><strong>Ürün en sona.</strong> İlk 40 dakika ürünün adı (Talimatname) geçmez. Prototip yalnızca Blok 8'de, 2 dakika, fiyat sorusundan sonra gösterilir.</li>
+<li><strong>Rakam iste.</strong> Her "çok", "sık", "bazen" için "geçen ay kaç kez?" diye sor. Not defterine sayı yazılmayan görüşme başarısızdır.</li>
+<li><strong>İki kişi:</strong> biri sorar ve göz teması kurar, diğeri not tutar ve zaman tutar. Kayıt yalnızca izinle; izin verilmezse not yeter.</li>
+<li><strong>Sessizliği doldurma.</strong> Cevap bitince 3 saniye bekle; en değerli cümle genellikle ikinci cümledir.</li>
+<li><strong>Övgüyü sayma.</strong> "Harika fikir" veri değildir. Veri: somut olay, harcanan para/zaman, bir sonraki adım için taahhüt (takvim, tanıştırma, LOI).</li>
+<li><strong>Görüşme biter bitmez 10 dakika:</strong> §09 formunu doldur, uyum puanını ver, "en şaşırtıcı cümle"yi yaz. Ertesi güne bırakılan not yarı yarıya kaybolur.</li>
+</ul>
+</section>
+
+<section class="item" id="kim"><div class="ih"><span class="num">03</span><h2>Kiminle, kaç görüşme</h2></div>
+<div class="tw"><table class="data wide"><thead><tr><th>Kim</th><th>Neden</th><th>Hedef sayı</th><th>Varyant</th></tr></thead><tbody>
+<tr><td>Operasyon müdürü / operasyon direktörü (merkez)</td><td>Satın alma kararının sahibi; talimat akışını kuran kişi; acı ve bütçe burada</td><td>20 (ana örneklem)</td><td>A</td></tr>
+<tr><td>Kalite / gıda güvenliği sorumlusu</td><td>Kanıt ve denetim ihtiyacının en somut anlatıcısı; varsa A görüşmesine katılır</td><td>≥ 8 (A içinde)</td><td>A, Blok 3 ve 6</td></tr>
+<tr><td>Bölge müdürü</td><td>Günlük kullanıcı; kaçırılan işleri ilk gören; eskalasyon alıcısı</td><td>≥ 6</td><td>A (kısaltılmış) veya B</td></tr>
+<tr><td>Şube müdürü / vardiya amiri</td><td>Benimsemenin belirleyicisi; WhatsApp yükünün taşıyıcısı</td><td>≥ 8 (şube ziyaretinde)</td><td>B</td></tr>
+<tr><td>Personel (barista, mutfak, kasa)</td><td>Cihaz, telefon, dil, alışkanlık gerçekliği</td><td>≥ 10 (kısa)</td><td>C</td></tr>
+</tbody></table></div>
+<h3>Örneklem karışımı (20 zincir)</h3>
+<ul>
+<li><strong>Büyüklük:</strong> 5–15 şube (6), 16–50 (9), 51–100 (5). Fizibilitedeki hedef segment 5–100; 100+ zincirler farklı satış döngüsü, bu turda yok.</li>
+<li><strong>Model:</strong> tamamı kendi işlettiği (8), karma (8), ağırlıkla franchise (4) — franchise sahibi rolü sorusu için.</li>
+<li><strong>Format:</strong> kafe/kahve zinciri (7), hızlı servis/fırın (7), restoran (6).</li>
+<li><strong>Coğrafya:</strong> en az 5'i İstanbul dışı merkezli (Wi-Fi, cihaz ve destek varsayımları için).</li>
+<li><strong>Ulaşım kanalı:</strong> UFRAD üye listesi, LinkedIn "operasyon müdürü" araması, POS/İK yazılımı ortaklarının tanıştırması, tanıdık zincirler. Soğuk mesajda ürün değil "kapanış listelerinizin nasıl yürüdüğünü 45 dakika dinlemek istiyoruz" denir.</li>
+</ul>
+</section>
+
+<section class="item" id="merkez"><div class="ih"><span class="num">04</span><h2>A · Merkez görüşmesi (55 dakika)</h2></div>
+<p><span class="tag core">★</span> ile işaretli sorular çekirdektir; süre daralırsa yalnızca bunlar sorulur. Her bloğun altında "iyi sinyal / kötü sinyal" ve hangi karara beslediği var.</p>
+
+<div class="block"><div class="bh"><h3>Blok 0 · Görüşme öncesi hazırlık</h3><span class="tag time">−1 gün</span></div>
+<p class="why">Görüşmede sorulmayacak şeyler: şube sayısı, formatı, franchise oranı, kullanılan POS, son denetim/şikâyet haberleri. Bunlar masaya bilinerek gelinir; görüşmede "kaç şubeniz var" sormak dakika yakar ve hazırlıksız görünür.</p>
+<ul class="chk">
+<li>Web sitesi, Google Haritalar (şube sayısı, puanlar, "hijyen" içeren yorumlar), Instagram (yeni şube açılışları)</li>
+<li>Ekşi/şikâyetvar/Google yorumlarında son 6 ayın hijyen, servis, "kapalıydı" şikâyetleri — görüşmede örnek olarak kullanılabilir</li>
+<li>Kullandıkları POS/sipariş sistemi (fiş, web, iş ilanları); İK/PDKS yazılımı (iş ilanları)</li>
+<li>Görüşülecek kişinin LinkedIn geçmişi: başka zincirden geldiyse orada ne kullanıyordu</li>
+<li>Prototip hazır ve cihazda; not formu (§09) basılı veya açık; kayıt izni cümlesi hazır</li>
+</ul>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 1 · Açılış ve rol</h3><span class="tag time">3 dk</span></div>
+<p class="why">Isınma ve rolün sınırlarını öğrenme: kararı bu kişi mi veriyor, günlük operasyona ne kadar yakın?</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Bugün sabah işe başladığınızda şubelerle ilgili ilk baktığınız şey neydi? Nereye baktınız — hangi ekran, hangi grup?</div><div class="qn">Rutini ve mevcut "panoyu" ortaya çıkarır. Cevap "WhatsApp gruplarını açtım" ise ürünün yerini alacağı davranış bu.</div></li>
+<li><div class="qt">Şubelerdeki günlük işleyişten (açılış, kapanış, hijyen, standartlar) merkezde kim sorumlu? Siz mi, bölge müdürleri mi, kalite mi?</div><div class="qn">Persona ve karar zinciri.</div></li>
+<li><div class="qt">Kaç bölge müdürünüz var, her biri kaç şubeye bakıyor, haftada kaç şubeyi fiziksel olarak ziyaret ediyor?</div><div class="qn">Ziyaret yükü = ürünün tasarruf ettireceği zamanın ölçüsü.</div></li>
+</ol>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 2 · Bugünkü talimat akışı</h3><span class="tag time">10 dk</span><span class="tag core">Çekirdek</span></div>
+<p class="why">Ürünün yerine geçeceği davranışın haritası. Burada "hangi listeler var, nerede yaşıyor, nasıl kapanıyor" somut olarak çıkmalı. Kapı 1'in ("≥ 3 kanıt gerektiren tekrarlı liste") kanıtı bu bloktan gelir.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Geçen hafta şubelere gönderdiğiniz son talimatı anlatır mısınız: ne istediniz, hangi kanaldan gönderdiniz, yapıldığını nasıl öğrendiniz?</div><div class="qn">Tek bir gerçek olay üzerinden tüm akış görünür. "Genelde" cevabı gelirse "en son ne zaman" diye somutlaştır.</div></li>
+<li><div class="qt"><span class="core">★</span>Şubelerle iletişimde kaç WhatsApp grubu var? Kimler içinde? Bir günde bu gruplara yaklaşık kaç mesaj düşüyor? Ekranınızı gösterebilir misiniz?</div><div class="qn">Gürültü ölçümü. Ekranı göstermeye razı olması güven işaretidir; grup sayısı ve günlük mesaj sayısını yaz.</div></li>
+<li><div class="qt"><span class="core">★</span>Şubelerde her gün veya her hafta tekrar eden, "yapıldı" diye kontrol etmek istediğiniz işler hangileri? (Açılış, kapanış, saatlik tuvalet/hijyen, buzdolabı sıcaklığı, yağ değişimi, kasa devri, haftalık derin temizlik, zararlı kontrolü…) Bunları saydırın, sayıyı yazın.</div><div class="qn">Kapı 1 sayacı. ≥ 3 liste + en az birinde fotoğraf/ölçüm ihtiyacı = geçer.</div></li>
+<li><div class="qt"><span class="core">★</span>Bu listeler bugün nerede yazılı? (Kağıt form, duvardaki liste, Excel, WhatsApp'ta sabitlenmiş mesaj, hiçbir yerde — "herkes bilir")</div><div class="qn">Kağıt/duvar cevabı şablon kütüphanesine girdi; "hiçbir yerde" cevabı onboarding yükü.</div></li>
+<li><div class="qt"><span class="core">★</span>Dün gece kapanışın düzgün yapıldığını bu sabah nasıl anladınız? Kim, size ne gönderdi?</div><div class="qn">Kanıt davranışının bugünkü hâli. "Anlamıyorum, sabah açan söyler" cevabı en güçlü acı sinyalidir.</div></li>
+<li><div class="qt"><span class="core">★</span>Şubeler fotoğraf gönderiyor mu? Nereye? Geçen ayın 12'sinde X şubesinin kapanış fotoğrafını şu an bulabilir misiniz? Kaç dakikada?</div><div class="qn">Arşiv/arama acısını canlı test eder. Bulamazsa süreyi ve tepkiyi not al.</div></li>
+<li><div class="qt">Yapılmayan bir iş genellikle nasıl ortaya çıkıyor: müşteri şikâyeti, bölge müdürü ziyareti, denetim, kamera, tesadüf?</div><div class="qn">Tespit gecikmesi = sorunun büyüme süresi.</div></li>
+<li><div class="qt">Sıcaklık, son kullanma tarihi gibi ölçüm gerektiren kayıtları kim, nereye yazıyor? Defter mi, form mu? Son 30 günün kaydını bugün çıkarabilir misiniz?</div><div class="qn">Denetim PDF'i (R-4) ihtiyacının kanıtı; Blok 6'da derinleşir.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>≥ 3 tekrarlı liste sayıyor; WhatsApp grup sayısı ≥ 5; kapanış fotoğrafını 5 dakikada bulamıyor; "sabah açan haber verir" diyor.</div><div class="bad"><b>Kötü sinyal</b>"Bölge müdürlerimiz her gün gidiyor, sorun yok"; listeler zaten POS/İK yazılımında ve memnun; şube sayısı az ve sahibi her şubeye uğruyor.</div></div>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 3 · Acı ve maliyet</h3><span class="tag time">8 dk</span><span class="tag core">Çekirdek</span></div>
+<p class="why">Fiyatı savunacak rakamlar buradan çıkar: kaçırılan işin bedeli, denetim riski, yönetici zamanı. Her cevabı TL veya saat cinsine çevirmeye çalış.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Son 3 ayda, şubede yapılması gereken bir işin yapılmaması yüzünden yaşadığınız en pahalı olay neydi? Ne oldu, kaça mal oldu (ürün kaybı, ceza, müşteri, iade, itibar)?</div><div class="qn">Somut olay yoksa "hatırladığınız en kötüsü" diye geriye git. Tutarı yaz; yoksa tahmin ettir.</div></li>
+<li><div class="qt"><span class="core">★</span>En son gıda denetimi (belediye/İl Tarım) veya marka/franchise denetimi ne zaman oldu? Ne istediler? İstedikleri kaydı bulmak kaç saat sürdü, eksik çıktı mı, sonucu ne oldu?</div><div class="qn">Kanıt ihtiyacının "zorunluluk" boyutu. Ceza tutarı veya "uyarı aldık" ifadesini yaz.</div></li>
+<li><div class="qt"><span class="core">★</span>Bir şube müdürü günde tahminen kaç dakikasını WhatsApp'ta merkeze/bölgeye cevap yazarak, fotoğraf göndererek geçiriyor? Bölge müdürü şube ziyaretinin ne kadarını "kontrol"e harcıyor?</div><div class="qn">Zaman tasarrufu argümanı (fizibilitedeki ₺37.500/ay hesabını bu rakamla düzelt).</div></li>
+<li><div class="qt">Şubeler arasında standart farkı sizi nerede en çok rahatsız ediyor? Hangi şube "iyi", hangisi "kötü" ve bunu neye bakarak söylüyorsunuz?</div><div class="qn">Şube karşılaştırma raporunun (R-2) değerini ve mevcut ölçüm yokluğunu gösterir.</div></li>
+<li><div class="qt"><span class="core">★</span>Bu sorunu çözmek için son bir yılda para ya da ciddi zaman harcadınız mı? (Danışman, denetim şirketi, gizli müşteri, ek bölge müdürü, yazılım, kamera)</div><div class="qn">"Evet, X'e ₺Y verdik" en güçlü ödeme isteği kanıtıdır — soru 7.3'ün referansı.</div></li>
+<li><div class="qt">Bu problem büyüdükçe kötüleşiyor mu? Gelecek yıl kaç şube açmayı planlıyorsunuz?</div><div class="qn">Büyüyen zincirde acı artar; satış zamanlaması.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>Parayla ifade edilen bir olay var (ürün kaybı, ceza); denetimde kayıt bulmak saatler sürdü; bu yıl gizli müşteri/denetim şirketine para vermiş; büyüme planı var.</div><div class="bad"><b>Kötü sinyal</b>Hiçbir olay hatırlamıyor; denetim "gelmiyor"; "sorun personel, yazılım çözmez" diyor ve alternatif aramamış.</div></div>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 4 · Denenmiş çözümler</h3><span class="tag time">5 dk</span><span class="tag core">Çekirdek</span></div>
+<p class="why">Neden bugün hâlâ WhatsApp'ta olduklarını öğrenmeden ürün tasarlanmaz. Terk edilmiş her deneme bir tasarım kısıtıdır.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Daha önce bir uygulama, Google Form, Excel, kağıt form ya da POS'un görev modülünü denediniz mi? Ne oldu? Kaç hafta sürdü, neden bırakıldı?</div><div class="qn">"Personel kullanmadı" ise nedeni deş: cihaz mı, karmaşıklık mı, takip eden yoktu mu?</div></li>
+<li><div class="qt">POS veya İK/PDKS yazılımınızın görev/kontrol listesi özelliği var mı? Kullanıyor musunuz? Neden değil?</div><div class="qn">Bedava rakip tehdidi ve kanal ortaklığı fırsatı.</div></li>
+<li><div class="qt">SafetyCulture/Mitti, Connecteam, CheckMaster gibi bir ürün duydunuz mu, denediniz mi? Ne düşündünüz?</div><div class="qn">Rakip farkındalığı; fiyat çıpası bilgisi.</div></li>
+<li><div class="qt">Şu an "yapıldı" sözüne güvenmek yerine ne yapıyorsunuz? (Kamera kayıtlarına bakmak, habersiz ziyaret, ikinci kişiden teyit)</div><div class="qn">Mevcut "kanıt" ikamelerinin maliyeti.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>Denemiş ve somut nedenle bırakmış (tablet yoktu, kimse rapora bakmadı); kamera kaydına bakarak kontrol ediyor.</div><div class="bad"><b>Kötü sinyal</b>POS'un modülünü kullanıyor ve memnun; "denemedik çünkü ihtiyaç duymadık".</div></div>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 5 · Personel ve cihaz gerçekliği</h3><span class="tag time">7 dk</span><span class="tag core">Çekirdek</span><span class="tag q">Kapsam</span></div>
+<p class="why">Benimseme riskinin fiziksel koşulları. Kiosk modunun Must kalıp kalmayacağı (O-5), bildirim kanalları (Y-8), dil/okuryazarlık tasarımı (Y-9) ve onboarding yükü buradan kararlaşır.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Şubelerinizde tablet var mı? Kaç şubede, kaç tane, ne için kullanılıyor (POS, sipariş ekranı, müzik)? Personel dokunabiliyor mu yoksa kasaya kilitli mi?</div><div class="qn">Kiosk modu kararı. Sayı: "20 şubeden 14'ünde POS tableti var, kasada" gibi yaz.</div></li>
+<li><div class="qt"><span class="core">★</span>Personelin vardiyada kendi telefonunu kullanmasına izin var mı? Mutfakta yasak mı? Personelin kendi telefonuna iş uygulaması yüklemesini istemek sizin için sorun olur mu — İK, sendika, KVKK açısından itiraz geldi mi?</div><div class="qn">Kişisel cihaz vs ortak cihaz. "Telefon yasak" + "tablet yok" kombinasyonu en zor durum; not al.</div></li>
+<li><div class="qt"><span class="core">★</span>Kapanışı fiilen kim yapıyor: kaç kişi, hangi saatte bitiyor, vardiya amiri var mı? Sabah açılışı kim?</div><div class="qn">Atama modeli (P-3) ve pencere tasarımı (P-2).</div></li>
+<li><div class="qt"><span class="core">★</span>Personel devri yılda yüzde kaç? Ortalama kıdem? Yaş aralığı? Türkçe okuma-yazma sorunu yaşayan ya da yabancı uyruklu personel oranı?</div><div class="qn">Onboarding tekrarı ve düşük okuryazarlık tasarımı. Devir yüksekse "1 dakikada öğrenilir" şartı ürün gereksinimi olur.</div></li>
+<li><div class="qt">Şubelerde personelin erişebildiği Wi-Fi var mı? Mobil veri kullanan şube var mı?</div><div class="qn">Çevrimdışı modun önemi ve veri boyutu sınırı.</div></li>
+<li><div class="qt">Personele bugün acil bir duyuru yapmanız gerekse nasıl ulaşırsınız? SMS, WhatsApp, şube müdürü aracılığıyla? Okuduğunu nasıl anlarsınız?</div><div class="qn">Duyuru-onay (D-2) ihtiyacı ve SMS'in yeri.</div></li>
+<li><div class="qt">Bölge ve şube müdürleri iş için hangi cihazı kullanıyor: şirket telefonu mu, kendi telefonu mu, bilgisayar var mı?</div><div class="qn">Yönetici mobil görünümü (Y-12) ve web paneli dengesi.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>Şubelerin çoğunda personelin erişebildiği tablet var ya da telefon serbest; vardiya amiri tanımlı; devir yüksek ama "1 günde öğrenilecek" beklentisi var.</div><div class="bad"><b>Kötü sinyal</b>Telefon yasak + tablet yok + Wi-Fi yok; personelin telefonuna uygulama yükletmeye İK itiraz ediyor.</div></div>
+<p class="why"><strong>Beslediği karar:</strong> O-5 kiosk modu (Must kalır mı), Y-8 bildirim kanalları, Y-9 tasarım, P-2/P-3 pencere ve atama varsayılanları. 20 görüşmede "tablet var" oranı %50'nin altındaysa MVP planına ucuz tablet paketi (donanım ortaklığı) eklenir.</p>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 6 · Kanıt, KVKK ve BT</h3><span class="tag time">5 dk</span><span class="tag core">Çekirdek</span><span class="tag q">Kapsam</span></div>
+<p class="why">Barındırma, franchise rolü ve sıcaklık probu kararları; ayrıca satışta çıkacak hukuki itirazların önceden görülmesi.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Personelin iş yaparken fotoğraf çekmesi ve bunun kayıt altına alınması bugün İK/hukuk tarafında hiç konu oldu mu? Çalışan aydınlatma metniniz var mı? Görev anında konum kaydı tepki çeker mi?</div><div class="qn">U-3 aydınlatma akışı; konum damgasının varsayılan açık/kapalı olması.</div></li>
+<li><div class="qt"><span class="core">★</span>Bulut yazılım alırken BT veya hukuk ekibiniz ne şart koşuyor? Verinin Türkiye'de tutulması zorunlu mu, ISO 27001 istiyor musunuz, veri işleme sözleşmesi imzalıyor musunuz? En son aldığınız bulut yazılımında bu süreç kaç hafta sürdü?</div><div class="qn">Barındırma kararı. "BT yok, ben karar veririm" cevabı da veridir (küçük zincir).</div></li>
+<li><div class="qt"><span class="core">★</span>(Franchise varsa) Bayi sahipleri şubelerinin kayıtlarını görmeli mi? Marka merkezi bayinin personelini görebilmeli mi? Böyle bir aracı bayi mi öder, marka mı; sözleşmenizde standart uyum maddesi var mı?</div><div class="qn">Gözlemci rolü ve fiyatlandırma tarafı. Franchise sözleşmesindeki "sistem kullanma zorunluluğu" maddesi dağıtım kanalı demektir.</div></li>
+<li><div class="qt">Sıcaklık kaydı tutulan kaç ekipman var şube başına? Nasıl ölçülüyor — elle termometre, prob, sensör? Kayıt formatı yasal olarak belirli mi?</div><div class="qn">Bluetooth prob kararı. "Şube başına 4–6 dolap, elle" tipik cevap; sensör isteyen varsa yaz.</div></li>
+<li><div class="qt">Kayıtları kaç yıl saklamanız gerekiyor? Denetçi geçmiş kaydı ne kadar geriye istedi?</div><div class="qn">U-4 saklama varsayılanı (24 ay) doğrulaması.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>Aydınlatma metni var, fotoğraf zaten çekiliyor; BT şartı "Türkiye'de sunucu + sözleşme" gibi karşılanabilir; franchise sözleşmesinde sistem zorunluluğu var.</div><div class="bad"><b>Kötü sinyal</b>Sendika/İK fotoğraf ve konuma kesin karşı; BT yalnızca on-premise istiyor; bayiler "merkez görmesin" diyor ve merkez bayiye dayatamıyor.</div></div>
+<p class="why"><strong>Beslediği karar:</strong> barındırma (TR bulut vs AB + standart sözleşme), franchise sahibi rolü (Gözlemci vs Şube müdürü yetkisi), sıcaklık probu (Could → Should), U-3/U-4 varsayılanları.</p>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 7 · Satın alma ve fiyat</h3><span class="tag time">7 dk</span><span class="tag core">Çekirdek</span></div>
+<p class="why">Ürün gösterilmeden fiyat konuşulur: "böyle bir işi çözen bir araç" çerçevesiyle. Van Westendorp'un dört sorusu şube başına aylık için sorulur<sup><a href="#k-vw">[2]</a></sup>; referans olarak bugün ödedikleri yazılımlar alınır.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Şube başına aylık ödediğiniz yazılımlar neler ve yaklaşık ne kadar? (POS, sipariş entegrasyonu, PDKS/İK, müzik, kamera bulutu…)</div><div class="qn">Fiyat çıpası. Şube başına toplam yazılım harcamasını yaz.</div></li>
+<li><div class="qt"><span class="core">★</span>Anlattığınız işleri (tekrarlı listeler, fotoğraf kanıtı, yapılmayanların size düşmesi, denetim kaydı) çözen bir araç için şube başına aylık: hangi fiyat <em>o kadar ucuz ki kaliteden şüphe edersiniz</em>? Hangisi <em>uygun, kelepir</em>? Hangisi <em>pahalı ama düşünürsünüz</em>? Hangisi <em>o kadar pahalı ki düşünmezsiniz</em>?</div><div class="qn">Van Westendorp: dört rakamı ayrı ayrı yaz. Cevap "bilmem" ise Blok 3'teki kayıp tutarını hatırlat: "Aylık ₺X kaybettiğinizi söylediniz; onun ne kadarı?"</div></li>
+<li><div class="qt"><span class="core">★</span>Bu büyüklükte bir yazılım kararını kim verir, kim onaylar (genel müdür, ortaklar, franchise komitesi)? Fikirden sözleşmeye tipik olarak kaç hafta sürer? Bütçe dönemi ne zaman?</div><div class="qn">Satış döngüsü varsayımı (4–8 hafta) ve LOI'yi kimin imzalayacağı.</div></li>
+<li><div class="qt">Yıllık peşin ödemeye indirim karşılığı sıcak bakar mısınız? Şube başına mı, zincir başına sabit mi ödemek daha kolay?</div><div class="qn">Fiyatlandırma birimi ve nakit akışı.</div></li>
+<li><div class="qt">Kurulum/eğitim için ayrı bir bedel (örn. şube başına tek seferlik) makul mü, yoksa "kurulum bedava olmalı" mı?</div><div class="qn">Onboarding gelir kalemi (Jolt 500–600 $ alıyor).</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>"Uygun" bandı ≥ ₺500/şube/ay; şube başına zaten ≥ ₺2.000/ay yazılım ödüyor; kararı görüştüğünüz kişi verebiliyor; bütçe dönemi yakın.</div><div class="bad"><b>Kötü sinyal</b>"Çok pahalı" eşiği ₺300'ün altında; karar üç kademe yukarıda ve süreç 6 ay; "bedava olsa denerdik".</div></div>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 8 · Prototip ve pilot</h3><span class="tag time">8 dk</span><span class="tag core">Çekirdek</span></div>
+<p class="why">Ürün ilk kez burada gösterilir — 2 dakika, üç ekran: personelin kapanış listesi ve fotoğraf, "yapılamadı", merkezin sabah ızgarası. Sonra taahhüt istenir; taahhüt görüşmenin gerçek sonucudur.</p>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>(Prototipten sonra) Bu, bugün yaptığınız hangi işin yerine geçer? Neyi değiştirmez?</div><div class="qn">Kendi cümleleriyle değer önerisi; pazarlama dili buradan çıkar.</div></li>
+<li><div class="qt"><span class="core">★</span>Pilot yapsaydık hangi iki liste ile başlardınız, kaç şubede, kim sahiplenirdi? Dört hafta sonra "işe yaradı" demeniz için ne olması gerekir?</div><div class="qn">Pilot tasarımı ve müşterinin başarı ölçütü (bizim %80 tamamlanma hedefimizle karşılaştır).</div></li>
+<li><div class="qt"><span class="core">★</span>8 haftalık, şube başına ₺[Blok 7 "uygun" bandının alt sınırı] ücretli bir pilot için bir niyet mektubu imzalar mısınız? Hangi şartla?</div><div class="qn">Kapı 2. "Bedava olsun" cevabı = zayıf sinyal; şart koşarak "evet" = güçlü sinyal. Şartları yaz.</div></li>
+<li><div class="qt"><span class="core">★</span>Pilotta 4. haftada şubelerin %80'i listeleri zamanında tamamlıyor ve kanıtlar geliyorsa yıllık sözleşmeye geçer misiniz? Bunu kim onaylar?</div><div class="qn">Kapı 3'ün önkoşulu; dönüşüm niyeti.</div></li>
+<li><div class="qt">Bu ürünü kullanmanızı engelleyecek tek bir şey söyleseniz ne olurdu?</div><div class="qn">En büyük itiraz; risk listesine girer.</div></li>
+<li><div class="qt">Üç isim gösteriyoruz: "Talimatname" ve yanında iki tanesi ("yap lütfen", "tamamlist", "tembihle"den dönüşümlü). Hangisini şube müdürünüze söylerdiniz? Hangisi personelin telefonunda rahatsız etmez? Neden?</div><div class="qn">İsim testi: Talimatname her görüşmede masada; yanındaki iki kart görüşmeler arasında dönüşümlü ve sırası değişken (sıra etkisini kır). İlk tepkiyi, gerekçeyi, Talimatname için "resmî/bürokratik mi?" ve tembihle için "anne/patron tınısı" cevabını yaz. 20 cevap kesin kararı verir. Çalışma adı: Talimatname.</div></li>
+</ol>
+<div class="sig"><div><b>İyi sinyal</b>Şart koşarak LOI'ye evet; pilot şubelerini ve sahibini isimlendiriyor; takvimden pilot başlangıç tarihi istiyor.</div><div class="bad"><b>Kötü sinyal</b>"Çok güzel, bir düşünelim"; ücretsiz istiyor; pilot sahibi olarak kimseyi gösteremiyor.</div></div>
+</div>
+
+<div class="block"><div class="bh"><h3>Blok 9 · Kapanış</h3><span class="tag time">2 dk</span></div>
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Bu konuyu bizden daha iyi bilen, konuşmamız gereken 2 kişi kim? Tanıştırır mısınız?</div><div class="qn">Örneklem büyür; her görüşmeden ≥ 1 tanıştırma hedefi.</div></li>
+<li><div class="qt"><span class="core">★</span>Bir şubenizde kapanış vardiyasını 30 dakika izlememize izin verir misiniz? Hangi şube, ne zaman?</div><div class="qn">§07 gözlem ziyareti randevusu.</div></li>
+<li><div class="qt">Sonraki adım olarak size ne zaman, ne göndermemizi istersiniz?</div><div class="qn">Takvimli sonraki adım yoksa görüşme "ilgi" düzeyinde kalmıştır.</div></li>
+</ol>
+</div>
+</section>
+
+<section class="item" id="sube"><div class="ih"><span class="num">05</span><h2>B · Şube müdürü görüşmesi (20 dakika)</h2></div>
+<p>Şube ziyaretinde, tercihen kapanıştan önce. Amaç merkezin anlattığıyla sahadakini karşılaştırmak; farklar en değerli bulgudur.</p>
+<div class="block">
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Merkezden ya da bölgeden bugün kaç mesaj aldınız? Hangi gruplardan? Kaçına fotoğrafla cevap verdiniz?</div><div class="qn">Yük ölçümü; telefonunu gösterirse grup sayısını say.</div></li>
+<li><div class="qt"><span class="core">★</span>Kapanış listesi nerede yazılı? Gösterir misiniz? En son ne zaman güncellendi?</div><div class="qn">Duvardaki liste fotoğraflanır (izinle) — şablon kütüphanesi girdisi.</div></li>
+<li><div class="qt"><span class="core">★</span>Dün gece kapanışı kim yaptı? Bir maddeyi yapamadığında ne olur — kime, nasıl söyler?</div><div class="qn">"Yapılamadı" akışının bugünkü hâli; çoğu zaman "söylemez".</div></li>
+<li><div class="qt"><span class="core">★</span>Buzdolabı sıcaklıklarını kim, ne zaman, nereye yazıyor? Defteri görebilir miyiz?</div><div class="qn">Kayıt gerçekliği: aynı kalemle aynı anda doldurulmuş sayfa = kayıt sonradan yazılıyor.</div></li>
+<li><div class="qt"><span class="core">★</span>Personel vardiyada telefonunu nerede tutuyor? Bir tablet olsa nereye koyardınız? Personelin dokunmasına izin verir miydiniz?</div><div class="qn">Kiosk yerleşimi; mutfak/bar nem-yağ koşulları.</div></li>
+<li><div class="qt">Yeni gelen personele kapanışı kim, kaç günde öğretiyor? Son 6 ayda kaç kişi ayrıldı?</div><div class="qn">Onboarding ve devir.</div></li>
+<li><div class="qt">Merkez sizden fotoğraf istediğinde ne hissediyorsunuz? Kanıt istemesi sizi rahatsız ediyor mu, yoksa "sonra suçlanmayayım" diye siz de ister misiniz?</div><div class="qn">Benimseme psikolojisi: kanıt, şube müdürünü de korur — mesajı burada test et.</div></li>
+<li><div class="qt">Böyle bir uygulama olsa günde kaç dakikanızı kurtarırdı, kaç dakikanızı alırdı?</div><div class="qn">Net yük algısı; "alır" cevabı büyükse ekran sayısını azalt.</div></li>
+</ol>
+</div>
+</section>
+
+<section class="item" id="personel"><div class="ih"><span class="num">06</span><h2>C · Personel (5 dakika, gözlem sırasında)</h2></div>
+<p>Yönetici yanında değilken, iş akışını bozmadan, sohbet tonunda. Yazılı not tutma; ziyaretten sonra yaz.</p>
+<div class="block">
+<ol class="q">
+<li><div class="qt"><span class="core">★</span>Kapanışta yapılacakları nasıl hatırlıyorsunuz? Bir yerde yazılı mı, ezbere mi?</div></li>
+<li><div class="qt"><span class="core">★</span>Bir şeyi yapamayınca ne yapıyorsunuz — söylüyor musunuz, kime?</div></li>
+<li><div class="qt"><span class="core">★</span>Vardiyada telefonunuz yanınızda mı? İş için uygulama yüklemenizi isteseler ne dersiniz?</div></li>
+<li><div class="qt">Fotoğraf çekip göndermeniz istendiğinde bu size zor geliyor mu, zaman alıyor mu?</div></li>
+<li><div class="qt">Uygulama olsa en çok neyin kolay olmasını isterdiniz?</div></li>
+</ol>
+</div>
+<p class="note warn">Personelle konuşurken KVKK ve iş ilişkisi hassasiyeti: isim alınmaz, kayıt yapılmaz, yönetici hakkında yorum istenmez. Ürün "sizi izlemek için değil, yapılanı kanıtlamak için" diye anlatılır; tepki verirse aynen not edilir — bu, aydınlatma metninin dili olacak.</p>
+</section>
+
+<section class="item" id="gozlem"><div class="ih"><span class="num">07</span><h2>Şube ziyareti gözlem listesi (30 dakika, kapanış vardiyası)</h2></div>
+<p>Görüşmede söylenenle sahada olan arasındaki fark bulgudur. Ziyaret başına bir sayfa; fotoğraf yalnızca izinle ve personel yüzü olmadan.</p>
+<h3>Fiziksel ortam</h3>
+<ul class="chk">
+<li>Tablet var mı, nerede (kasa, bar, ofis), kilitli mi, personel dokunuyor mu; marka/işletim sistemi</li>
+<li>Wi-Fi adı ve personelin erişimi; mutfakta sinyal var mı (telefonla test)</li>
+<li>Duvarda/kapı arkasında liste, form, sıcaklık defteri: fotoğrafla; son doldurulma tarihi ve yazı düzeni (aynı kalem, aynı anda mı?)</li>
+<li>QR/etiket asılabilecek istasyonlar: buzdolapları, fritöz, tuvalet, depo — sayısı</li>
+<li>Ortam koşulları: nem, yağ, eldiven — dokunmatik kullanımı etkiler mi</li>
+</ul>
+<h3>Davranış</h3>
+<ul class="chk">
+<li>Kapanışı kaç kişi yapıyor, kaç dakika sürüyor, sırası var mı</li>
+<li>Kim kime ne mesaj atıyor: WhatsApp'a fotoğraf gidiyor mu, kaç tane, kim çekiyor</li>
+<li>Yapılamayan/atlanan madde oldu mu; söylendi mi</li>
+<li>Sıcaklık ölçümü gerçekten yapılıyor mu, ne ile, ne zaman yazılıyor</li>
+<li>Personelin telefonu nerede; kullanım kuralına uyuluyor mu</li>
+<li>Vardiya devri: sabahçıya not bırakılıyor mu, nasıl</li>
+</ul>
+<h3>Ziyaret sonrası 5 dakika</h3>
+<ul class="chk">
+<li>Merkezin anlattığıyla en büyük 3 fark</li>
+<li>Bu şubede kiosk modu çalışır mıydı (evet / hayır / tabletle)</li>
+<li>Şablon kütüphanesine giren yeni madde/liste var mı</li>
+</ul>
+</section>
+
+<section class="item" id="puan"><div class="ih"><span class="num">08</span><h2>Pilot uyum puanı (görüşme başına)</h2></div>
+<p>Görüşme bittikten sonra 10 dakika içinde verilir; 20 görüşmenin sıralaması pilot adaylarını (ilk 5 LOI hedefi) belirler. Puanlar yargısal; iki görüşmeci ayrı verip uzlaşır.</p>
+<div class="tw"><table class="data wide"><thead><tr><th>Ölçüt</th><th>Puan</th><th>Nasıl verilir</th></tr></thead><tbody>
+<tr><td>Acı şiddeti</td><td>0–3</td><td>3: parayla ifade edilen somut olay + denetim kaydı bulmakta zorlanmış · 2: somut olay var · 1: genel şikâyet · 0: sorun görmüyor</td></tr>
+<tr><td>Tekrarlı liste sayısı</td><td>0–3</td><td>3: ≥ 5 liste, en az 2'si fotoğraf/ölçüm gerektiriyor · 2: 3–4 liste · 1: 1–2 · 0: yok</td></tr>
+<tr><td>Cihaz uygunluğu</td><td>0–2</td><td>2: şubelerin ≥ %70'inde erişilebilir tablet ya da telefon serbest · 1: kısmen · 0: telefon yasak ve tablet yok</td></tr>
+<tr><td>Karar yetkisi</td><td>0–2</td><td>2: görüşülen kişi bütçeyi onaylar · 1: bir üst onay, süreç ≤ 8 hafta · 0: komite/6 ay+</td></tr>
+<tr><td>Ödeme isteği</td><td>0–3</td><td>3: "uygun" bandı ≥ ₺700/şube/ay · 2: ₺500–700 · 1: ₺300–500 · 0: &lt; ₺300 ya da "bedava"</td></tr>
+<tr><td>Taahhüt</td><td>0–3</td><td>3: LOI'ye şartlı evet + pilot sahibi isimli + takvim · 2: LOI'ye evet, ayrıntı yok · 1: şube ziyaretine izin · 0: "düşünelim"</td></tr>
+<tr><td>Engeller</td><td>−3–0</td><td>−1 her biri: on-premise şartı · İK/sendika fotoğraf-konum itirazı · franchise bayileri merkezin görmesini reddediyor</td></tr>
+<tr class="tot"><td>Toplam</td><td>16</td><td>≥ 11: pilot adayı · 8–10: ikinci tur · &lt; 8: takibe al, pilot değil</td></tr>
+</tbody></table></div>
+<p class="note">Kapı 1 sayımı bu tablodan bağımsız: "tekrarlı liste ≥ 2 puan" <em>ve</em> "acı şiddeti ≥ 2 puan" alan görüşme sayısı 20'de ≥ 12 olmalı.</p>
+</section>
+
+<section class="item" id="not"><div class="ih"><span class="num">09</span><h2>Görüşme notu şablonu</h2></div>
+<p>Her görüşme için tek sayfa; alanlar puanlama tablosuyla ve kapsam kararlarıyla birebir eşleşir. Excel/Notion'da aynı sütunlarla tutulur ki 20 satır yan yana okunabilsin.</p>
+<div class="form">
+<div class="f"><span>Zincir / tarih</span><span>ad · şube sayısı · format · franchise oranı · görüşülen kişi ve unvan · görüşmeciler</span></div>
+<div class="f"><span>Bugünkü kanal</span><span>WhatsApp grup sayısı · günlük mesaj tahmini · listelerin yaşadığı yer (kağıt/duvar/Excel/yok)</span></div>
+<div class="f"><span>Tekrarlı listeler</span><span>sayı · isimleri · fotoğraf/ölçüm gerektirenler</span></div>
+<div class="f"><span>Acı olayı</span><span>ne oldu · ne zaman · tutar (₺) · denetim: tarih, ne istendi, kaç saat sürdü, sonuç</span></div>
+<div class="f"><span>Zaman yükü</span><span>şube müdürü dk/gün · bölge müdürü ziyaret/hafta ve kontrol payı</span></div>
+<div class="f"><span>Denenmiş çözüm</span><span>ne · ne kadar sürdü · neden bırakıldı · POS/İK modülü durumu</span></div>
+<div class="f"><span>Cihaz</span><span>tablet: şube oranı, yer, erişim · telefon politikası · Wi-Fi · devir % · dil/okuryazarlık</span></div>
+<div class="f"><span>KVKK / BT</span><span>aydınlatma var mı · fotoğraf/konum itirazı · barındırma şartı · sözleşme süreci · saklama süresi</span></div>
+<div class="f"><span>Franchise</span><span>bayi kayıtları görsün mü · merkez bayi personelini görsün mü · kim öder · sözleşmede zorunluluk</span></div>
+<div class="f"><span>Sıcaklık</span><span>ekipman/şube · ölçüm yöntemi · prob/sensör talebi</span></div>
+<div class="f"><span>Fiyat (₺/şube/ay)</span><span>mevcut yazılım toplamı · çok ucuz · uygun · pahalı · çok pahalı · yıllık peşin? · kurulum bedeli?</span></div>
+<div class="f"><span>Karar</span><span>kim verir · kim onaylar · süre · bütçe dönemi</span></div>
+<div class="f"><span>Pilot</span><span>listeler · şube sayısı · sahibi · başarı ölçütü · LOI: evet/şartlı/hayır · şartlar · yıllık sözleşme niyeti</span></div>
+<div class="f"><span>En büyük itiraz</span><span>kendi cümlesiyle</span></div>
+<div class="f"><span>Sonraki adım</span><span>tarih · ne gönderilecek · tanıştırma (kim) · şube ziyareti (hangi, ne zaman)</span></div>
+<div class="f"><span>Uyum puanı</span><span>acı · liste · cihaz · yetki · ödeme · taahhüt · engeller · toplam /16</span></div>
+<div class="f"><span>En şaşırtıcı cümle</span><span>—</span></div>
+</div>
+</section>
+
+<section class="item" id="loi"><div class="ih"><span class="num">10</span><h2>Niyet mektubu (LOI) iskeleti</h2></div>
+<p>Bağlayıcı olmayan, tek sayfalık, Blok 8'de masaya konacak belge. Amaç hukuki güvence değil, "bedava denemek isterim" ile "para verip denerim" arasındaki farkı görmek.</p>
+<ol>
+<li><strong>Taraflar ve amaç:</strong> [Zincir] ile [Şirket], aşağıdaki kapsamda 8 haftalık ücretli pilot yürütme niyetindedir.</li>
+<li><strong>Kapsam:</strong> [N] şube; başlangıç listeleri: [kapanış, soğuk zincir] (+ en fazla 1 ek liste); personel ve yönetici hesapları; kiosk modu için [N] tablet zincir tarafından sağlanır / [Şirket] tarafından ödünç verilir.</li>
+<li><strong>Bedel:</strong> şube başına aylık ₺[…] + KDV, 2 ay peşin; yıllık sözleşmeye geçilirse pilot bedeli ilk yıldan düşülür.</li>
+<li><strong>Başarı ölçütleri (4. hafta sonu):</strong> pencere içinde tamamlanma ≥ %80; fotoğraf zorunlu maddelerin ≥ %95'inde kanıt; kritik aksiyonların ≥ %80'i vadesinde kapalı; zincirin kendi ölçütü: […].</li>
+<li><strong>Dönüşüm niyeti:</strong> ölçütler karşılanırsa taraflar [N] şube için 12 aylık sözleşmeyi 2 hafta içinde görüşür; fiyat aralığı ₺[…]–[…]/şube/ay.</li>
+<li><strong>Sorumluluklar:</strong> zincir — pilot sahibi (isim), şube listesi, personel bilgilendirmesi, haftalık 30 dk geri bildirim; [Şirket] — kurulum (yerinde 1 gün), şablon uyarlaması, destek (hafta içi 08–24), haftalık rapor.</li>
+<li><strong>Veri ve KVKK:</strong> veri işleme sözleşmesi imzalanır; barındırma [Türkiye / AB + standart sözleşme]; pilot sonunda veriler istenirse dışa aktarılır ve silinir; biyometrik veri işlenmez; konum yalnızca madde tamamlama anında.</li>
+<li><strong>Süre ve çıkış:</strong> 8 hafta; her iki taraf 1 hafta önceden bildirimle sonlandırabilir; kullanılmayan ay iade edilir.</li>
+<li><strong>Bağlayıcılık:</strong> bu mektup bağlayıcı bir satın alma taahhüdü değildir; gizlilik ve KVKK maddeleri bağlayıcıdır.</li>
+</ol>
+<p class="note warn">Bedel alanı boş bırakılıp Blok 7'de çıkan "uygun" bandının alt sınırıyla görüşmede doldurulur; standart bir fiyat yazmak, her görüşmede aynı çıpayı verir ve ödeme isteği ölçümünü bozar.</p>
+</section>
+
+<section class="item" id="hata"><div class="ih"><span class="num">11</span><h2>Kaçınılacak hatalar</h2></div>
+<div class="tw"><table class="data wide"><thead><tr><th>Hata</th><th>Neden zararlı</th><th>Yerine</th></tr></thead><tbody>
+<tr><td>İlk 10 dakikada ürünü anlatmak</td><td>Görüşme "beğendin mi"ye döner; nezaket cevapları başlar</td><td>Prototip yalnızca Blok 8'de, fiyat sorusundan sonra</td></tr>
+<tr><td>"Böyle bir şey kullanır mıydınız?"</td><td>Hipotetik; herkes evet der</td><td>"En son ne zaman… / geçen ay kaç kez…"</td></tr>
+<tr><td>Yönlendirici soru ("WhatsApp çok dağınık değil mi?")</td><td>Kendi tezimizi onaylatırız</td><td>"Şubelerle nasıl haberleşiyorsunuz?" — kanalı onlar söylesin</td></tr>
+<tr><td>Fiyatı prototip gösterdikten sonra sormak</td><td>Çıpa ürün olur, iş değil; tepki "bu kadar ekran için…" olur</td><td>Fiyat, çözülen işe göre, ürün görülmeden</td></tr>
+<tr><td>Her görüşmede aynı fiyatı söylemek</td><td>Van Westendorp ölçümü bozulur</td><td>Dört bandı onlar söylesin; LOI bedeli görüşmede doldurulsun</td></tr>
+<tr><td>Yalnızca merkezle konuşmak</td><td>Merkez, sahayı olduğundan düzenli anlatır</td><td>Her 2 merkez görüşmesine 1 şube ziyareti</td></tr>
+<tr><td>Övgüyü sonuç saymak</td><td>"Harika fikir" pilot getirmez</td><td>Sonuç = takvimli sonraki adım, tanıştırma veya LOI</td></tr>
+<tr><td>Notu ertesi güne bırakmak</td><td>Rakamlar ve cümleler kaybolur</td><td>10 dakikalık kural; §09 formu görüşme biter bitmez</td></tr>
+<tr><td>20 görüşmeyi aynı profille yapmak</td><td>Tek segmentin görüşü genellenir</td><td>§03 karışımı; her hafta dağılımı kontrol et</td></tr>
+<tr><td>Kötü sinyali görmezden gelmek</td><td>Kapı kararı çarpılır; en pahalı hata</td><td>Kötü sinyaller ayrı sütunda sayılır; Kapı 1 tutmazsa sprint biter</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="item" id="kaynak"><div class="ih"><span class="num">12</span><h2>Kaynaklar</h2></div>
+<ol class="src">
+<li id="k-mom">Rob Fitzpatrick, <em>The Mom Test</em> (2013) — geçmiş davranış sorma, ürünü sona bırakma, taahhüt-ilgi ayrımı ilkeleri.</li>
+<li id="k-vw">Peter van Westendorp, <em>Price Sensitivity Meter</em> (1976) — dört soruluk fiyat hassasiyeti ölçümü ("çok ucuz / uygun / pahalı / çok pahalı").</li>
+<li>Önceki çalışmalar: <a href="https://claude.ai/code/artifact/7624c049-c18f-45d6-b7c5-c750bcd7798f">Talimat Fizibilitesi</a> (§10 doğrulama planı ve kapılar) ve <a href="https://claude.ai/code/artifact/c7feaa95-847e-473e-bd87-8f95646bb515">Talimat MVP Kapsamı</a> (§12 açık sorular, O-5 kiosk modu, U-3/U-4 KVKK, R-4 sıcaklık günlüğü).</li>
+<li>KVKK: <a href="https://www.kvkk.gov.tr/Icerik/8762/mesai-takibi-amaciyla-biyometrik-veri-islenmesi-hakkinda-kisisel-verileri-koruma-kurulunun-29-04-2026-tarihli-ve-2026-921-sayili-ilke-karari-iliskin-kamuoyu-duyurusu">Kurul 2026/921 ilke kararı</a>; <a href="https://www.kvkk.gov.tr/Icerik/6913/2020-404">Kurul 2020/404 kararı</a> (aydınlatma yükümlülüğü).</li>
+</ol>
+</section>
+
+</main>
+</div>
+</div>

@@ -1,0 +1,617 @@
+
+<title>Talimatname Fizibilitesi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f4; --sf:#ffffff; --sf2:#eef2ef; --ink:#151c22; --ink2:#46525c; --mut:#77838c; --line:#d6ddd9; --line2:#e7ece9;
+  --acc:#0e6b6b; --accs:#dcecea; --acct:#0a5252; --stamp:#b8412f; --stamps:#f6e3df; --good:#1f7a3d; --goods:#e0f0e4; --warn:#9a6300; --warns:#f7ead0;
+  --s1:#eb6834; --s2:#4a3aa7; --s3:#1baf7a; --s4:#2a78d6; --heat:14,107,107;
+  --fd:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif; --fb:"Source Serif 4",Georgia,"Times New Roman",serif; --fu:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f;
+  --s1:#d95926; --s2:#9085e9; --s3:#199e70; --s4:#3987e5; --heat:63,179,173;
+}}
+:root[data-theme="dark"]{
+  --bg:#0f1315; --sf:#161b1e; --sf2:#1d2427; --ink:#e7ece9; --ink2:#b3bdb8; --mut:#7f8b87; --line:#2b3438; --line2:#222a2e;
+  --acc:#3fb3ad; --accs:#15302f; --acct:#7fd4cf; --stamp:#e46f5a; --stamps:#3a201b; --good:#5fc47f; --goods:#16301f; --warn:#e2a93f; --warns:#33290f;
+  --s1:#d95926; --s2:#9085e9; --s3:#199e70; --s4:#3987e5; --heat:63,179,173;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--acct);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+header.top{border-bottom:1px solid var(--line);padding:40px 0 28px;margin-bottom:12px}
+.eyebrow{font-family:var(--fu);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600}
+h1{font-family:var(--fd);font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.01em;margin:10px 0 14px;text-wrap:balance;max-width:20ch}
+.lede{font-size:20px;line-height:1.5;max-width:62ch;color:var(--ink2);margin:0 0 18px}
+.meta{font-family:var(--fu);font-size:13px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px 22px}
+.layout{display:grid;grid-template-columns:1fr;gap:0 40px}
+@media (min-width:1080px){.layout{grid-template-columns:220px minmax(0,1fr)}}
+nav.toc{display:none}
+@media (min-width:1080px){nav.toc{display:block;position:sticky;top:20px;align-self:start;padding-top:28px}}
+nav.toc ol{list-style:none;margin:0;padding:0;font-family:var(--fu);font-size:13px;line-height:1.35}
+nav.toc li{padding:5px 0;border-left:2px solid var(--line2);padding-left:12px}
+nav.toc li a{color:var(--ink2);text-decoration:none}
+nav.toc li a:hover{color:var(--acct)}
+nav.toc .v{display:inline-block;width:14px;color:var(--mut);font-weight:600}
+main{min-width:0}
+section.item{padding:34px 0 8px;border-top:1px solid var(--line)}
+section.item:first-of-type{border-top:0}
+.ih{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.box{flex:none;width:30px;height:30px;border:2px solid var(--ink);border-radius:4px;display:grid;place-items:center;font-family:var(--fu);font-weight:700;font-size:16px;margin-top:6px}
+.box.ok{border-color:var(--good);color:var(--good);background:var(--goods)}
+.box.cond{border-color:var(--warn);color:var(--warn);background:var(--warns)}
+.box.no{border-color:var(--stamp);color:var(--stamp);background:var(--stamps)}
+.box.info{border-color:var(--line);color:var(--mut)}
+h2{font-family:var(--fd);font-weight:700;font-size:30px;line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.verdict{font-family:var(--fu);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:3px;display:inline-block;margin-top:8px}
+.verdict.ok{background:var(--goods);color:var(--good)} .verdict.cond{background:var(--warns);color:var(--warn)} .verdict.no{background:var(--stamps);color:var(--stamp)} .verdict.info{background:var(--sf2);color:var(--ink2)}
+h3{font-family:var(--fd);font-weight:700;font-size:20px;margin:28px 0 8px;letter-spacing:-.005em}
+p,ul,ol{max-width:68ch}
+p{margin:0 0 14px}
+ul,ol{padding-left:22px;margin:0 0 14px}
+li{margin-bottom:5px}
+strong{font-weight:600}
+.note{font-family:var(--fu);font-size:14px;color:var(--ink2);background:var(--sf2);border-left:3px solid var(--acc);padding:10px 14px;margin:14px 0 18px;max-width:80ch}
+.note.warn{border-left-color:var(--warn)}
+.note.stamp{border-left-color:var(--stamp)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 8px;max-width:980px}
+.kpi{background:var(--sf);padding:14px 16px}
+.kpi .l{font-family:var(--fu);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.kpi .v{font-family:var(--fd);font-weight:700;font-size:26px;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.kpi .s{font-family:var(--fu);font-size:12px;color:var(--ink2);margin-top:4px}
+.decision{border:2px solid var(--stamp);border-radius:6px;padding:18px 22px;margin:18px 0 10px;max-width:980px;background:var(--sf);position:relative}
+.decision .st{position:absolute;top:-13px;left:18px;background:var(--sf);padding:0 8px;font-family:var(--fu);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--stamp)}
+.decision h3{margin:4px 0 8px;font-size:24px}
+.decision p{max-width:80ch}
+.grid2{display:grid;grid-template-columns:1fr;gap:18px;max-width:980px}
+@media (min-width:820px){.grid2{grid-template-columns:1fr 1fr}}
+.tw{overflow-x:auto;margin:12px 0 20px;max-width:980px}
+table.data{border-collapse:collapse;width:100%;font-family:var(--fu);font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--sf)}
+table.data caption{text-align:left;font-weight:600;font-size:13px;color:var(--ink2);padding:0 0 8px;letter-spacing:.02em}
+table.data th{font-weight:600;text-align:left;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);border-bottom:1.5px solid var(--ink);padding:8px 10px;white-space:nowrap}
+table.data td{border-bottom:1px solid var(--line2);padding:8px 10px;vertical-align:top}
+table.data td:first-child{color:var(--ink);font-weight:500}
+table.data tr.tot td{font-weight:600;border-top:1.5px solid var(--ink);border-bottom:0}
+table.data .sub{color:var(--mut);font-size:12px;font-weight:400}
+table.data.wide td{white-space:normal;min-width:140px}
+table.data.wide td:first-child{min-width:150px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;vertical-align:-1px}
+.s1{color:var(--s1);background:var(--s1)} .s2{color:var(--s2);background:var(--s2)} .s3{color:var(--s3);background:var(--s3)} .s4{color:var(--s4);background:var(--s4)}
+table.data.heat td.hc{background:rgba(var(--heat),calc(var(--t)*.55));text-align:right}
+table.data.heat td.hc.base{outline:2px solid var(--ink);outline-offset:-2px;font-weight:700}
+figure{margin:18px 0 22px;max-width:980px}
+figcaption{font-family:var(--fu);font-size:13px;color:var(--ink2);margin-top:6px;max-width:80ch}
+svg.chart{width:100%;height:auto;display:block;background:var(--sf);border:1px solid var(--line);font-family:var(--fu)}
+svg.chart .ct{font-size:13px;font-weight:600;fill:var(--ink)}
+svg.chart .tick{font-size:11px;fill:var(--mut)}
+svg.chart .grid{stroke:var(--line2);stroke-width:1}
+svg.chart .ax0{stroke:var(--line);stroke-width:1.5}
+svg.chart .ln{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+svg.chart .ln.s1{stroke:var(--s1)} svg.chart .ln.s2{stroke:var(--s2)} svg.chart .ln.s3{stroke:var(--s3)} svg.chart .ln.s4{stroke:var(--s4)}
+svg.chart .dot{stroke:var(--sf);stroke-width:2}
+svg.chart .dot.s1{fill:var(--s1)} svg.chart .dot.s2{fill:var(--s2)} svg.chart .dot.s3{fill:var(--s3)} svg.chart .dot.s4{fill:var(--s4)}
+svg.chart .lbl{font-size:11.5px;font-weight:600;fill:var(--ink)}
+svg.chart .lblv{font-weight:400;fill:var(--ink2)}
+svg.chart .xh{stroke:var(--ink2);stroke-width:1;stroke-dasharray:3 3}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-family:var(--fu);font-size:12px;padding:8px 10px;border-radius:4px;display:none;z-index:9;line-height:1.5;white-space:nowrap}
+.tip b{font-weight:600}
+.tag{font-family:var(--fu);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px;background:var(--sf2);color:var(--ink2);white-space:nowrap}
+.tag.hi{background:var(--stamps);color:var(--stamp)} .tag.md{background:var(--warns);color:var(--warn)} .tag.lo{background:var(--goods);color:var(--good)}
+.src{font-family:var(--fu);font-size:13.5px;line-height:1.5}
+.src li{margin-bottom:4px}
+.src{max-width:90ch}
+sup a{text-decoration:none;font-family:var(--fu);font-size:11px;color:var(--acct)}
+.arch{font-family:var(--fu);font-size:13px;background:var(--sf2);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.45;max-width:980px;border:1px solid var(--line2)}
+@media (prefers-reduced-motion:no-preference){ nav.toc li a{transition:color .15s} }
+</style>
+
+<div class="wrap">
+<header class="top">
+<div class="eyebrow">Fizibilite çalışması · İş analizi · Eylül 2026</div>
+<h1>Talimatname: kanıtlı görev listesi ürünü</h1>
+<p class="lede">WhatsApp gruplarında yürüyen açılış, kapanış ve haftalık talimatların; fotoğraf kanıtlı, loglu ve tekrarlı bir mobil ürüne taşınması. Pazar, rekabet, teknik, operasyonel, hukuki ve finansal yapılabilirlik; 60 aylık model, dört senaryo.</p>
+<div class="meta"><span>Hazırlayan: iş analisti rolünde Claude</span><span>Sabit $; 1 $ = ₺48,6</span><span>Kaynaklı rakamlar §11'de</span></div>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="İçindekiler"><ol><li><span class="v">!</span><a href="#karar">Karar özeti</a></li><li><span class="v">✓</span><a href="#urun">Ürün ve değer önerisi</a></li><li><span class="v">!</span><a href="#pazar">Pazar</a></li><li><span class="v">✓</span><a href="#rekabet">Rekabet</a></li><li><span class="v">✓</span><a href="#teknik">Teknik fizibilite</a></li><li><span class="v">!</span><a href="#operasyon">Operasyonel fizibilite</a></li><li><span class="v">✓</span><a href="#hukuk">Hukuki / KVKK</a></li><li><span class="v">!</span><a href="#finans">Finansal fizibilite</a></li><li><span class="v">i</span><a href="#risk">Riskler</a></li><li><span class="v">i</span><a href="#plan">Doğrulama planı</a></li><li><span class="v">i</span><a href="#kaynak">Kaynaklar ve sınırlar</a></li></ol></nav>
+<main>
+<section class="item" id="karar"><div class="ih"><div class="box cond">!</div><div><h2>Karar özeti</h2><span class="verdict cond">Koşullu GO</span></div></div>
+<div class="decision"><span class="st">Karar</span>
+<h3>Koşullu GO — yalın başla, 24. ayda kapı koy</h3>
+<p>Ürün teknik ve hukuki olarak yapılabilir; sorun <em>yapılabilirlik</em> değil, <em>Türkiye pazarının küçüklüğü ve WhatsApp'ın bedava olması</em>. Lokasyon bazlı hesapla Türkiye'de erişilebilir pazar (SAM) yılda yaklaşık <strong>15,7 M$</strong> (₺763 M); bu, tek başına "büyük çıkış" üretecek bir pazar değil, ama <strong>627 bin $–1.127 bin $</strong> (₺30 M–₺55 M) sermayeyle 5 yılda <strong>927 bin $–1.552 bin $ ARR</strong>'ye ulaşan, kârlılığa yeni geçmiş bir şirket kurulabilir. Getiri; (1) makul bir çıkış çarpanına veya (2) 3. yıldan itibaren yurt dışına açılmaya bağlı. Bunlar olmadan, %30 iskontoyla bugünkü değer yatırılan sermayenin altında kalıyor.</p>
+<p><strong>Öneri:</strong> 90 günlük, en fazla ₺316 bin maliyetli bir doğrulama sprinti (20 zincir görüşmesi, 3–5 tasarım ortağı, ücretli pilot) → geçerse Yalın senaryoyla lansman → 24. ayda net kapı: ARR ≥ 107 bin $ ve zincir aylık kaybı ≤ %2 ise ölçekle (Baz), değilse kapat. Bu kapıya kadar azami kayıp ≈ <strong>445 bin $</strong> (₺22 M).</p>
+</div>
+<div class="kpis">
+<div class="kpi"><div class="l">Türkiye SAM</div><div class="v">15,7 M$</div><div class="s">99.700 lokasyon · yıllık</div></div>
+<div class="kpi"><div class="l">Tepe sermaye (Yalın / Baz)</div><div class="v">627 bin $ / 1.127 bin $</div><div class="s">₺30 M / ₺55 M</div></div>
+<div class="kpi"><div class="l">Başabaş (Yalın / Baz)</div><div class="v">55. / 57. ay</div><div class="s">İyimser: 34. ay</div></div>
+<div class="kpi"><div class="l">Y5 ARR (Baz)</div><div class="v">1,55 M$</div><div class="s">9.510 lokasyon · SAM'ın %9,5'i</div></div>
+<div class="kpi"><div class="l">Beklenen kâr (A / B)</div><div class="v">3,4 M$ / 1,8 M$</div><div class="s">çıkış çarpanına bağlı, bkz. §8</div></div>
+</div>
+<p class="note">Rakamlar sabit dolarla (TL enflasyonundan arındırılmış) ve 12 Eylül 2026 kuru <strong>1 $ = ₺48,6</strong> ile verilmiştir. Model ve varsayımlar <code>talimat-fizibilite/model.py</code> içinde; her tablo bu dosyadan üretildi.</p>
+</section>
+<section class="item" id="urun"><div class="ih"><div class="box ok">✓</div><div><h2>Ürün ve değer önerisi</h2><span class="verdict ok">Geçerli — dağıtım problemi</span></div></div>
+<p>Çalışma adı <strong>"Talimatname"</strong> (12 Eylül 2026; önceki çalışma adları Talimat ve yap lütfen; kesin isim pilot görüşmelerindeki isim testi sonrası). Yönetici, tekrar eden (saatlik, açılış, kapanış, haftalık) talimat listeleri hazırlar; sahadaki kişi mobil uygulamadan maddeleri tamamlar, <strong>fotoğraf/video/konum/zaman damgalı kanıt</strong> yükler, yapamadığını sebebiyle işaretler. Her adım değiştirilemez şekilde loglanır. Hedef: bugün WhatsApp gruplarında "yapıldı abi 👍" ile yürüyen işlerin kanıtlı, raporlanabilir ve denetlenebilir hâle gelmesi.</p>
+<h3>WhatsApp neden yetmiyor — ve neden yine de zor rakip</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>İhtiyaç</th><th>WhatsApp grubu</th><th>Talimatname</th></tr></thead><tbody>
+<tr><td>Tekrarlı iş planı</td><td>Her gün yöneticinin elle yazması gerekir; unutulur</td><td>Takvim kuralı (her gün 22:30 kapanış; pazartesi genel temizlik) otomatik açılır</td></tr>
+<tr><td>Kanıt</td><td>Fotoğraf gelir ama hangi maddeye ait, ne zaman çekildi, arşivde bulunur mu — hayır</td><td>Madde bazında, zaman ve konum damgalı, aranabilir arşiv</td></tr>
+<tr><td>Yapılmayan işler</td><td>Sessizlik = belirsizlik</td><td>"Yapılamadı + sebep" zorunlu; eksik maddeler yöneticiye düşer</td></tr>
+<tr><td>Raporlama</td><td>Yok</td><td>Şube × liste × kişi tamamlanma oranı, gecikme, tekrar eden sorunlar</td></tr>
+<tr><td>Denetim / uyuşmazlık</td><td>Ekran görüntüsü</td><td>Değiştirilemez log; iş hukuku ve gıda güvenliği denetimlerinde kanıt</td></tr>
+<tr><td>Kurulum ve alışkanlık</td><td><strong>Sıfır — herkesin telefonunda var</strong></td><td>Uygulama indirtmek ve alışkanlık kurmak gerekir — <strong>en büyük engel</strong></td></tr>
+</tbody></table></div>
+<p>Değer önerisi gerçek: gıda güvenliği, franchise standardı, tesis yönetimi gibi alanlarda "kanıt" bir lüks değil zorunluluk. Ama ürün, bedava ve evrensel bir aracın yerine geçmeye çalışıyor; bu yüzden <strong>satış argümanı "WhatsApp'ı bırakın" değil, "WhatsApp'ta kaybolan işleri görünür kılın" olmalı</strong>. Bildirimlerin WhatsApp Business API üzerinden gitmesi (Türkiye'de yardımcı mesaj tarifesi mesaj başına ≈0,0014 $<sup><a href="#k-wa">[WA]</a></sup>) alışkanlık engelini düşürür: çalışan bildirimi WhatsApp'ta görür, tek dokunuşla uygulamada tamamlar.</p>
+<h3>Temel özellik seti (MVP)</h3>
+<ul>
+<li>Liste şablonları ve tekrar kuralları (RRULE: saatli, açılış/kapanış, haftalık, aylık; vardiya ve şube bazlı)</li>
+<li>Madde türleri: onay kutusu, fotoğraf zorunlu, sayısal (sıcaklık, kasa sayımı), imza, çoktan seçmeli</li>
+<li>Kanıt: kamera-içi çekim (galeriden yükleme kapatılabilir), zaman/konum damgası, sıkıştırma, çevrimdışı kuyruk</li>
+<li>"Yapılamadı" akışı: sebep seçimi + not; otomatik eskalasyon (şube müdürü → bölge → merkez)</li>
+<li>Roller: merkez, bölge, şube, personel; kişi/grup atama</li>
+<li>Rapor ekranı: tamamlanma, gecikme, sorun ısı haritası; PDF/Excel dışa aktarım</li>
+<li>Değiştirilemez günlük (hash zinciri), KVKK aydınlatma akışı, veri saklama süreleri</li>
+</ul>
+</section>
+<section class="item" id="pazar"><div class="ih"><div class="box cond">!</div><div><h2>Pazar</h2><span class="verdict cond">Kategori kanıtlı, Türkiye küçük</span></div></div>
+<h3>Küresel sinyal: kategori var, para akıyor</h3>
+<p>Ürünün girdiği kategori ("frontline / deskless operations", dijital kontrol listesi) küresel ölçekte kanıtlanmış: SafetyCulture 2024'te <strong>1,7 milyar $</strong> değerlemeyle 350 M$ topladı; Connecteam 800 M$ değerlemeyle 120 M$ Seri C aldı<sup><a href="#k-fund">[F]</a></sup>. Kategori büyüklüğü tanıma göre 6,8 mlr $ (2025) → 12,3 mlr $ (2030, YBBO %12,6) ya da 8,1 mlr $ → 40 mlr $ (2034, YBBO %18,5)<sup><a href="#k-mkt">[M]</a></sup>. Drake Star'ın Ağustos 2026 raporuna göre frontline teknolojisinde çeyreklik M&A hacmi 14 mlr $'a çıktı<sup><a href="#k-mkt">[M]</a></sup>. Yani ürün fikri doğru; soru, Türkiye'de kaç para ettiği.</p>
+<h3>Türkiye: lokasyon bazlı TAM / SAM</h3>
+<p>Fiyatlama lokasyon başına olacağı için pazar da lokasyonla ölçülmeli. Kaynaklı sayılar: UFRAD'a göre 1.500+ franchise veren marka, <strong>80.000+ franchise noktası</strong><sup><a href="#k-tr">[T]</a></sup>; organize gıda perakendesi 2024 sonu <strong>55.737 mağaza</strong> (ilk 10 zincir 2025'te 51.916; ilk 3 — BİM, A101, Şok — ≈40.000 ve kendi sistemleri var)<sup><a href="#k-tr">[T]</a></sup>; kayıtlı yeme-içme işyeri <strong>158.725</strong> (2025)<sup><a href="#k-tr">[T]</a></sup>; akaryakıt istasyonu ≈12.500–13.200<sup><a href="#k-tr">[T]</a></sup>; spor salonu 6.000+<sup><a href="#k-tr">[T]</a></sup>. Otel/konaklama ve tesis-hizmet sahaları için resmi tek sayı bulamadım; <em>tahmin</em> olarak işaretlendi.</p>
+<div class="tw"><table class="data"><thead><tr><th>Segment (Türkiye)</th><th>Lokasyon</th><th>SAM payı</th><th>Hedef ARPU</th><th>TAM / yıl</th><th>SAM / yıl</th></tr></thead><tbody>
+<tr><td>Franchise / zincir noktaları (UFRAD 80k+)</td><td>80.000</td><td>%60</td><td>15 $</td><td>14,40 M$</td><td>8,64 M$</td></tr>
+<tr><td>Yerel market zincirleri (55,7k − ilk 3 ≈ 40k)</td><td>16.000</td><td>%50</td><td>12 $</td><td>2,30 M$</td><td>1,15 M$</td></tr>
+<tr><td>Bağımsız yeme-içme (159k kayıtlı; sahibi başta olmayan, ≥3 personel)</td><td>60.000</td><td>%25</td><td>9 $</td><td>6,48 M$</td><td>1,62 M$</td></tr>
+<tr><td>Akaryakıt istasyonları (~13k)</td><td>13.000</td><td>%40</td><td>12 $</td><td>1,87 M$</td><td>0,75 M$</td></tr>
+<tr><td>Spor salonları (6k+)</td><td>6.000</td><td>%50</td><td>12 $</td><td>0,86 M$</td><td>0,43 M$</td></tr>
+<tr><td>Oteller / konaklama tesisleri</td><td>15.000</td><td>%30</td><td>15 $</td><td>2,70 M$</td><td>0,81 M$</td></tr>
+<tr><td>Tesis yönetimi / temizlik / güvenlik hizmet sahaları</td><td>20.000</td><td>%50</td><td>12 $</td><td>2,88 M$</td><td>1,44 M$</td></tr>
+<tr><td>Klinik, diş, güzellik, oto-yıkama, kuru temizleme vb. çok-şubeli hizmet</td><td>15.000</td><td>%40</td><td>12 $</td><td>2,16 M$</td><td>0,86 M$</td></tr>
+<tr class="tot"><td>Toplam</td><td>225.000</td><td>%44</td><td>—</td><td>33,7 M$<br><span class="sub">₺1.636 M</span></td><td>15,7 M$<br><span class="sub">₺763 M</span></td></tr>
+</tbody></table></div>
+<p class="note warn">SAM payları yargısal: örneğin bağımsız yeme-içmenin yalnızca %25'i (sahibinin başında durmadığı, ≥3 personelli işletmeler) erişilebilir sayıldı. ARPU'lar Türkiye'ye uyarlanmış ($9–15/lokasyon/ay; ABD'de Jolt 80–100 $, Xenia 30–200 $)<sup><a href="#k-comp">[R]</a></sup>. Eczaneler (≈25–26 bin) tek şubeli ve düşük uyumlu olduğu için dışarıda bırakıldı.</p>
+<h3>Ne kadarı alınabilir (SOM)?</h3>
+<p>Baz senaryo 5. yıl sonunda <strong>9.510 lokasyon</strong>a ulaşıyor; bu SAM'ın %9,5'i, TAM'ın %4,2'i. Kıyas: Türkiye'nin en bilinen İK SaaS'ı Kolay İK, 149 kişilik ekiple 2024'te ≈5,7 M$ gelire ulaşmış durumda<sup><a href="#k-tr-saas">[S]</a></sup> — yani Türkiye'de tek ülkeyle 5 yılda 1–2 M$ ARR "iyi", 4 M$+ "istisnai" sonuçtur. Türkiye pazarı, ürünü <strong>kanıtlamak</strong> için yeterli, <strong>büyütmek</strong> için değil.</p>
+</section>
+<section class="item" id="rekabet"><div class="ih"><div class="box ok">✓</div><div><h2>Rekabet</h2><span class="verdict ok">Boşluk var, kapanıyor</span></div></div>
+<p>Rekabet üç katmanda: küresel oyuncular (Türkçe yerelleştirme ve TL fiyat yok, satış ekibi yok), yerel yeni girişimler ve POS/İK yazılımlarının eklenti modülleri, bir de asıl rakip olan <strong>ücretsiz WhatsApp</strong>.</p>
+<div class="tw"><table class="data wide"><thead><tr><th>Oyuncu</th><th>Konum</th><th>Fiyat (kaynaklı)</th><th>Türkiye'de zayıf noktası</th></tr></thead><tbody>
+<tr><td>SafetyCulture (iAuditor)</td><td>Küresel lider, denetim + kontrol listesi</td><td>10 kullanıcıya kadar ücretsiz; Premium 24 $/kullanıcı/ay (yıllık), 29 $ aylık<sup><a href="#k-comp">[R]</a></sup></td><td>Kullanıcı başı fiyat Türkiye'de pahalı; ücretsiz katman küçük işletmeyi kapar ama zincir için yetersiz; Türkçe şablon kütüphanesi var, satış/destek yok</td></tr>
+<tr><td>Connecteam</td><td>Saha ekipleri "hepsi bir arada"</td><td>Operasyon hub'ı Basic 29 $/ay (ilk 30 kullanıcı), Advanced 49 $, Expert 99 $; ek kullanıcı 0,5–3 $; 10 kullanıcıya kadar ücretsiz<sup><a href="#k-comp">[R]</a></sup></td><td>Çok geniş, karmaşık; Türkçe pazarlama yok; küçük ekipler için fiyat/performansı güçlü — <strong>en tehlikeli küresel rakip</strong></td></tr>
+<tr><td>Jolt</td><td>Restoran operasyonu, ABD</td><td>≈80–100 $/lokasyon/ay; tam paket 207–296 $/ay + 500–600 $ kurulum<sup><a href="#k-comp">[R]</a></sup></td><td>Türkiye'de yok; fiyat 5–8 kat yüksek</td></tr>
+<tr><td>Xenia</td><td>Çok şubeli operasyon, AI</td><td>Lokasyon başı özel fiyat; tek lokasyon ≈200 $, 500+ lokasyonda ≈30 $<sup><a href="#k-comp">[R]</a></sup></td><td>Türkiye'de yok</td></tr>
+<tr><td>GoAudits / Bindy</td><td>Denetim odaklı</td><td>GoAudits 10–30 $/kullanıcı/ay; Bindy 129 $/ay'dan (10 denetim)<sup><a href="#k-comp">[R]</a></sup></td><td>Denetim odaklı, günlük görev akışı zayıf</td></tr>
+<tr><td><strong>CheckMaster</strong> (İstanbul)</td><td>Doğrudan yerel rakip: şube, açılış/kapanış kontrol listesi, fotoğraf kanıtı, vardiya, eğitim</td><td>Sitede 249 ve 499 "/yıl" planlar; birim (şirket mi şube mi, $ mı ₺ mi) belirsiz<sup><a href="#k-comp">[R]</a></sup></td><td>App Store'da Haziran 2025'te çıktı, henüz yeterli değerlendirme yok; referans müşteri listelenmemiş. Fikir doğrulanmış ama pazar hâlâ boş — <strong>ilk hareket avantajı kaçmamış</strong></td></tr>
+<tr><td>POS/franchise modülleri (YemekPOS, Menulux, Netpus, Aybil)</td><td>Merkez–şube yönetimi eklentisi</td><td>Paket içinde</td><td>Kontrol listesi ikincil özellik; kanıt/log derinliği yok; ama mevcut müşteriye "bedava" gelir — kanal ortağı da olabilir</td></tr>
+<tr><td>PDKS uygulamaları (Patron PDKS, Paydoss, Shiftbox)</td><td>Mesai/konum takibi</td><td>Personel başı</td><td>Görev/kanıt yok; komşu kategori, entegrasyon fırsatı</td></tr>
+<tr><td><strong>WhatsApp</strong></td><td>Fiili standart</td><td>0 ₺</td><td>Kanıt, log, tekrar, rapor yok — ama alışkanlık ve sıfır sürtünme</td></tr>
+</tbody></table></div>
+<h3>Konumlanma boşluğu</h3>
+<ul>
+<li><strong>Zincir + kanıt + Türkçe + TL + saha satışı</strong> kombinasyonu bugün kimsede tam yok. Küreseller ilk üçü, yereller son ikisini karşılıyor.</li>
+<li>Fiyat çıpası düşük: CheckMaster'ın yıllık 249–499'luk planları ve Paraşüt'ün ₺940+KDV/ay ön muhasebe paketi<sup><a href="#k-tr-saas">[S]</a></sup> KOBİ'nin "yazılım" için ödemeye alıştığı bandı gösteriyor. Zincir başına ₺15–40 bin/ay'lık sözleşmeler (25–50 lokasyon) mümkün, tek şube için ₺300–500/ay tavan.</li>
+<li>Savunma hattı ürün değil dağıtım: franchise verenlerle (marka merkezi) anlaşıp bayilere standart olarak indirtmek. Bir marka = onlarca lokasyon, tek satış görüşmesi.</li>
+</ul>
+</section>
+<section class="item" id="teknik"><div class="ih"><div class="box ok">✓</div><div><h2>Teknik fizibilite</h2><span class="verdict ok">Yapılabilir, 5–6 ay</span></div></div>
+<p>Teknik olarak orta zorlukta, iyi bilinen bir problem. Riskli kısımlar kanıt bütünlüğü, çevrimdışı senkronizasyon ve tekrar kurallarının saat dilimi/vardiya karmaşası; hiçbiri araştırma gerektirmiyor.</p>
+<div class="arch">Mobil (Flutter, iOS+Android)  ──►  API (Python/FastAPI veya Node)  ──►  PostgreSQL (görev, log, RRULE)
+   • kamera-içi çekim, EXIF+GPS+sunucu zamanı           • nesne depolama (S3 uyumlu; fotoğraf/video, WORM politikası)
+   • çevrimdışı kuyruk (SQLite) → senk                   • bildirim: push + WhatsApp Business API + SMS yedek
+Web yönetim paneli (React)  ──►  şablon editörü, atama, raporlar, dışa aktarım, denetim izi görüntüleyici
+Bütünlük: her olay hash-zincirli günlükte; günlük kökü günde bir kez zaman damgası servisine yazılır</div>
+<h3>MVP kapsamı, süre ve ekip</h3>
+<ul>
+<li><strong>Süre:</strong> 5–6 ay (Yalın senaryoda 7. ay lansman). Kapsam: yukarıdaki MVP listesi; entegrasyonlar (PDKS, POS, HRIS) sonraya.</li>
+<li><strong>Ekip:</strong> 2 geliştirici (1 mobil, 1 backend/web; modelde 2.600 $ ≈ ₺126 bin/ay yüklü maliyet) + ürün sahibi kurucu + yarı zamanlı tasarımcı. Piyasa: Flutter geliştirici ortalama ₺67,2 bin, kıdemli çapraz-platform ≈₺117,5 bin net<sup><a href="#k-dev">[D]</a></sup>; yüklü işveren maliyeti net'in ~1,4–1,5 katı.</li>
+<li><strong>MVP maliyeti:</strong> 6 ay × (2 geliştirici + kurucu + genel gider) ≈ <strong>62 bin $</strong> (₺3,0 M). AI destekli geliştirme bu süreyi kısaltabilir; modelde varsayılmadı (yukarı yönlü ihtiyat).</li>
+<li><strong>İşletme maliyeti:</strong> depolama+işlem ≈0,6 $/lokasyon/ay (lokasyon başına günde ~20 fotoğraf × 300 KB → yılda ~2 GB), bildirim ≈0,3 $, destek payı ≈1,2 $ → brüt marj zincirde %83.</li>
+</ul>
+<h3>Yapım–satın alma ve platform kararları</h3>
+<ul>
+<li>SafetyCulture/Connecteam'in ücretsiz katmanı üstüne "Türkçe katman" kurmak (bayilik) mümkün ama marj ve veri sahipliği kaybolur; önerilmez.</li>
+<li>Barındırma: KVKK yurt dışı aktarım kuralları (bkz. §6) nedeniyle Türkiye'de sunucu (yerel bulut) veya standart sözleşme ile AB bölgesi. Maliyet farkı önemsiz.</li>
+<li>Kanıt bütünlüğü: galeriden yükleme kapalı, kamera-içi çekim, cihaz saati yerine sunucu saati, hash zinciri — "fotoğrafı dün çekmiş" itirazını kapatır.</li>
+</ul>
+</section>
+<section class="item" id="operasyon"><div class="ih"><div class="box cond">!</div><div><h2>Operasyonel fizibilite</h2><span class="verdict cond">Benimsetme ana yük</span></div></div>
+<p>Asıl operasyonel yük yazılımda değil <strong>benimsetmede</strong>: her müşteride onlarca personelin uygulamayı indirmesi, ilk hafta alışkanlık kurulması, şablonların işletmeye uyarlanması. Bu, ürün değil müşteri-başarısı işidir ve maliyeti modele "CAC" ve "destek" olarak girildi.</p>
+<ul>
+<li><strong>Onboarding:</strong> sektör şablon kütüphanesi (restoran açılış/kapanış, market raf/soğuk zincir, spor salonu temizlik, akaryakıt vardiya devri) ilk günde değer üretmeli. Her zincir için 1–2 günlük kurulum hizmeti; ücretli olabilir (Jolt 500–600 $ alıyor).</li>
+<li><strong>Destek:</strong> personel tarafı basit tutulmalı (3 ekran); sorunların çoğu "bildirim gelmiyor / fotoğraf yüklenmiyor" olacak. 1 destek kişisi / ~1.500 lokasyon varsayıldı.</li>
+<li><strong>Satış döngüsü:</strong> zincir merkeziyle 4–8 hafta, pilot 1 ay; tekil işletmeler için self-servis (kart, 14 gün deneme). Satış ekibi Yalın'da PMF sonrası (2. yıl) devreye giriyor.</li>
+<li><strong>Kayıp (churn) kontrolü:</strong> lokasyon başına haftalık tamamlanma oranı düşünce müşteri başarısı araması — kullanım düşüşü iptalin 1–2 ay öncüsüdür.</li>
+<li><strong>Mevsimsellik:</strong> turizm/yeme-içme yaz yoğun; sözleşmeleri yıllık ve peşin yapmak (indirimle) hem nakit hem kaybı düzeltir.</li>
+</ul>
+</section>
+<section class="item" id="hukuk"><div class="ih"><div class="box ok">✓</div><div><h2>Hukuki / KVKK</h2><span class="verdict ok">Uyumlu tasarımla mümkün</span></div></div>
+<p>Ürün çalışanların kişisel verisini (ad, fotoğraf, konum, çalışma saatleri) işler; bu KVKK kapsamında yapılabilir ama tasarım kararlarıyla şekillenmeli.</p>
+<ul>
+<li><strong>Aydınlatma ve hukuki sebep:</strong> işveren, çalışanın verisini "meşru menfaat / sözleşmenin ifası" temelinde işleyebilir; aydınlatma metni somut olmalı ("konum yalnızca görev tamamlama anında, işyeri sınırında"). Kurul'un 2020/404 kararı aydınlatmasız işlemeyi cezalandırdı<sup><a href="#k-kvkk">[K]</a></sup>. Ürün, müşteriye hazır aydınlatma şablonu ve uygulama-içi onay akışı sağlamalı.</li>
+<li><strong>Biyometri yasağı:</strong> Kurul'un 29.04.2026 tarihli 2026/921 sayılı ilke kararı mesai takibinde biyometrik veriyi kısıtladı<sup><a href="#k-kvkk">[K]</a></sup>. Ürün <strong>yüz tanıma/parmak izi kullanmamalı</strong>; kanıt fotoğrafı işi gösterir, kişiyi değil. Bu, bir rakip özelliği değil, uyum avantajı.</li>
+<li><strong>Konum:</strong> sürekli takip değil, madde tamamlanırken tek seferlik damga; kapatılabilir; işyeri dışında toplanmaz.</li>
+<li><strong>Yurt dışı aktarım:</strong> veriler Türkiye'de tutulursa sorun yok; yurt dışı bulut için 2024 değişikliğiyle gelen standart sözleşme yolu kullanılabilir. Veri işleyen sıfatıyla müşteriyle veri işleme sözleşmesi şart.</li>
+<li><strong>İş hukuku:</strong> loglar disiplin süreçlerinde delil olur; bu müşteri için değer, çalışan için hassasiyet. Saklama süresi ve silme politikası (örn. 2 yıl) ürün ayarı olmalı.</li>
+<li><strong>Diğer:</strong> KVKK VERBİS kaydı (çalışan sayısı eşiğine göre), uygulama mağazası gizlilik etiketleri, e-fatura/e-arşiv abonelik faturalaması. Hiçbiri engelleyici değil.</li>
+</ul>
+</section>
+<section class="item" id="finans"><div class="ih"><div class="box cond">!</div><div><h2>Finansal fizibilite</h2><span class="verdict cond">Getiri çıkışa/yurt dışına bağlı</span></div></div>
+<p>Model 60 aylık; dört senaryo aynı maliyet yapısını, farklı büyüme/fiyat/kayıp varsayımlarını kullanıyor. <strong>Yalın</strong> senaryo kurucunun kendi kaynağıyla, satış ekibini ürün-pazar uyumu (PMF) sonrasına bırakarak ilerlediği yol; <strong>Baz</strong> dış sermayeyle daha hızlı ekip kurma; <strong>İyimser</strong> 3. yıldan itibaren yurt dışı (MENA/Doğu Avrupa) satışını içeriyor ve Türkiye SAM'ıyla sınırlı değil; <strong>Kötümser</strong> düşük fiyat + yüksek kayıp + geç lansman.</p>
+<h3>Varsayımlar</h3>
+<div class="tw"><table class="data wide"><thead><tr><th>Kalem</th><th>Değer</th><th>Dayanak</th></tr></thead><tbody>
+<tr><td>Zincir ARPU</td><td>11–19 $/lokasyon/ay (Baz 15 $ ≈ ₺729)</td><td>ABD fiyatlarının ~%15–25'i (Jolt 80–100 $, Xenia 30–200 $, SafetyCulture 24 $/kullanıcı); Paraşüt ₺940/ay çıpası</td></tr>
+<tr><td>Tekil ARPU</td><td>6–12 $/ay (Baz 9 $ ≈ ₺437)</td><td>Tek şube tavanı ₺300–500/ay</td></tr>
+<tr><td>Aylık kayıp (churn)</td><td>Zincir %1,2–%2,5, tekil %4,0–%6,0</td><td>KOBİ SaaS %3–7/ay; yıllık sözleşmeli zincirlerde çok daha düşük<sup><a href="#k-saas">[B]</a></sup></td></tr>
+<tr><td>CAC (maaş hariç)</td><td>Zincir 100–140 $/lokasyon, tekil 40–60 $</td><td>B2B CPL ₺200–1.500; 25 lokasyonluk zincir başına ≈2.750 $ (demo, pilot, kurulum, seyahat, prim); satış maaşları ayrıca</td></tr>
+<tr><td>Ekip (yüklü maliyet)</td><td>Geliştirici 2.600 $/ay, satış-CS 2.200 $/ay, kurucu 2.000 $/ay</td><td>2026 maaş verisi × 1,4–1,5 işveren yükü<sup><a href="#k-dev">[D]</a></sup></td></tr>
+<tr><td>Ekip büyüklüğü Y1→Y5</td><td>Yalın: gel. 2/2/3/3/4, satış 0/1/2/3/4 · Baz: gel. 3/4/5/6/7, satış 1/2/4/6/8</td><td>Kolay İK ölçeği (149 kişi, 5,7 M$) referans</td></tr>
+<tr><td>Satılan hizmet maliyeti</td><td>2,1 $/lokasyon/ay + ödeme %3 + sabit 600 $/ay</td><td>Depolama, WhatsApp/SMS, destek FTE payı</td></tr>
+<tr><td>Genel gider</td><td>2.500 → 8.000 $/ay</td><td>Muhasebe, hukuk, ofis, araçlar</td></tr>
+<tr><td>Çıkış çarpanı (Y5 ARR ×)</td><td>2,5 / 4,0 / 4,0 / 6,0</td><td>Küresel KOBİ SaaS 4–6×; Türkiye iskontosu; Paraşüt→Mikro, Insider→Bluecore (2026) emsalleri tutar açıklamıyor<sup><a href="#k-tr-saas">[S]</a></sup></td></tr>
+</tbody></table></div>
+<h3>Senaryo özeti</h3>
+<div class="tw"><table class="data"><thead><tr><th>Senaryo</th><th>Lansman</th><th>Y5 lokasyon</th><th>Y5 gelir</th><th>Y5 ARR</th><th>Başabaş</th><th>Tepe sermaye</th><th>24. ay ARR</th><th>Çıkış (ARR×kat)</th><th>MOIC</th><th>IRR</th></tr></thead><tbody>
+<tr><td><span class="sw s1"></span>Kötümser</td><td>8. ay</td><td>4.182</td><td>414 bin $</td><td>493 bin $</td><td>60 ay içinde yok</td><td>1.630 bin $<br><span class="sub">₺79,2 M</span></td><td>57 bin $</td><td>1,23 M$<br><span class="sub">×2,5</span></td><td>0,8×</td><td>%-13</td></tr>
+<tr><td><span class="sw s2"></span>Yalın</td><td>7. ay</td><td>5.688</td><td>769 bin $</td><td>927 bin $</td><td>55. ay</td><td>627 bin $<br><span class="sub">₺30,5 M</span></td><td>107 bin $</td><td>3,71 M$<br><span class="sub">×4,0</span></td><td>6,0×</td><td>%73</td></tr>
+<tr><td><span class="sw s3"></span>Baz</td><td>6. ay</td><td>9.510</td><td>1.288 bin $</td><td>1.552 bin $</td><td>57. ay</td><td>1.127 bin $<br><span class="sub">₺54,8 M</span></td><td>167 bin $</td><td>6,21 M$<br><span class="sub">×4,0</span></td><td>5,5×</td><td>%74</td></tr>
+<tr><td><span class="sw s4"></span>İyimser</td><td>5. ay</td><td>20.486</td><td>3.516 bin $</td><td>4.330 bin $</td><td>34. ay</td><td>642 bin $<br><span class="sub">₺31,2 M</span></td><td>393 bin $</td><td>25,98 M$<br><span class="sub">×6,0</span></td><td>42,7×</td><td>%171</td></tr>
+</tbody></table></div>
+<figure><svg class="chart" id="c-arr" viewBox="0 0 760 340" role="img" aria-label="Yıllık yinelenen gelir (ARR), bin $">
+<text class="ct" x="64" y="16">Yıllık yinelenen gelir (ARR), bin $</text>
+<line class="ax0" x1="64" x2="664" y1="300.0" y2="300.0"/>
+<text class="tick" x="56" y="304.0" text-anchor="end">0</text>
+<line class="grid" x1="64" x2="664" y1="245.6" y2="245.6"/>
+<text class="tick" x="56" y="249.6" text-anchor="end">1.000</text>
+<line class="grid" x1="64" x2="664" y1="191.2" y2="191.2"/>
+<text class="tick" x="56" y="195.2" text-anchor="end">2.000</text>
+<line class="grid" x1="64" x2="664" y1="136.8" y2="136.8"/>
+<text class="tick" x="56" y="140.8" text-anchor="end">3.000</text>
+<line class="grid" x1="64" x2="664" y1="82.4" y2="82.4"/>
+<text class="tick" x="56" y="86.4" text-anchor="end">4.000</text>
+<line class="grid" x1="64" x2="664" y1="28.0" y2="28.0"/>
+<text class="tick" x="56" y="32.0" text-anchor="end">5.000</text>
+<text class="tick" x="56" y="20" text-anchor="end">bin $</text>
+<line class="grid" x1="64.0" x2="64.0" y1="300" y2="305"/>
+<text class="tick" x="64.0" y="320" text-anchor="middle">Başlangıç</text>
+<line class="grid" x1="184.0" x2="184.0" y1="300" y2="305"/>
+<text class="tick" x="184.0" y="320" text-anchor="middle">Y1</text>
+<line class="grid" x1="304.0" x2="304.0" y1="300" y2="305"/>
+<text class="tick" x="304.0" y="320" text-anchor="middle">Y2</text>
+<line class="grid" x1="424.0" x2="424.0" y1="300" y2="305"/>
+<text class="tick" x="424.0" y="320" text-anchor="middle">Y3</text>
+<line class="grid" x1="544.0" x2="544.0" y1="300" y2="305"/>
+<text class="tick" x="544.0" y="320" text-anchor="middle">Y4</text>
+<line class="grid" x1="664.0" x2="664.0" y1="300" y2="305"/>
+<text class="tick" x="664.0" y="320" text-anchor="middle">Y5</text>
+<polyline class="ln s1" points="74.0,300.0 84.0,300.0 94.0,300.0 104.0,300.0 114.0,300.0 124.0,300.0 134.0,300.0 144.0,299.9 154.0,299.8 164.0,299.7 174.0,299.6 184.0,299.5 194.0,299.2 204.0,299.0 214.0,298.7 224.0,298.5 234.0,298.3 244.0,298.1 254.0,297.8 264.0,297.6 274.0,297.4 284.0,297.2 294.0,297.1 304.0,296.9 314.0,296.3 324.0,295.8 334.0,295.3 344.0,294.8 354.0,294.3 364.0,293.8 374.0,293.3 384.0,292.9 394.0,292.5 404.0,292.0 414.0,291.6 424.0,291.2 434.0,290.5 444.0,289.7 454.0,288.9 464.0,288.2 474.0,287.5 484.0,286.8 494.0,286.2 504.0,285.5 514.0,284.9 524.0,284.3 534.0,283.7 544.0,283.2 554.0,282.2 564.0,281.3 574.0,280.3 584.0,279.5 594.0,278.6 604.0,277.7 614.0,276.9 624.0,276.1 634.0,275.4 644.0,274.6 654.0,273.9 664.0,273.2"/>
+<polyline class="ln s2" points="74.0,300.0 84.0,300.0 94.0,300.0 104.0,300.0 114.0,300.0 124.0,300.0 134.0,299.8 144.0,299.7 154.0,299.5 164.0,299.3 174.0,299.2 184.0,299.0 194.0,298.6 204.0,298.1 214.0,297.7 224.0,297.3 234.0,296.8 244.0,296.4 254.0,296.0 264.0,295.6 274.0,295.3 284.0,294.9 294.0,294.5 304.0,294.2 314.0,293.2 324.0,292.3 334.0,291.4 344.0,290.5 354.0,289.7 364.0,288.9 374.0,288.1 384.0,287.3 394.0,286.5 404.0,285.7 414.0,285.0 424.0,284.3 434.0,282.9 444.0,281.5 454.0,280.1 464.0,278.8 474.0,277.5 484.0,276.2 494.0,275.0 504.0,273.8 514.0,272.6 524.0,271.5 534.0,270.4 544.0,269.3 554.0,267.4 564.0,265.6 574.0,263.8 584.0,262.1 594.0,260.4 604.0,258.8 614.0,257.2 624.0,255.6 634.0,254.0 644.0,252.5 654.0,251.0 664.0,249.6"/>
+<polyline class="ln s3" points="74.0,300.0 84.0,300.0 94.0,300.0 104.0,300.0 114.0,300.0 124.0,299.8 134.0,299.6 144.0,299.4 154.0,299.2 164.0,299.0 174.0,298.8 184.0,298.6 194.0,297.9 204.0,297.1 214.0,296.4 224.0,295.8 234.0,295.1 244.0,294.5 254.0,293.8 264.0,293.2 274.0,292.6 284.0,292.0 294.0,291.5 304.0,290.9 314.0,289.3 324.0,287.8 334.0,286.2 344.0,284.8 354.0,283.3 364.0,281.9 374.0,280.5 384.0,279.2 394.0,277.8 404.0,276.6 414.0,275.3 424.0,274.1 434.0,271.7 444.0,269.3 454.0,267.0 464.0,264.7 474.0,262.5 484.0,260.4 494.0,258.3 504.0,256.2 514.0,254.2 524.0,252.2 534.0,250.3 544.0,248.5 554.0,245.4 564.0,242.3 574.0,239.4 584.0,236.5 594.0,233.7 604.0,230.9 614.0,228.2 624.0,225.6 634.0,223.0 644.0,220.4 654.0,218.0 664.0,215.5"/>
+<polyline class="ln s4" points="74.0,300.0 84.0,300.0 94.0,300.0 104.0,300.0 114.0,299.6 124.0,299.2 134.0,298.8 144.0,298.4 154.0,298.0 164.0,297.7 174.0,297.3 184.0,296.9 194.0,295.3 204.0,293.6 214.0,292.0 224.0,290.4 234.0,288.8 244.0,287.3 254.0,285.8 264.0,284.3 274.0,282.9 284.0,281.4 294.0,280.0 304.0,278.6 314.0,274.8 324.0,271.0 334.0,267.3 344.0,263.6 354.0,260.0 364.0,256.5 374.0,253.1 384.0,249.6 394.0,246.3 404.0,243.0 414.0,239.7 424.0,236.6 434.0,230.0 444.0,223.5 454.0,217.2 464.0,211.0 474.0,204.8 484.0,198.8 494.0,192.8 504.0,186.9 514.0,181.2 524.0,175.5 534.0,169.9 544.0,164.4 554.0,155.3 564.0,146.4 574.0,137.7 584.0,129.0 594.0,120.5 604.0,112.1 614.0,103.9 624.0,95.8 634.0,87.8 644.0,79.9 654.0,72.1 664.0,64.4"/>
+<circle class="dot s4" cx="664.0" cy="64.4" r="4"/>
+<text class="lbl" x="672.0" y="68.4">İyimser <tspan class="lblv">4.330</tspan></text>
+<circle class="dot s3" cx="664.0" cy="215.5" r="4"/>
+<text class="lbl" x="672.0" y="219.5">Baz <tspan class="lblv">1.552</tspan></text>
+<circle class="dot s2" cx="664.0" cy="249.6" r="4"/>
+<text class="lbl" x="672.0" y="253.6">Yalın <tspan class="lblv">927</tspan></text>
+<circle class="dot s1" cx="664.0" cy="273.2" r="4"/>
+<text class="lbl" x="672.0" y="277.2">Kötümser <tspan class="lblv">493</tspan></text>
+<line class="xh" id="c-arr-xh" x1="0" x2="0" y1="28" y2="300" style="display:none"/>
+<rect class="hit" x="64" y="28" width="600" height="272" fill="transparent" data-l="64" data-pw="600" data-series='[[&quot;Kötümser&quot;, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2016.0, 3966.5, 5854.0, 7680.9, 9449.7, 14196.4, 18786.4, 23226.0, 27521.1, 31677.2, 35699.8, 39594.0, 43364.6, 47016.3, 50553.6, 53980.6, 57301.6, 67520.3, 77412.9, 86991.9, 96269.1, 105255.7, 113962.5, 122399.9, 130577.7, 138505.2, 146191.6, 153645.3, 160874.7, 175437.6, 189550.4, 203229.4, 216490.4, 229348.4, 241817.6, 253912.0, 265644.7, 277028.1, 288074.6, 298795.5, 309202.0, 327104.8, 344477.1, 361337.1, 377702.2, 393589.3, 409014.4, 423993.1, 438540.0, 452669.4, 466395.1, 479730.0, 492686.9]], [&quot;Yalın&quot;, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3120.0, 6160.8, 9125.0, 12015.0, 14833.3, 17582.0, 26143.5, 34484.9, 42613.6, 50536.5, 58260.3, 65791.5, 73136.0, 80299.9, 87288.9, 94108.3, 100763.4, 107259.3, 124550.8, 141409.1, 157847.9, 173880.8, 189520.5, 204779.2, 219669.0, 234201.0, 248386.2, 262235.2, 275757.9, 288964.3, 315063.5, 340540.6, 365414.3, 389702.9, 413423.7, 436593.5, 459228.3, 481343.7, 502954.7, 524075.6, 544720.3, 564902.2, 598884.2, 632100.3, 664571.8, 696319.6, 727363.6, 757723.1, 787416.8, 816462.5, 844877.6, 872678.9, 899882.6, 926504.1]], [&quot;Baz&quot;, [0.0, 0.0, 0.0, 0.0, 0.0, 4011.4, 7921.0, 11732.1, 15447.9, 19071.3, 22605.5, 26053.0, 39505.4, 52609.3, 65376.4, 77817.8, 89944.1, 101765.6, 113292.1, 124533.0, 135497.4, 146193.9, 156630.8, 166816.4, 196258.1, 224968.4, 252970.6, 280287.0, 306939.0, 332947.2, 358331.4, 383110.7, 407303.2, 430926.7, 453997.9, 476533.3, 521048.5, 564509.6, 606948.2, 648394.7, 688878.4, 728427.4, 767068.9, 804829.1, 841732.9, 877804.8, 913068.0, 947545.0, 1004357.7, 1059896.0, 1114195.3, 1167289.9, 1219212.9, 1269996.2, 1319670.6, 1368265.7, 1415810.2, 1462331.9, 1507857.4, 1552412.8]], [&quot;İyimser&quot;, [0.0, 0.0, 0.0, 0.0, 7500.0, 14859.6, 22082.5, 29172.3, 36132.4, 42966.2, 49676.8, 56267.6, 87141.3, 117457.0, 147228.8, 176470.6, 205195.5, 233416.4, 261145.7, 288395.4, 315177.3, 341502.4, 367381.7, 392825.8, 463544.9, 533031.6, 601316.1, 668427.5, 734394.2, 799243.3, 863001.3, 925693.9, 987345.8, 1047981.2, 1107623.1, 1166294.2, 1286816.4, 1405388.4, 1522053.8, 1636854.8, 1749832.3, 1861026.2, 1970474.8, 2078215.6, 2184284.9, 2288717.8, 2391548.6, 2492810.3, 2659135.3, 2822886.9, 2984119.0, 3142884.0, 3299232.9, 3453215.1, 3604878.5, 3754269.9, 3901434.7, 4046416.8, 4189259.1, 4330003.4]]]' data-unit="1000.0"/>
+</svg><figcaption>Yıl sonu ARR. İyimser eğri 3. yıldan itibaren yurt dışı satışı içerir; diğer üçü yalnızca Türkiye. Grafiğin üstüne gelince ay bazında değerler görünür.</figcaption></figure>
+<figure><svg class="chart" id="c-cum" viewBox="0 0 760 340" role="img" aria-label="Kümülatif nakit (sermaye ihtiyacı), bin $">
+<text class="ct" x="64" y="16">Kümülatif nakit (sermaye ihtiyacı), bin $</text>
+<line class="grid" x1="64" x2="664" y1="300.0" y2="300.0"/>
+<text class="tick" x="56" y="304.0" text-anchor="end">-2.000</text>
+<line class="grid" x1="64" x2="664" y1="254.7" y2="254.7"/>
+<text class="tick" x="56" y="258.7" text-anchor="end">-1.500</text>
+<line class="grid" x1="64" x2="664" y1="209.3" y2="209.3"/>
+<text class="tick" x="56" y="213.3" text-anchor="end">-1.000</text>
+<line class="grid" x1="64" x2="664" y1="164.0" y2="164.0"/>
+<text class="tick" x="56" y="168.0" text-anchor="end">-500</text>
+<line class="ax0" x1="64" x2="664" y1="118.7" y2="118.7"/>
+<text class="tick" x="56" y="122.7" text-anchor="end">0</text>
+<line class="grid" x1="64" x2="664" y1="73.3" y2="73.3"/>
+<text class="tick" x="56" y="77.3" text-anchor="end">500</text>
+<line class="grid" x1="64" x2="664" y1="28.0" y2="28.0"/>
+<text class="tick" x="56" y="32.0" text-anchor="end">1.000</text>
+<text class="tick" x="56" y="20" text-anchor="end">bin $</text>
+<line class="grid" x1="64.0" x2="64.0" y1="300" y2="305"/>
+<text class="tick" x="64.0" y="320" text-anchor="middle">Başlangıç</text>
+<line class="grid" x1="184.0" x2="184.0" y1="300" y2="305"/>
+<text class="tick" x="184.0" y="320" text-anchor="middle">Y1</text>
+<line class="grid" x1="304.0" x2="304.0" y1="300" y2="305"/>
+<text class="tick" x="304.0" y="320" text-anchor="middle">Y2</text>
+<line class="grid" x1="424.0" x2="424.0" y1="300" y2="305"/>
+<text class="tick" x="424.0" y="320" text-anchor="middle">Y3</text>
+<line class="grid" x1="544.0" x2="544.0" y1="300" y2="305"/>
+<text class="tick" x="544.0" y="320" text-anchor="middle">Y4</text>
+<line class="grid" x1="664.0" x2="664.0" y1="300" y2="305"/>
+<text class="tick" x="664.0" y="320" text-anchor="middle">Y5</text>
+<polyline class="ln s1" points="74.0,119.8 84.0,121.0 94.0,122.2 104.0,123.3 114.0,124.5 124.0,125.8 134.0,127.2 144.0,128.8 154.0,130.4 164.0,132.0 174.0,133.6 184.0,135.2 194.0,137.3 204.0,139.4 214.0,141.4 224.0,143.5 234.0,145.5 244.0,147.5 254.0,149.4 264.0,151.4 274.0,153.3 284.0,155.2 294.0,157.1 304.0,159.0 314.0,162.0 324.0,165.0 334.0,167.9 344.0,170.8 354.0,173.6 364.0,176.3 374.0,179.0 384.0,181.7 394.0,184.3 404.0,186.9 414.0,189.4 424.0,191.9 434.0,195.4 444.0,198.7 454.0,202.0 464.0,205.2 474.0,208.4 484.0,211.4 494.0,214.4 504.0,217.3 514.0,220.2 524.0,223.0 534.0,225.7 544.0,228.4 554.0,232.1 564.0,235.7 574.0,239.1 584.0,242.5 594.0,245.8 604.0,249.0 614.0,252.1 624.0,255.2 634.0,258.1 644.0,261.0 654.0,263.8 664.0,266.5"/>
+<polyline class="ln s2" points="74.0,119.6 84.0,120.5 94.0,121.5 104.0,122.4 114.0,123.4 124.0,124.4 134.0,125.5 144.0,126.6 154.0,127.7 164.0,128.8 174.0,129.8 184.0,130.8 194.0,132.3 204.0,133.8 214.0,135.2 224.0,136.5 234.0,137.8 244.0,139.1 254.0,140.3 264.0,141.5 274.0,142.6 284.0,143.7 294.0,144.7 304.0,145.7 314.0,147.6 324.0,149.4 334.0,151.1 344.0,152.8 354.0,154.3 364.0,155.7 374.0,157.0 384.0,158.2 394.0,159.4 404.0,160.5 414.0,161.4 424.0,162.3 434.0,164.0 444.0,165.4 454.0,166.7 464.0,167.9 474.0,168.9 484.0,169.8 494.0,170.5 504.0,171.1 514.0,171.6 524.0,171.9 534.0,172.1 544.0,172.2 554.0,173.2 564.0,174.1 574.0,174.7 584.0,175.2 594.0,175.4 604.0,175.5 614.0,175.4 624.0,175.1 634.0,174.6 644.0,173.9 654.0,173.1 664.0,172.1"/>
+<polyline class="ln s3" points="74.0,119.8 84.0,121.0 94.0,122.2 104.0,123.4 114.0,124.9 124.0,126.5 134.0,128.1 144.0,129.7 154.0,131.2 164.0,132.8 174.0,134.3 184.0,135.8 194.0,138.2 204.0,140.6 214.0,142.9 224.0,145.1 234.0,147.3 244.0,149.4 254.0,151.4 264.0,153.3 274.0,155.2 284.0,157.0 294.0,158.7 304.0,160.4 314.0,163.7 324.0,166.8 334.0,169.8 344.0,172.5 354.0,175.1 364.0,177.6 374.0,179.9 384.0,182.0 394.0,184.0 404.0,185.9 414.0,187.6 424.0,189.2 434.0,192.4 444.0,195.4 454.0,198.1 464.0,200.6 474.0,202.8 484.0,204.8 494.0,206.5 504.0,208.0 514.0,209.3 524.0,210.4 534.0,211.2 544.0,211.8 554.0,214.1 564.0,216.0 574.0,217.6 584.0,218.9 594.0,219.8 604.0,220.5 614.0,220.8 624.0,220.8 634.0,220.5 644.0,220.0 654.0,219.1 664.0,218.0"/>
+<polyline class="ln s4" points="74.0,119.8 84.0,121.0 94.0,122.2 104.0,123.7 114.0,125.4 124.0,127.0 134.0,128.5 144.0,130.1 154.0,131.6 164.0,133.0 174.0,134.4 184.0,135.7 194.0,138.8 204.0,141.6 214.0,144.2 224.0,146.6 234.0,148.9 244.0,151.0 254.0,152.9 264.0,154.6 274.0,156.1 284.0,157.5 294.0,158.7 304.0,159.8 314.0,163.3 324.0,166.3 334.0,168.9 344.0,171.1 354.0,172.8 364.0,174.2 374.0,175.1 384.0,175.6 394.0,175.7 404.0,175.5 414.0,174.8 424.0,173.8 434.0,175.6 444.0,176.6 454.0,176.8 464.0,176.4 474.0,175.2 484.0,173.2 494.0,170.6 504.0,167.3 514.0,163.3 524.0,158.6 534.0,153.3 544.0,147.3 554.0,144.4 564.0,140.4 574.0,135.4 584.0,129.4 594.0,122.4 604.0,114.3 614.0,105.3 624.0,95.4 634.0,84.5 644.0,72.6 654.0,59.9 664.0,46.2"/>
+<circle class="dot s4" cx="664.0" cy="46.2" r="4"/>
+<text class="lbl" x="672.0" y="50.2">İyimser <tspan class="lblv">799</tspan></text>
+<circle class="dot s2" cx="664.0" cy="172.1" r="4"/>
+<text class="lbl" x="672.0" y="176.1">Yalın <tspan class="lblv">-590</tspan></text>
+<circle class="dot s3" cx="664.0" cy="218.0" r="4"/>
+<text class="lbl" x="672.0" y="222.0">Baz <tspan class="lblv">-1.096</tspan></text>
+<circle class="dot s1" cx="664.0" cy="266.5" r="4"/>
+<text class="lbl" x="672.0" y="270.5">Kötümser <tspan class="lblv">-1.630</tspan></text>
+<line class="xh" id="c-cum-xh" x1="0" x2="0" y1="28" y2="300" style="display:none"/>
+<rect class="hit" x="64" y="28" width="600" height="272" fill="transparent" data-l="64" data-pw="600" data-series='[[&quot;Kötümser&quot;, [-12900.0, -25800.0, -38700.0, -51600.0, -64500.0, -78200.0, -94100.0, -111914.8, -129608.4, -147184.5, -164646.8, -181998.7, -205300.1, -228317.0, -251058.5, -273533.0, -295748.9, -317714.2, -339436.6, -360923.5, -382182.1, -403219.3, -424041.8, -444655.9, -478016.6, -510760.2, -542905.6, -574470.8, -605473.4, -635930.4, -665858.0, -695272.0, -724187.6, -752619.5, -780581.9, -808088.4, -846048.8, -883123.5, -919338.9, -954720.5, -989292.7, -1023079.3, -1056103.2, -1088386.5, -1119950.6, -1150816.2, -1181003.4, -1210531.4, -1251028.5, -1290427.2, -1328759.1, -1366054.7, -1402343.3, -1437653.5, -1472012.9, -1505448.2, -1537985.4, -1569649.4, -1600464.6, -1630454.5]], [&quot;Yalın&quot;, [-10300.0, -20600.0, -30900.0, -41200.0, -52300.0, -63400.0, -75689.8, -87774.6, -99659.4, -111349.2, -122848.5, -134162.1, -150699.5, -166675.2, -182103.2, -196996.8, -211369.3, -225233.2, -238600.9, -251484.3, -263895.0, -275844.0, -287342.4, -298400.5, -319467.3, -339396.2, -358214.9, -375950.1, -392627.7, -408272.8, -422909.8, -436562.5, -449253.6, -461005.6, -471840.0, -481777.8, -499647.4, -515790.1, -530245.7, -543053.1, -554250.0, -563873.0, -571957.6, -578538.4, -583649.0, -587322.1, -589589.4, -590481.9, -601986.4, -611229.2, -618259.8, -623126.7, -625877.0, -626556.4, -625209.6, -621879.9, -616609.8, -609440.4, -600411.8, -589563.3]], [&quot;Baz&quot;, [-12900.0, -25800.0, -38700.0, -52400.0, -68300.0, -86244.0, -103924.5, -121347.8, -138520.4, -155448.1, -172137.0, -188592.7, -215712.9, -241951.2, -267329.8, -291870.0, -315592.5, -338517.3, -360663.9, -382051.0, -402696.8, -422619.1, -441835.0, -460361.1, -496649.7, -530999.1, -563455.8, -594065.1, -622870.9, -649915.6, -675240.6, -698885.9, -720890.3, -741291.6, -760126.5, -777430.5, -813300.4, -846222.6, -876264.9, -903493.1, -927971.3, -949761.6, -968924.4, -985518.3, -999600.5, -1011226.4, -1020450.1, -1027324.1, -1052413.1, -1073718.8, -1091324.1, -1105309.5, -1115753.3, -1122732.1, -1126320.0, -1126589.5, -1123611.1, -1117453.5, -1108183.8, -1095867.1]], [&quot;İyimser&quot;, [-12900.0, -25800.0, -39500.0, -55400.0, -73772.5, -91627.2, -108973.4, -125820.5, -142177.2, -158052.4, -173454.5, -188391.8, -221587.2, -252645.8, -281605.2, -308502.2, -333372.3, -356250.5, -377170.9, -396166.6, -413270.0, -428512.9, -441926.2, -453540.1, -491962.5, -525478.7, -554172.1, -578123.9, -597413.6, -612118.6, -622314.7, -628075.9, -629474.5, -626581.3, -619465.3, -608194.1, -627687.4, -638781.1, -641608.1, -636298.2, -622978.6, -601773.9, -572805.9, -536193.8, -492054.5, -440502.4, -381649.5, -315605.7, -283526.7, -239825.8, -184679.1, -118259.3, -40735.4, 47726.7, 146964.7, 256819.2, 377134.1, 507756.3, 648535.5, 799324.6]]]' data-unit="1000.0"/>
+</svg><figcaption>Kümülatif nakit: en düşük nokta gereken toplam sermaye. Kötümser senaryo 5 yıl ısrar edildiğinde 1,63 M$ kaybettirir; 24. ayda kapatılırsa kayıp 445 bin $ ile sınırlı kalır.</figcaption></figure>
+<h3>Yıllık tablolar</h3>
+<div class="grid2"><div class="tw"><table class="data"><thead><tr><th>Yalın</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead><tbody>
+<tr><td>Lokasyon (yıl sonu)</td><td>112</td><td>680</td><td>1.819</td><td>3.514</td><td>5.688</td></tr>
+<tr><td>— zincir</td><td>76</td><td>470</td><td>1.284</td><td>2.574</td><td>4.337</td></tr>
+<tr><td>— tekil</td><td>35</td><td>211</td><td>535</td><td>940</td><td>1.351</td></tr>
+<tr><td>Gelir</td><td>5 bin $</td><td>68 bin $</td><td>210 bin $</td><td>445 bin $</td><td>769 bin $</td></tr>
+<tr><td>Satılan hizmet maliyeti</td><td>8 bin $</td><td>20 bin $</td><td>47 bin $</td><td>91 bin $</td><td>150 bin $</td></tr>
+<tr><td>Faaliyet gideri (CAC dahil)</td><td>131 bin $</td><td>212 bin $</td><td>346 bin $</td><td>463 bin $</td><td>618 bin $</td></tr>
+<tr><td>— CAC harcaması</td><td>8 bin $</td><td>48 bin $</td><td>106 bin $</td><td>178 bin $</td><td>258 bin $</td></tr>
+<tr class="tot"><td>EBITDA</td><td>-134 bin $</td><td>-164 bin $</td><td>-183 bin $</td><td>-109 bin $</td><td>1 bin $</td></tr>
+<tr><td>ARR (yıl sonu)</td><td>18 bin $</td><td>107 bin $</td><td>289 bin $</td><td>565 bin $</td><td>927 bin $</td></tr>
+<tr class="tot"><td>Kümülatif nakit</td><td>-134 bin $</td><td>-298 bin $</td><td>-482 bin $</td><td>-590 bin $</td><td>-590 bin $</td></tr>
+</tbody></table></div><div class="tw"><table class="data"><thead><tr><th>Baz</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead><tbody>
+<tr><td>Lokasyon (yıl sonu)</td><td>165</td><td>1.061</td><td>2.995</td><td>5.881</td><td>9.510</td></tr>
+<tr><td>— zincir</td><td>114</td><td>726</td><td>2.125</td><td>4.339</td><td>7.297</td></tr>
+<tr><td>— tekil</td><td>52</td><td>334</td><td>870</td><td>1.543</td><td>2.213</td></tr>
+<tr><td>Gelir</td><td>9 bin $</td><td>106 bin $</td><td>342 bin $</td><td>743 bin $</td><td>1.288 bin $</td></tr>
+<tr><td>Satılan hizmet maliyeti</td><td>9 bin $</td><td>27 bin $</td><td>72 bin $</td><td>146 bin $</td><td>246 bin $</td></tr>
+<tr><td>Faaliyet gideri (CAC dahil)</td><td>189 bin $</td><td>350 bin $</td><td>587 bin $</td><td>846 bin $</td><td>1.111 bin $</td></tr>
+<tr><td>— CAC harcaması</td><td>16 bin $</td><td>97 bin $</td><td>232 bin $</td><td>389 bin $</td><td>552 bin $</td></tr>
+<tr class="tot"><td>EBITDA</td><td>-189 bin $</td><td>-272 bin $</td><td>-317 bin $</td><td>-250 bin $</td><td>-69 bin $</td></tr>
+<tr><td>ARR (yıl sonu)</td><td>26 bin $</td><td>167 bin $</td><td>477 bin $</td><td>948 bin $</td><td>1.552 bin $</td></tr>
+<tr class="tot"><td>Kümülatif nakit</td><td>-189 bin $</td><td>-460 bin $</td><td>-777 bin $</td><td>-1.027 bin $</td><td>-1.096 bin $</td></tr>
+</tbody></table></div></div>
+<div class="grid2"><div class="tw"><table class="data"><thead><tr><th>Kötümser</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead><tbody>
+<tr><td>Lokasyon (yıl sonu)</td><td>84</td><td>506</td><td>1.402</td><td>2.661</td><td>4.182</td></tr>
+<tr><td>— zincir</td><td>57</td><td>348</td><td>999</td><td>1.960</td><td>3.193</td></tr>
+<tr><td>— tekil</td><td>27</td><td>158</td><td>403</td><td>701</td><td>989</td></tr>
+<tr><td>Gelir</td><td>2 bin $</td><td>37 bin $</td><td>117 bin $</td><td>246 bin $</td><td>414 bin $</td></tr>
+<tr><td>Satılan hizmet maliyeti</td><td>8 bin $</td><td>17 bin $</td><td>36 bin $</td><td>68 bin $</td><td>109 bin $</td></tr>
+<tr><td>Faaliyet gideri (CAC dahil)</td><td>177 bin $</td><td>283 bin $</td><td>444 bin $</td><td>580 bin $</td><td>725 bin $</td></tr>
+<tr><td>— CAC harcaması</td><td>10 bin $</td><td>61 bin $</td><td>146 bin $</td><td>238 bin $</td><td>334 bin $</td></tr>
+<tr class="tot"><td>EBITDA</td><td>-182 bin $</td><td>-263 bin $</td><td>-363 bin $</td><td>-402 bin $</td><td>-420 bin $</td></tr>
+<tr><td>ARR (yıl sonu)</td><td>9 bin $</td><td>57 bin $</td><td>161 bin $</td><td>309 bin $</td><td>493 bin $</td></tr>
+<tr class="tot"><td>Kümülatif nakit</td><td>-182 bin $</td><td>-445 bin $</td><td>-808 bin $</td><td>-1.211 bin $</td><td>-1.630 bin $</td></tr>
+</tbody></table></div><div class="tw"><table class="data"><thead><tr><th>İyimser</th><th>Y1</th><th>Y2</th><th>Y3</th><th>Y4</th><th>Y5</th></tr></thead><tbody>
+<tr><td>Lokasyon (yıl sonu)</td><td>279</td><td>1.921</td><td>5.653</td><td>11.917</td><td>20.486</td></tr>
+<tr><td>— zincir</td><td>192</td><td>1.383</td><td>4.194</td><td>9.248</td><td>16.430</td></tr>
+<tr><td>— tekil</td><td>87</td><td>537</td><td>1.459</td><td>2.669</td><td>4.056</td></tr>
+<tr><td>Gelir</td><td>22 bin $</td><td>244 bin $</td><td>825 bin $</td><td>1.906 bin $</td><td>3.516 bin $</td></tr>
+<tr><td>Satılan hizmet maliyeti</td><td>11 bin $</td><td>45 bin $</td><td>133 bin $</td><td>295 bin $</td><td>534 bin $</td></tr>
+<tr><td>Faaliyet gideri (CAC dahil)</td><td>199 bin $</td><td>465 bin $</td><td>846 bin $</td><td>1.318 bin $</td><td>1.867 bin $</td></tr>
+<tr><td>— CAC harcaması</td><td>24 bin $</td><td>154 bin $</td><td>376 bin $</td><td>688 bin $</td><td>1.020 bin $</td></tr>
+<tr class="tot"><td>EBITDA</td><td>-188 bin $</td><td>-265 bin $</td><td>-155 bin $</td><td>293 bin $</td><td>1.115 bin $</td></tr>
+<tr><td>ARR (yıl sonu)</td><td>56 bin $</td><td>393 bin $</td><td>1.166 bin $</td><td>2.493 bin $</td><td>4.330 bin $</td></tr>
+<tr class="tot"><td>Kümülatif nakit</td><td>-188 bin $</td><td>-454 bin $</td><td>-608 bin $</td><td>-316 bin $</td><td>799 bin $</td></tr>
+</tbody></table></div></div>
+<h3>Birim ekonomi</h3>
+<div class="tw"><table class="data"><thead><tr><th>Birim ekonomi (olgun dönem)</th>
+<th>Kötümser</th>
+<th>Yalın</th>
+<th>Baz</th>
+<th>İyimser</th>
+</tr></thead><tbody>
+<tr><td>Zincir ARPU ($/lokasyon/ay)</td><td>11,0 $ <span class="sub">(₺535)</span></td><td>15,0 $ <span class="sub">(₺729)</span></td><td>15,0 $ <span class="sub">(₺729)</span></td><td>19,0 $ <span class="sub">(₺923)</span></td></tr>
+<tr><td>Zincir aylık kayıp (churn)</td><td>%2,5</td><td>%1,8</td><td>%1,8</td><td>%1,2</td></tr>
+<tr><td>Zincir brüt marj</td><td>%78</td><td>%83</td><td>%83</td><td>%86</td></tr>
+<tr><td>Zincir LTV / lokasyon</td><td>343 $</td><td>692 $</td><td>692 $</td><td>1.361 $</td></tr>
+<tr><td>Zincir CAC / lokasyon</td><td>140 $</td><td>90 $</td><td>110 $</td><td>100 $</td></tr>
+<tr><td>Zincir LTV/CAC</td><td>2,4×</td><td>7,7×</td><td>6,3×</td><td>13,6×</td></tr>
+<tr><td>Zincir CAC geri ödeme</td><td>16,3 ay</td><td>7,2 ay</td><td>8,8 ay</td><td>6,1 ay</td></tr>
+<tr><td>Tekil ARPU ($/hesap/ay)</td><td>6,0 $ <span class="sub">(₺292)</span></td><td>9,0 $ <span class="sub">(₺437)</span></td><td>9,0 $ <span class="sub">(₺437)</span></td><td>12,0 $ <span class="sub">(₺583)</span></td></tr>
+<tr><td>Tekil aylık kayıp</td><td>%6,0</td><td>%5,0</td><td>%5,0</td><td>%4,0</td></tr>
+<tr><td>Tekil LTV/CAC</td><td>1,0×</td><td>4,4×</td><td>2,7×</td><td>6,0×</td></tr>
+<tr><td>Tekil CAC geri ödeme</td><td>16,1 ay</td><td>4,5 ay</td><td>7,5 ay</td><td>4,2 ay</td></tr>
+</tbody></table></div>
+<p>Zincir segmenti sağlıklı (LTV/CAC 6,3×, geri ödeme 8,8 ay Baz'da); <strong>tekil işletme segmenti ancak self-servis ve düşük CAC ile ayakta duruyor</strong> (Kötümser'de LTV/CAC 1,0×). Sonuç: satış eforu zincirlere, tekil işletmelere yalnızca ürün-güdümlü büyüme.</p>
+<h3>Müşteri tarafında geri dönüş (fiyatı savunmak için)</h3>
+<p>25 lokasyonlu bir yeme-içme zinciri Baz fiyatla ayda 25 × ₺729 = <strong>₺18.225</strong> öder. Karşılığı: her şube müdürünün WhatsApp'ta iş kovalamaya harcadığı ~6 saat/ay (25 × 6 × ₺250 ≈ ₺37.500), bölge müdürünün şube ziyaret sayısının yarıya inmesi, bir gıda güvenliği/denetim cezasından kaçınma (tek seferde on binlerce ₺). Yalnızca zaman tasarrufu bile 2× geri dönüş — fiyat argümanı savunulabilir; itiraz fiyatta değil <em>alışkanlıkta</em> olacak.</p>
+<h3>Duyarlılık</h3>
+<div class="tw"><table class="data heat"><caption>Baz senaryo — Y5 ARR</caption><thead><tr><th>Zincir ARPU ↓ / aylık churn →</th>
+<th>%1,0</th>
+<th>%1,5</th>
+<th>%1,8</th>
+<th>%2,5</th>
+<th>%3,5</th>
+</tr></thead><tbody>
+<tr><td>10,0 $</td>
+<td class="hc" style="--t:0.23">1.224 bin $</td>
+<td class="hc" style="--t:0.17">1.153 bin $</td>
+<td class="hc" style="--t:0.14">1.115 bin $</td>
+<td class="hc" style="--t:0.08">1.034 bin $</td>
+<td class="hc" style="--t:0.00">938 bin $</td>
+</tr>
+<tr><td>12,5 $</td>
+<td class="hc" style="--t:0.42">1.470 bin $</td>
+<td class="hc" style="--t:0.35">1.382 bin $</td>
+<td class="hc" style="--t:0.31">1.334 bin $</td>
+<td class="hc" style="--t:0.23">1.233 bin $</td>
+<td class="hc" style="--t:0.14">1.113 bin $</td>
+</tr>
+<tr><td>15,0 $</td>
+<td class="hc" style="--t:0.61">1.716 bin $</td>
+<td class="hc" style="--t:0.53">1.610 bin $</td>
+<td class="hc base" style="--t:0.48">1.552 bin $</td>
+<td class="hc" style="--t:0.39">1.431 bin $</td>
+<td class="hc" style="--t:0.27">1.287 bin $</td>
+</tr>
+<tr><td>17,5 $</td>
+<td class="hc" style="--t:0.81">1.963 bin $</td>
+<td class="hc" style="--t:0.71">1.839 bin $</td>
+<td class="hc" style="--t:0.66">1.771 bin $</td>
+<td class="hc" style="--t:0.54">1.630 bin $</td>
+<td class="hc" style="--t:0.41">1.462 bin $</td>
+</tr>
+<tr><td>20,0 $</td>
+<td class="hc" style="--t:1.00">2.209 bin $</td>
+<td class="hc" style="--t:0.89">2.068 bin $</td>
+<td class="hc" style="--t:0.83">1.990 bin $</td>
+<td class="hc" style="--t:0.70">1.829 bin $</td>
+<td class="hc" style="--t:0.55">1.637 bin $</td>
+</tr>
+</tbody></table></div>
+<div class="tw"><table class="data heat"><caption>Baz senaryo — IRR (çıkış ×4 ARR varsayımıyla)</caption><thead><tr><th>Müşteri edinme hızı ↓ / zincir ARPU →</th>
+<th>10,0 $</th>
+<th>12,5 $</th>
+<th>15,0 $</th>
+<th>17,5 $</th>
+<th>20,0 $</th>
+</tr></thead><tbody>
+<tr><td>×0,50</td>
+<td class="hc" style="--t:0.00">%11</td>
+<td class="hc" style="--t:0.11">%24</td>
+<td class="hc" style="--t:0.21">%35</td>
+<td class="hc" style="--t:0.30">%45</td>
+<td class="hc" style="--t:0.37">%54</td>
+</tr>
+<tr><td>×0,75</td>
+<td class="hc" style="--t:0.18">%31</td>
+<td class="hc" style="--t:0.30">%45</td>
+<td class="hc" style="--t:0.41">%58</td>
+<td class="hc" style="--t:0.50">%69</td>
+<td class="hc" style="--t:0.59">%79</td>
+</tr>
+<tr><td>×1,00</td>
+<td class="hc" style="--t:0.30">%46</td>
+<td class="hc" style="--t:0.43">%61</td>
+<td class="hc base" style="--t:0.55">%74</td>
+<td class="hc" style="--t:0.66">%87</td>
+<td class="hc" style="--t:0.76">%98</td>
+</tr>
+<tr><td>×1,25</td>
+<td class="hc" style="--t:0.40">%57</td>
+<td class="hc" style="--t:0.54">%73</td>
+<td class="hc" style="--t:0.66">%88</td>
+<td class="hc" style="--t:0.78">%101</td>
+<td class="hc" style="--t:0.89">%114</td>
+</tr>
+<tr><td>×1,50</td>
+<td class="hc" style="--t:0.48">%66</td>
+<td class="hc" style="--t:0.63">%83</td>
+<td class="hc" style="--t:0.76">%99</td>
+<td class="hc" style="--t:0.88">%113</td>
+<td class="hc" style="--t:1.00">%127</td>
+</tr>
+</tbody></table></div>
+<p>ARR'nin fiyata duyarlılığı kayba duyarlılığından büyük; IRR ise en çok <strong>müşteri edinme hızına</strong> bağlı. Edinme hızı Baz'ın yarısına düşerse (ilk satır) IRR tek haneye iner — bu yüzden 24. ay kapısı edinme hızını ölçmeli.</p>
+<h3>Çıkış olmazsa değer</h3>
+<div class="tw"><table class="data"><thead><tr><th>Çıkış yoksa (Y6–Y10 nakit akışı DCF)</th>
+<th>Kötümser</th>
+<th>Yalın</th>
+<th>Baz</th>
+<th>İyimser</th>
+</tr></thead><tbody>
+<tr><td>Y10 ARR (büyüme %25→%5)</td><td>0,98 M$</td><td>1,85 M$</td><td>3,09 M$</td><td>8,63 M$</td></tr>
+<tr><td>Bugünkü değer, iskonto %20</td><td>0,38 M$</td><td>0,71 M$</td><td>1,18 M$</td><td>3,30 M$</td></tr>
+<tr><td>Bugünkü değer, iskonto %30</td><td>0,14 M$</td><td>0,27 M$</td><td>0,45 M$</td><td>1,26 M$</td></tr>
+<tr class="tot"><td>Yatırılan sermaye (tepe)</td><td>1,63 M$</td><td>0,63 M$</td><td>1,13 M$</td><td>0,64 M$</td></tr>
+</tbody></table></div>
+<p>Çıkış olmadan, şirketi 10 yıl işletip nakit akışını iskonto edince Baz senaryo bugünkü değeri %20 iskontoyla yatırılan sermayeye yakın, %30'da altında. Yani <strong>Türkiye-içi "nakit ineği" tezi tek başına zayıf</strong>; getiri tezi ya çıkış ya da yurt dışı ölçek.</p>
+<h3>Beklenen değer (olasılık ağırlıklı)</h3>
+<div class="tw"><table class="data"><thead><tr><th>Senaryo</th><th>Sonuç</th><th>Olasılık A</th><th>Olasılık B</th></tr></thead><tbody>
+<tr><td><span class="sw s1"></span>Kötümser</td><td>-0,44 M$ <span class="sub">(24. ayda kapatma, kayıp)</span></td><td>%50</td><td>%65</td></tr>
+<tr><td><span class="sw s2"></span>Yalın</td><td>3,12 M$ <span class="sub">(çıkış − yatırılan sermaye)</span></td><td>%25</td><td>%20</td></tr>
+<tr><td><span class="sw s3"></span>Baz</td><td>5,11 M$ <span class="sub">(çıkış − yatırılan sermaye)</span></td><td>%18</td><td>%12</td></tr>
+<tr><td><span class="sw s4"></span>İyimser</td><td>26,78 M$ <span class="sub">(çıkış − yatırılan sermaye)</span></td><td>%7</td><td>%3</td></tr>
+<tr class="tot"><td>Beklenen kâr</td><td></td><td>3,35 M$</td><td>1,75 M$</td></tr>
+</tbody></table></div>
+<p>A ve B iki farklı önsel: A "iyi yürütülen" (%50 başarısızlık), B "sert" (%65 başarısızlık, İyimser %3). İkisinde de beklenen kâr pozitif; ama dağılım aşırı sağa çarpık — sonuçların çoğu kayıp, değer birkaç iyi sonuçta. Bu, kişisel sermayeyle girilecekse <strong>kayıp bütçesini baştan sınırlamayı</strong> (24. ay kapısı) gerektirir; portföy mantığıyla (birkaç girişimden biri) daha rahattır.</p>
+</section>
+<section class="item" id="risk"><div class="ih"><div class="box info">i</div><div><h2>Riskler ve azaltma</h2><span class="verdict info">9 başlık</span></div></div>
+<div class="tw"><table class="data wide"><thead><tr><th>Risk</th><th>Olasılık</th><th>Etki</th><th>Azaltma</th></tr></thead><tbody>
+<tr><td>Personel uygulamayı kullanmıyor; yönetici WhatsApp'a geri dönüyor</td><td><span class="tag hi">Yüksek</span></td><td><span class="tag hi">Yüksek</span></td><td>WhatsApp API ile bildirim; 3 ekranlık personel arayüzü; ilk 2 hafta yerinde kurulum; kullanım düşüşünde otomatik uyarı</td></tr>
+<tr><td>Düşük ödeme isteği; fiyat ₺500/lokasyon altına iniyor</td><td><span class="tag md">Orta</span></td><td><span class="tag hi">Yüksek</span></td><td>Zincir odaklı satış; yıllık peşin; ROI hesaplayıcı; tekil segmentte self-servis</td></tr>
+<tr><td>Connecteam/SafetyCulture Türkçe + TL ile gelir</td><td><span class="tag md">Orta</span></td><td><span class="tag md">Orta</span></td><td>Yerel dağıtım (franchise merkezleri, POS ortaklıkları), yerel uyum (KVKK, e-fatura), hızlı destek</td></tr>
+<tr><td>CheckMaster veya benzeri yerel oyuncu önce ölçeklenir</td><td><span class="tag md">Orta</span></td><td><span class="tag md">Orta</span></td><td>Pazar boş ve büyük; ilk 20 zincirle referans üstünlüğü; ürün değil dağıtım hızına yatırım</td></tr>
+<tr><td>Yapay zekâ ile herkesin iç araç yazabilmesi kategoriyi metalaştırır</td><td><span class="tag md">Orta</span></td><td><span class="tag md">Orta</span></td><td>Değer, yazılımda değil şablon kütüphanesi, uyum paketi, denetim izi ve destek hizmetinde konumlanmalı</td></tr>
+<tr><td>Zincir satış döngüsü uzar, CAC ikiye katlanır</td><td><span class="tag md">Orta</span></td><td><span class="tag md">Orta</span></td><td>Ücretli pilot (₺'li LOI) şartı; 8 haftayı geçen fırsatları kapatma disiplini</td></tr>
+<tr><td>KVKK şikâyeti / çalışan tepkisi (gözetim algısı)</td><td><span class="tag lo">Düşük</span></td><td><span class="tag md">Orta</span></td><td>Biyometri yok, sürekli konum yok, şeffaf aydınlatma; "işi kanıtla, kişiyi izleme" ilkesi</td></tr>
+<tr><td>TL/USD ve enflasyon: TL fiyat erir, dolar maliyet artar</td><td><span class="tag hi">Yüksek</span></td><td><span class="tag md">Orta</span></td><td>Fiyatları döviz endeksli veya çeyreklik güncellenir tutmak; sözleşmelerde artış maddesi</td></tr>
+<tr><td>Kurucu tek başına; teknik ve satış aynı kişide</td><td><span class="tag md">Orta</span></td><td><span class="tag hi">Yüksek</span></td><td>Satış-operasyon ortak (perakende/yeme-içme geçmişli) — lansmandan önce</td></tr>
+</tbody></table></div>
+</section>
+<section class="item" id="plan"><div class="ih"><div class="box info">i</div><div><h2>Doğrulama planı ve kapılar</h2><span class="verdict info">90 gün, ₺316 bin</span></div></div>
+<p>Fizibilitenin en belirsiz üç girdisi (ödeme isteği, benimseme, edinme hızı) masa başında değil sahada doğrulanır. Öneri, harcamadan önce 90 gün:</p>
+<ol>
+<li><strong>Hafta 1–4 — Sorun görüşmeleri:</strong> 20 zincir (5–100 lokasyon; yeme-içme, market, spor salonu, tesis yönetimi) operasyon müdürüyle görüşme. Ölçüt: en az 12'si bugün WhatsApp'la yürüttüğü "kanıt gerektiren" en az 3 tekrarlı listeyi sayabiliyor ve mevcut çözümüyle ilgili somut acı anlatıyor.</li>
+<li><strong>Hafta 3–8 — Tıklanabilir prototip + fiyat testi:</strong> Figma prototipi ile ₺729/lokasyon/ay teklif. Ölçüt: 20'den en az 5 zincir ücretli pilot niyet mektubu (LOI) imzalıyor.</li>
+<li><strong>Hafta 6–12 — "Çelik iplik" pilot:</strong> tek liste türü (kapanış), 3 tasarım-ortağı zincirde 15–30 lokasyon; WhatsApp bildirim + fotoğraf kanıtı. Ölçüt: 4. haftada lokasyon başına tamamlanma ≥ %80, yönetici haftada ≥ 3 kez rapor açıyor, en az 2 zincir yıllık sözleşmeye geçiyor.</li>
+</ol>
+<p class="note">Sprint maliyeti ≈ ₺316 bin (6 bin $; 1 geliştirici 2 ay + prototip + seyahat). Üç ölçütten ikisi tutmazsa proje burada biter; kayıp bir yazılım şirketinin bir aylık maaş bordrosu kadar.</p>
+<h3>Sonraki kapılar</h3>
+<ul>
+<li><strong>6. ay (lansman):</strong> 3 ödeyen zincir, ≥ 100 lokasyon canlı.</li>
+<li><strong>12. ay:</strong> en az 8 ödeyen zincir; gelir hedefi yerine <em>kayıp</em> ölçülür: zincir aylık kaybı ≤ %2,5, tekil ≤ %6; lokasyon başına haftalık tamamlanma ≥ %75.</li>
+<li><strong>24. ay (büyüt/kapat kapısı):</strong> ARR ≥ 107 bin $ (₺5,2 M), zincir kaybı ≤ %2, CAC geri ödeme ≤ 12 ay → satış ekibi ve mümkünse dış sermaye ile Baz senaryoya geçiş; ilk yurt dışı pilot (Türkçe konuşulan / Körfez / Balkanlar'daki Türk zincirleri).</li>
+<li><strong>36. ay:</strong> yurt dışı gelir payı ≥ %15 değilse "Türkiye'de kârlı niş" moduna geç (ekip sabit, EBITDA ≥ %20 hedefi), çıkış tezini franchise-yazılım/POS oyuncularına stratejik satış olarak kur.</li>
+</ul>
+</section>
+<section class="item" id="kaynak"><div class="ih"><div class="box info">i</div><div><h2>Kaynaklar ve sınırlar</h2><span class="verdict info">Neyi doğrulayamadım</span></div></div>
+<h3>Doğrulanamayan / tahmini kalemler</h3>
+<ul>
+<li>Otel/konaklama ve tesis-hizmet sahası lokasyon sayıları (tahmin; ±%50).</li>
+<li>CheckMaster fiyatının birimi (şirket mi şube mi; $ mı ₺ mi) sitede net değil.</li>
+<li>Kolay İK'nın güncel fiyatı yayınlanmıyor; TL ödeme isteği çıpası olarak Paraşüt kullanıldı.</li>
+<li>Türkiye'de işletmelerin WhatsApp'ı iş takibinde kullanma oranına dair güvenilir istatistik bulunamadı; varsayım niteliksel.</li>
+<li>Çıkış çarpanları: Türkiye'de bu ölçekte SaaS satışlarının bedelleri açıklanmıyor; küresel bantlardan iskonto uygulandı.</li>
+<li>Model kurumlar vergisini, işletme sermayesini ve kur riskini içermiyor; sabit dolarla çalışır.</li>
+</ul>
+<h3>Kaynaklar</h3>
+<ol class="src">
+<li id="k-comp"><strong>[R] Rakip fiyatları:</strong> <a href="https://www.educate-me.co/blog/safetyculture-pricing">SafetyCulture fiyat rehberi</a>, <a href="https://www.xpay.sh/saas-pricing/safetyculture/">xpay SafetyCulture</a>; <a href="https://connecteam.com/pricing/">Connecteam pricing</a>, <a href="https://www.actitime.com/software-collections/connecteam-pricing">actiTIME – Connecteam hub modeli</a>; <a href="https://softwarefinder.com/resources/how-much-does-jolt-cost">Jolt maliyeti</a>, <a href="https://restauranttools.ai/tools/jolt">RestaurantTools – Jolt</a>; <a href="https://www.xenia.team/pricing">Xenia pricing</a>, <a href="https://operandio.com/xenia-app-cost/">Operandio – Xenia maliyeti</a>; <a href="https://goaudits.com/pricing/">GoAudits</a>, <a href="https://www.capterra.com/p/191777/GoAudits/pricing/">Capterra – GoAudits</a>; <a href="https://checkmaster.app/">CheckMaster</a>, <a href="https://apps.apple.com/tr/app/checkmaster/id6746339344?l=tr">CheckMaster App Store</a>; <a href="https://www.yemekpos.com/franchise-yonetim-yazilimi/">YemekPOS franchise</a>, <a href="https://www.menulux.com/restoran-yonetimi/web-portal/merkezi-yonetim">Menulux</a>, <a href="https://www.patronpdks.com/">Patron PDKS</a>.</li>
+<li id="k-fund"><strong>[F] Finansman/değerleme:</strong> <a href="https://tracxn.com/d/companies/safetyculture/__b4zb84DDkwf7agQNXkBm2h8RPLNMOb5CC7E2h1QWnsc/funding-and-investors">Tracxn – SafetyCulture</a>, <a href="https://pitchbook.com/profiles/company/60535-18">PitchBook – SafetyCulture</a>; <a href="https://www.businesswire.com/news/home/20210503005296/en">Connecteam Seri C (BusinessWire)</a>, <a href="https://tracxn.com/d/companies/connecteam/__kxUHdDO-KYV5AYYQUalaQ4iO97HkUuKUoAHhUmHKRUI/funding-and-investors">Tracxn – Connecteam</a>.</li>
+<li id="k-mkt"><strong>[M] Pazar büyüklüğü:</strong> <a href="https://www.guideflow.com/blog/frontline-worker-software">Guideflow – frontline software 2026</a>; <a href="https://growthmarketreports.com/report/frontline-worker-platform-market">Growth Market Reports – frontline platform</a>; <a href="https://www.researchandmarkets.com/reports/6260957/frontline-worker-technology-market-share">Research&Markets – frontline technology</a>; <a href="https://www.drakestar.com/news/drake-star-frontline-technology-report-august-2026">Drake Star Ağustos 2026 raporu</a>.</li>
+<li id="k-tr"><strong>[T] Türkiye pazar sayıları:</strong> <a href="https://www.loginoffice.com.tr/turkiyede-franchise-almak/">Login Office – franchise rehberi (UFRAD verisi)</a>, <a href="https://www.ekonomim.com/ekonomi/franchiseda-islem-hacmi-50-milyar-dolara-ulasti-haberi-675905">Ekonomim – franchise hacmi</a>; <a href="https://www.marketingturkiye.com.tr/haberler/perakende-buyumeye-devam-ediyor-2024te-3-bin-478-yeni-market-acildi/">Marketing Türkiye – 55.737 market</a>, <a href="https://www.gazetebirlik.com/ekonomi/turkiyedeki-market-zincirlerinin-sube-sayisi-55-bini-asti/274498">Yeni Birlik – zincir şube sayıları</a>; <a href="https://www.milligazete.com.tr/turkiyede-kayitli-yeme-icme-is-yeri-sayisi-2010-yilinda-62-bin-iken-2025te-159-bine-cikti">Milli Gazete – 158.725 yeme-içme işyeri</a>, <a href="https://www.ipsos.com/tr-tr/restoran-ve-kafelerin-sayisi-artti">Ipsos</a>; <a href="https://petrolpiyasasi.com/tum-dagitim-sirketlerinin-2025-yili-toplam-istasyon-sayisi-fark-kayip-kazanc/">Petrol Piyasası – istasyon sayısı</a>, <a href="https://www.otoraf.com/akaryakit-istasyonlari-bp-opet-petrol-ofisi-shell-ve-total.html">Otoraf</a>; <a href="https://www.karo360.com/turkiyede-spor-merkezlerinin-sayisinda-hizli-artis-saglikli-yasama-dogru-adim/">Karo – spor salonu sayısı</a>; <a href="https://www.researchgate.net/profile/Mehmet-Atasever-3/publication/343987376_Turkiye_Serbest_Eczane_Sektor_Analizi/links/5f4ca1a2458515a88b95c919/Tuerkiye-Serbest-Eczane-Sektoer-Analizi.pdf">TEB – eczane sektör analizi</a>; <a href="https://www.dunya.com/ekonomi/tuik-acikladi-girisim-sayisi-ve-istihdamda-en-yuksek-pay-hizmet-sektorunde-haberi-791437">Dünya – TÜİK 2024 sanayi ve hizmet istatistikleri</a>.</li>
+<li id="k-tr-saas"><strong>[S] Türkiye SaaS emsalleri:</strong> <a href="https://getlatka.com/companies/kolay-k">Latka – Kolay İK geliri</a>; <a href="https://www.parasut.com/on-muhasebe-fiyatlari">Paraşüt fiyatları</a>; <a href="https://tracxn.com/d/companies/parasut/___UwRXC2mDybt7qemB8X3MNUQvsKND3-UaTuA5pOT_4Y">Tracxn – Paraşüt</a>; <a href="https://pitchbook.com/profiles/company/166459-51">PitchBook – Insider</a>; <a href="https://www.scalexventures.com/content/turkish-startup-and-vc-ecosystem-at-a-glance">ScaleX – Türkiye ekosistemi</a>.</li>
+<li id="k-dev"><strong>[D] Maaşlar:</strong> <a href="https://www.eleman.net/meslek/flutter-developer/maas">Eleman.net – Flutter maaşları 2026</a>; <a href="https://code2work.co/blog/yazilimci-maaslari-2026-turkiye">Code2Work – yazılımcı maaşları 2026</a>.</li>
+<li id="k-saas"><strong>[B] SaaS kıyas ölçütleri:</strong> <a href="https://www.venasolutions.com/blog/saas-churn-rate">Vena – churn benchmarks</a>; <a href="https://www.stackmatix.com/blog/payback-period-saas-benchmarks">Stackmatix – CAC payback</a>; <a href="https://optif.ai/learn/questions/b2b-saas-churn-rate-benchmark/">Optifai – churn by segment</a>; <a href="https://abdullahcalis.com/blog/dijital-pazarlama-butcesi-2026">Abdullah Çalış – B2B CPL Türkiye</a>.</li>
+<li id="k-wa"><strong>[WA] WhatsApp Business API:</strong> <a href="https://whautomate.com/whatsapp-business-api-pricing">Whautomate – ülke tarifeleri 2026</a>; <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing">Meta – WhatsApp pricing</a>.</li>
+<li id="k-kvkk"><strong>[K] KVKK:</strong> <a href="https://www.kvkk.gov.tr/Icerik/8762/mesai-takibi-amaciyla-biyometrik-veri-islenmesi-hakkinda-kisisel-verileri-koruma-kurulunun-29-04-2026-tarihli-ve-2026-921-sayili-ilke-karari-iliskin-kamuoyu-duyurusu">Kurul 2026/921 ilke kararı</a>; <a href="https://www.kvkk.gov.tr/Icerik/6913/2020-404">Kurul 2020/404 kararı</a>; <a href="https://www.sinaneroglu.av.tr/isyerinde-izleme-sistemlerinin-hukuka-uygunlugu-kvkk-2026-921-ilke-karari-sonrasi-durum/">İşyerinde izleme – 2026/921 sonrası</a>.</li>
+<li><strong>Kur:</strong> <a href="https://www.bloomberght.com/doviz/dolar">BloombergHT USD/TRY, 12 Eylül 2026</a>.</li>
+</ol>
+</section>
+</main>
+</div>
+</div>
+
+<div class="tip" id="tip"></div>
+<script>
+(function(){
+  var tip=document.getElementById('tip');
+  var fmt=function(v){return v.toLocaleString('tr-TR',{maximumFractionDigits:0});};
+  document.querySelectorAll('svg.chart').forEach(function(svg){
+    var hit=svg.querySelector('rect.hit'); if(!hit) return;
+    var series=JSON.parse(hit.getAttribute('data-series'));
+    var L=+hit.getAttribute('data-l'), pw=+hit.getAttribute('data-pw');
+    var xh=svg.querySelector('line.xh');
+    var pt=svg.createSVGPoint();
+    function move(e){
+      pt.x=e.clientX; pt.y=e.clientY;
+      var p=pt.matrixTransform(svg.getScreenCTM().inverse());
+      var m=Math.max(1,Math.min(60,Math.round((p.x-L)/pw*60)));
+      var x=L+pw*(m/60);
+      xh.setAttribute('x1',x); xh.setAttribute('x2',x); xh.style.display='';
+      var y=Math.floor((m-1)/12)+1, mm=((m-1)%12)+1;
+      var h='<b>'+m+'. ay</b> (Y'+y+' · '+mm+'. ay)<br>';
+      series.forEach(function(s){ h+=s[0]+': <b>'+fmt(s[1][m-1]/1000)+' bin $</b><br>'; });
+      tip.innerHTML=h; tip.style.display='block';
+      var tx=e.clientX+14, ty=e.clientY+14;
+      if(tx+tip.offsetWidth>window.innerWidth-8) tx=e.clientX-tip.offsetWidth-14;
+      if(ty+tip.offsetHeight>window.innerHeight-8) ty=e.clientY-tip.offsetHeight-14;
+      tip.style.left=tx+'px'; tip.style.top=ty+'px';
+    }
+    hit.addEventListener('mousemove',move);
+    hit.addEventListener('mouseleave',function(){tip.style.display='none'; xh.style.display='none';});
+  });
+})();
+</script>
+

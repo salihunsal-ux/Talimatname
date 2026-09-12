@@ -1,0 +1,55 @@
+DCF çıkışsız Kötümser: r=20% PV(t0) $0.38M | r=30% PV(t0) $0.14M | ARR Y10 $0.98M
+DCF çıkışsız Yalın: r=20% PV(t0) $0.71M | r=30% PV(t0) $0.27M | ARR Y10 $1.85M
+DCF çıkışsız Baz: r=20% PV(t0) $1.18M | r=30% PV(t0) $0.45M | ARR Y10 $3.09M
+DCF çıkışsız İyimser: r=20% PV(t0) $3.30M | r=30% PV(t0) $1.26M | ARR Y10 $8.63M
+EV(a) $3.35M  Kötümser 50%: $-0.44M, Yalın 25%: $3.12M, Baz 18%: $5.11M, İyimser 7%: $26.78M
+EV(b) $1.75M  Kötümser 65%: $-0.44M, Yalın 20%: $3.12M, Baz 12%: $5.11M, İyimser 3%: $26.78M
+TAM: 225,000 lokasyon, $33.7M/yıl (₺1.64 mlr) | SAM: 99,700 lokasyon, $15.7M/yıl
+
+=== Kötümser ===  lansman ay 8  başabaş ay None  tepe sermaye $1630k (₺79.2M)  çıkış $1.23M  MOIC 0.8x  IRR -13%  | ay-24: küm $-445k, ARR $57k, lok 506
+  Y1: lok     84 (zincir     57) | gelir $      2k | ARR-son $      9k | EBITDA $   -182k | küm $   -182k
+  Y2: lok    506 (zincir    348) | gelir $     37k | ARR-son $     57k | EBITDA $   -263k | küm $   -445k
+  Y3: lok  1,402 (zincir    999) | gelir $    117k | ARR-son $    161k | EBITDA $   -363k | küm $   -808k
+  Y4: lok  2,661 (zincir  1,960) | gelir $    246k | ARR-son $    309k | EBITDA $   -402k | küm $  -1211k
+  Y5: lok  4,182 (zincir  3,193) | gelir $    414k | ARR-son $    493k | EBITDA $   -420k | küm $  -1630k
+  birim: zincir GM 78% LTV $343 LTV/CAC 2.4 payback 16.3 ay | tekil GM 62% LTV $62 LTV/CAC 1.0 payback 16.1 ay
+
+=== Yalın ===  lansman ay 7  başabaş ay 55  tepe sermaye $627k (₺30.5M)  çıkış $3.71M  MOIC 6.0x  IRR 73%  | ay-24: küm $-298k, ARR $107k, lok 680
+  Y1: lok    112 (zincir     76) | gelir $      5k | ARR-son $     18k | EBITDA $   -134k | küm $   -134k
+  Y2: lok    680 (zincir    470) | gelir $     68k | ARR-son $    107k | EBITDA $   -164k | küm $   -298k
+  Y3: lok  1,819 (zincir  1,284) | gelir $    210k | ARR-son $    289k | EBITDA $   -183k | küm $   -482k
+  Y4: lok  3,514 (zincir  2,574) | gelir $    445k | ARR-son $    565k | EBITDA $   -109k | küm $   -590k
+  Y5: lok  5,688 (zincir  4,337) | gelir $    769k | ARR-son $    927k | EBITDA $      1k | küm $   -590k
+  birim: zincir GM 83% LTV $692 LTV/CAC 7.7 payback 7.2 ay | tekil GM 74% LTV $133 LTV/CAC 4.4 payback 4.5 ay
+
+=== Baz ===  lansman ay 6  başabaş ay 57  tepe sermaye $1127k (₺54.8M)  çıkış $6.21M  MOIC 5.5x  IRR 74%  | ay-24: küm $-460k, ARR $167k, lok 1061
+  Y1: lok    165 (zincir    114) | gelir $      9k | ARR-son $     26k | EBITDA $   -189k | küm $   -189k
+  Y2: lok  1,061 (zincir    726) | gelir $    106k | ARR-son $    167k | EBITDA $   -272k | küm $   -460k
+  Y3: lok  2,995 (zincir  2,125) | gelir $    342k | ARR-son $    477k | EBITDA $   -317k | küm $   -777k
+  Y4: lok  5,881 (zincir  4,339) | gelir $    743k | ARR-son $    948k | EBITDA $   -250k | küm $  -1027k
+  Y5: lok  9,510 (zincir  7,297) | gelir $   1288k | ARR-son $   1552k | EBITDA $    -69k | küm $  -1096k
+  birim: zincir GM 83% LTV $692 LTV/CAC 6.3 payback 8.8 ay | tekil GM 74% LTV $133 LTV/CAC 2.7 payback 7.5 ay
+
+=== İyimser ===  lansman ay 5  başabaş ay 34  tepe sermaye $642k (₺31.2M)  çıkış $25.98M  MOIC 42.7x  IRR 171%  | ay-24: küm $-454k, ARR $393k, lok 1921
+  Y1: lok    279 (zincir    192) | gelir $     22k | ARR-son $     56k | EBITDA $   -188k | küm $   -188k
+  Y2: lok  1,921 (zincir  1,383) | gelir $    244k | ARR-son $    393k | EBITDA $   -265k | küm $   -454k
+  Y3: lok  5,653 (zincir  4,194) | gelir $    825k | ARR-son $   1166k | EBITDA $   -155k | küm $   -608k
+  Y4: lok 11,917 (zincir  9,248) | gelir $   1906k | ARR-son $   2493k | EBITDA $    293k | küm $   -316k
+  Y5: lok 20,486 (zincir 16,430) | gelir $   3516k | ARR-son $   4330k | EBITDA $   1115k | küm $    799k
+  birim: zincir GM 86% LTV $1361 LTV/CAC 13.6 payback 6.1 ay | tekil GM 80% LTV $239 LTV/CAC 6.0 payback 4.2 ay
+
+Duyarlılık (Baz) ARR Y5 $k — satır ARPU, sütun churn:
+          1.0%    1.5%    1.8%    2.5%    3.5%
+$ 10.0    1224    1153    1115    1034     938
+$ 12.5    1470    1382    1334    1233    1113
+$ 15.0    1716    1610    1552    1431    1287
+$ 17.5    1963    1839    1771    1630    1462
+$ 20.0    2209    2068    1990    1829    1637
+
+Duyarlılık (Baz) IRR — satır ekleme çarpanı, sütun ARPU:
+        $ 10.0  $ 12.5  $ 15.0  $ 17.5  $ 20.0
+x0.50      11      24      35      45      54
+x0.75      31      45      58      69      79
+x1.00      46      61      74      87      98
+x1.25      57      73      88     101     114
+x1.50      66      83      99     113     127

@@ -1,0 +1,140 @@
+{
+ "pages": [
+  {
+   "id": "page-1",
+   "name": "Rafine"
+  },
+  {
+   "id": "page-2",
+   "name": "İlk yönler"
+  }
+ ],
+ "artboards": [
+  {
+   "file": "Main.dc.html",
+   "x": 0,
+   "y": 0,
+   "w": 1400,
+   "h": 1000,
+   "title": "talimatname · çalışma adı",
+   "page": "page-1"
+  },
+  {
+   "file": "YapLutfenA.dc.html",
+   "x": 1500,
+   "y": 0,
+   "w": 1400,
+   "h": 1000,
+   "title": "yap lütfen · A · Rica",
+   "page": "page-1"
+  },
+  {
+   "file": "TamamlistB.dc.html",
+   "x": 3000,
+   "y": 0,
+   "w": 1400,
+   "h": 1000,
+   "title": "tamamlist · B · Mesaj",
+   "page": "page-1"
+  },
+  {
+   "file": "Tembihle.dc.html",
+   "x": 4500,
+   "y": 0,
+   "w": 1400,
+   "h": 1000,
+   "title": "tembihle · isim testi kartı",
+   "page": "page-1"
+  },
+  {
+   "file": "YapLutfenB.dc.html",
+   "x": 0,
+   "y": 0,
+   "w": 920,
+   "h": 660,
+   "title": "yap lütfen · B · Kutu",
+   "page": "page-2"
+  },
+  {
+   "file": "YapLutfenC.dc.html",
+   "x": 1000,
+   "y": 0,
+   "w": 920,
+   "h": 660,
+   "title": "yap lütfen · C · Not",
+   "page": "page-2"
+  },
+  {
+   "file": "TamamlistA.dc.html",
+   "x": 0,
+   "y": 860,
+   "w": 920,
+   "h": 660,
+   "title": "tamamlist · A · Tik-liste",
+   "page": "page-2"
+  },
+  {
+   "file": "TamamlistC.dc.html",
+   "x": 1000,
+   "y": 860,
+   "w": 920,
+   "h": 660,
+   "title": "tamamlist · C · Damga",
+   "page": "page-2"
+  }
+ ],
+ "annotations": [
+  {
+   "id": "not-name",
+   "x": 0,
+   "y": 1034,
+   "w": 1400,
+   "text": "talimatname · çalışma adı (12 Eylül 2026) — 'nâme' = belge; işaret sayfa + mühür: talimat yazılır (sayfa), iş yapılır, kanıt mühürlenir. Slab serif eski kelimeyi modern tutar. Artı: 4/4 alan adı boş, uydurma-derecesinde ayırt edici (tescil kolay), kanıt/kayıt hikâyesini isim taşıyor. Eksi: 11 harf, bürokrasi tınısı; personel tarafında 'resmî' algılanabilir — isim testinde ölçülecek; yurt dışına taşınmaz.",
+   "page": "page-1"
+  },
+  {
+   "id": "not-rica-rafine",
+   "x": 1500,
+   "y": 1034,
+   "w": 1400,
+   "text": "yap lütfen · rafine — Balonun kuyruğu gövdeye kaynaştı (tek çizgi), tik gövdenin optik merkezinde. 16 px'te kuyruk kayboluyor: favicon için kuyruksuz sürüm. Koruma alanı = ikon yüksekliğinin yarısı. Nane yeşili yalnızca arayüzde 'yapıldı' durumu için; logoda kullanılmaz.",
+   "page": "page-1"
+  },
+  {
+   "id": "not-mesaj-rafine",
+   "x": 3000,
+   "y": 1034,
+   "w": 1400,
+   "text": "tamamlist · rafine — Rica'dan ayrışması için balon köşeli (kart) ve kuyruk sağ-altta: gelen istek değil, giden cevap. Tik aynı kalınlıkta. 'list' iki tonlu yazılmadı; tek renk daha sakin. Çivit, B2B yazılımda tanıdık; Rica'nın mercanıyla yan yana konunca sıcak/soğuk farkı isim kararını kolaylaştırır.",
+   "page": "page-1"
+  },
+  {
+   "id": "not-tembih",
+   "x": 4500,
+   "y": 1034,
+   "w": 1400,
+   "text": "tembihle · isim testi kartı — 'Tembih etmek' = tekrar tekrar, önceden hatırlatmak; işaret tekrar halkası içinde tik (tekrarlı liste + yapıldı). Safran: uyarı/hatırlatma rengi, mercan ve çivitten ayrışır. Artı: 4/4 alan adı boş, anlam ürünün tam kendisi, sıcak. Eksi: hafif ebeveyn/anne tınısı — personel 'patron' değil 'anne' mi duyar, sahada test edilecek; yurt dışına taşınmaz.",
+   "page": "page-1"
+  },
+  {
+   "id": "not-secim",
+   "x": 0,
+   "y": -150,
+   "w": 1400,
+   "text": "Çalışma adı (12 Eylül 2026): talimatname — Mühür sistemi esas (önceki çalışma adları: Talimat, yap lütfen). İsim testi: Talimatname her görüşmede gösterilir; yanına yap lütfen / tamamlist / tembihle'den ikisi dönüşümlü. Kesin karar 20 tepkiden sonra. Elenen ilk yönler 'İlk yönler' sayfasında.",
+   "page": "page-1"
+  },
+  {
+   "id": "not-ilk",
+   "x": 0,
+   "y": -120,
+   "w": 900,
+   "text": "İlk turdaki dört yön, referans için. Seçilmedi; rafine edilmedi.",
+   "page": "page-2"
+  }
+ ],
+ "launch": {
+  "view": "canvas",
+  "page": "page-1"
+ }
+}

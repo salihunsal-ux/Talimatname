@@ -1,0 +1,38 @@
+# Talimatname
+
+Talimatname, çok şubeli yeme-içme zincirlerinin şubelere verdiği tekrarlı talimatları (açılış, kapanış, hijyen, soğuk zincir, haftalık temizlik) WhatsApp gruplarından çıkarıp **kanıtlı, loglu ve raporlanabilir** hâle getiren bir mobil + web üründür. Personel listeyi telefondan veya şube tabletinden tamamlar, fotoğraf/ölçüm kanıtı yükler, yapamadığını sebebiyle bildirir; merkez her sabah hangi şubede neyin yapılıp yapılmadığını kanıtıyla görür.
+
+Bu depo ürünün **iş analizi ve ürün sahipliği** dokümantasyonunu taşır: strateji, kapsam, analiz, gereksinimler, ekran tasarımları, test hazırlığı ve geliştirme hazırlığı. Kod ayrı depolarda tutulacaktır (bkz. `docs/07-gelistirme/02-repo-ve-ortam-kurulumu.md`).
+
+## Depo haritası
+
+- [Ürün merkezi](docs/00-urun-merkezi.md) — buradan başla: ürün özeti, karar haritası, belge navigasyonu, durum.
+- [Çalışma planı](docs/00-calisma-plani.md) — BA/PO çalışma fazları, teslimatlar, durum.
+- [01 Strateji](docs/01-strateji) — fizibilite raporu ve modeli, pilot görüşme rehberi, isim ve marka çalışması.
+- [02 Ürün](docs/02-urun) — vizyon ve konumlanma, personalar, MVP kapsamı, yetenek haritası.
+- [03 Analiz](docs/03-analiz) — aktörler, kullanım senaryoları (use case) kataloğu ve detayları, uçtan uca senaryolar.
+- [04 Gereksinimler](docs/04-gereksinimler) — fonksiyonel ve fonksiyonel olmayan gereksinimler, iş kuralları, veri modeli, API taslağı, KVKK ve güvenlik.
+- [05 Tasarım](docs/05-tasarim) — ekran envanteri ve navigasyon, mobil ve web tel-çerçeveler, tasarım sistemi, marka dosyaları.
+- [06 Test](docs/06-test) — test stratejisi, kabul test senaryoları, test verisi ve ortam, cihaz matrisi, pilot UAT planı.
+- [07 Geliştirme](docs/07-gelistirme) — kodlama hazırlık indeksi, teknik mimari, repo ve ortam kurulumu, backlog ve sprint planı, DoR/DoD.
+- [ADR](docs/adr) — ürün ve mimari karar kayıtları.
+
+## Güncel ürün kararları
+
+- Çalışma adı: **Talimatname** (12 Eylül 2026; kesin isim pilot görüşmelerindeki isim testinden sonra — kartlar: yap lütfen, tamamlist, tembihle)
+- İlk pazar: Türkiye · ilk dikey: yeme-içme zincirleri · ilk müşteri: 5–100 şubeli zincir merkezi
+- İlk sürüm: tam MVP, 5–6 ay, 12 sprint; WhatsApp entegrasyonu MVP dışı (push + SMS yedek)
+- Kişi bazlı performans skoru yok; skor şube düzeyinde
+- Fizibilite kararı: Koşullu GO — 90 günlük doğrulama sprinti (20 görüşme → 5 LOI → 3 pilot), 24. ayda büyüt/kapat kapısı
+
+## Bu depoda nasıl çalışılır
+
+1. `docs/00-urun-merkezi.md` ile başla.
+2. Strateji belgeleri yalnızca pazar, konumlanma veya hedef kitle varsayımı değişince güncellenir.
+3. Kapsam, akış veya veri modeli değişince gereksinim belgeleri ve izlenebilirlik tabloları birlikte güncellenir (ID'ler kalıcıdır; silinen madde "İptal" olarak işaretlenir, numarası yeniden kullanılmaz).
+4. Her anlamlı karar `docs/adr` altına yazılır.
+5. Her iş paketi bittiğinde commit atılır ve uzak depoya gönderilir.
+
+## Hızlı başlangıç (geliştirici)
+
+`docs/07-gelistirme/00-kodlama-hazirlik-indeksi.md` — kodlamaya başlamadan önce okunacak belgelerin sıralı listesi ve hazırlık kontrol listesi.

@@ -1,0 +1,7 @@
+# üretilen / büyük dosyalar
+*.pyc
+__pycache__/
+docs/05-tasarim/marka/*-logo-*.html
+docs/05-tasarim/marka/logo-tuvali.html
+.DS_Store
+Thumbs.db
