@@ -41,7 +41,7 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | GET/POST | /templates · /templates/{id}/versions | Şablonlar ve sürümler |
 | PATCH | /template-versions/{id} (taslak) · POST …/publish · POST …/validate | Düzenleme, yayın, doğrulama |
 | GET/POST | /library/templates · POST /library/templates/{id}/copy | Kütüphane |
-| POST | /template-versions/{id}/rules/test | Kural deneme (Should) |
+| POST | /template-versions/{id}/rules/test | Kural deneme — v1.1 |
 | GET/POST/PATCH | /plans · GET /plans/{id}/preview?days=7 | Plan ve önizleme |
 | POST | /plans/oneoff | Tek seferlik liste |
 
@@ -51,10 +51,12 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | GET | /runs?site=&from=&to= · GET /runs/today | Bugün / dönem çalıştırmaları (önbellek için ETag) |
 | GET | /runs/{id} | Detay (maddeler, cevaplar, kanıt küçük resimleri) |
 | PATCH | /runs/{id}/assignments | Günlük yeniden atama (FR-0519) |
+| POST | /runs/{id}/claim · /runs/{id}/release | Çalıştırma kilidi al/bırak (FR-0521, BR-26) |
+| GET | /digest/morning?date= | Sabah özeti verisi (FR-1212) |
 | PUT | /runs/{id}/answers/{answerId} | Madde cevabı (idempotent; çevrimdışı kuyruk buradan boşalır) |
 | POST | /runs/{id}/submit | Gönderim → puan/durum (BR-05…07) |
 | POST | /runs/{id}/wont-do | Yapılmayacak (BR-04) |
-| POST | /runs/{id}/addenda | Ek kayıt (BR-12) |
+| POST | /runs/{id}/addenda | Ek kayıt (BR-12) — v1.1 |
 | POST | /evidence/upload-url · POST /evidence/{id}/complete | Ön imzalı yükleme URL'si; yükleme tamamlandı (hash doğrulama, damgalama işi) |
 | GET | /evidence/{id}?variant=stamped|raw | İmzalı, 15 dk süreli indirme URL'si |
 | POST | /sync/batch | Çevrimdışı kuyruk toplu senk (cevaplar + kanıt meta; zaman farkı hesabı) |
@@ -68,24 +70,25 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | GET/POST/PATCH | /actions · /actions/{id}/transition · /actions/{id}/comments | Aksiyonlar, durum geçişi, yorumlar |
 | GET | /escalations?source= | Eskalasyon adımları (destek/denetim) |
 
-### Duyuru ve bildirim
+### Duyuru (v1.1) ve bildirim
 | Yöntem | Yol | Amaç |
 |---|---|---|
 | GET/POST | /announcements · POST /announcements/{id}/ack · POST …/remind | Duyuru, onay, hatırlatma |
-| GET/PATCH | /me/notification-preferences | Tercihler |
+| GET/PATCH | /me/notification-preferences | Tercihler — v1.1 |
 | GET | /notifications?user= | Teslimat izi (destek/yönetici) |
 
 ### Rapor ve dışa aktarım
 | Yöntem | Yol | Amaç |
 |---|---|---|
 | GET | /reports/grid?date=&region= | Operasyon ızgarası |
-| GET | /reports/completion · /reports/failed-items · /reports/reasons · /reports/measurements · /reports/actions | Raporlar (filtre: şube, bölge, şablon, dönem) |
-| GET | /reports/person-followup?site= | Kişi düzeyi gecikme/eksik (yetki: şube/bölge müdürü; BR-20) |
+| GET | /reports/monthly · /reports/measurements | v1 raporları (aylık tek sayfa, ölçüm günlüğü) |
+| GET | /reports/completion · /reports/failed-items · /reports/reasons · /reports/actions | v1.1 raporları |
+| GET | /reports/person-followup?site= | Kişi düzeyi gecikme/eksik (yetki: şube/bölge müdürü; BR-20) — v1.1 |
 | GET | /evidence?site=&station=&item=&from=&to= | Kanıt galerisi |
-| POST | /exports/run-pdf · /exports/period-pdf · /exports/excel | Asenkron üretim; `GET /exports/{id}` durum + indirme |
-| POST | /exports/{id}/share | Süreli paylaşım bağlantısı |
+| POST | /exports/run-pdf · /exports/period-pdf | Asenkron üretim; `GET /exports/{id}` durum + indirme (Excel v1.1) |
+| POST | /exports/{id}/share | Süreli paylaşım bağlantısı — v1.1 |
 
-### Denetim izi ve uyum
+### Denetim izi ve uyum (v1: yalnızca /audit/verify iç araç; diğerleri v1.1 — KVKK talepleri v1'de destek betiğiyle)
 | Yöntem | Yol | Amaç |
 |---|---|---|
 | GET | /audit?object=&from=&to= · GET /audit/verify?from=&to= | Olay izi, zincir doğrulama |
@@ -98,6 +101,8 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 |---|---|---|
 | GET | /public/v1/runs · /answers · /actions · /measurements | Hesap API anahtarıyla, salt okunur, imleç sayfalı |
 | POST/GET | /webhooks | Olay abonelikleri: run.missed, item.critical_failed, action.overdue (HMAC imzalı) |
+
+Sürüm: işaretsiz uç noktalar v1; "v1.1" işaretli olanlar ilk sürümde yayınlanmaz (ADR-0008).
 
 ## Çevrimdışı senk sözleşmesi (özet)
 

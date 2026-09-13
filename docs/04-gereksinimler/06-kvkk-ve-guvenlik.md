@@ -18,6 +18,8 @@ Talimatname, müşteri (zincir) adına **veri işleyen**dir; zincir **veri sorum
 
 ## Rol × yetki matrisi (uygulama uç noktalarında zorunlu)
 
+> v1'de Hesap yön., Op. müdürü ve Kalite sütunları tek **Yönetici** rolüdür (üçünün birleşimi); Gözlemci v1.1 (ADR-0008). Duyuru, denetim izi ekranı ve KVKK talep ekranı satırları v1.1'de devreye girer; v1'de KVKK talepleri destek betiğiyle, Yönetici talebiyle işlenir.
+
 | Kaynak / eylem | Hesap yön. | Op. müdürü | Kalite | Bölge müd. | Şube müd. | Personel | Gözlemci |
 |---|---|---|---|---|---|---|---|
 | Hesap ayarları, saklama, KVKK talepleri | RW | R | R | – | – | – | – |

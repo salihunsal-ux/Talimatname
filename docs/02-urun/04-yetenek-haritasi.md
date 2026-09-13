@@ -1,35 +1,35 @@
-# Yetenek haritası (MVP)
+# Yetenek haritası
 
-Kaynak: [MVP kapsamı](03-mvp-kapsam.html) §4 (57 Must / 10 Should / 5 Could). Yetenek (CAP), kapsam satırlarını (O-1, Ş-2, P-3…) geliştirme ve test için gruplar; her CAP, use case'lere (UC) ve fonksiyonel gereksinimlere (FR) bağlanır. Öncelik: **M** = MVP zorunlu, **S** = süre izin verirse MVP, **C** = v1.x.
+Kaynak: [v1 çekirdek kapsamı](06-v1-cekirdek-kapsam.md) (ADR-0008). Yetenek (CAP), kapsam satırlarını gruplar; her CAP use case'lere (UC) ve fonksiyonel gereksinimlere (FR) bağlanır. Sürüm: **v1** ilk sürüm · **v1.1** pilot sonrası · **v2** daha sonra. CAP numaraları korunur; ertelenen CAP'ler listede kalır.
 
-| CAP | Yetenek | Kapsam satırları | Ö | Kısa tanım | UC |
+| CAP | Yetenek | v1 içeriği | v1.1'e bırakılan | Sürüm | UC |
 |---|---|---|---|---|---|
-| CAP-01 | Hesap ve organizasyon | O-1, O-2, O-6, O-8 | M | Çok kiracılı hesap; Marka › Bölge › Şube › İstasyon hiyerarşisi; Excel'den toplu yükleme; işten ayrılma/maskeleme | UC-01, UC-02 |
-| CAP-02 | Kimlik ve yetki | O-3, O-4, O-5, O-7 | M | Roller ve yetki matrisi; telefon + OTP; yönetici e-posta + 2FA; ortak cihaz (kiosk) PIN; akıllı gruplar | UC-03, UC-04 |
-| CAP-03 | Şablon tasarımı | Ş-1, Ş-2, Ş-3, Ş-5, Ş-6 | M | Sürümlü şablon editörü; madde türleri (onay, çoktan seçmeli, sayı, sıcaklık, metin, fotoğraf, video, imza, barkod, tarih-saat, talimat); puanlama; 30 Türkçe şablon | UC-05 |
-| CAP-04 | Koşullu mantık | Ş-4 | M | (madde, cevap) → ek soru / not iste / fotoğraf iste / aksiyon oluştur / bildir / atla | UC-05, UC-08 |
-| CAP-05 | Planlama ve pencereler | P-1…P-7 | M | RRULE tekrar; açılış/kapanış pencereleri (gece yarısını aşan); atama (rol/kişi/grup/istasyon; biri/herkes); otomatik çalıştırma üretimi; tatil takvimi; tek seferlik liste; hatırlatma politikası | UC-06, UC-07 |
-| CAP-06 | Mobil yürütme ve kanıt | Y-1, Y-2, Y-3, Y-6, Y-9 | M | Bugün ekranı; madde tamamlama; kamera-içi kanıt, damga, sıkıştırma; gönderim ve kilit; düşük okuryazarlık tasarımı | UC-08, UC-09 |
-| CAP-07 | Çevrimdışı çalışma | Y-5 | M | Yerel önbellek ve kanıt kuyruğu; arka planda senk; çakışma kuralları; 72 saat | UC-09 |
-| CAP-08 | Yapılamadı ve sorun bildirimi | Y-4, Y-7 | M | Sebep seti + not + fotoğraf; kritik maddede yasak; liste dışı sorun bildirimi | UC-10, UC-11 |
-| CAP-09 | Aksiyon ve eskalasyon | A-1…A-6 | M | Aksiyon kaydı (atanan, vade, öncelik, durum); otomatik oluşturma; kapanış kanıtı; zamanlı eskalasyon merdiveni; yorum dizisi; filtreli listeler | UC-12, UC-13 |
-| CAP-10 | Bildirimler | Y-8, P-7 | M | Push (FCM/APNs) öncelikli; SMS yedek (kritik/eskalasyon); rol bazlı tercihler; sessiz saatler; teslimat izi | UC-07, UC-13 |
-| CAP-11 | Duyuru ve onay | D-1, D-2 | M | Hedefli duyuru; "okudum" onayı; hatırlatma; onay oranı | UC-14 |
-| CAP-12 | Raporlama ve dışa aktarım | R-1…R-7, R-9 | M | Operasyon ızgarası; tamamlanma/zamanındalık; başarısız madde analizi; ölçüm günlüğü; kanıt galerisi; PDF/Excel; aksiyon raporu; kişi düzeyi gecikme/eksik (skor yok) | UC-15, UC-16 |
-| CAP-13 | Denetim izi ve uyum | U-1…U-6 | M | Ekle-yalnız hash zincirli olay günlüğü; denetim izi görüntüleyici; KVKK aydınlatma, dışa aktarma/silme; saklama politikası; güvenlik; biyometri yok | UC-17, UC-18 |
-| CAP-14 | Yönetim paneli ve platform | W-1, W-2, W-3, W-4 | M | Kurulum sihirbazı; şube/personel yönetimi; bildirim ve eskalasyon ayarları; aktif şube sayacı (manuel faturalama) | UC-01, UC-02 |
-| CAP-15 | Şablon yardımcıları | Ş-7, Ş-8 | S | Şube türüne göre varyant; SOP/PDF'ten AI ile taslak şablon | UC-05 |
-| CAP-16 | Vardiya ve istasyon kolaylıkları | P-8, Y-10, Y-11 | S | Vardiya bazlı tekrar; vardiya devri notu; QR ile istasyondan başlatma | UC-06, UC-08 |
-| CAP-17 | Gözden geçirme ve imza | D-3, D-4, A-3 onaylı kapanış | S | Yönetici gözden geçirme notu; imzalı belge; duyuru → şablon bağlantısı | UC-14, UC-16 |
-| CAP-18 | Planlı raporlar ve API | R-8, W-5, W-7 | S | Sabah/haftalık e-posta özeti; salt okunur REST + webhook; i18n hazırlığı | UC-15 |
-| CAP-19 | v1.x adayları | O-9, Ş-9, A-7, R-10, W-6 | C | SSO/dizin senkronu; formül ve kaydırıcı; özel aksiyon tipleri; pano oluşturucu; PDKS/POS/İK bağlayıcıları | — |
+| CAP-01 | Hesap ve organizasyon | Çok kiracılı hesap; Marka › Bölge › Şube › İstasyon; Excel içe aktarma (şube, personel); pasifleştirme | Kimlik maskeleme ekranı (v1: destek betiği) | v1 | UC-01, UC-02 |
+| CAP-02 | Kimlik ve yetki | 4 rol × kapsam; telefon + OTP; yönetici e-posta + şifre; kiosk cihaz kaydı, PIN, kilit; şube müdürünün PIN ataması (E-1) | 2FA; akıllı gruplar; Gözlemci rolü | v1 | UC-03, UC-04 |
+| CAP-03 | Şablon tasarımı | Sürümlü editör (yayın hemen); 6 madde türü + talimat; zorunlu / fotoğraf zorunlu / kritik; sıcaklık aralığı; yüzde puan; 8 şablon kütüphanesi; yayın doğrulaması | Video/imza/barkod/tarih-saat; ağırlık ve eşik; tarihli yayın; 30 şablon | v1 | UC-05 |
+| CAP-04 | Koşullu mantık | Tek sabit kural: başarısız cevapta fotoğraf + not; kritik → aksiyon | Kural editörü ve altı eylem | v1 sabit | UC-05, UC-08 |
+| CAP-05 | Planlama ve pencereler | RRULE tekrar; pencere ve gece yarısı; tolerans; çalışma saatinden türetme; atama rol/kişi/herkes ("biri tamamlasın", ilk açan alır — E-2); üretim; kapalı gün; tek seferlik liste; sabit iki hatırlatma; günlük yeniden atama | "Herkes tamamlasın"; vardiya bazlı tekrar; hatırlatma ayarları | v1 | UC-06, UC-07, UC-19 |
+| CAP-06 | Mobil yürütme ve kanıt | Bugün; madde tamamlama (tek kullanıcı, kaldığı yerden devam); kamera doğrudan, 1–3 fotoğraf, sıkıştırma, damga, hash; gönderim kilidi; açılışta dün gece özeti (E-3); erişilebilirlik | Ek kayıt; çoklu kullanıcı/madde kilidi; QR ile başlatma; video | v1 | UC-08, UC-09 |
+| CAP-07 | Çevrimdışı çalışma | Aynen: önbellek, kuyruk, arka plan senk, zaman düzeltmesi, idempotency, kuyruk sınırları, senk ekranı | — | v1 | UC-09 |
+| CAP-08 | Yapılamadı ve sorun bildirimi | Yapılamadı (sabit sebep seti, kritikte yok); sorun bildir (fotoğraf + not, sabit kategori) → şube müdürü → aksiyona çevir / kapat | Sebep/kategori setleri yönetimi; sebep raporu; yükseltme | v1 | UC-10, UC-11 |
+| CAP-09 | Aksiyon ve eskalasyon | Aksiyon açık/kapalı, not, isteğe bağlı fotoğraf; otomatik oluşturma (kritik, yapılamadı, kaçırma), sabit vadeler; listeler; sabit eskalasyon kuralı; sabah özeti (E-5); kritik anında bildirim (E-6) | Durum makinesi, yorum dizisi, onaylı kapanış, merdiven editörü | v1 | UC-12, UC-13 |
+| CAP-10 | Bildirimler | Push; SMS (OTP, kritik, push teslim olmazsa); sabit sessiz saat; teslimat izi; token yönetimi; kanal-bağımsız arayüz | Tercih ekranı | v1 | UC-07, UC-13 |
+| CAP-11 | Duyuru ve onay | — | Tamamı | v1.1 | UC-14 |
+| CAP-12 | Raporlama ve dışa aktarım | İstisna odaklı ızgara (E-4); çalıştırma detayı; basit kanıt galerisi; sıcaklık günlüğü; aylık tek sayfa (E-7); çalıştırma PDF'i ve dönem PDF'i (doğrulama kodlu, arka plan üretim); "Bölgem" mobil listesi | Sıralama, ısı haritası, sebep dağılımı, aksiyon raporu, kişi takibi, Excel, paylaşım bağlantısı | v1 | UC-15, UC-16 |
+| CAP-13 | Denetim izi ve uyum | Ekle-yalnız hash zincirli olay günlüğü (arka plan); zincir doğrulama komutu (iç araç); güvenlik temel; biyometri yok; aydınlatma + konum izni; saklama 24 ay (arka plan); KVKK talepleri destek betiğiyle | Denetim izi ekranı; RFC 3161; KVKK talep ekranı; 2FA | v1 | UC-17 (arka plan), UC-18 (süreç) |
+| CAP-14 | Yönetim paneli ve platform | 4 adımlı sihirbaz (tek plan); şube/personel/cihaz yönetimi; aktif şube sayacı; i18n hazırlığı | Ayarlar paneli; API/webhook | v1 | UC-01, UC-02 |
+| CAP-15 | Şablon yardımcıları | — | Şube türü varyantı; AI taslak | v1.1 | UC-05 |
+| CAP-16 | Vardiya ve istasyon kolaylıkları | Açılışta dün gece özeti (E-3, CAP-06'da) | Vardiya bazlı tekrar; QR | v1.1 | UC-06, UC-08 |
+| CAP-17 | Gözden geçirme ve imza | — | Tamamı | v1.1 | UC-20 |
+| CAP-18 | Planlı raporlar ve API | Sabah özeti (E-5, CAP-09'da) | Salt okunur API; webhook | v1.1 | UC-15 |
+| CAP-19 | v2 adayları | — | SSO; formül/kaydırıcı; özel aksiyon tipleri; pano oluşturucu; PDKS/POS/İK | v2 | — |
 
 ## Sürüm dilimi
 
-- **GA (6. ay):** CAP-01…CAP-14 tamamı.
-- **GA'da süre kalırsa:** CAP-15…CAP-18 (Should) — sıralama: CAP-16 (QR, devir notu) → CAP-18 (sabah özeti) → CAP-15 → CAP-17.
-- **v1.x:** CAP-19.
+- **v1 (GA, 10. sprint):** CAP-01…CAP-10 (v1 içerikleri), CAP-12, CAP-13, CAP-14.
+- **v1.1 (pilot geri bildirimiyle sıralanır):** CAP-11, CAP-15, CAP-17, CAP-18 ve yukarıdaki "v1.1'e bırakılan" sütunu. Aday sıra: duyuru/onay → koşul editörü → herkes tamamlasın → aksiyon yorumları/onayı → raporlar → denetim izi ekranı + TSA → KVKK ekranı → 2FA → ayarlar → Excel/paylaşım → video/imza/barkod → QR → gruplar → varyant → AI.
+- **v2:** CAP-19.
 
 ## Kapsam dışı (bilinçli)
 
-Sohbet, mesai/PDKS, vardiya planı, eğitim/LMS, sensör/prob, varlık/iş emri, AI fotoğraf değerlendirme, WhatsApp kanalı, self-servis kayıt/ödeme, kişi skoru, franchise portalı — gerekçeleri MVP kapsamı §5'te.
+Sohbet, mesai/PDKS, vardiya planı, eğitim/LMS, sensör/prob, varlık/iş emri, AI fotoğraf değerlendirme, WhatsApp kanalı, self-servis kayıt/ödeme, kişi skoru, franchise portalı — gerekçeleri 03-mvp-kapsam.html §5'te.

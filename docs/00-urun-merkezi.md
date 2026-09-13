@@ -11,7 +11,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | Neyin yerine | WhatsApp grupları, kâğıt formlar, Excel, sıcaklık defteri |
 | Değer | Her iş kanıtla (fotoğraf, ölçüm, zaman, konum) kapanır; yapılmayan iş sebebiyle merkeze düşer; denetim kaydı 3 dakikada PDF |
 | Fiyat çıpası | Zincir: ~₺730/şube/ay (Baz senaryo 15 $) · tekil işletme self-servisi MVP dışı |
-| Durum | Doğrulama sprinti öncesi; dokümantasyon ve geliştirme hazırlığı tamamlanıyor |
+| Durum | Dokümantasyon v1 çekirdeğe göre yeniden çizildi (ADR-0008); doğrulama sprinti ve Sprint 0 bekliyor |
 
 ## Karar haritası
 
@@ -19,7 +19,8 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 |---|---|---|
 | Çalışma adı | Talimatname (geçici; isim testi kartları: yap lütfen, tamamlist, tembihle) | [ADR-0001](adr/0001-calisma-adi-talimatname.md), [İsim ve marka](01-strateji/03-isim-ve-marka.md) |
 | İlk dikey ve müşteri | Yeme-içme zincirleri; zincir merkezi | [MVP kapsamı §1](02-urun/03-mvp-kapsam.html) |
-| MVP boyutu | Tam MVP, 5–6 ay, 12 sprint | [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) |
+| v1 çekirdek | Basit, ilk gün kullanılabilir çekirdek: 6 madde türü, sabit kural, 4 rol, sabit eskalasyon + sabah özeti, istisna odaklı ızgara; duyuru/koşul editörü/raporların çoğu v1.1 | [ADR-0008](adr/0008-v1-cekirdek.md), [v1 çekirdek kapsamı](02-urun/06-v1-cekirdek-kapsam.md) |
+| Sürüm planı | GA 10. sprint (Alfa 6, Beta 8), 2 sprint tampon | [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) |
 | WhatsApp | MVP dışı; push + SMS yedek | [ADR-0006](adr/0006-whatsapp-mvp-disi.md) |
 | Kişi skoru | Yok; şube düzeyinde skor, kişi düzeyinde yalnızca gecikme/eksik görünümü | [ADR-0007](adr/0007-kisi-skoru-yok.md) |
 | Teknoloji | Flutter mobil, React web, Python/FastAPI, PostgreSQL, S3 uyumlu depolama | [ADR-0002](adr/0002-mobil-flutter-web-react.md), [Teknik mimari](07-gelistirme/01-teknik-mimari.md) |
@@ -40,7 +41,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 ## Belge navigasyonu (okuma sırası)
 
 1. Strateji: [Fizibilite](01-strateji/01-fizibilite.html) → [Pilot görüşme rehberi](01-strateji/02-pilot-gorusme-rehberi.html) → [İsim ve marka](01-strateji/03-isim-ve-marka.md)
-2. Ürün: [Vizyon ve konumlanma](02-urun/01-urun-vizyonu-ve-konumlanma.md) → [Personalar](02-urun/02-personalar.md) → [MVP kapsamı](02-urun/03-mvp-kapsam.html) → [Yetenek haritası](02-urun/04-yetenek-haritasi.md) → [v1 çekirdek gözden geçirme](02-urun/05-v1-cekirdek-gozden-gecirme.md) (aktör gözüyle kesinti listesi — onay bekliyor)
+2. Ürün: [Vizyon ve konumlanma](02-urun/01-urun-vizyonu-ve-konumlanma.md) → [Personalar](02-urun/02-personalar.md) → [MVP kapsamı](02-urun/03-mvp-kapsam.html) → [Yetenek haritası](02-urun/04-yetenek-haritasi.md) → [v1 çekirdek gözden geçirme](02-urun/05-v1-cekirdek-gozden-gecirme.md) → [v1 çekirdek kapsamı](02-urun/06-v1-cekirdek-kapsam.md) (kaynak)
 3. Analiz: [Aktörler](03-analiz/01-aktorler.md) → [Use case kataloğu](03-analiz/02-usecase-katalogu.md) → [Use case detayları](03-analiz/03-usecase-detaylari.md) → [Senaryolar](03-analiz/04-senaryolar.md)
 4. Gereksinimler: [Fonksiyonel](04-gereksinimler/01-fonksiyonel-gereksinimler.md) → [Fonksiyonel olmayan](04-gereksinimler/02-fonksiyonel-olmayan.md) → [İş kuralları](04-gereksinimler/03-is-kurallari.md) → [Veri modeli](04-gereksinimler/04-veri-modeli.md) → [API taslağı](04-gereksinimler/05-api-taslagi.md) → [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md)
 5. Tasarım: [Ekran envanteri ve navigasyon](05-tasarim/01-ekran-envanteri-ve-navigasyon.md) → [Mobil ekranlar](05-tasarim/02-mobil-ekranlar.html) → [Web ekranlar](05-tasarim/03-web-ekranlar.html) → [Tasarım sistemi](05-tasarim/04-tasarim-sistemi.md)

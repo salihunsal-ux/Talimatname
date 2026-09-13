@@ -1,5 +1,31 @@
 # Kullanım senaryosu detayları
 
+> **v1 notu (ADR-0008, 13 Eylül 2026).** Akışlar tam kapsamı anlatır; v1'de aşağıdaki daraltmalar geçerlidir, ID'ler ve adım numaraları korunur:
+>
+> | UC | v1'de değişen |
+> |---|---|
+> | UC-01 | Sihirbaz 4 adım, tek plan (kapanış); şablon seçimi kütüphanedeki 8 şablondan |
+> | UC-02 | Roller 4 (Yönetici, Bölge müdürü, Şube müdürü, Personel); akıllı grup yok; maskeleme destek betiğiyle |
+> | UC-03 | 2FA yok (v1.1); şifre politikası var |
+> | UC-04 | **Ek adım:** şube müdürü kioskta personele başlangıç PIN'i atar (FR-0211) |
+> | UC-05 | 6 madde türü + talimat; ayarlar zorunlu/fotoğraf zorunlu/kritik/sıcaklık aralığı; koşul editörü yok (sabit kural FR-0405); puan yüzde, eşik yok; yayın hemen; A1/A2 (AI, varyant) yok |
+> | UC-06 | Atama rol/kişi/şubedeki herkes; "herkes tamamlasın" yok; hatırlatma sabit; eskalasyon sabit (adım 7 yok); A2 vardiya yok |
+> | UC-07 | Hatırlatma iki sabit an; kaçırıldı → şube müdürü push + sabah özeti (BR-11) |
+> | UC-08 | Fotoğraf 1–3, kamera doğrudan; A1 çoklu kullanıcı yok (çalıştırma kilidi, FR-0521); adım 7 ek kayıt yok; A3 QR yok; **ek:** açılış listesinde dün gece özeti (FR-0613) |
+> | UC-09 | Aynen |
+> | UC-10 | Sabit sebep seti; adım 4 (şube müdürü doğrulama) yok — bildirim + aksiyon |
+> | UC-11 | Sabit 4 kategori; A1 yükseltme yok; aksiyona çevir / kapat |
+> | UC-12 | Aksiyon açık/kapalı; adım 4 onaylı kapanış yok; yorum dizisi yerine "not ekle" |
+> | UC-13 | Sabit kural: kaçırıldı → şube müdürü anında, bölge/yönetici sabah özeti; kritik → anında push, 10 dk'da SMS; merdiven editörü yok |
+> | UC-14 | **v1.1** (duyuru modülü) |
+> | UC-15 | Izgara istisna odaklı; raporlar: sıcaklık günlüğü, basit galeri, aylık tek sayfa (FR-1220); diğer raporlar v1.1; yönetici mobil = Bölgem listesi; sabah özeti v1 |
+> | UC-16 | Çalıştırma PDF'i ve dönem PDF'i; Excel ve paylaşım bağlantısı v1.1 |
+> | UC-17 | Arka plan: zincir ve doğrulama komutu; görüntüleyici ve RFC 3161 v1.1 |
+> | UC-18 | Süreç: aydınlatma ürün içinde; dışa aktarma/silme destek betiğiyle (≤ 30 gün); ekran v1.1 |
+> | UC-19 | Aynen (herkes tamamlasın kısmı hariç) |
+> | UC-20 | **v1.1** |
+
+
 Biçim: amaç · aktörler · ön koşul · tetikleyici · ana akış · alternatif akışlar (A) · istisnalar (E) · son koşul · iş kuralları (BR, bkz. 04-gereksinimler/03) · gereksinimler (FR, bkz. 04-gereksinimler/01) · ekranlar (SCR, bkz. 05-tasarim/01). Numaralı adımlar geliştirici ve test için referanstır (örn. "UC-08 adım 6").
 
 ---

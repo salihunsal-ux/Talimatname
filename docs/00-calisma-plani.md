@@ -13,7 +13,7 @@ Amaç: kodlamaya başlamadan önce bir geliştirme ekibinin ihtiyaç duyacağı 
 | F4 · Tasarım | Ekran envanteri ve navigasyon haritası, mobil ve web tel-çerçeveler, tasarım sistemi | 05-tasarim/01–04 | ✅ Tamamlandı |
 | F5 · Test hazırlığı | Test stratejisi, kabul test senaryoları (TC), test verisi ve ortam, cihaz matrisi, pilot UAT planı | 06-test/01–05 | ✅ Tamamlandı |
 | F6 · Geliştirme hazırlığı | Kodlama hazırlık indeksi, teknik mimari, repo/ortam kurulumu, backlog ve sprint planı, DoR/DoD | 07-gelistirme/00–04 | ✅ Tamamlandı |
-| F6b · v1 çekirdek yeniden çizimi | Aktör gözüyle gözden geçirme (02-urun/05) onaylanınca kapsam, FR, UC, ekran, TC ve backlog'un çekirdeğe göre yeniden çizilmesi (ID'ler korunur, ertelenenler v1.1 etiketi) | Güncellenmiş belgeler, ADR-0008 | ⏳ Onay bekliyor |
+| F6b · v1 çekirdek yeniden çizimi | Aktör gözüyle gözden geçirme (02-urun/05) onaylanınca kapsam, FR, UC, ekran, TC ve backlog'un çekirdeğe göre yeniden çizilmesi (ID'ler korunur, ertelenenler v1.1 etiketi) | Güncellenmiş belgeler, ADR-0008, 02-urun/06 | ✅ Tamamlandı (13 Eylül 2026) |
 | F7 · Doğrulama sprinti (saha) | 20 görüşme, 8 şube ziyareti, isim testi, 5 LOI | Görüşme notları (01-strateji/gorusmeler/), karar güncellemeleri, ADR | ⏳ Başlamadı — 12 hafta |
 | F8 · Hi-fi tasarım ve prototip | Tel-çerçevelerin Talimatname tasarım sistemiyle yüksek doğruluklu sürümü; Blok 8 tıklanabilir prototip | 05-tasarim/05-prototip | ⏳ F7 ile paralel, 2–3 hafta |
 | F9 · Sprint 0 | Repo'lar, CI, ortamlar, tasarım token'ları kodda, örnek veri, ilk hikâyeler hazır | Kod depoları | ⏳ F8 sonrası, 2 hafta |

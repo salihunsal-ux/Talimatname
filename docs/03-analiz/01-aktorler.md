@@ -1,5 +1,7 @@
 # Aktörler
 
+> **v1 notu (ADR-0008):** ilk sürümde dört rol vardır — **Yönetici** (A-01 Hesap yöneticisi + A-02 Operasyon müdürü + A-03 Kalite tek rolde), **Bölge müdürü** (A-04), **Şube müdürü** (A-05), **Personel** (A-06). Gözlemci (A-07) v1.1. Aşağıdaki aktör listesi ve matris tam modeli anlatır; v1'de A-01/A-02/A-03 satırları Yönetici olarak okunur.
+
 Aktör = sistemle etkileşen rol (kişi veya dış sistem). Personalar (02-urun/02) aktörlerin somut örnekleridir. Yetki ayrıntısı 04-gereksinimler/01 (FR-CAP02) ve 06 (rol matrisi).
 
 ## İnsan aktörler

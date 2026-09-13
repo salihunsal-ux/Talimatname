@@ -41,7 +41,7 @@ Sentetik zincir "Kahve Durağı" (03-analiz/04 ve 06-test/03): 25 şube, 3 bölg
 
 - Sprint DoD: yeni FR için birim + kabul testi yazılmış ve geçmiş; CI yeşil; kritik hata sıfır.
 - Beta (4,5. ay): TC'lerin ≥ %80'i otomasyonda; E2E gece koşusu; performans ölçümü cihaz matrisinde.
-- GA: TC-001…112 %100 geçiş; sızma testi kapanmış; kurtarma tatbikatı yapılmış; pilot UAT imzası (3 zincir).
+- GA: v1 etiketli 89 kabul testi %100 geçiş (v1.1 testleri ilgili sürümde); sızma testi kapanmış; kurtarma tatbikatı yapılmış; pilot UAT imzası (3 zincir).
 
 ## Hata sınıflandırma
 

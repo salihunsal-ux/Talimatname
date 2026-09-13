@@ -48,4 +48,4 @@ Kullanıcı kabul testi, doğrulama sprintinden (fizibilite §10) gelen 3 pilot 
 
 ## UAT test seti
 
-Kabul testlerinden (02) UAT alt kümesi: TC-004, 005, 008, 013–016, 039–046, 051, 057–059, 062, 065–068, 073, 079–083, 085, 087, 088, 095, 096, 104, 107, 108. Pilot kullanıcıları bunları gerçek iş akışında icra eder; ürün sahibi metrik ve logdan doğrular; elle test yalnızca kiosk ve kamera adımlarında.
+Kabul testlerinden (02) UAT alt kümesi (v1): TC-004, 005, 008, 013–016, 039–046, 051, 057–059, 062, 065–067, 073, 074, 085, 087, 088, 091, 095, 096, 104, 107, 108. (Duyuru testleri 079–083 v1.1.) Pilot kullanıcıları bunları gerçek iş akışında icra eder; ürün sahibi metrik ve logdan doğrular; elle test yalnızca kiosk ve kamera adımlarında.

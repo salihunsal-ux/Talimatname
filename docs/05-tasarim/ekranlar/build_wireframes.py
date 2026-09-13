@@ -124,15 +124,14 @@ M.append(frame("SCR-M-02", "Kiosk kilit ekranı (tablet, yatay)", "UC-04",
 
 M.append(frame("SCR-M-03", "Bugün", "UC-08, UC-11, UC-14",
     top("Bugün · 12 Eyl", "Emre T. · Kadıköy") +
-    box("Onay bekleyen duyuru" + n(1), "Alerjen prosedürü v2 — Okudum ve anladım →", solid=True) +
-    li("Kapanış listesi <span class=chip>22:00–01:30</span>", "▶", "1 sa 12 dk kaldı" + n(2)) +
+    li("Kapanış listesi <span class=chip>22:00–01:30</span>", "▶", "1 sa 12 dk kaldı" + n(1) + n(2)) +
     li("Saatlik tuvalet kontrolü", "✓", "22:00 yapıldı", "ok") +
     li("Soğuk zincir ölçümü", "!", "Pencere kapandı · 40 dk tolerans" + n(3), "w") +
     li("Haftalık derin temizlik (pazartesi)", "", "Planlandı") +
     box("Bekleyen senk: 2 kayıt, 5 fotoğraf" + n(4), "Bağlantı gelince otomatik gönderilir") +
     btn("Sorun bildir" + n(5), "big") +
     tabs("Bugün"),
-    ["FR-1103 onay bekleyen duyuru Bugün'ün üstünde", "FR-0601/0610 pencere geri sayımı ve durum rengi", "BR-02 tolerans içinde 'geç' uyarısı; BR-03 tolerans sonu kilit", "FR-0702/0708 çevrimdışı kuyruk rozeti", "FR-0806 liste dışı sorun bildirimi"]))
+    ["FR-0521/BR-26 atanmamış liste: şubedeki herkes görür, ilk açan alır ('Emre yapıyor' rozeti); duyuru şeridi v1.1", "FR-0601/0610 pencere geri sayımı ve durum rengi", "BR-02 tolerans içinde 'geç' uyarısı; BR-03 tolerans sonu kilit", "FR-0702/0708 çevrimdışı kuyruk rozeti", "FR-0806 liste dışı sorun bildirimi (sabit kategori)"]))
 
 M.append(frame("SCR-M-04", "Liste çalıştırma", "UC-08, UC-09",
     top("Kapanış listesi", "01:30'a kadar · 48 dk") +
@@ -145,10 +144,10 @@ M.append(frame("SCR-M-04", "Liste çalıştırma", "UC-08, UC-09",
     li("Buzdolabı 2 sıcaklığı <span class=chip x>kritik</span>", "!", "6,0 °C → aksiyon" + n(2), "x") +
     li("Zemin yıkandı", "✗", "Yapılamadı: malzeme yok" + n(3), "w") +
     li("Çöpler alındı <span class=chip>fotoğraf</span>", "", "") + "</div>" +
-    box("Sabahçıya not (isteğe bağlı)" + n(4), "…") +
+    box("Gönderilen liste değişmez" + n(4), "Düzeltme yok (v1); açıklama aksiyon notuna") +
     btn("Gönder (5 zorunlu madde eksik)" + n(5), "g big") +
     tabs("Bugün"),
-    ["FR-0603 ilerleme ve kaldığı yerden devam; FR-0702 yerel kuyruk", "BR-06/08 kritik + aralık dışı → başarısız, fotoğraf+not, kritik aksiyon", "FR-0801 yapılamadı sebebiyle işaretli madde", "FR-1601 vardiya devri notu (Should)", "BR-05 zorunlu maddeler bitmeden gönderim pasif"]))
+    ["FR-0603 ilerleme ve kaldığı yerden devam; FR-0702 yerel kuyruk", "FR-0405/BR-06/08 sabit kural: aralık dışı → fotoğraf+not, kritik → aksiyon", "FR-0801 yapılamadı sebebiyle işaretli madde", "BR-12 gönderilen değişmez; ek kayıt v1.1 (açılış listesinde 'dün gece' bloğu FR-0613)", "BR-05 zorunlu maddeler bitmeden gönderim pasif"]))
 
 M.append(frame("SCR-M-05", "Madde bileşenleri", "UC-08",
     top("Buzdolabı 2 sıcaklığı", "Madde 8/12") +
@@ -157,9 +156,9 @@ M.append(frame("SCR-M-05", "Madde bileşenleri", "UC-08",
     '<div class="img" style="height:120px">Kamera · yalnızca uygulama içi çekim' + n(3) + '</div>' +
     box("Not", "Kompresör sesi geliyor…") +
     '<div class="row"><div class="btn d grow">Yapılamadı' + n(4) + '</div><div class="btn p grow">Kaydet ve ileri</div></div>' +
-    box("Diğer bileşenler", "Onay ✓/✗ · Seçim (büyük düğmeler) · Sayı+birim · Metin · Video ≤20 sn · İmza · Barkod/QR · Tarih-saat · Talimat (görsel/PDF)" + n(5)) +
+    box("Diğer bileşenler (v1)", "Onay ✓/✗ · Seçim Evet/Hayır/Uygun değil · Sayı+birim · Metin · Talimat (metin/görsel). Video, imza, barkod, tarih-saat v1.1" + n(5)) +
     tabs("Bugün"),
-    ["FR-0305 kabul aralığı; ± adım düğmeleri", "BR-08 aralık dışı → koşullu mantık (fotoğraf, not, aksiyon)", "FR-0604/BR-14 yalnızca kamera; galeri yok; FR-0606 damga", "FR-0804 kritik maddede 'Yapılamadı' görünmez (bu maddede kritik olduğu için gerçek ekranda gizli)", "FR-0303 madde türleri; FR-0611 44 px hedefler"]))
+    ["FR-0305 kabul aralığı; ± adım düğmeleri", "BR-08 aralık dışı → koşullu mantık (fotoğraf, not, aksiyon)", "FR-0604/BR-14 yalnızca kamera; galeri yok; FR-0606 damga", "FR-0804 kritik maddede 'Yapılamadı' görünmez (bu maddede kritik olduğu için gerçek ekranda gizli)", "FR-0303 6 madde türü + talimat; FR-0611 44 px hedefler"]))
 
 M.append(frame("SCR-M-06", "Yapılamadı", "UC-10",
     top("Yapılamadı — Zemin yıkandı") +
@@ -186,13 +185,13 @@ M.append(frame("SCR-M-08", "Aksiyonlarım ve aksiyon detayı", "UC-12",
     li("Buzdolabı 2 sıcaklık aralık dışı <span class=chip x>kritik</span>", "!", "3 sa 12 dk", "x") +
     li("Zemin yıkanamadı — deterjan", "", "2 gün") +
     li("Fritöz termostatı (sorun)", "", "gecikti" + n(2), "w") +
-    box("Aksiyon: Buzdolabı 2 sıcaklık" + n(3), "Kaynak: kapanış listesi madde 8 · Kadıköy / Mutfak · Atanan: Ayşe K. · Vade: 03:41 · Durum: devam ediyor", solid=True) +
-    box("Yorumlar" + n(4), "Ayşe 00:10: Servisi aradım, sabah geliyor · [fotoğraf]") +
-    '<div class="row"><div class="btn grow">Devam</div><div class="btn p grow">Kapat (fotoğraf + not)' + n(5) + '</div></div>' +
+    box("Aksiyon: Buzdolabı 2 sıcaklık" + n(3), "Kaynak: kapanış listesi madde 8 · Kadıköy / Mutfak · Atanan: Ayşe K. · Vade: 03:41 · Durum: açık", solid=True) +
+    box("Notlar" + n(4), "Ayşe 00:10: Servisi aradım, sabah geliyor · [fotoğraf] · [+ Not ekle]") +
+    '<div class="row"><div class="btn grow">Not ekle</div><div class="btn p grow">Kapat (not + fotoğraf)' + n(5) + '</div></div>' +
     tabs("Aksiyonlar"),
-    ["FR-0907 listeler ve filtreler; toplu kapatma yok", "FR-0910 gecikme bildirimi; BR-11 eskalasyon", "FR-0901 aksiyon alanları", "FR-0906 yorum dizisi (@bahsetme)", "FR-0905 kapanış kanıtı zorunlu; FR-0909 onaylı kapanış (Should)"]))
+    ["FR-0907 listeler ve filtreler; toplu kapatma yok", "FR-0910 gecikme sabah özetinde; BR-11 sabit eskalasyon", "FR-0901 aksiyon: açık/kapalı (v1)", "Notlar eklenir, silinmez; yorum dizisi/@bahsetme v1.1", "FR-0905 kapatırken not zorunlu, fotoğraf isteğe bağlı; onaylı kapanış v1.1"]))
 
-M.append(frame("SCR-M-09", "Duyuru onayı", "UC-14",
+M.append(frame("SCR-M-09", "Duyuru onayı (v1.1 — ilk sürümde yok)", "UC-14 · v1.1",
     top("Duyuru") +
     box("Alerjen prosedürü v2" + n(1), "Selin Y. · 10 Eyl · Tüm personel") +
     '<div class="img" style="height:170px">PDF önizleme</div>' +
@@ -208,9 +207,9 @@ M.append(frame("SCR-M-10", "Yönetici görünümü (şube/bölge müdürü)", "U
     li("Bakırköy — Kapanış <span class=chip x>kaçırıldı</span>", "!", "eskalasyon 2. adım" + n(2), "x") +
     li("Kadıköy — Kapanış <span class=chip w>başarısız %88</span>", "", "2 aksiyon", "w") +
     box("Bugünkü atamalar (şube müdürü)" + n(3), "Kapanış → Emre T. ▾ · Saatlik tuvalet → Zeynep A. ▾") +
-    box("Gözden geçir" + n(4), "Kadıköy kapanış · [Gözden geçirildi] · not") +
+    box("Raporlar ve ayrıntı web'de" + n(4), "Bu ekran yalnızca durum listesi + fotoğraf; gözden geçirme v1.1") +
     tabs("Şubem"),
-    ["FR-1211 yönetici mobil özet ızgarası", "FR-0912/0913 eskalasyon adımı görünür", "FR-0519/0520 günlük yeniden atama, anında bildirim", "FR-1701 gözden geçirme (Should)"]))
+    ["FR-1211 'Bölgem' listesi: şube × dün gece durumu (küçültülmüş yönetici görünümü)", "FR-0912 sabit eskalasyon: kaçırıldı → şube müdürü anında, bölge sabah özeti", "FR-0519/0520 günlük yeniden atama (şube müdürü, mobil), anında bildirim", "Raporlar duyarlı web'de; gözden geçirme v1.1"]))
 
 M.append(frame("SCR-M-11", "Senk durumu ve profil", "UC-09",
     top("Menü") +
@@ -260,17 +259,17 @@ W.append(frame("SCR-W-05", "Şablon editörü", "UC-05",
     desk("Şablonlar",
         top("Kapanış — kafe · v2 (taslak)", "v1 yayında · 3 plan kullanıyor" + n(1)) +
         '<div class="three"><div class="col"><div class="h">Yapı</div>' + li("Bölüm 1 · Bar") + li("— Kahve makinesi temizlendi <span class=chip>foto</span>") + li("— Süt dolabı °C") + li("Bölüm 2 · Mutfak") + li("— Buzdolabı 2 °C <span class=chip x>kritik</span>", "●", "", "ok") + li("— Zemin yıkandı") + li("— Çöpler alındı <span class=chip>foto</span>") + btn("+ Madde") + btn("+ Bölüm", "g") + '</div>' +
-        '<div class="col"><div class="h">Madde ayarları' + n(2) + '</div>' + field("Tür", "Sıcaklık (°C)") + field("Kabul aralığı", "0 – 4") + '<div class="row">' + field("Zorunlu", "✓") + field("Kanıt zorunlu", "✓ foto") + field("Ağırlık", "3") + field("Kritik", "✓") + '</div>' + field("Yapılamadı izinli", "hayır (kritik)") + field("İstasyon", "Mutfak") + '<div class="h">Koşullu mantık' + n(3) + '</div>' + field("Eğer", "değer aralık dışı") + field("Yap", "fotoğraf iste · not iste · aksiyon oluştur (şube müdürü, kritik) · bildir (kalite)") + '<div class="h">Puanlama' + n(4) + '</div>' + field("Eşik", "%90 · kritik kuralı açık") + '</div>' +
+        '<div class="col"><div class="h">Madde ayarları' + n(2) + '</div>' + field("Tür", "Sıcaklık (°C)") + field("Kabul aralığı", "0 – 4") + '<div class="row">' + field("Zorunlu", "✓") + field("Fotoğraf zorunlu", "✓") + field("Kritik", "✓") + '</div>' + field("Yapılamadı", "yok (kritik madde)") + '<div class="h">Sabit kural (v1)' + n(3) + '</div>' + field("Başarısız cevapta", "fotoğraf + not iste (şablon ayarı: açık)") + field("Kritik maddede", "aksiyon (şube müdürü, 4 sa) + anında bildirim") + '<div class="h">Puan' + n(4) + '</div>' + field("Hesap", "geçen madde yüzdesi · başarısız = kritik") + '</div>' +
         '<div class="col"><div class="h">Mobil önizleme' + n(5) + '</div><div class="img" style="flex-grow:1">390×… gerçek bileşenler</div><div class="row">' + btn("Doğrula") + btn("Yayınla ▾", "p") + '</div><div class="s" style="font-size:11px">Yayınla: hemen / tarihli · etkilenen planlar listelenir</div></div></div>'),
-    ["FR-0301/0310 sürümleme ve yayın; BR-18", "FR-0304/0305 madde ayarları, kabul aralığı", "FR-0401/0402 kural ve eylemler", "FR-0306/0307 puan ve kritik", "FR-0309 önizleme; FR-0312 yayın doğrulaması"], kind="desk"))
+    ["FR-0301 sürümleme, yayın hemen (tarihli v1.1); BR-18", "FR-0304/0305 madde ayarları: zorunlu · fotoğraf zorunlu · kritik · kabul aralığı (ağırlık/istasyon v1.1)", "FR-0405 sabit kural; kural editörü v1.1", "FR-0306/0307 yüzde puan, kritik kuralı; eşik v1.1", "FR-0309 önizleme; FR-0312 yayın doğrulaması"], kind="desk"))
 
 W.append(frame("SCR-W-06", "Plan editörü", "UC-06",
     desk("Planlar",
         top("Plan · Kapanış (tüm şubeler)", "Şablon: Kapanış — kafe v1") +
         '<div class="three" style="grid-template-columns:1fr 1fr 320px"><div class="col"><div class="h">Kapsam' + n(1) + '</div>' + field("Şubeler", "Tümü (25) · grup: — ") + '<div class="h">Tekrar' + n(2) + '</div>' + field("Sıklık", "Her gün") + field("Pencere", "22:00 → 01:30 (+1 gün) · tolerans 120 dk") + field("Çalışma saatinden türet", "kapanış −120 / +90 dk ✓") + field("Bitiş", "—") + '</div>' +
-        '<div class="col"><div class="h">Atama' + n(3) + '</div>' + field("Kime", "Rol: Kapanış sorumlusu") + field("Tamamlama", "Biri tamamlasın") + '<div class="h">Hatırlatma</div>' + field("Zamanlar", "açılışta · bitişe 30 dk · bitişte") + field("Kanal", "push · kritik listede SMS") + '<div class="h">Eskalasyon' + n(4) + '</div>' + field("Merdiven", "0: şube müdürü · +2 sa bölge (SMS) · +24 sa merkez") + '</div>' +
+        '<div class="col"><div class="h">Atama' + n(3) + '</div>' + field("Kime", "Şubedeki herkes (varsayılan) ▾ · rol / kişi") + field("Tamamlama", "Biri tamamlasın — ilk açan alır") + '<div class="h">Hatırlatma (sabit)</div>' + field("Zamanlar", "açılışta · bitişe 30 dk") + '<div class="h">Eskalasyon (sabit)' + n(4) + '</div>' + field("Kural", "kaçırıldı → şube müdürü anında · bölge 07:00 özeti · kritik → anında") + '</div>' +
         '<div class="col"><div class="h">7 gün önizleme' + n(5) + '</div><div class="gridcells" style="grid-template-columns:repeat(7,1fr)">' + "".join('<div class="cell" style="background:#dcebe5"></div>' for _ in range(21)) + '<div class="cell" style="background:#c9ced6"></div>' + "".join('<div class="cell" style="background:#dcebe5"></div>' for _ in range(6)) + '</div><div class="s" style="font-size:11px">25 şube × 7 gün = 173 çalıştırma (2 kapalı gün düşüldü)</div><div class="row">' + btn("İptal", "g") + btn("Kaydet", "p") + '</div></div></div>'),
-    ["FR-0502 kapsam", "FR-0503…0507 RRULE, pencere, gece yarısı (BR-01), tolerans (BR-02)", "FR-0508 atama modeli (BR-16)", "FR-0510 merdiven (BR-11)", "FR-0511 önizleme, FR-0515 kapalı gün"], kind="desk"))
+    ["FR-0502 kapsam (grup v1.1)", "FR-0503…0507 RRULE, pencere, gece yarısı (BR-01), tolerans (BR-02)", "FR-0508/0521 atama: rol/kişi/herkes, biri tamamlasın (herkes tamamlasın v1.1)", "BR-11 sabit eskalasyon; merdiven editörü v1.1", "FR-0511 önizleme, FR-0515 kapalı gün"], kind="desk"))
 
 cells = []
 import random
@@ -280,44 +279,44 @@ for r in range(6):
         cells.append(random.choice(["#1f6f5b"]*7 + ["#b7791f", "#b8452f", "#c9ced6", "#dcebe5"]))
 W.append(frame("SCR-W-07", "Operasyon panosu (ızgara)", "UC-15, UC-19",
     desk("Pano",
-        top("Pano · 12 Eylül (dün gece)", "◀ gün ▶ · Bölge: Tümü ▾ · Şube türü ▾ · canlı ●" + n(1)) +
+        top("Pano · 12 Eylül (dün gece)", "◀ gün ▶ · Bölge: Tümü ▾ · [Yalnızca sorunlular ✓] · canlı ●" + n(1)) +
         '<div class="kpi"><div><b>22/25</b><span>zamanında</span></div><div><b>1</b><span>geç</span></div><div><b>1</b><span>kaçırıldı</span></div><div><b>3</b><span>açık kritik aksiyon</span></div></div>' +
         '<table class="wt"><tr><th>Şube</th><th>Kapanış</th><th>Saatlik hijyen</th><th>Soğuk zincir</th><th>Açılış</th><th>Haftalık</th></tr>' +
         "".join(f'<tr><td>{s}</td>' + "".join(f'<td><div style="height:22px;border-radius:4px;background:{cells[i*5+j]}"></div></td>' for j in range(5)) + '</tr>' for i, s in enumerate(["Kadıköy", "Üsküdar", "Bakırköy", "Beşiktaş", "Bornova", "Karşıyaka"])) + '</table>' +
         '<div class="row" style="font-size:11px;color:var(--mut)"><span>■ tamamlandı</span><span>■ geç</span><span>■ kaçırıldı</span><span>■ kapalı</span><span>■ planlı/devam</span>' + n(2) + '<div class="grow"></div><span>Hücreye tıkla → çalıştırma detayı' + n(3) + '</span></div>' +
         '<div class="box"><div class="h">Bakırköy · Kapanış · kaçırıldı</div><div class="s">Eskalasyon: 03:30 şube müdürü ✓ · 05:30 bölge (SMS) ✓ · 03:30+24 sa merkez · [Yapılmayacak işaretle' + n(4) + '] [Aksiyon oluştur]</div></div>'),
-    ["FR-1201 gün seçici, filtreler, 60 sn yenileme", "Durum lejantı (FR-0514); renk + ikon", "FR-1202 detay", "BR-04 yapılmayacak (yönetici + sebep) eskalasyonu durdurur"], kind="desk"))
+    ["FR-1201/1219 istisna odaklı varsayılan: yalnızca sorunlu hücreler; 'her şey yolunda' durumu; tümünü göster seçeneği", "Durum lejantı (FR-0514); renk + ikon", "FR-1202 detay", "BR-04 yapılmayacak (yönetici + sebep) eskalasyonu durdurur"], kind="desk"))
 
 W.append(frame("SCR-W-08", "Çalıştırma detayı", "UC-15, UC-16, UC-17",
     desk("Pano",
         top("Kadıköy · Kapanış · 12 Eyl · Tamamlandı 23:41 · <span class='chip x'>başarısız %88</span>", "[PDF" + n(1) + "] [Denetim izi] [Ek kayıt]") +
         '<div class="three" style="grid-template-columns:1fr 360px 260px"><div class="col"><div class="h">Maddeler</div>' + li("Kahve makinesi temizlendi", "✓", "23:02 · Emre T. · foto", "ok") + li("Süt dolabı °C · 3,2", "✓", "23:05", "ok") + li("Buzdolabı 2 °C · 6,0 <span class=chip x>kritik</span>", "!", "23:20 · aksiyon #418", "x") + li("Zemin yıkandı · yapılamadı: malzeme yok", "✗", "23:30 · aksiyon #419", "w") + li("Çöpler alındı", "✓", "23:38 · foto", "ok") + '</div>' +
         '<div class="col"><div class="h">Kanıt' + n(2) + '</div><div class="img" style="height:150px">damgalı fotoğraf · Kadıköy · 12.09 23:02 · Emre T.</div><div class="s" style="font-size:11px">sha256 7f3a… · konum 38 m · cihaz: şube tableti · saat farkı 0 sn · [ham dosya]</div><div class="h">Aksiyonlar</div>' + li("#418 kritik · devam · vade 03:41") + li("#419 orta · açık · vade 3 gün") + '</div>' +
-        '<div class="col"><div class="h">Olay izi' + n(3) + '</div><div class="s" style="font-size:11px">22:00 pencere açıldı (sistem)<br>22:58 Emre T. başladı (tablet)<br>23:20 madde 8 aralık dışı → aksiyon #418<br>23:41 gönderildi · puan 88<br>23:41 kritik kural → başarısız<br>23:41 bildirim: Ayşe K. push ✓</div><div class="h">Gözden geçirme' + n(4) + '</div><div class="s">[Gözden geçirildi] not · ikinci imza</div></div></div>'),
-    ["FR-1213 markalı PDF + doğrulama kodu", "FR-0606 damga ve meta; FR-1208 galeri", "FR-1301/1303 olay izi", "FR-1701/1702 gözden geçirme ve imza (Should)"], kind="desk"))
+        '<div class="col"><div class="h">Olay izi' + n(3) + '</div><div class="s" style="font-size:11px">22:00 pencere açıldı (sistem)<br>22:58 Emre T. başladı (tablet)<br>23:20 madde 8 aralık dışı → aksiyon #418<br>23:41 gönderildi · puan 88<br>23:41 kritik kural → başarısız<br>23:41 bildirim: Ayşe K. push ✓</div><div class="h">Ek not' + n(4) + '</div><div class="s">Gönderilen liste değişmez; açıklama ilgili aksiyona not olarak eklenir (gözden geçirme v1.1)</div></div></div>'),
+    ["FR-1213 markalı PDF + doğrulama kodu", "FR-0606 damga ve meta; FR-1208 galeri (basit)", "FR-1301 olay izi (PDF özeti v1; görüntüleyici ekranı v1.1)", "BR-12 düzeltme yok; gözden geçirme v1.1"], kind="desk"))
 
 W.append(frame("SCR-W-09", "Aksiyonlar", "UC-12, UC-13",
     desk("Aksiyonlar",
         top("Aksiyonlar", "Açık 37 · Gecikmiş 6 · Kritik 3") +
         '<div class="row">' + field("Görünüm", "Bölgem ▾") + field("Durum", "Açık ▾") + field("Öncelik", "Tümü ▾") + field("Şube", "Tümü ▾") + '<div class="grow"></div>' + btn("Aksiyon oluştur", "p") + '</div>' +
         '<table class="wt"><tr><th>#</th><th>Başlık</th><th>Kaynak' + n(1) + '</th><th>Şube</th><th>Atanan</th><th>Öncelik</th><th>Vade</th><th>Durum</th></tr>' +
-        '<tr><td>418</td><td>Buzdolabı 2 aralık dışı</td><td>madde</td><td>Kadıköy</td><td>Ayşe K.</td><td><span class="chip x">kritik</span></td><td>03:41</td><td>devam</td></tr>' +
+        '<tr><td>418</td><td>Buzdolabı 2 aralık dışı</td><td>madde</td><td>Kadıköy</td><td>Ayşe K.</td><td><span class="chip x">kritik</span></td><td>03:41</td><td>açık</td></tr>' +
         '<tr><td>417</td><td>Kapanış kaçırıldı</td><td>kaçırma</td><td>Bakırköy</td><td>Bölge: Murat D.</td><td><span class="chip x">kritik</span></td><td>gecikti 2 sa</td><td>açık</td></tr>' +
-        '<tr><td>412</td><td>Fritöz termostatı</td><td>sorun</td><td>Kadıköy</td><td>Ayşe K.</td><td><span class="chip w">yüksek</span></td><td>yarın 10:00</td><td>kapatma bekliyor' + n(2) + '</td></tr></table>' +
-        '<div class="row"><div class="box grow"><div class="h">#417 · eskalasyon adımları' + n(3) + '</div><div class="s">0 · 03:30 şube müdürü push ✓ okundu 07:12 · 1 · 05:30 bölge push+SMS ✓ · 2 · 03:30+24 sa merkez (planlı)</div></div><div class="box grow"><div class="h">Geçişler' + n(4) + '</div><div class="s">açık → devam → kapatma bekliyor → kapalı · reddedildi (sebep) · kapatırken foto/not zorunlu</div></div></div>'),
-    ["FR-0901/0902 kaynak türleri, otomatik oluşturma", "FR-0904/0909 durum akışı, onaylı kapanış", "FR-0912/0913 merdiven ve log (BR-11)", "FR-0905 kapanış kanıtı"], kind="desk"))
+        '<tr><td>412</td><td>Fritöz termostatı</td><td>sorun</td><td>Kadıköy</td><td>Ayşe K.</td><td><span class="chip w">yüksek</span></td><td>yarın 10:00</td><td>açık' + n(2) + '</td></tr></table>' +
+        '<div class="row"><div class="box grow"><div class="h">#417 · bildirimler' + n(3) + '</div><div class="s">03:30 şube müdürü push ✓ okundu 07:12 · 07:00 sabah özeti: bölge müdürü + yönetici ✓</div></div><div class="box grow"><div class="h">Durum' + n(4) + '</div><div class="s">açık → kapalı · kapatırken not zorunlu, fotoğraf isteğe bağlı · notlar eklenir, silinmez</div></div></div>'),
+    ["FR-0901/0902 kaynak türleri, otomatik oluşturma", "FR-0904 açık/kapalı (durum makinesi v1.1)", "FR-0912/1212 sabit eskalasyon ve sabah özeti (BR-11, BR-27)", "FR-0905 not zorunlu, fotoğraf isteğe bağlı"], kind="desk"))
 
 W.append(frame("SCR-W-11", "Raporlar", "UC-15, UC-16",
     desk("Raporlar",
-        top("Raporlar", "Tamamlanma · Başarısız maddeler · Sebepler · Ölçüm günlüğü · Kanıt galerisi · Aksiyonlar · Kişi takibi" + n(1)) +
+        top("Raporlar (v1)", "Aylık özet · Sıcaklık günlüğü · Kanıt galerisi   |   v1.1: başarısız maddeler · sebepler · aksiyonlar · kişi takibi" + n(1)) +
         '<div class="row">' + field("Dönem", "1–12 Eyl") + field("Bölge", "Tümü") + field("Şablon", "Kapanış") + '<div class="grow"></div>' + btn("Excel") + btn("Dönem PDF" + n(2), "p") + '</div>' +
         '<div class="kpi"><div><b>%91</b><span>pencere içi</span></div><div><b>%5</b><span>geç</span></div><div><b>%3</b><span>kaçırıldı</span></div><div><b>%1</b><span>yapılmayacak</span></div></div>' +
-        '<div class="row"><div class="img grow" style="height:170px">trend çizgisi · şube sıralaması (şube düzeyi' + n(3) + ')</div><div class="img grow" style="height:170px">şube × madde ısı haritası · en çok başarısız 10 madde</div></div>' +
+        '<div class="row"><div class="img grow" style="height:170px">Aylık tek sayfa: %91 zamanında · 12 kaçırma · 3 başarısız · 41 yapılamadı · şube kırılımı' + n(3) + '</div><div class="img grow" style="height:170px">v1.1: ısı haritası · sıralama · sebep dağılımı</div></div>' +
         '<div class="box"><div class="h">Ölçüm günlüğü · Kadıköy · Buzdolabı 2 · 30 gün' + n(4) + '</div><div class="s">zaman serisi; aralık dışı 2 ölçüm işaretli; denetim formatında PDF (sayfa damgası, doğrulama kodu)</div></div>' +
-        '<div class="box"><div class="h">Kişi takibi (yalnızca şube/bölge müdürü)' + n(5) + '</div><div class="s">Emre T.: 1 eksik madde, 0 gecikmiş aksiyon · puan/sıralama yok</div></div>'),
-    ["FR-1203…1209 rapor sekmeleri", "FR-1214/1215/1216 dışa aktarım ve paylaşım; FR-1217 arka plan üretim", "FR-1204 sıralama şube/bölge düzeyinde (BR-20)", "FR-1207 ölçüm günlüğü", "FR-1210 kişi düzeyi takip — skor yok"], kind="desk"))
+        '<div class="box"><div class="h">Dışa aktarım' + n(5) + '</div><div class="s">Çalıştırma PDF · dönem PDF (doğrulama kodlu) · Excel ve paylaşım bağlantısı v1.1</div></div>'),
+    ["v1 sekmeleri: aylık özet (FR-1220), sıcaklık günlüğü (FR-1207), kanıt galerisi (FR-1208); diğerleri v1.1", "FR-1214 dönem PDF; Excel/paylaşım v1.1; FR-1217 arka plan üretim", "FR-1220 aylık tek sayfa", "FR-1207 ölçüm günlüğü", "FR-1213/1214 PDF'ler doğrulama kodlu"], kind="desk"))
 
-W.append(frame("SCR-W-12 · SCR-W-13", "Denetim izi ve Ayarlar", "UC-17, UC-18",
+W.append(frame("SCR-W-12 · SCR-W-13", "Denetim izi (v1.1) ve Ayarlar (v1: yalnızca hesap, tatil takvimi, aydınlatma metni, şube sayacı)", "UC-17, UC-18 · v1.1 / v1 minimal",
     desk("Ayarlar",
         '<div class="three" style="grid-template-columns:1fr 1fr"><div class="col"><div class="h">Denetim izi' + n(1) + '</div>' + field("Filtre", "nesne: çalıştırma #9021 · 12 Eyl") + '<table class="wt"><tr><th>Zaman</th><th>Aktör</th><th>Olay</th><th>Cihaz/IP</th></tr><tr><td>23:20:14</td><td>Emre T.</td><td>madde 8 cevap 6,0 (aralık dışı)</td><td>tablet KDK-1</td></tr><tr><td>23:41:02</td><td>Emre T.</td><td>gönderim · puan 88 · başarısız</td><td>tablet KDK-1</td></tr><tr><td>07:12:40</td><td>Ayşe K.</td><td>aksiyon #418 devam</td><td>iOS · 88.x</td></tr></table><div class="box"><div class="h">Zincir doğrulama' + n(2) + '</div><div class="s">12 Eyl: 18.204 olay · zincir tutarlı ✓ · günlük kök a91c… · RFC 3161 damgası 04:00 ✓</div></div></div>' +
         '<div class="col"><div class="h">Ayarlar' + n(3) + '</div>' + li("Hesap ve marka (logo, renk)") + li("Bildirim varsayılanları · sessiz saatler 23–07") + li("Eskalasyon şablonları") + li("Sebep ve kategori setleri") + li("Tatil takvimi") + li("Saklama süresi: 24 ay" + n(4)) + li("KVKK talepleri · aydınlatma metni v3") + li("Faturalama sayacı: 25 aktif şube") + li("API ve webhook (Should)") + '</div></div>'),

@@ -21,7 +21,7 @@ Bu depo ürünün **iş analizi ve ürün sahipliği** dokümantasyonunu taşır
 
 - Çalışma adı: **Talimatname** (12 Eylül 2026; kesin isim pilot görüşmelerindeki isim testinden sonra — kartlar: yap lütfen, tamamlist, tembihle)
 - İlk pazar: Türkiye · ilk dikey: yeme-içme zincirleri · ilk müşteri: 5–100 şubeli zincir merkezi
-- İlk sürüm: tam MVP, 5–6 ay, 12 sprint; WhatsApp entegrasyonu MVP dışı (push + SMS yedek)
+- İlk sürüm: **v1 çekirdek** (ADR-0008) — 6 madde türü, sabit kural, 4 rol, sabit eskalasyon + sabah özeti, istisna odaklı ızgara; GA 10. sprint + 2 sprint tampon; duyuru, koşul editörü, raporların çoğu v1.1; WhatsApp entegrasyonu MVP dışı (push + SMS yedek)
 - Kişi bazlı performans skoru yok; skor şube düzeyinde
 - Fizibilite kararı: Koşullu GO — 90 günlük doğrulama sprinti (20 görüşme → 5 LOI → 3 pilot), 24. ayda büyüt/kapat kapısı
 

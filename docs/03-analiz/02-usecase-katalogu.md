@@ -1,29 +1,29 @@
 # Kullanım senaryosu (use case) kataloğu
 
-Yirmi use case; her biri bir yeteneğe (CAP) ve birincil aktöre bağlı. Ayrıntılı akışlar 03-usecase-detaylari.md'de. Öncelik MVP kapsamından gelir (M/S).
+Yirmi use case; her biri bir yeteneğe (CAP) ve birincil aktöre bağlı. Ayrıntılı akışlar 03-usecase-detaylari.md'de. Sürüm sütunu ADR-0008 v1 çekirdeğine göredir: **v1** ilk sürümde (içeriği 03-usecase-detaylari.md'deki "v1 notu" ile daraltılmış olabilir), **v1.1** pilot sonrası, **arka plan** = v1'de kullanıcı arayüzü yok, sistem/destek süreci var.
 
-| UC | Ad | Birincil aktör | İkincil aktörler | CAP | Ö |
+| UC | Ad | Birincil aktör | İkincil aktörler | CAP | Sürüm |
 |---|---|---|---|---|---|
-| UC-01 | Hesabı kur ve organizasyonu yükle | A-01 Hesap yöneticisi | A-14 e-posta | CAP-01, CAP-14 | M |
-| UC-02 | Personel, rol ve cihazları yönet | A-01 | A-05 (kendi şubesi), A-11 SMS | CAP-01, CAP-02 | M |
-| UC-03 | Oturum aç | A-06, A-05, A-04, A-02, A-01 | A-11 SMS (OTP) | CAP-02 | M |
-| UC-04 | Ortak cihazda PIN ile geçiş yap | A-06 Personel | A-05 | CAP-02 | M |
-| UC-05 | Şablon tasarla ve yayınla | A-02 Operasyon müdürü | A-03 | CAP-03, CAP-04, CAP-15 | M |
-| UC-06 | Plan tanımla (tekrar, pencere, atama, eskalasyon) | A-02 | A-04 (bölgesi) | CAP-05, CAP-16 | M |
-| UC-07 | Çalıştırmaları üret ve hatırlat | A-08 Zamanlayıcı | A-10 push, A-11 SMS | CAP-05, CAP-10 | M |
-| UC-08 | Listeyi tamamla ve kanıt yükle | A-06 Personel | A-13 depolama | CAP-06, CAP-04 | M |
-| UC-09 | Çevrimdışı tamamla ve senkronize et | A-06 | A-08 | CAP-07 | M |
-| UC-10 | Yapılamadı bildir | A-06 | A-05 | CAP-08, CAP-09 | M |
-| UC-11 | Sorun bildir | A-06, A-05 | A-04 | CAP-08, CAP-09 | M |
-| UC-12 | Aksiyonu yönet ve kapat | A-05, A-04 | A-06 (kanıt), A-02 | CAP-09 | M |
-| UC-13 | Eskalasyonu yürüt | A-08 Zamanlayıcı | A-05 → A-04 → A-02; A-10, A-11 | CAP-09, CAP-10 | M |
-| UC-14 | Duyuru yayınla ve onay topla | A-02 | A-06, A-05 (onaylayan) | CAP-11, CAP-17 | M |
-| UC-15 | Operasyonu izle ve raporla | A-02, A-04, A-03 | A-07 (salt okunur) | CAP-12, CAP-18 | M |
-| UC-16 | Denetim kaydını ve kanıtı dışa aktar | A-03, A-02 | A-13, A-14 | CAP-12 | M |
-| UC-17 | Denetim izini görüntüle ve doğrula | A-03, A-01 | A-12 | CAP-13 | M |
-| UC-18 | KVKK talebini işle (dışa aktar / sil / maskele) | A-01 | A-08 (saklama) | CAP-13 | M |
-| UC-19 | Günün listelerini ata (yeniden atama) | A-05 Şube müdürü | A-06 | CAP-05 | M |
-| UC-20 | Çalıştırmayı gözden geçir ve onayla | A-04, A-03 | A-05 | CAP-17 | S |
+| UC-01 | Hesabı kur ve organizasyonu yükle | A-01 Hesap yöneticisi (v1: Yönetici) | A-14 e-posta | CAP-01, CAP-14 | v1 |
+| UC-02 | Personel, rol ve cihazları yönet | A-01 | A-05 (kendi şubesi), A-11 SMS | CAP-01, CAP-02 | v1 |
+| UC-03 | Oturum aç | A-06, A-05, A-04, A-02, A-01 | A-11 SMS (OTP) | CAP-02 | v1 |
+| UC-04 | Ortak cihazda PIN ile geçiş yap | A-06 Personel | A-05 | CAP-02 | v1 |
+| UC-05 | Şablon tasarla ve yayınla | A-02 Operasyon müdürü | A-03 | CAP-03, CAP-04, CAP-15 | v1 |
+| UC-06 | Plan tanımla (tekrar, pencere, atama, eskalasyon) | A-02 | A-04 (bölgesi) | CAP-05, CAP-16 | v1 |
+| UC-07 | Çalıştırmaları üret ve hatırlat | A-08 Zamanlayıcı | A-10 push, A-11 SMS | CAP-05, CAP-10 | v1 |
+| UC-08 | Listeyi tamamla ve kanıt yükle | A-06 Personel | A-13 depolama | CAP-06, CAP-04 | v1 |
+| UC-09 | Çevrimdışı tamamla ve senkronize et | A-06 | A-08 | CAP-07 | v1 |
+| UC-10 | Yapılamadı bildir | A-06 | A-05 | CAP-08, CAP-09 | v1 |
+| UC-11 | Sorun bildir | A-06, A-05 | A-04 | CAP-08, CAP-09 | v1 |
+| UC-12 | Aksiyonu yönet ve kapat | A-05, A-04 | A-06 (kanıt), A-02 | CAP-09 | v1 |
+| UC-13 | Eskalasyonu yürüt | A-08 Zamanlayıcı | A-05 → A-04 → A-02; A-10, A-11 | CAP-09, CAP-10 | v1 |
+| UC-14 | Duyuru yayınla ve onay topla | A-02 | A-06, A-05 (onaylayan) | CAP-11, CAP-17 | v1.1 |
+| UC-15 | Operasyonu izle ve raporla | A-02, A-04, A-03 | A-07 (salt okunur) | CAP-12, CAP-18 | v1 |
+| UC-16 | Denetim kaydını ve kanıtı dışa aktar | A-03, A-02 | A-13, A-14 | CAP-12 | v1 |
+| UC-17 | Denetim izini görüntüle ve doğrula | A-03, A-01 | A-12 | CAP-13 | arka plan |
+| UC-18 | KVKK talebini işle (dışa aktar / sil / maskele) | A-01 | A-08 (saklama) | CAP-13 | süreç |
+| UC-19 | Günün listelerini ata (yeniden atama) | A-05 Şube müdürü | A-06 | CAP-05 | v1 |
+| UC-20 | Çalıştırmayı gözden geçir ve onayla | A-04, A-03 | A-05 | CAP-17 | v1.1 |
 
 ## Use case diyagramı (özet)
 

@@ -79,6 +79,8 @@ erDiagram
 
 ## Sabitler (enum)
 
+v1'de (ADR-0008): `rol` yalnızca yonetici, bolge_muduru, sube_muduru, personel; `madde.tur` yalnızca onay, secim, sayi, sicaklik, metin, foto, talimat; `aksiyon.durum` yalnızca acik, kapali; DUYURU/DUYURU_ONAY, GOZDEN_GECIRME, KVKK_TALEP (ekran), GRUP tabloları v1.1'de kullanılır (şema v1'de oluşturulabilir, arayüzü yoktur). CALISTIRMA'ya `kilit_kullanici_id`, `kilit_bitis` alanları eklenir (BR-26).
+
 - `rol`: hesap_yoneticisi, operasyon_muduru, kalite, bolge_muduru, sube_muduru, personel, gozlemci
 - `madde.tur`: onay, secim, sayi, sicaklik, metin, foto, video, imza, barkod, tarih_saat, talimat
 - `calistirma.durum`: planlandi, acik, devam, tamamlandi, gec_tamamlandi, kacirildi, yapilmayacak (+ `basarili` bayrağı ayrı)
