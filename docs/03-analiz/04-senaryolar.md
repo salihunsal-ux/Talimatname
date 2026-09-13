@@ -1,6 +1,6 @@
 # Uçtan uca senaryolar
 
-> **v1 notu (ADR-0008):** S-05'teki duyuru-onay adımları v1.1; S-06'daki "herkes tamamlasın" v1'de "biri tamamlasın + kilit" olarak koşulur; S-01 adım 5'teki puan %88 artık bilgi amaçlıdır — çalıştırma "başarısız" olmasının nedeni kritik maddedir. Diğer senaryolar v1'de aynen geçerlidir.
+> **v1 notu (ADR-0008):** S-05'teki duyuru-onay adımları v1.1; S-06'daki "herkes tamamlasın" v1'de "biri tamamlasın + kilit" olarak koşulur; S-01 adım 5'teki puan %88 artık bilgi amaçlıdır — çalıştırma "başarısız" olmasının nedeni kritik maddedir. S-02'de Bakırköy için eskalasyon v1'de sabit kurala göre koşar: 03:30 şube müdürüne push, bölge müdürü ve yöneticiye 07:00 sabah özeti (gece SMS yok; SMS yalnızca kritik madde). Diğer senaryolar v1'de aynen geçerlidir.
 
 Senaryo = birden çok use case'i gerçek bir iş günü akışında birleştiren, test edilebilir hikâye. Her senaryo örnek veriyle (06-test/03) çalıştırılır; kabul testleri (06-test/02) bu adımlara bağlanır. Örnek zincir: **Kahve Durağı** — 25 şube, 3 bölge; Kadıköy şubesi 09:00–24:00 açık.
 

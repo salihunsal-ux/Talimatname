@@ -214,4 +214,4 @@ Pilot bulguları önce. Kalan kapasite v1.1 sırasına göre (aşağıdaki liste
 
 ## Kapasite notu
 
-v1'de 102 hikâye (S1–S10), 7'si L (bölünmüş). 10 sprint × ~16 gün ≈ 160 geliştirici günü; S/M/L ortalaması 1,5/4/8 gün kabulüyle ~150 gün → **plan artık tampon içeriyor** (S11–S12 ayrıca). Riskli sprintler S3–S6 (motor + çevrimdışı) değişmedi; kayma olursa S8 (PDF/aylık özet) S9'a kayar, Beta bir sprint ötelenir, GA S10 korunur.
+v1'de 112 hikâye (S1–S10), 3'ü L (bölünmüş); eski planın 138 hikâyesinden 34'ü v1.1'e gitti, 8 yeni (E-1…E-7 ve KVKK betiği) eklendi. 10 sprint × ~16 gün ≈ 160 geliştirici günü; S/M/L ortalaması 1,5/4/8 gün kabulüyle ~165 gün → S1–S10 hâlâ dolu, **tampon S11–S12'dir** (2 sprint ≈ 32 gün). Eski planda tampon sıfırdı ve kapsam %30 daha büyüktü. Riskli sprintler S3–S6 (motor + çevrimdışı) değişmedi; kayma olursa S8 (PDF/aylık özet) S9'a kayar, Beta bir sprint ötelenir, GA S10 korunur.
