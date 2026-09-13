@@ -40,7 +40,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 ## Belge navigasyonu (okuma sırası)
 
 1. Strateji: [Fizibilite](01-strateji/01-fizibilite.html) → [Pilot görüşme rehberi](01-strateji/02-pilot-gorusme-rehberi.html) → [İsim ve marka](01-strateji/03-isim-ve-marka.md)
-2. Ürün: [Vizyon ve konumlanma](02-urun/01-urun-vizyonu-ve-konumlanma.md) → [Personalar](02-urun/02-personalar.md) → [MVP kapsamı](02-urun/03-mvp-kapsam.html) → [Yetenek haritası](02-urun/04-yetenek-haritasi.md)
+2. Ürün: [Vizyon ve konumlanma](02-urun/01-urun-vizyonu-ve-konumlanma.md) → [Personalar](02-urun/02-personalar.md) → [MVP kapsamı](02-urun/03-mvp-kapsam.html) → [Yetenek haritası](02-urun/04-yetenek-haritasi.md) → [v1 çekirdek gözden geçirme](02-urun/05-v1-cekirdek-gozden-gecirme.md) (aktör gözüyle kesinti listesi — onay bekliyor)
 3. Analiz: [Aktörler](03-analiz/01-aktorler.md) → [Use case kataloğu](03-analiz/02-usecase-katalogu.md) → [Use case detayları](03-analiz/03-usecase-detaylari.md) → [Senaryolar](03-analiz/04-senaryolar.md)
 4. Gereksinimler: [Fonksiyonel](04-gereksinimler/01-fonksiyonel-gereksinimler.md) → [Fonksiyonel olmayan](04-gereksinimler/02-fonksiyonel-olmayan.md) → [İş kuralları](04-gereksinimler/03-is-kurallari.md) → [Veri modeli](04-gereksinimler/04-veri-modeli.md) → [API taslağı](04-gereksinimler/05-api-taslagi.md) → [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md)
 5. Tasarım: [Ekran envanteri ve navigasyon](05-tasarim/01-ekran-envanteri-ve-navigasyon.md) → [Mobil ekranlar](05-tasarim/02-mobil-ekranlar.html) → [Web ekranlar](05-tasarim/03-web-ekranlar.html) → [Tasarım sistemi](05-tasarim/04-tasarim-sistemi.md)
