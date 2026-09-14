@@ -1,0 +1,315 @@
+<title>Talimatname Prototip</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">
+<style>
+:root{--bg:#e9e6df;--paper:#f7f5ef;--sf:#ffffff;--sf2:#efece4;--ink:#1c2128;--ink2:#4b5560;--mut:#7b8590;--line:#d6d9d2;
+  --acc:#1f6f5b;--accs:#dcebe5;--crit:#b8452f;--crits:#f3ddd8;--warn:#b7791f;--warns:#f6ebd2;--ok:#1f6f5b;--oks:#dcebe5;--pasif:#c9ced6;
+  --fd:Bitter,Georgia,serif;--fu:"Segoe UI",Roboto,-apple-system,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fu);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+.stage{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:18px 12px 40px;gap:18px;flex-wrap:wrap}
+.phone{width:390px;max-width:100%;height:780px;background:var(--paper);border:2px solid var(--ink);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+@media (max-width:430px){.stage{padding:0}.phone{width:100%;height:100vh;height:100dvh;border:0;border-radius:0;box-shadow:none}}
+.scr{display:none;flex-direction:column;height:100%;overflow:hidden}
+.scr.on{display:flex}
+.hd{padding:14px 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:var(--paper)}
+.hd .back{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--line);background:var(--sf);display:grid;place-items:center;font-size:18px;cursor:pointer}
+.hd .t{font-weight:700;font-size:17px}
+.hd .s{font-size:12px;color:var(--mut)}
+.hd .r{margin-left:auto;font-size:12px;color:var(--mut);text-align:right}
+.brand{display:flex;align-items:center;gap:8px}
+.brand svg{width:26px;height:26px}
+.brand .w{font-family:var(--fd);font-weight:700;font-size:20px;letter-spacing:-.01em}
+.body{flex:1;overflow-y:auto;padding:14px 16px 18px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card.tint{background:var(--sf2);border-style:dashed}
+.row{display:flex;align-items:center;gap:10px}
+.grow{flex:1;min-width:0}
+.mut{color:var(--mut);font-size:13px}
+.small{font-size:13px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 16px;border-radius:12px;border:1.5px solid var(--ink);background:var(--sf);font-weight:600;font-size:15px;cursor:pointer;user-select:none;color:var(--ink)}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.d{border-color:var(--crit);color:var(--crit)}
+.btn.g{border-color:var(--line);color:var(--mut)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--sf2);color:var(--ink2)}
+.chip.ok{background:var(--oks);color:var(--ok)}.chip.crit{background:var(--crits);color:var(--crit)}.chip.warn{background:var(--warns);color:var(--warn)}.chip.acc{background:var(--accs);color:var(--acc)}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer;min-height:56px}
+.item:first-of-type{border-top:0}
+.box{width:26px;height:26px;border-radius:7px;border:2px solid var(--ink);flex:none;display:grid;place-items:center;font-size:14px;font-weight:700;background:var(--sf)}
+.box.ok{background:var(--ok);border-color:var(--ok);color:#fff}.box.crit{background:var(--crits);border-color:var(--crit);color:var(--crit)}.box.warn{background:var(--warns);border-color:var(--warn);color:var(--warn)}
+.item .lbl{font-size:15px;line-height:1.3}
+.item .meta{margin-left:auto;text-align:right;font-size:12px;color:var(--mut);white-space:nowrap}
+.prog{height:8px;background:var(--sf2);border-radius:4px;overflow:hidden}.prog i{display:block;height:100%;background:var(--acc);transition:width .2s}
+.avatars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.av{background:var(--sf);border:1.5px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer}
+.av b{display:block;width:44px;height:44px;line-height:44px;margin:0 auto 6px;border-radius:50%;background:var(--accs);color:var(--acc);font-size:16px}
+.av.sel{border-color:var(--acc);background:var(--accs)}
+.pin{display:flex;gap:12px;justify-content:center;margin:8px 0}
+.pin i{width:16px;height:16px;border-radius:50%;border:2px solid var(--ink);display:block}.pin i.f{background:var(--ink)}
+.kbd{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kbd div{background:var(--sf);border:1.5px solid var(--line);border-radius:12px;text-align:center;padding:14px 0;font-size:20px;font-weight:600;cursor:pointer}
+.temp{display:flex;align-items:center;gap:12px;justify-content:center}
+.temp .v{font-size:40px;font-weight:700;min-width:120px;text-align:center;font-variant-numeric:tabular-nums}
+.temp .v.bad{color:var(--crit)}
+.temp .b{width:56px;height:56px;border-radius:14px;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:26px;cursor:pointer;background:var(--sf)}
+.cam{flex:1;background:#1c2128;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;color:#fff;position:relative;overflow:hidden}
+.cam .view{position:absolute;inset:0;background:repeating-linear-gradient(135deg,#2a3038 0 18px,#232930 18px 36px)}
+.cam .stamp{position:absolute;left:12px;top:12px;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:8px;font-size:12px;line-height:1.35}
+.cam .shutter{position:relative;width:74px;height:74px;border-radius:50%;background:#fff;border:6px solid rgba(255,255,255,.35);margin:0 0 26px;cursor:pointer}
+.thumb{width:64px;height:48px;border-radius:8px;background:repeating-linear-gradient(135deg,#dfe3e8 0 8px,#eef1f4 8px 16px);border:1px solid var(--line);position:relative;flex:none}
+.thumb::after{content:"✓";position:absolute;right:3px;bottom:1px;font-size:11px;color:var(--ok);font-weight:700}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--sf);border-radius:20px 20px 0 0;padding:16px 16px 22px;box-shadow:0 -12px 30px rgba(0,0,0,.2);display:none;flex-direction:column;gap:8px;z-index:5;max-height:80%;overflow:auto}
+.sheet.on{display:flex}
+.sheet h3{margin:0 0 6px;font-size:17px}
+.opt{padding:14px 12px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;font-size:15px}
+.opt.sel{border-color:var(--acc);background:var(--accs)}
+textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--sf);color:var(--ink)}
+.toast{position:absolute;left:12px;right:12px;top:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:12px;font-size:13.5px;display:none;z-index:9;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.toast.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.cell{aspect-ratio:1;border-radius:5px;display:grid;place-items:center;font-size:10px;color:#fff;font-weight:700}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi div{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.kpi b{display:block;font-size:22px}
+.kpi span{font-size:11px;color:var(--mut)}
+.tabs{display:flex;border-top:1px solid var(--line);background:var(--paper)}
+.tabs div{flex:1;text-align:center;font-size:11px;padding:10px 0 12px;color:var(--mut);cursor:pointer}
+.tabs div.on{color:var(--acc);font-weight:700}
+.log{font-size:12.5px;color:var(--ink2);line-height:1.6}
+.dev{width:300px;max-width:100%;background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13px;align-self:flex-start}
+.dev h4{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.dev .btn{min-height:38px;font-size:13px;margin:4px 0;justify-content:flex-start}
+.dev select{width:100%;font:inherit;padding:8px;border-radius:8px;border:1.5px solid var(--line);background:var(--sf)}
+.dev p{color:var(--ink2);margin:8px 0 0;font-size:12.5px}
+.note{font-size:12.5px;color:var(--mut)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--sf2);font-size:12.5px}
+.pill.emre{background:var(--accs);color:var(--acc)}
+</style>
+
+<div class="stage">
+<div class="phone" id="phone">
+  <div class="toast" id="toast"></div>
+
+  <!-- KIOSK -->
+  <section class="scr on" id="s-lock">
+    <div class="hd"><div class="brand" id="brand1"></div><div class="r">Kadıköy şubesi<br>Şube cihazı · 21:58</div></div>
+    <div class="body">
+      <div class="mut">Adınıza dokunun, PIN girin</div>
+      <div class="avatars" id="avatars"></div>
+      <div class="card" id="pinbox" style="display:none">
+        <div class="row"><b id="pinname">—</b><span class="mut" style="margin-left:auto">PIN</span></div>
+        <div class="pin"><i id="d1"></i><i id="d2"></i><i id="d3"></i><i id="d4"></i></div>
+        <div class="kbd" id="kbd"></div>
+        <div class="note" style="margin-top:8px">PIN'i şube müdürü atar; ilk kullanımda değiştirebilirsiniz. 2 dk hareketsizlikte bu ekrana dönülür.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUGÜN -->
+  <section class="scr" id="s-today">
+    <div class="hd"><div class="brand" id="brand2"></div><div class="r"><span class="pill emre">Emre T.</span><br><span class="mut" style="font-size:11px">Kadıköy · Cts 13 Eyl</span></div></div>
+    <div class="body">
+      <div class="mut">Bugün</div>
+      <div class="card" onclick="go('s-list')" style="cursor:pointer">
+        <div class="row"><div class="grow"><b>Kapanış listesi</b><div class="mut">22:00 – 01:30 · 12 madde</div></div><span class="chip acc" id="todaychip">1 sa 12 dk kaldı</span></div>
+        <div class="prog" style="margin-top:10px"><i id="todayprog" style="width:0%"></i></div>
+        <div class="row" style="margin-top:8px"><span class="pill emre" id="lockpill">Sen yapıyorsun</span><span class="mut small">diğerleri "Emre yapıyor" görür</span></div>
+      </div>
+      <div class="card"><div class="row"><div class="grow"><b>Saatlik tuvalet kontrolü</b><div class="mut">22:00 yapıldı · Zeynep A.</div></div><span class="chip ok">✓ tamam</span></div></div>
+      <div class="card"><div class="row"><div class="grow"><b>Soğuk zincir ölçümü</b><div class="mut">23:00 – 23:30</div></div><span class="chip">planlı</span></div></div>
+      <div class="card tint"><div class="row"><div class="grow"><b>Dün gece</b><div class="mut">2 madde yapılamadı: deterjan yok · çöp poşeti bitti</div></div></div></div>
+      <div class="btn" onclick="toast('Sorun bildir: fotoğraf + not → şube müdürüne düşer (prototipte atlandı)')">Sorun bildir</div>
+    </div>
+    <div class="tabs"><div class="on">Bugün</div><div onclick="toast('Aksiyonlar: açık / kapalı, not ekle')">Aksiyonlar</div><div onclick="go('s-morning')">Şubem</div><div onclick="toast('Menü: senk durumu, PIN değiştir, kullanıcı değiştir')">Menü</div></div>
+  </section>
+
+  <!-- LİSTE -->
+  <section class="scr" id="s-list">
+    <div class="hd"><div class="back" onclick="go('s-today')">‹</div><div><div class="t">Kapanış listesi</div><div class="s" id="listsub">01:30'a kadar</div></div><div class="r" id="listcount">0 / 12</div></div>
+    <div class="body">
+      <div class="prog"><i id="listprog" style="width:0%"></i></div>
+      <div class="card" id="sec1"><div class="mut" style="margin-bottom:4px">Bölüm 1 · Bar</div></div>
+      <div class="card" id="sec2"><div class="mut" style="margin-bottom:4px">Bölüm 2 · Mutfak</div></div>
+      <div class="card" id="sec3"><div class="mut" style="margin-bottom:4px">Bölüm 3 · Salon ve kasa</div></div>
+      <div class="btn p" id="submit" disabled onclick="submit()">Gönder</div>
+      <div class="note" id="submitnote">Zorunlu maddeler bitmeden gönderilemez</div>
+    </div>
+    <div class="sheet" id="sheet-unable">
+      <h3>Yapılamadı — <span id="unable-title"></span></h3>
+      <div class="opt" onclick="clearMark()" style="border-style:dashed">İşareti kaldır (yeniden yapacağım)</div>
+      <div class="mut">Yapılamadıysa sebep seçin</div>
+      <div class="opt" onclick="pickReason(this,'Malzeme yok')">Malzeme yok</div>
+      <div class="opt" onclick="pickReason(this,'Ekipman arızalı')">Ekipman arızalı</div>
+      <div class="opt" onclick="pickReason(this,'Zaman yetmedi')">Zaman yetmedi</div>
+      <div class="opt" onclick="pickReason(this,'Yetkim yok')">Yetkim yok</div>
+      <div class="opt" onclick="pickReason(this,'Diğer')">Diğer (not zorunlu)</div>
+      <textarea id="unable-note" rows="2" placeholder="Not (isteğe bağlı; 'Diğer' seçilirse zorunlu)"></textarea>
+      <div class="row"><div class="btn g grow" onclick="closeSheet('sheet-unable')">Vazgeç</div><div class="btn d grow" onclick="confirmUnable()">Kaydet</div></div>
+    </div>
+    <div class="sheet" id="sheet-temp">
+      <h3 id="temp-title">Sıcaklık</h3>
+      <div class="mut">Kabul aralığı <b>0 – 4 °C</b></div>
+      <div class="temp"><div class="b" onclick="tempAdj(-0.5)">−</div><div class="v" id="tempv">3,0</div><div class="b" onclick="tempAdj(0.5)">+</div></div>
+      <div class="card tint" id="tempwarn" style="display:none"><b style="color:var(--crit)">Aralık dışı!</b><div class="small">Fotoğraf ve not zorunlu; kritik maddede aksiyon şube müdürüne açılır (4 sa).</div><textarea id="temp-note" rows="2" placeholder="Not: ne gördünüz?" style="margin-top:8px"></textarea></div>
+      <div class="row"><div class="btn g grow" onclick="closeSheet('sheet-temp')">Vazgeç</div><div class="btn p grow" onclick="confirmTemp()">Kaydet</div></div>
+    </div>
+  </section>
+
+  <!-- KAMERA -->
+  <section class="scr" id="s-cam">
+    <div class="cam"><div class="view"></div><div class="stamp">Kadıköy · 13.09.2026 <span id="camtime"></span><br>Emre T. · şube tableti</div><div class="shutter" onclick="shot()"></div></div>
+    <div class="hd" style="border-top:1px solid var(--line);border-bottom:0"><div class="back" onclick="go('s-list')">‹</div><div><div class="t" id="camtitle">Fotoğraf</div><div class="s">Yalnızca uygulama içi çekim · galeri yok</div></div></div>
+  </section>
+
+  <!-- SONUÇ -->
+  <section class="scr" id="s-done">
+    <div class="hd"><div class="brand" id="brand3"></div></div>
+    <div class="body">
+      <div class="card"><div class="row"><span class="chip ok" id="donechip">Gönderildi</span><span class="mut" id="donetime"></span></div>
+        <h2 style="margin:10px 0 4px;font-size:22px" id="donetitle">Kapanış tamamlandı</h2>
+        <div class="mut" id="donesub"></div></div>
+      <div class="card"><b>Ne oldu?</b><div class="log" id="donelog"></div></div>
+      <div class="card tint"><b>Bu kayıt değişmez</b><div class="small mut">Fotoğraflar sunucu zamanı ve dosya özetiyle mühürlendi. Açıklama gerekiyorsa aksiyona not eklenir.</div></div>
+      <div class="btn p" onclick="go('s-morning')">Sabah: merkez ne görür? →</div>
+      <div class="btn g" onclick="reset()">Baştan başla</div>
+    </div>
+  </section>
+
+  <!-- SABAH / MERKEZ -->
+  <section class="scr" id="s-morning">
+    <div class="hd"><div class="back" onclick="go('s-today')">‹</div><div><div class="t">Sabah özeti · Anadolu</div><div class="s">Pzr 14 Eyl 07:00 · Murat D. (bölge müdürü)</div></div></div>
+    <div class="body">
+      <div class="card" style="border-left:4px solid var(--acc)"><b>Dün gece: 12 şubeden 10'u yolunda</b><div class="mut">2 şube dikkat istiyor · 3 açık aksiyon</div></div>
+      <div class="kpi"><div><b>10</b><span>zamanında</span></div><div><b>1</b><span>başarısız</span></div><div><b>1</b><span>kaçırıldı</span></div></div>
+      <div class="card" onclick="go('s-detail')" style="cursor:pointer;border-color:var(--crit)"><div class="row"><span class="box crit">!</span><div class="grow"><b>Kadıköy · Kapanış</b><div class="mut">Tamamlandı 23:41 · <span style="color:var(--crit)">başarısız — buzdolabı 2: 6,0 °C</span></div></div><span class="mut">›</span></div></div>
+      <div class="card" style="border-color:var(--crit)"><div class="row"><span class="box crit">✕</span><div class="grow"><b>Bakırköy · Kapanış</b><div class="mut">Kaçırıldı · 03:30 şube müdürüne bildirildi</div></div><span class="mut">›</span></div></div>
+      <div class="mut" style="margin-top:4px">Tümünü göster (ızgara)</div>
+      <div class="grid" id="grid"></div>
+      <div class="note">Yeşil = zamanında · sarı = geç · kırmızı = başarısız/kaçırıldı · gri = kapalı. Varsayılan görünüm yalnızca sorunlu hücreleri listeler.</div>
+    </div>
+    <div class="tabs"><div onclick="go('s-today')">Bugün</div><div onclick="toast('Aksiyonlar: #418 kritik açık · #419 orta açık')">Aksiyonlar</div><div class="on">Bölgem</div><div>Menü</div></div>
+  </section>
+
+  <!-- DETAY -->
+  <section class="scr" id="s-detail">
+    <div class="hd"><div class="back" onclick="go('s-morning')">‹</div><div><div class="t">Kadıköy · Kapanış</div><div class="s">13 Eyl · Emre T. · şube tableti</div></div><div class="r"><span class="chip crit">başarısız</span></div></div>
+    <div class="body">
+      <div class="card" id="detail-items"></div>
+      <div class="card"><b>Aksiyon #418 · kritik</b><div class="mut">Buzdolabı 2 aralık dışı · Ayşe K. · vade 03:41 · <b style="color:var(--acc)">açık</b></div><div class="row" style="margin-top:8px"><div class="btn grow" onclick="toast('Not eklendi (notlar silinmez)')">Not ekle</div><div class="btn p grow" onclick="toast('Kapatırken not zorunlu, fotoğraf isteğe bağlı')">Kapat</div></div></div>
+      <div class="card"><b>Olay izi</b><div class="log" id="detail-log"></div></div>
+      <div class="btn" onclick="toast('PDF: maddeler, fotoğraflar, zaman damgaları, doğrulama kodu (prototipte üretilmez)')">PDF indir</div>
+    </div>
+  </section>
+</div>
+
+<div class="dev">
+  <h4>Görüşmeci paneli</h4>
+  <select id="brandsel" onchange="setBrand(this.value)">
+    <option value="talimatname">Talimatname (çalışma adı)</option>
+    <option value="yaplutfen">yap lütfen</option>
+    <option value="tamamlist">tamamlist</option>
+    <option value="tembihle">tembihle</option>
+  </select>
+  <div class="btn" onclick="reset()">1 · Kiosk PIN (Emre)</div>
+  <div class="btn" onclick="go('s-today')">2 · Bugün</div>
+  <div class="btn" onclick="go('s-list')">3 · Kapanış listesi</div>
+  <div class="btn" onclick="go('s-morning')">4 · Sabah özeti (bölge müdürü)</div>
+  <div class="btn" onclick="go('s-detail')">5 · Çalıştırma detayı</div>
+  <p>Blok 8 senaryosu: Emre PIN ile girer, 12 maddeyi yapar; buzdolabı 2'yi 6,0 °C girer (aralık dışı → fotoğraf + not, kritik aksiyon), zemin için "yapılamadı: malzeme yok", gönderir. Sonra Murat'ın sabah özetine geçin. İsim testi için üstteki seçici; sırayı her görüşmede değiştirin.</p>
+  <p>Prototip: veri kaydetmez, kamera çalışmaz (sahte çekim), sıcaklık ± ile girilir.</p>
+</div>
+</div>
+
+<script>
+const BR={
+ talimatname:{w:"talimatname",acc:"#1f6f5b",accs:"#dcebe5",mark:'<svg viewBox="0 0 64 64"><path d="M14 4 H38 L48 14 V56 A4 4 0 0 1 44 60 H14 A4 4 0 0 1 10 56 V8 A4 4 0 0 1 14 4 Z" fill="#1c2128"/><path d="M38 4 V14 H48 Z" fill="#f7f5ef"/><rect x="17" y="22" width="20" height="4" rx="2" fill="#f7f5ef"/><rect x="17" y="31" width="14" height="4" rx="2" fill="#f7f5ef"/><circle cx="46" cy="46" r="14" fill="#1f6f5b" stroke="#f7f5ef" stroke-width="3"/><path d="M39 46.5 L44 51.5 L53.5 41" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',font:'Bitter,Georgia,serif'},
+ yaplutfen:{w:"yap lütfen",acc:"#e96a48",accs:"#fbe3da",mark:'<svg viewBox="0 0 64 64"><path d="M21 6 H43 A17 17 0 0 1 60 23 V33 A17 17 0 0 1 43 50 H34 L22 61 L21 50 A17 17 0 0 1 4 33 V23 A17 17 0 0 1 21 6 Z" fill="#e96a48"/><path d="M20 28 L28 36 L44 20" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>',font:'"Segoe UI",Roboto,Arial,sans-serif'},
+ tamamlist:{w:"tamamlist",acc:"#4b4fd6",accs:"#e1e2f8",mark:'<svg viewBox="0 0 64 64"><path d="M16 4 H48 A12 12 0 0 1 60 16 V38 A12 12 0 0 1 48 50 H46 L58 61 L34 50 H16 A12 12 0 0 1 4 38 V16 A12 12 0 0 1 16 4 Z" fill="#4b4fd6"/><path d="M19 28 L28 37 L46 19" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>',font:'"Segoe UI",Roboto,Arial,sans-serif'},
+ tembihle:{w:"tembihle",acc:"#d9971c",accs:"#f7e8c4",mark:'<svg viewBox="0 0 64 64"><path d="M50.5 22.5 A21 21 0 1 0 53 32" fill="none" stroke="#d9971c" stroke-width="7" stroke-linecap="round"/><path d="M44 12 L52 24 L38 26 Z" fill="#d9971c"/><path d="M22 32 L29 39 L43 24" fill="none" stroke="#242018" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>',font:'"Segoe UI",Roboto,Arial,sans-serif'}
+};
+function setBrand(k){const b=BR[k];document.documentElement.style.setProperty('--acc',b.acc);document.documentElement.style.setProperty('--accs',b.accs);document.documentElement.style.setProperty('--ok',b.acc);document.documentElement.style.setProperty('--oks',b.accs);
+ ['brand1','brand2','brand3'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=b.mark+'<span class="w" style="font-family:'+b.font+'">'+b.w+'</span>';});}
+setBrand('talimatname');
+
+const ITEMS=[
+ {id:1,sec:1,t:"Kahve makinesi temizlendi",type:"photo",req:true},
+ {id:2,sec:1,t:"Süt dolabı sıcaklığı",type:"temp",req:true,crit:false,val:null},
+ {id:3,sec:1,t:"Tezgâh dezenfekte edildi",type:"check",req:true},
+ {id:4,sec:1,t:"Espresso makinesi kapatıldı, süt hortumları çıkarıldı",type:"check",req:true},
+ {id:5,sec:2,t:"Buzdolabı 2 sıcaklığı",type:"temp",req:true,crit:true,val:null},
+ {id:6,sec:2,t:"Fritöz yağı süzüldü, kapağı kapatıldı",type:"check",req:true},
+ {id:7,sec:2,t:"Zemin yıkandı",type:"check",req:true},
+ {id:8,sec:2,t:"Çöpler alındı, poşet takıldı",type:"photo",req:true},
+ {id:9,sec:3,t:"Masalar ve sandalyeler silindi",type:"check",req:true},
+ {id:10,sec:3,t:"Tuvalet son kontrol",type:"check",req:true},
+ {id:11,sec:3,t:"Kasa sayıldı, Z raporu alındı",type:"check",req:true},
+ {id:12,sec:3,t:"Işıklar, klima, ana kapı",type:"check",req:false},
+];
+let state={};let cur=null;let tempVal=3.0;let events=[];
+function now(){const d=new Date();return d.toTimeString().slice(0,5);}
+function log(s){events.push(now()+" · "+s);}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2600);}
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');if(id==='s-list')renderList();if(id==='s-morning')renderGrid();if(id==='s-detail')renderDetail();}
+function closeSheet(id){document.getElementById(id).classList.remove('on');}
+
+// kiosk
+const PEOPLE=["Ayşe K.","Emre T.","Zeynep A.","Burak S.","Selin Y.","Deniz Ö."];let pin="";let who=null;
+const av=document.getElementById('avatars');
+PEOPLE.forEach(p=>{const d=document.createElement('div');d.className='av';d.innerHTML='<b>'+p.split(' ').map(x=>x[0]).join('')+'</b>'+p;d.onclick=()=>{document.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');who=p;pin="";document.getElementById('pinname').textContent=p;document.getElementById('pinbox').style.display='block';drawPin();};av.appendChild(d);});
+const kbd=document.getElementById('kbd');["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(k=>{const d=document.createElement('div');d.textContent=k;if(k==="")d.style.visibility='hidden';d.onclick=()=>{if(k==="⌫")pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;drawPin();if(pin.length===4){setTimeout(()=>{log((who||"Emre T.")+" PIN ile giriş (şube tableti)");go('s-today');},250);}};kbd.appendChild(d);});
+function drawPin(){for(let i=1;i<=4;i++)document.getElementById('d'+i).classList.toggle('f',pin.length>=i);}
+
+// list
+function status(it){const s=state[it.id];if(!s)return null;return s;}
+function renderList(){[1,2,3].forEach(n=>{const sec=document.getElementById('sec'+n);sec.querySelectorAll('.item').forEach(e=>e.remove());ITEMS.filter(i=>i.sec===n).forEach(it=>{const s=status(it);const d=document.createElement('div');d.className='item';
+ let box='<span class="box"></span>',meta='';
+ if(s){if(s.k==='ok'){box='<span class="box ok">✓</span>';meta=s.meta||'';}if(s.k==='fail'){box='<span class="box crit">!</span>';meta=s.meta||'';}if(s.k==='unable'){box='<span class="box warn">✗</span>';meta='yapılamadı: '+s.reason;}}
+ const chips=(it.type==='photo'?' <span class="chip">fotoğraf</span>':'')+(it.type==='temp'?' <span class="chip">0–4 °C</span>':'')+(it.crit?' <span class="chip crit">kritik</span>':'');
+ d.innerHTML=box+'<div class="grow"><div class="lbl">'+it.t+chips+'</div></div>'+(s&&s.k==='ok'&&it.type==='photo'?'<div class="thumb"></div>':'')+'<div class="meta">'+meta+'</div>';
+ d.onclick=()=>tap(it);sec.appendChild(d);});});
+ const done=ITEMS.filter(i=>state[i.id]).length;const reqLeft=ITEMS.filter(i=>i.req&&!state[i.id]).length;
+ document.getElementById('listcount').textContent=done+' / 12';document.getElementById('listprog').style.width=(done/12*100)+'%';document.getElementById('todayprog').style.width=(done/12*100)+'%';
+ const sb=document.getElementById('submit');if(reqLeft===0){sb.removeAttribute('disabled');document.getElementById('submitnote').textContent='Gönderince liste kilitlenir; değiştirilemez.';}else{sb.setAttribute('disabled','');document.getElementById('submitnote').textContent=reqLeft+' zorunlu madde eksik — gönderim pasif';}
+ if(done>0)document.getElementById('todaychip').textContent='devam ediyor · '+done+'/12';}
+function tap(it){cur=it;const s=state[it.id];
+ if(it.type==='check'){if(!s){state[it.id]={k:'ok',meta:now()};log(it.t+' ✓');renderList();if(!it._asked){it._asked=true;toast('Yapamadıysanız maddeye tekrar dokunun: "Yapılamadı"');}return;}
+   openChoice(it);return;}
+ if(it.type==='photo'){document.getElementById('camtitle').textContent=it.t;document.getElementById('camtime').textContent=now();go('s-cam');return;}
+ if(it.type==='temp'){tempVal=it.val??3.0;document.getElementById('temp-title').textContent=it.t;drawTemp();document.getElementById('sheet-temp').classList.add('on');}}
+function openChoice(it){// işaretli maddeye ikinci dokunuş: işareti kaldır veya yapılamadı
+ const sh=document.getElementById('sheet-unable');document.getElementById('unable-title').textContent=it.t;document.querySelectorAll('#sheet-unable .opt').forEach(o=>o.classList.remove('sel'));document.getElementById('unable-note').value='';delete sh.dataset.r;
+ sh.classList.add('on');}
+function clearMark(){delete state[cur.id];log(cur.t+' işareti kaldırıldı');closeSheet('sheet-unable');renderList();}
+function pickReason(el,r){document.querySelectorAll('#sheet-unable .opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');el.dataset.r=r;document.getElementById('sheet-unable').dataset.r=r;}
+function confirmUnable(){const r=document.getElementById('sheet-unable').dataset.r;const n=document.getElementById('unable-note').value.trim();
+ if(!r){toast('Sebep seçin');return;}if(r==='Diğer'&&n.length<5){toast('"Diğer" için not zorunlu (≥ 5 karakter)');return;}
+ state[cur.id]={k:'unable',reason:r,note:n};log(cur.t+' yapılamadı: '+r+' → aksiyon #419 Ayşe K. (orta, 72 sa)');closeSheet('sheet-unable');renderList();toast('Kaydedildi · şube müdürüne bildirildi, aksiyon açıldı');}
+function drawTemp(){const v=document.getElementById('tempv');v.textContent=tempVal.toFixed(1).replace('.',',');const bad=tempVal<0||tempVal>4;v.classList.toggle('bad',bad);document.getElementById('tempwarn').style.display=bad?'block':'none';}
+function tempAdj(d){tempVal=Math.round((tempVal+d)*10)/10;drawTemp();}
+function confirmTemp(){const bad=tempVal<0||tempVal>4;const n=document.getElementById('temp-note').value.trim();
+ if(bad&&n.length<3){toast('Aralık dışı: not zorunlu, sonra fotoğraf');return;}
+ cur.val=tempVal;const label=tempVal.toFixed(1).replace('.',',')+' °C';
+ if(bad){state[cur.id]={k:'fail',meta:label+' · aralık dışı'};log(cur.t+' '+label+' ARALIK DIŞI'+(cur.crit?' → kritik: aksiyon #418 Ayşe K. (4 sa) + anında bildirim':''));closeSheet('sheet-temp');document.getElementById('temp-note').value='';toast(cur.crit?'Kritik madde: aksiyon açıldı, şube ve bölge müdürüne bildirildi. Şimdi fotoğraf.':'Aralık dışı kaydedildi. Şimdi fotoğraf.');document.getElementById('camtitle').textContent=cur.t;document.getElementById('camtime').textContent=now();setTimeout(()=>go('s-cam'),600);}
+ else{state[cur.id]={k:'ok',meta:label};log(cur.t+' '+label);closeSheet('sheet-temp');renderList();}}
+function shot(){const it=cur;if(state[it.id]&&state[it.id].k==='fail'){state[it.id].meta+=' · foto';}else{state[it.id]={k:'ok',meta:now()};}log(it.t+' fotoğraf · damga '+now()+' · sha256 …7f3a');go('s-list');toast('Fotoğraf mühürlendi: Kadıköy · '+now()+' · Emre T.');}
+function submit(){const fails=ITEMS.filter(i=>state[i.id]&&state[i.id].k==='fail');const crit=fails.filter(i=>i.crit);const un=ITEMS.filter(i=>state[i.id]&&state[i.id].k==='unable');const passed=ITEMS.filter(i=>state[i.id]&&state[i.id].k==='ok').length;const scored=ITEMS.filter(i=>state[i.id]).length;
+ const t=now();document.getElementById('donetime').textContent=t;
+ const failed=crit.length>0;document.getElementById('donechip').textContent=failed?'Başarısız (kritik madde)':'Tamamlandı';document.getElementById('donechip').className='chip '+(failed?'crit':'ok');
+ document.getElementById('donetitle').textContent='Kapanış '+(failed?'gönderildi — başarısız':'tamamlandı');
+ document.getElementById('donesub').textContent='Puan %'+Math.round(passed/Math.max(1,scored)*100)+' (bilgi) · '+fails.length+' aralık dışı · '+un.length+' yapılamadı · '+(crit.length+un.length)+' aksiyon';
+ log('Gönderildi '+t+(failed?' · kritik kural → BAŞARISIZ':' · tamamlandı')+' · liste kilitlendi');
+ document.getElementById('donelog').innerHTML=events.map(e=>'• '+e).join('<br>');go('s-done');}
+function reset(){state={};events=[];pin="";who=null;ITEMS.forEach(i=>{i.val=null;i._asked=false;});document.getElementById('pinbox').style.display='none';document.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));document.getElementById('todaychip').textContent='1 sa 12 dk kaldı';document.getElementById('todayprog').style.width='0%';go('s-lock');}
+
+// morning grid
+function renderGrid(){const g=document.getElementById('grid');g.innerHTML='';const subeler=["Kadıköy","Üsküdar","Bakırköy","Beşiktaş","Bornova","Karşıyaka","Ataşehir","Maltepe","Kartal","Pendik","Ümraniye","Şişli"];
+ subeler.forEach((s,i)=>{let c='#1f6f5b';if(s==='Kadıköy')c='#b8452f';if(s==='Bakırköy')c='#b8452f';if(s==='Kartal')c='#b7791f';if(i===11)c='#c9ced6';const d=document.createElement('div');d.className='cell';d.style.background=c;d.title=s;d.textContent=s.slice(0,3);g.appendChild(d);});}
+function renderDetail(){const el=document.getElementById('detail-items');el.innerHTML='<div class="mut" style="margin-bottom:4px">Maddeler</div>';
+ const src=Object.keys(state).length?ITEMS:null;
+ const rows=src?ITEMS.map(it=>{const s=state[it.id];let box='<span class="box"></span>',m='—';if(s){if(s.k==='ok'){box='<span class="box ok">✓</span>';m=s.meta||'';}if(s.k==='fail'){box='<span class="box crit">!</span>';m=s.meta;}if(s.k==='unable'){box='<span class="box warn">✗</span>';m='yapılamadı: '+s.reason;}}return '<div class="item" style="cursor:default">'+box+'<div class="grow"><div class="lbl">'+it.t+'</div></div>'+(s&&it.type==='photo'?'<div class="thumb"></div>':'')+'<div class="meta">'+m+'</div></div>';}).join('')
+ :'<div class="item" style="cursor:default"><span class="box ok">✓</span><div class="grow"><div class="lbl">Kahve makinesi temizlendi</div></div><div class="thumb"></div><div class="meta">23:02</div></div><div class="item" style="cursor:default"><span class="box crit">!</span><div class="grow"><div class="lbl">Buzdolabı 2 sıcaklığı</div></div><div class="thumb"></div><div class="meta">6,0 °C · aralık dışı</div></div><div class="item" style="cursor:default"><span class="box warn">✗</span><div class="grow"><div class="lbl">Zemin yıkandı</div></div><div class="meta">yapılamadı: malzeme yok</div></div>';
+ el.innerHTML+=rows;
+ const lg=events.length?events:["22:00 · pencere açıldı (sistem)","22:58 · Emre T. PIN ile giriş (şube tableti)","23:20 · Buzdolabı 2: 6,0 °C ARALIK DIŞI → kritik aksiyon #418","23:30 · Zemin yıkandı: yapılamadı (malzeme yok) → aksiyon #419","23:41 · Gönderildi · kritik kural → BAŞARISIZ","23:41 · bildirim: Ayşe K. push ✓, Murat D. push ✓","07:00 · sabah özeti: Murat D., Selin Y."];
+ document.getElementById('detail-log').innerHTML=lg.map(e=>'• '+e).join('<br>');}
+renderGrid();
+</script>
