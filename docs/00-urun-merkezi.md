@@ -11,7 +11,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | Neyin yerine | WhatsApp grupları, kâğıt formlar, Excel, sıcaklık defteri |
 | Değer | Her iş kanıtla (fotoğraf, ölçüm, zaman, konum) kapanır; yapılmayan iş sebebiyle merkeze düşer; denetim kaydı 3 dakikada PDF |
 | Fiyat çıpası | Zincir: ~₺730/şube/ay (Baz senaryo 15 $) · tekil işletme self-servisi MVP dışı |
-| Durum | Dokümantasyon v1 çekirdeğe göre yeniden çizildi (ADR-0008); doğrulama sprinti ve Sprint 0 bekliyor |
+| Durum | Doğrulama sprinti kiti hazır (14 Eylül 2026): hafta 0 — hedef liste onayı ve ilk ulaşım mesajları; Sprint 0 paralel başlayabilir |
 
 ## Karar haritası
 
@@ -40,7 +40,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 
 ## Belge navigasyonu (okuma sırası)
 
-1. Strateji: [Fizibilite](01-strateji/01-fizibilite.html) → [Pilot görüşme rehberi](01-strateji/02-pilot-gorusme-rehberi.html) → [İsim ve marka](01-strateji/03-isim-ve-marka.md)
+1. Strateji: [Fizibilite](01-strateji/01-fizibilite.html) → [Pilot görüşme rehberi](01-strateji/02-pilot-gorusme-rehberi.html) → [İsim ve marka](01-strateji/03-isim-ve-marka.md) → [Doğrulama sprinti kiti](01-strateji/dogrulama-sprinti/00-sprint-plani.md) (plan, hedef liste, ulaşım, not şablonu + puanla.py, LOI, gözlem, haftalık rapor)
 2. Ürün: [Vizyon ve konumlanma](02-urun/01-urun-vizyonu-ve-konumlanma.md) → [Personalar](02-urun/02-personalar.md) → [MVP kapsamı](02-urun/03-mvp-kapsam.html) → [Yetenek haritası](02-urun/04-yetenek-haritasi.md) → [v1 çekirdek gözden geçirme](02-urun/05-v1-cekirdek-gozden-gecirme.md) → [v1 çekirdek kapsamı](02-urun/06-v1-cekirdek-kapsam.md) (kaynak)
 3. Analiz: [Aktörler](03-analiz/01-aktorler.md) → [Use case kataloğu](03-analiz/02-usecase-katalogu.md) → [Use case detayları](03-analiz/03-usecase-detaylari.md) → [Senaryolar](03-analiz/04-senaryolar.md)
 4. Gereksinimler: [Fonksiyonel](04-gereksinimler/01-fonksiyonel-gereksinimler.md) → [Fonksiyonel olmayan](04-gereksinimler/02-fonksiyonel-olmayan.md) → [İş kuralları](04-gereksinimler/03-is-kurallari.md) → [Veri modeli](04-gereksinimler/04-veri-modeli.md) → [API taslağı](04-gereksinimler/05-api-taslagi.md) → [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md)
@@ -71,3 +71,4 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 - MVP kapsamı (canlı sayfa): https://claude.ai/code/artifact/c7feaa95-847e-473e-bd87-8f95646bb515
 - Pilot görüşme rehberi (canlı sayfa): https://claude.ai/code/artifact/7dda6bc8-bf82-4c28-a572-b6572652e421
 - Logo tuvali (düzenlenebilir): https://claude.ai/code/artifact/96cf8183-a732-4988-acd2-731b83545950
+- Blok 8 prototipi (telefonda aç): https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69
