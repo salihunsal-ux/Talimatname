@@ -19,10 +19,10 @@ Karar kuralı: üç kapıdan ikisi tutmazsa proje burada biter (fizibilite §10)
 | 0 (hazırlık) | Kit | Hedef liste onayı (01), ulaşım mesajları (02), not şablonu ve puanlama betiği (03), prototip (05-tasarim/05-prototip), kanıt raporu örnekleri — basılı (05-tasarim/06-kanit-raporu), 8 şablonun madde listeleri (02-urun/07), isim kartları (logo tuvali), LOI (04) | Kit hazır; ilk 30 ulaşım mesajı gitti |
 | 1 | Ulaşım + ilk görüşmeler | 40 ulaşım (LinkedIn/e-posta/tanıştırma); hedef 5 randevu; ilk 2–3 görüşme; notlar aynı gün | 3 not, puanlama tablosu dolmaya başladı |
 | 2 | Görüşme | 4–5 görüşme; ilk şube ziyareti; haftalık rapor #1 | 8 not, 1 gözlem |
-| 3 | Görüşme + prototip testi | 4–5 görüşme (Blok 8 prototip + isim kartları devrede); 2 gözlem; fiyat testi cevapları toplanıyor | 13 not, 3 gözlem |
-| 4 | **K1** | 4–5 görüşme; K1 sayımı; örneklem dengesi kontrolü (format/model/büyüklük); K1 kararı; haftalık rapor | 17–20 not; K1 raporu |
+| 3 | Görüşme + prototip testi | 4–5 görüşme (Blok 8 prototip + isim kartları devrede); 2 gözlem — ilk **saha kiosk denemesi** (07, tabletle kapanış); fiyat testi cevapları toplanıyor | 13 not, 3 gözlem, 1 kiosk denemesi |
+| 4 | **K1** | 4–5 görüşme; K1 sayımı; örneklem dengesi kontrolü (format/model/büyüklük); K1 kararı; 2. kiosk denemesi; haftalık rapor | 17–20 not; K1 raporu |
 | 5 | LOI turu | En yüksek uyum puanlı 8 zincire LOI teklifi; ikinci görüşme (karar vericiyle); 2 gözlem | LOI görüşmeleri |
-| 6 | LOI turu | LOI imzaları; fiyat testi analizi (van Westendorp); ürün kararlarının güncellenmesi (kiosk, barındırma, prob, franchise) | ≥ 3 LOI; karar güncellemeleri |
+| 6 | LOI turu | LOI imzaları; fiyat testi analizi (van Westendorp); 3. kiosk denemesi → kiosk kararı (07 karar kuralı); ürün kararlarının güncellenmesi (kiosk, barındırma, prob, franchise) | ≥ 3 LOI; karar güncellemeleri |
 | 7 | LOI + pilot hazırlığı | Kalan LOI'ler; 3 pilot seçimi (uyum puanı + çeşitlilik); veri işleme sözleşmesi; şube/personel Excel'i | ≥ 5 LOI hedefi |
 | 8 | **K2** | K2 sayımı ve kararı; pilot kurulum planı; Alfa/Beta takvimiyle hizalama (S6 Alfa) | K2 raporu; 3 pilot sözleşmesi |
 | 9–12 | Pilot ön hazırlık ve paralel iş | Pilot zincirlerde şablon uyarlaması (8 şablon), tablet envanteri, aydınlatma metni; geliştirme Alfa'ya kadar sürer; isim testi sonucu → kesin isim kararı (ADR) | Pilot hazır; isim kararı |
@@ -35,7 +35,7 @@ Not: K3, yazılım Alfa/Beta'ya ulaşınca ölçülür (S6–S8); sprintin 9–1
 - **Pazartesi 30 dk:** haftanın randevuları, ulaşım hedefi, örneklem dengesi (aşağıdaki tablo).
 - **Her görüşmeden sonra 10 dk:** not formu (03) doldurulur, `puanla.py` çalıştırılır, kapı sayacı güncellenir.
 - **Cuma 30 dk:** haftalık rapor (07 şablonu) → depoya commit; karar gerektiren bulgular → ADR/karar günlüğü.
-- **Her 2 görüşmeye 1 şube ziyareti** (rehber §07 gözlem listesi).
+- **Her 2 görüşmeye 1 şube ziyareti** (rehber §07 gözlem listesi); 3 ziyaret tabletli kiosk denemesi (07).
 
 ## Örneklem dengesi (20 görüşme)
 

@@ -31,7 +31,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 
 ## Açık kararlar (pilot görüşmelerinden beslenecek)
 
-1. Ortak cihaz (kiosk) modunun Must kalıp kalmayacağı — şubelerde tablet oranı
+1. Ortak cihaz (kiosk) modunun Must kalıp kalmayacağı — şubelerde tablet oranı + 3 şubede saha kiosk denemesi ([karar kuralı](01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md))
 2. Tekil işletme self-servisi (v1.x?)
 3. Franchise sahibi rolü: Gözlemci mi, şube müdürü yetkisi mi
 4. Barındırma: TR bulut vs AB + standart sözleşme (pilotların BT şartı)

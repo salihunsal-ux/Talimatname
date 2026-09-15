@@ -53,6 +53,7 @@ REGISTRY = [
         (D+"01-strateji/dogrulama-sprinti/04-loi-sablonu.md", "Pilot niyet mektubu (LOI)", "8 haftalık ücretli pilot; başarı ölçütleri; yalnızca gizlilik maddesi bağlayıcı; görüşmeci kontrol listesi", ["kit"]),
         (D+"01-strateji/dogrulama-sprinti/05-gozlem-formu.md", "Şube ziyareti gözlem formu", "Kapanış vardiyası: fiziksel ortam, davranış, personel sohbeti, merkez–saha farkı", ["kit"]),
         (D+"01-strateji/dogrulama-sprinti/06-haftalik-rapor-sablonu.md", "Haftalık rapor şablonu", "Cuma raporu: sayılar, sinyaller, kapsam kararlarına etki; 4. ve 8. hafta kapı bölümü", ["kit"]),
+        (D+"01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md", "Saha kiosk denemesi", "Gerçek tablet + kilit modu + prototip ile kapanış: ölçütler, karar kuralı, donanım, kurulum, ziyaret akışı, not şablonu", ["kit"]),
         (D+"01-strateji/gorusmeler/README.md", "Görüşme notları — akış", "Görüşme → 10 dk not → puanla.py → commit; dosya adlandırma", []),
         (D+"01-strateji/gorusmeler/00-ozet.md", "Görüşme özeti ve kapı sayacı", "puanla.py çıktısı (otomatik): K1/K2, pilot adayları, örneklem, isim testi, fiyat", ["otomatik"]),
         (D+"01-strateji/gorusmeler/ornek-gorusme.md", "Örnek görüşme notu", "Doldurulmuş örnek (ornek: true — puanlamaya girmez)", []),

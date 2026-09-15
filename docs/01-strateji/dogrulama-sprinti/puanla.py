@@ -76,9 +76,26 @@ def van_westendorp(rows):
     return dict(n=n, opp=opp, ipp=ipp, pmc=min(pmc, pme), pme=max(pmc, pme),
                 med=dict(zip(keys, (med(0), med(1), med(2), med(3))))), n
 
+def kiosk_section(kiosk):
+    """Saha kiosk denemesi notları (tur: kiosk, 07-kiosk-saha-denemesi.md): karar kuralı ≥ 2/3 şube 'kiosk'."""
+    if not kiosk:
+        return ["## Saha kiosk denemesi", "", "- Henüz deneme notu yok (tur: kiosk).", ""]
+    out = ["## Saha kiosk denemesi", "", "| Tarih | Zincir | Şube | Format | Konum | Wi-Fi min | PIN sn | Liste dk | Yanlış dokunuş | Gidiş-geliş | Foto | Kilit tepki | Telefon tercihi | Karar |",
+           "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for r in kiosk:
+        out.append(f"| {r.get('tarih','')} | {r.get('zincir_kodu','')} | {r.get('sube','')} | {r.get('format','')} | {r.get('konum','')} | {num(r,'wifi_min_cubuk'):.0f} | {num(r,'pin_sn'):.0f} | {num(r,'liste_dk'):.1f} | {num(r,'yanlis_dokunus'):.0f} | {num(r,'gidis_gelis'):.0f} | {r.get('foto_davranisi','')} | {r.get('kilit_tepki','')} | {r.get('telefon_tercihi','')} | **{r.get('karar','')}** |")
+    ok = sum(1 for r in kiosk if str(r.get('karar','')).lower() == 'kiosk')
+    hizli = sum(1 for r in kiosk if num(r,'liste_dk') and num(r,'liste_dk') < 8 and str(r.get('telefon_tercihi','')).lower() != 'evet')
+    out += ["", f"- Karar kuralı (≥ 2 şubede liste < 8 dk ve telefon tercihi yok): **{hizli} / {len(kiosk)}** şube → {'kiosk v1 (O-5) kalır' if hizli >= 2 else 'henüz karar yok' if len(kiosk) < 3 else 'personel telefonu birincil, kiosk isteğe bağlı'}",
+            f"- Gözlemci kararları: kiosk {ok} · telefon {sum(1 for r in kiosk if str(r.get('karar','')).lower()=='telefon')} · ikisi {sum(1 for r in kiosk if str(r.get('karar','')).lower()=='ikisi')}", ""]
+    return out
+
 def main():
-    rows = load()
-    lines = [f"# Görüşme özeti ve kapı sayacı", "", f"Üretim: {datetime.date.today().isoformat()} · `puanla.py` · {len(rows)} görüşme notu (ornek=true olanlar hariç)", ""]
+    allrows = load()
+    kiosk = [r for r in allrows if str(r.get("tur", "")).lower() == "kiosk"]
+    gozlem = [r for r in allrows if str(r.get("tur", "")).lower() == "gozlem"]
+    rows = [r for r in allrows if str(r.get("tur", "")).lower() not in ("kiosk", "gozlem")]
+    lines = [f"# Görüşme özeti ve kapı sayacı", "", f"Üretim: {datetime.date.today().isoformat()} · `puanla.py` · {len(rows)} görüşme notu (ornek=true olanlar hariç) · {len(gozlem)} şube gözlemi · {len(kiosk)} kiosk denemesi", ""]
     # ---- tablo
     lines += ["| # | Tarih | Zincir | Şube | Kutu | Format | Model | Tür | Acı | Liste | Cihaz | Yetki | Ödeme | Taahhüt | Engel | Toplam /16 | K1 | LOI | İsim |",
               "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
@@ -131,8 +148,9 @@ def main():
               f"- Fotoğraf/konum itirazı: var {oran('foto_konum_itirazi','var')[0]}/{oran('foto_konum_itirazi','var')[1]}",
               f"- Prob talebi: var {oran('prob_talebi','var')[0]}/{oran('prob_talebi','var')[1]}",
               f"- Franchise bayi görsün: evet {oran('franchise_bayi_gorsun','evet')[0]} · hayır {oran('franchise_bayi_gorsun','hayir')[0]}", ""]
+    lines += kiosk_section(kiosk)
     open(OUT, "w", encoding="utf-8").write("\n".join(lines))
-    print(f"{len(rows)} not → {OUT}\nK1 {k1}/{len(merkez)} · K2 LOI {loi} · pilot adayı {len(adaylar)}")
+    print(f"{len(rows)} not → {OUT}\nK1 {k1}/{len(merkez)} · K2 LOI {loi} · pilot adayı {len(adaylar)} · gözlem {len(gozlem)} · kiosk {len(kiosk)}")
 
 if __name__ == "__main__":
     main()
