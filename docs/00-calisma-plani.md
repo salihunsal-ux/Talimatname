@@ -15,7 +15,7 @@ Amaç: kodlamaya başlamadan önce bir geliştirme ekibinin ihtiyaç duyacağı 
 | F6 · Geliştirme hazırlığı | Kodlama hazırlık indeksi, teknik mimari, repo/ortam kurulumu, backlog ve sprint planı, DoR/DoD | 07-gelistirme/00–04 | ✅ Tamamlandı |
 | F6b · v1 çekirdek yeniden çizimi | Aktör gözüyle gözden geçirme (02-urun/05) onaylanınca kapsam, FR, UC, ekran, TC ve backlog'un çekirdeğe göre yeniden çizilmesi (ID'ler korunur, ertelenenler v1.1 etiketi) | Güncellenmiş belgeler, ADR-0008, 02-urun/06 | ✅ Tamamlandı (13 Eylül 2026) |
 | F7 · Doğrulama sprinti (saha) | 20 görüşme, 8 şube ziyareti, isim testi, 5 LOI — kit: 01-strateji/dogrulama-sprinti/ (plan, hedef liste, ulaşım, not şablonu + puanla.py, LOI, gözlem, rapor), prototip 05-tasarim/05-prototip | Görüşme notları (01-strateji/gorusmeler/), 00-ozet.md, haftalık raporlar, karar güncellemeleri, ADR | 🟡 Kit hazır (14 Eylül 2026) — hafta 0 |
-| F8 · Hi-fi tasarım ve prototip | Tel-çerçevelerin Talimatname tasarım sistemiyle yüksek doğruluklu sürümü; Blok 8 tıklanabilir prototip (✅ hazır) | 05-tasarim/05-prototip | 🟡 Prototip hazır; hi-fi ekranlar Sprint 4'e kadar |
+| F8 · Hi-fi tasarım ve prototip | Tel-çerçevelerin Talimatname tasarım sistemiyle yüksek doğruluklu sürümü; Blok 8 tıklanabilir prototip (✅), yönetici web prototipi (✅), basılı kanıt raporu örnekleri (✅), 8 şablon içeriği (✅ taslak) | 05-tasarim/05-prototip, 06-kanit-raporu, 02-urun/07 | 🟡 Görüşme prototipleri hazır; hi-fi ekranlar Sprint 4'e kadar |
 | F9 · Sprint 0 | Repo'lar, CI, ortamlar, tasarım token'ları kodda, örnek veri, ilk hikâyeler hazır | Kod depoları | ⏳ F8 sonrası, 2 hafta |
 
 ## Çalışma kuralları

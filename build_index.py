@@ -26,6 +26,7 @@ LIVE = {
     "docs/01-strateji/02-pilot-gorusme-rehberi.html": "https://claude.ai/code/artifact/7dda6bc8-bf82-4c28-a572-b6572652e421",
     "docs/05-tasarim/marka/Main.dc.html": "https://claude.ai/code/artifact/96cf8183-a732-4988-acd2-731b83545950",
     "docs/05-tasarim/05-prototip/blok8-prototip.html": "https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69",
+    "docs/05-tasarim/05-prototip/yonetici-web-prototip.html": "https://claude.ai/code/artifact/96276ca2-4d59-49b2-8bb2-50ec77e394f5",
 }
 
 # (yol, başlık, açıklama, etiketler) — tür uzantıdan: .md gömülü, .py/.txt kod, .html çerçeve, diğer bağlantı
@@ -86,7 +87,8 @@ REGISTRY = [
         (D+"05-tasarim/04-tasarim-sistemi.md", "Tasarım sistemi", "Renk, tipografi, boşluk, bileşen kuralları, erişilebilirlik (token'lar)", []),
         (D+"05-tasarim/ekranlar/build_wireframes.py", "Tel-çerçeve üretici (build_wireframes.py)", "02 ve 03 HTML dosyalarını üretir", ["betik"]),
         (D+"05-tasarim/05-prototip/blok8-prototip.html", "Blok 8 prototipi", "Tıklanabilir: kiosk PIN → kapanış listesi → sabah özeti; isim kartı seçici", ["canlı sayfa", "kit"]),
-        (D+"05-tasarim/05-prototip/README.md", "Prototip kullanım notu", "Görüşmede nasıl kullanılır, hangi akışlar gösterilir", []),
+        (D+"05-tasarim/05-prototip/yonetici-web-prototip.html", "Yönetici web prototipi", "Kurulum sihirbazı (4 adım) → istisna odaklı pano ve ızgara → çalıştırma detayı ve aksiyon → sabah özeti e-postası; LOI turu için", ["kit", "canlı sayfa"]),
+        (D+"05-tasarim/05-prototip/README.md", "Prototip kullanım notu", "İki prototip: Blok 8 (personel, telefon) ve yönetici web (LOI turu); ne gösterir, ne sorulur", []),
         (D+"05-tasarim/06-kanit-raporu/README.md", "Kanıt raporu örnekleri — not", "Üç basılı örnek: ne gösterir, hangi kapsam satırına bağlı, nasıl üretilir", ["kit"]),
         (D+"05-tasarim/06-kanit-raporu/01-calistirma-raporu.html", "Çalıştırma raporu (örnek PDF)", "Kadıköy kapanışı 13 Eylül: başarısız (kritik), 15 madde, damgalı fotoğraflar, aksiyonlar, olay izi, doğrulama kodu — 2 sayfa", ["kit", "basılı"]),
         (D+"05-tasarim/06-kanit-raporu/02-aylik-ozet.html", "Aylık özet (örnek PDF)", "Ağustos 2026, 25 şube: zamanında %81, kırılımlar, en sık yapılamayanlar, kritik kaynakları — 1 sayfa", ["kit", "basılı"]),

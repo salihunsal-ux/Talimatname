@@ -73,3 +73,4 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 - Pilot görüşme rehberi (canlı sayfa): https://claude.ai/code/artifact/7dda6bc8-bf82-4c28-a572-b6572652e421
 - Logo tuvali (düzenlenebilir): https://claude.ai/code/artifact/96cf8183-a732-4988-acd2-731b83545950
 - Blok 8 prototipi (telefonda aç): https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69
+- Yönetici web prototipi (LOI turu, masaüstü): https://claude.ai/code/artifact/96276ca2-4d59-49b2-8bb2-50ec77e394f5
