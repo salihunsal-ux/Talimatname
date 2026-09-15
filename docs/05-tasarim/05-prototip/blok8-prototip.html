@@ -127,7 +127,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
 
   <!-- LİSTE -->
   <section class="scr" id="s-list">
-    <div class="hd"><div class="back" onclick="go('s-today')">‹</div><div><div class="t">Kapanış listesi</div><div class="s" id="listsub">01:30'a kadar</div></div><div class="r" id="listcount">0 / 12</div></div>
+    <div class="hd"><div class="back" onclick="go('s-today')">‹</div><div><div class="t">Kapanış listesi</div><div class="s" id="listsub">01:30'a kadar</div></div><div class="r" id="listcount">0 / 15</div></div>
     <div class="body">
       <div class="prog"><i id="listprog" style="width:0%"></i></div>
       <div class="card" id="sec1"><div class="mut" style="margin-bottom:4px">A · Bar ve mutfak</div></div>
@@ -273,9 +273,9 @@ function renderList(){[1,2,3].forEach(n=>{const sec=document.getElementById('sec
  d.innerHTML=box+'<div class="grow"><div class="lbl">'+it.t+chips+'</div></div>'+(s&&s.k==='ok'&&it.type==='photo'?'<div class="thumb"></div>':'')+'<div class="meta">'+meta+'</div>';
  d.onclick=()=>tap(it);sec.appendChild(d);});});
  const done=ITEMS.filter(i=>state[i.id]).length;const reqLeft=ITEMS.filter(i=>i.req&&!state[i.id]).length;
- document.getElementById('listcount').textContent=done+' / 12';document.getElementById('listprog').style.width=(done/12*100)+'%';document.getElementById('todayprog').style.width=(done/12*100)+'%';
+ const N=ITEMS.length;document.getElementById('listcount').textContent=done+' / '+N;document.getElementById('listprog').style.width=(done/N*100)+'%';document.getElementById('todayprog').style.width=(done/N*100)+'%';
  const sb=document.getElementById('submit');if(reqLeft===0){sb.removeAttribute('disabled');document.getElementById('submitnote').textContent='Gönderince liste kilitlenir; değiştirilemez.';}else{sb.setAttribute('disabled','');document.getElementById('submitnote').textContent=reqLeft+' zorunlu madde eksik — gönderim pasif';}
- if(done>0)document.getElementById('todaychip').textContent='devam ediyor · '+done+'/12';}
+ if(done>0)document.getElementById('todaychip').textContent='devam ediyor · '+done+'/'+N;}
 function tap(it){cur=it;const s=state[it.id];
  if(it.type==='check'){if(!s){state[it.id]={k:'ok',meta:now()};log(it.t+' ✓');renderList();if(!it._asked){it._asked=true;toast('Yapamadıysanız maddeye tekrar dokunun: "Yapılamadı"');}return;}
    openChoice(it);return;}
