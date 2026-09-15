@@ -6,6 +6,7 @@ Bu depo ürünün **iş analizi ve ürün sahipliği** dokümantasyonunu taşır
 
 ## Depo haritası
 
+- [Ürün dosyası](index.html) — tek sayfa: ürün özeti, tüm belgeler okunabilir, açık konular; canlı sürüm https://claude.ai/code/artifact/bb2f5c58-4b72-4fc5-80c9-0baef13cd2b4 · belgeler değişince `python build_index.py` (bağımlılık: `pip install markdown`).
 - [Ürün merkezi](docs/00-urun-merkezi.md) — buradan başla: ürün özeti, karar haritası, belge navigasyonu, durum.
 - [Çalışma planı](docs/00-calisma-plani.md) — BA/PO çalışma fazları, teslimatlar, durum.
 - [01 Strateji](docs/01-strateji) — fizibilite raporu ve modeli, pilot görüşme rehberi, isim ve marka çalışması.

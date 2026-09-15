@@ -67,6 +67,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 
 ## Dış bağlantılar
 
+- Ürün dosyası (tek sayfa, tüm belgeler): https://claude.ai/code/artifact/bb2f5c58-4b72-4fc5-80c9-0baef13cd2b4 — depoda `index.html`, `python build_index.py` ile yenilenir
 - Fizibilite (canlı sayfa): https://claude.ai/code/artifact/7624c049-c18f-45d6-b7c5-c750bcd7798f
 - MVP kapsamı (canlı sayfa): https://claude.ai/code/artifact/c7feaa95-847e-473e-bd87-8f95646bb515
 - Pilot görüşme rehberi (canlı sayfa): https://claude.ai/code/artifact/7dda6bc8-bf82-4c28-a572-b6572652e421
