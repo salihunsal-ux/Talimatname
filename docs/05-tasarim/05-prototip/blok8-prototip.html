@@ -104,11 +104,20 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
 .note{font-size:12.5px;color:var(--mut)}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--sf2);font-size:12.5px}
 .pill.emre{background:var(--accs);color:var(--acc)}
+
+.banner{position:absolute;left:0;right:0;top:0;background:var(--warn);color:#fff;font-size:12px;padding:4px 12px;z-index:6;display:none;text-align:center}
+body.offline .banner{display:block} body.offline .hd{padding-top:36px}
+.pill.ayse{background:var(--warns);color:var(--warn)}
+.chip.sel{background:var(--acc);color:#fff}
+.prow{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)} .prow:first-of-type{border-top:0}
+.prow b.i{width:32px;height:32px;line-height:32px;border-radius:50%;background:var(--accs);color:var(--acc);text-align:center;font-size:12px;flex:none}
+.note-li{font-size:13px;color:var(--ink2);padding:6px 0;border-top:1px dotted var(--line)}
 </style>
 
 <div class="stage">
 <div class="phone" id="phone">
   <div class="toast" id="toast"></div>
+  <div class="banner" id="offline">Bağlantı yok — kayıtlar cihazda saklanıyor · <b id="qn">0</b> senk bekliyor</div>
 
   <!-- KIOSK -->
   <section class="scr on" id="s-lock">
@@ -130,7 +139,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="hd"><div class="brand" id="brand2"></div><div class="r"><span class="pill emre">Emre T.</span><br><span class="mut" style="font-size:11px">Kadıköy · Cts 13 Eyl</span></div></div>
     <div class="body">
       <div class="mut">Bugün</div>
-      <div class="card" onclick="go('s-list')" style="cursor:pointer">
+      <div class="card" onclick="openList()" style="cursor:pointer">
         <div class="row"><div class="grow"><b>Kapanış listesi</b><div class="mut">22:00 – 01:30 · 15 madde</div></div><span class="chip acc" id="todaychip">1 sa 12 dk kaldı</span></div>
         <div class="prog" style="margin-top:10px"><i id="todayprog" style="width:0%"></i></div>
         <div class="row" style="margin-top:8px"><span class="pill emre" id="lockpill">Sen yapıyorsun</span><span class="mut small">diğerleri "Emre yapıyor" görür</span></div>
@@ -138,9 +147,23 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
       <div class="card"><div class="row"><div class="grow"><b>Saatlik tuvalet kontrolü</b><div class="mut">22:00 yapıldı · Zeynep A.</div></div><span class="chip ok">✓ tamam</span></div></div>
       <div class="card"><div class="row"><div class="grow"><b>Soğuk zincir ölçümü</b><div class="mut">23:00 – 23:30</div></div><span class="chip">planlı</span></div></div>
       <div class="card tint"><div class="row"><div class="grow"><b>Dün gece</b><div class="mut">2 madde yapılamadı: deterjan yok · çöp poşeti bitti</div></div></div></div>
-      <div class="btn" onclick="toast('Sorun bildir: fotoğraf + not → şube müdürüne düşer (prototipte atlandı)')">Sorun bildir</div>
+      <div class="btn" onclick="openIssue()">Sorun bildir</div>
     </div>
-    <div class="tabs"><div class="on">Bugün</div><div onclick="toast('Aksiyonlar: açık / kapalı, not ekle')">Aksiyonlar</div><div onclick="go('s-morning')">Şubem</div><div onclick="toast('Menü: senk durumu, PIN değiştir, kullanıcı değiştir')">Menü</div></div>
+    <div class="tabs"><div class="on">Bugün</div><div onclick="toast('Aksiyonlar: açık / kapalı, not ekle')">Aksiyonlar</div><div onclick="go('s-morning')">Şubem</div><div onclick="toast('Menü: senk durumu ('+queue+' bekliyor), PIN değiştir, kullanıcı değiştir')">Menü</div></div>
+    <div class="sheet" id="sheet-locked">
+      <h3>Kapanış listesi kilitli</h3>
+      <div>Pencere 01:30'da kapandı, tolerans 03:30'da doldu. Bu liste sonradan tamamlanamaz; <b>"Kaçırıldı"</b> olarak kaydedildi.</div>
+      <div class="card tint small">Şube müdürüne 03:30'da bildirildi; bölge müdürü sabah özetinde görür. Açıklama gerekiyorsa şube müdürü aksiyon notuyla yazar.</div>
+      <div class="btn g" onclick="closeSheet('sheet-locked')">Tamam</div>
+    </div>
+    <div class="sheet" id="sheet-issue">
+      <h3>Sorun bildir</h3>
+      <div class="mut">Şube müdürüne düşer; o aksiyona çevirebilir. Liste maddesi değildir.</div>
+      <div class="row" id="issue-cats"><span class="chip" onclick="pickCat(this,'Ekipman')">Ekipman</span><span class="chip" onclick="pickCat(this,'Tedarik')">Tedarik</span><span class="chip" onclick="pickCat(this,'Hijyen')">Hijyen</span><span class="chip" onclick="pickCat(this,'Diğer')">Diğer</span></div>
+      <textarea id="issue-note" rows="2" placeholder="Ne oldu? (zorunlu)"></textarea>
+      <div class="btn g" id="issue-photo" onclick="issuePhoto=true;this.textContent='Fotoğraf eklendi ✓'">Fotoğraf çek (isteğe bağlı)</div>
+      <div class="row"><div class="btn g grow" onclick="closeSheet('sheet-issue')">Vazgeç</div><div class="btn p grow" onclick="sendIssue()">Gönder</div></div>
+    </div>
   </section>
 
   <!-- LİSTE -->
@@ -215,10 +238,55 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="hd"><div class="back" onclick="go('s-morning')">‹</div><div><div class="t">Kadıköy · Kapanış</div><div class="s">13 Eyl · Emre T. · şube tableti</div></div><div class="r"><span class="chip crit">başarısız</span></div></div>
     <div class="body">
       <div class="card" id="detail-items"></div>
-      <div class="card"><b>Aksiyon #418 · kritik</b><div class="mut">Mutfak buzdolabı aralık dışı · Ayşe K. · vade 03:20 · <b style="color:var(--acc)">açık</b></div><div class="row" style="margin-top:8px"><div class="btn grow" onclick="toast('Not eklendi (notlar silinmez)')">Not ekle</div><div class="btn p grow" onclick="toast('Kapatırken not zorunlu, fotoğraf isteğe bağlı')">Kapat</div></div></div>
+      <div class="card"><b>Aksiyon #418 · kritik</b><div class="mut">Mutfak buzdolabı aralık dışı · Ayşe K. · vade 03:20 · <b style="color:var(--acc)">açık</b></div><div class="row" style="margin-top:8px"><div class="btn p grow" onclick="backTo='s-detail';openAct(418)">Aksiyonu aç</div></div></div>
       <div class="card"><b>Olay izi</b><div class="log" id="detail-log"></div></div>
       <div class="btn" onclick="toast('PDF: maddeler, fotoğraflar, zaman damgaları, doğrulama kodu (prototipte üretilmez)')">PDF indir</div>
     </div>
+  </section>
+
+  <!-- ŞUBE MÜDÜRÜ -->
+  <section class="scr" id="s-sube">
+    <div class="hd"><div class="brand" id="brand4"></div><div class="r"><span class="pill ayse">Ayşe K. · şube müdürü</span><br><span class="mut" style="font-size:11px">Kadıköy · Paz 14 Eyl</span></div></div>
+    <div class="body">
+      <div class="mut">Dün gece</div>
+      <div id="sube-dun"></div>
+      <div class="mut">Bugün</div>
+      <div id="sube-bugun"></div>
+      <div class="mut">Sorunlar</div>
+      <div id="sube-sorun"></div>
+      <div class="mut">Personel</div>
+      <div class="card" id="sube-pers"></div>
+    </div>
+    <div class="tabs"><div class="on">Şubem</div><div onclick="backTo='s-sube';openAct(418)">Aksiyonlar</div><div onclick="go('s-morning')">Bölge</div><div onclick="toast('Menü: senk durumu, PIN değiştir, kullanıcı değiştir')">Menü</div></div>
+    <div class="sheet" id="sheet-nowork">
+      <h3>Yapılmayacak — Kapanış</h3>
+      <div class="mut">Sebep seçin: eskalasyon durur, rapora "yapılmayacak (sebep)" düşer, puanlanmaz. Yalnızca şube müdürü işaretler.</div>
+      <div class="opt" onclick="pickNo(this,'Su kesintisi')">Su kesintisi</div>
+      <div class="opt" onclick="pickNo(this,'Elektrik kesintisi')">Elektrik kesintisi</div>
+      <div class="opt" onclick="pickNo(this,'Şube erken kapandı')">Şube erken kapandı</div>
+      <div class="opt" onclick="pickNo(this,'Diğer')">Diğer (not zorunlu)</div>
+      <textarea id="nowork-note" rows="2" placeholder="Not"></textarea>
+      <div class="row"><div class="btn g grow" onclick="closeSheet('sheet-nowork')">Vazgeç</div><div class="btn d grow" onclick="confirmNoWork()">İşaretle</div></div>
+    </div>
+    <div class="sheet" id="sheet-pin">
+      <h3>PIN ata</h3>
+      <div class="mut">Telefonu olmayan personel için başlangıç PIN'i; personel ilk girişte değiştirebilir; işlem olay günlüğüne yazılır.</div>
+      <div id="pin-people"></div>
+      <div class="card tint" id="pin-result" style="display:none"></div>
+      <div class="btn g" onclick="closeSheet('sheet-pin')">Kapat</div>
+    </div>
+    <div class="sheet" id="sheet-assign">
+      <h3>Bugün kapanışı kim yapsın?</h3>
+      <div class="mut">Varsayılan: şubedeki herkes görür, ilk açan alır. Bugün için bir kişiye verebilirsiniz (ör. Burak hasta, Emre izinli).</div>
+      <div id="assign-people"></div>
+      <div class="btn g" onclick="closeSheet('sheet-assign')">Vazgeç</div>
+    </div>
+  </section>
+
+  <!-- AKSİYON (mobil) -->
+  <section class="scr" id="s-aksiyon">
+    <div class="hd"><div class="back" onclick="go(backTo)">‹</div><div><div class="t" id="act-title">Aksiyon</div><div class="s" id="act-sub"></div></div><div class="r" id="act-chip"></div></div>
+    <div class="body" id="act-body"></div>
   </section>
 </div>
 
@@ -235,7 +303,10 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
   <div class="btn" onclick="go('s-list')">3 · Kapanış listesi</div>
   <div class="btn" onclick="go('s-morning')">4 · Sabah özeti (bölge müdürü)</div>
   <div class="btn" onclick="go('s-detail')">5 · Çalıştırma detayı</div>
-  <p>Blok 8 senaryosu: Emre PIN ile girer, 15 maddeyi yapar (şablon: 02-urun/07 Kapanış); mutfak buzdolabını 6,0 °C girer (aralık dışı → fotoğraf + not, kritik aksiyon), zemin için "yapılamadı: malzeme yok", gönderir. Sonra Murat'ın sabah özetine geçin. İsim testi için üstteki seçici; sırayı her görüşmede değiştirin.</p>
+  <div class="btn" onclick="go('s-sube')">6 · Şube müdürü (Ayşe): Şubem</div>
+  <div class="btn" id="devwifi" onclick="setOffline(!offline)">Wi-Fi kes (çevrimdışı senaryosu)</div>
+  <div class="btn" id="devclosed" onclick="toggleClosed()">Pencere kapandı senaryosu (03:45)</div>
+  <p>Blok 8 senaryosu: Emre PIN ile girer, 15 maddeyi yapar (şablon: 02-urun/07 Kapanış); mutfak buzdolabını 6,0 °C girer (aralık dışı → fotoğraf + not, kritik aksiyon), zemin için "yapılamadı: malzeme yok", gönderir. Sonra Murat'ın sabah özetine geçin; 6 ile Ayşe'nin (şube müdürü) sabahını gösterin: aksiyonu kapat, kapanışı kişiye ver, yapılmayacak, PIN ata. Wi-Fi kes/bağla ile çevrimdışı; pencere kapandı ile kilitli liste. İsim testi için üstteki seçici; sırayı her görüşmede değiştirin.</p>
   <p>Prototip: veri kaydetmez, kamera çalışmaz (sahte çekim), sıcaklık ± ile girilir.</p>
   <div class="btn" onclick="location.search='?kiosk=1'">Tablet / kiosk modu (tam ekran, 2 dk kilit)</div>
   <p>Saha denemesi: 01-strateji/dogrulama-sprinti/07. Kiosk modundan çıkmak için adresten <code>?kiosk=1</code> silinir.</p>
@@ -250,7 +321,7 @@ const BR={
  tembihle:{w:"tembihle",acc:"#d9971c",accs:"#f7e8c4",mark:'<svg viewBox="0 0 64 64"><path d="M50.5 22.5 A21 21 0 1 0 53 32" fill="none" stroke="#d9971c" stroke-width="7" stroke-linecap="round"/><path d="M44 12 L52 24 L38 26 Z" fill="#d9971c"/><path d="M22 32 L29 39 L43 24" fill="none" stroke="#242018" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>',font:'"Segoe UI",Roboto,Arial,sans-serif'}
 };
 function setBrand(k){const b=BR[k];document.documentElement.style.setProperty('--acc',b.acc);document.documentElement.style.setProperty('--accs',b.accs);document.documentElement.style.setProperty('--ok',b.acc);document.documentElement.style.setProperty('--oks',b.accs);
- ['brand1','brand2','brand3'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=b.mark+'<span class="w" style="font-family:'+b.font+'">'+b.w+'</span>';});}
+ ['brand1','brand2','brand3','brand4'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=b.mark+'<span class="w" style="font-family:'+b.font+'">'+b.w+'</span>';});}
 setBrand('talimatname');
 
 const ITEMS=[
@@ -272,16 +343,16 @@ const ITEMS=[
 ];
 let state={};let cur=null;let tempVal=3.0;let events=[];
 function now(){const d=new Date();return d.toTimeString().slice(0,5);}
-function log(s){events.push(now()+" · "+s);}
+function log(s){events.push(now()+" · "+s+(offline?" (cihazda, senk bekliyor)":""));if(offline){queue++;updateQ();}}
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2600);}
-function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');if(id==='s-list')renderList();if(id==='s-morning')renderGrid();if(id==='s-detail')renderDetail();}
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');if(id==='s-list')renderList();if(id==='s-morning')renderGrid();if(id==='s-detail')renderDetail();if(id==='s-sube')renderSubem();}
 function closeSheet(id){document.getElementById(id).classList.remove('on');}
 
 // kiosk
 const PEOPLE=["Ayşe K.","Emre T.","Zeynep A.","Burak S.","Selin Y.","Deniz Ö."];let pin="";let who=null;
 const av=document.getElementById('avatars');
 PEOPLE.forEach(p=>{const d=document.createElement('div');d.className='av';d.innerHTML='<b>'+p.split(' ').map(x=>x[0]).join('')+'</b>'+p;d.onclick=()=>{document.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');who=p;pin="";document.getElementById('pinname').textContent=p;document.getElementById('pinbox').style.display='block';drawPin();};av.appendChild(d);});
-const kbd=document.getElementById('kbd');["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(k=>{const d=document.createElement('div');d.textContent=k;if(k==="")d.style.visibility='hidden';d.onclick=()=>{if(k==="⌫")pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;drawPin();if(pin.length===4){setTimeout(()=>{log((who||"Emre T.")+" PIN ile giriş (şube tableti)");go(Object.keys(state).length?'s-list':'s-today');if(Object.keys(state).length)toast('Kaldığınız yerden devam');},250);}};kbd.appendChild(d);});
+const kbd=document.getElementById('kbd');["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(k=>{const d=document.createElement('div');d.textContent=k;if(k==="")d.style.visibility='hidden';d.onclick=()=>{if(k==="⌫")pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;drawPin();if(pin.length===4){setTimeout(()=>{log((who||"Emre T.")+" PIN ile giriş (şube tableti)");if(who==='Ayşe K.'){go('s-sube');}else if(who==='Selin Y.'){go('s-morning');}else{go(Object.keys(state).length?'s-list':'s-today');if(Object.keys(state).length)toast('Kaldığınız yerden devam');}},250);}};kbd.appendChild(d);});
 function drawPin(){for(let i=1;i<=4;i++)document.getElementById('d'+i).classList.toggle('f',pin.length>=i);}
 
 // list
@@ -323,7 +394,7 @@ function submit(){const fails=ITEMS.filter(i=>state[i.id]&&state[i.id].k==='fail
  const t=now();document.getElementById('donetime').textContent=t;
  const failed=crit.length>0;document.getElementById('donechip').textContent=failed?'Başarısız (kritik madde)':'Tamamlandı';document.getElementById('donechip').className='chip '+(failed?'crit':'ok');
  document.getElementById('donetitle').textContent='Kapanış '+(failed?'gönderildi — başarısız':'tamamlandı');
- document.getElementById('donesub').textContent='Puan %'+Math.round(passed/Math.max(1,scored)*100)+' (bilgi) · '+fails.length+' aralık dışı · '+un.length+' yapılamadı · '+(crit.length+un.length)+' aksiyon';
+ document.getElementById('donesub').textContent='Puan %'+Math.round(passed/Math.max(1,scored)*100)+' (bilgi) · '+fails.length+' aralık dışı · '+un.length+' yapılamadı · '+(crit.length+un.length)+' aksiyon';if(offline){document.getElementById('donesub').textContent+=' · bağlantı yok: kayıt cihazda, bağlantı gelince senklenir';}
  log('Gönderildi '+t+(failed?' · kritik kural → BAŞARISIZ':' · tamamlandı')+' · liste kilitlendi');
  document.getElementById('donelog').innerHTML=events.map(e=>'• '+e).join('<br>');go('s-done');}
 function reset(){state={};events=[];pin="";who=null;ITEMS.forEach(i=>{i.val=null;i._asked=false;});document.getElementById('pinbox').style.display='none';document.querySelectorAll('.av').forEach(x=>x.classList.remove('sel'));document.getElementById('todaychip').textContent='1 sa 12 dk kaldı';document.getElementById('todayprog').style.width='0%';go('s-lock');}
@@ -339,6 +410,66 @@ function renderDetail(){const el=document.getElementById('detail-items');el.inne
  const lg=events.length?events:["22:00 · pencere açıldı (sistem)","22:58 · Emre T. PIN ile giriş (şube tableti)","23:20 · Mutfak buzdolabı: 6,0 °C ARALIK DIŞI → kritik aksiyon #418","23:30 · Zemin süpürüldü ve paspaslandı: yapılamadı (malzeme yok) → aksiyon #419","23:41 · Gönderildi · kritik kural → BAŞARISIZ","23:41 · bildirim: Ayşe K. push ✓, Murat D. push ✓","07:00 · sabah özeti: Murat D., Selin Y."];
  document.getElementById('detail-log').innerHTML=lg.map(e=>'• '+e).join('<br>');}
 renderGrid();
+// ---------- çevrimdışı simülasyonu
+let offline=false,queue=0;
+function updateQ(){document.getElementById('qn').textContent=queue;}
+function setOffline(v){offline=v;document.body.classList.toggle('offline',v);document.getElementById('devwifi').textContent=v?'Wi-Fi bağla (senkle)':'Wi-Fi kes (çevrimdışı senaryosu)';
+ if(v){toast('Bağlantı kesildi: liste cihazda devam eder; fotoğraf ve cevaplar kuyruğa alınır (72 sa, 500 kanıt)');}
+ else if(queue){const n=queue;queue=0;events.push(now()+' · senk: '+n+' kayıt gönderildi · cihaz saati farkı +3 sn düzeltildi · pencere içinde = zamanında');toast('Senklendi: '+n+' kayıt · zaman damgaları sunucu saatiyle düzeltildi');const dl=document.getElementById('donelog');if(dl)dl.innerHTML=events.map(e=>'• '+e).join('<br>');const ds=document.getElementById('donesub');if(ds)ds.textContent=ds.textContent.replace(' · bağlantı yok: kayıt cihazda, bağlantı gelince senklenir',' · senklendi');}
+ updateQ();}
+// ---------- pencere kapandı (kilitli liste)
+let windowClosed=false;
+function toggleClosed(){windowClosed=!windowClosed;document.getElementById('devclosed').textContent=windowClosed?'Pencere kapandı senaryosu: AÇIK (kapat)':'Pencere kapandı senaryosu (03:45)';const c=document.getElementById('todaychip');c.textContent=windowClosed?'kaçırıldı · 03:30':'1 sa 12 dk kaldı';c.className='chip '+(windowClosed?'crit':'acc');if(windowClosed)go('s-today');}
+function openList(){if(windowClosed){document.getElementById('sheet-locked').classList.add('on');return;}go('s-list');}
+// ---------- sorun bildir
+let issues=[],issueCat='',issuePhoto=false;
+function openIssue(){issueCat='';issuePhoto=false;document.querySelectorAll('#issue-cats .chip').forEach(c=>c.classList.remove('sel'));document.getElementById('issue-note').value='';document.getElementById('issue-photo').textContent='Fotoğraf çek (isteğe bağlı)';document.getElementById('sheet-issue').classList.add('on');}
+function pickCat(el,c){issueCat=c;document.querySelectorAll('#issue-cats .chip').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+function sendIssue(){const n=document.getElementById('issue-note').value.trim();if(!issueCat){toast('Kategori seçin');return;}if(n.length<5){toast('Not zorunlu (≥ 5 karakter)');return;}
+ issues.push({cat:issueCat,note:n,photo:issuePhoto,who:who||'Emre T.',t:now(),act:null});log('Sorun bildirildi: '+issueCat+' — '+n+' → Ayşe K. push');closeSheet('sheet-issue');toast('Sorun şube müdürüne düştü (Ayşe K., push)');}
+// ---------- aksiyonlar (mobil)
+let backTo='s-sube';
+const ACTS={
+ 418:{t:'Mutfak buzdolabı 6,0 °C — aralık dışı',pri:'kritik',src:'Kapanış · madde 4 · 13 Eyl 23:20 · Emre T.',who:'Ayşe K.',due:'14 Eyl 03:20',st:'acik',late:true,notes:['23:20 sistem: kritik madde başarısız — aksiyon açıldı; Ayşe K. ve Murat D. push ✓','23:24 Ayşe K.: “Ürünler süt dolabına taşındı, sabah servis çağıracağım.”']},
+ 419:{t:'Zemin süpürüldü ve paspaslandı — yapılamadı (malzeme yok)',pri:'orta',src:'Kapanış · madde 10 · 13 Eyl 23:30 · Emre T. · not: paspas deterjanı bitti',who:'Ayşe K.',due:'16 Eyl 23:30',st:'acik',late:false,notes:['23:30 sistem: yapılamadı — malzeme yok']}};
+let nextAct=424;
+function openAct(id){const a=ACTS[id];if(!a)return;document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById('s-aksiyon').classList.add('on');
+ document.getElementById('act-title').textContent='#'+id+' · '+a.t;document.getElementById('act-sub').textContent=a.src;
+ document.getElementById('act-chip').innerHTML=a.st==='acik'?'<span class="chip '+(a.pri==='kritik'?'crit':'warn')+'">'+a.pri+(a.late?' · vadesi geçti':'')+'</span>':'<span class="chip ok">kapalı</span>';
+ let h='<div class="card"><div class="row"><span class="mut">Atanan</span><b>'+a.who+'</b><span class="mut" style="margin-left:auto">vade '+a.due+'</span></div></div>';
+ h+='<div class="card"><b>Notlar</b><div class="mut small">eklenir, silinmez</div>'+a.notes.map(n=>'<div class="note-li">'+n+'</div>').join('')+'</div>';
+ if(a.st==='acik'){h+='<div class="card"><textarea id="act-note" rows="2" placeholder="Not (kapatırken zorunlu)"></textarea><div class="btn g" id="act-photo" style="margin-top:8px" onclick="this.textContent=\'Fotoğraf eklendi ✓\'">Fotoğraf ekle (isteğe bağlı)</div><div class="row" style="margin-top:8px"><div class="btn grow" onclick="addActNote('+id+')">Not ekle</div><div class="btn p grow" onclick="closeAct('+id+')">Kapat</div></div></div>';}
+ else{h+='<div class="card tint small">Kapalı aksiyon değiştirilemez; yeni bilgi yeni not olarak eklenir.</div>';}
+ document.getElementById('act-body').innerHTML=h;}
+function addActNote(id){const i=document.getElementById('act-note');if(i.value.trim().length<3){toast('Not boş');return;}ACTS[id].notes.push(now()+' '+(who==='Ayşe K.'||!who?'Ayşe K.':who)+': “'+i.value.trim()+'”');log('Aksiyon #'+id+' not eklendi');openAct(id);toast('Not eklendi');}
+function closeAct(id){const i=document.getElementById('act-note');if(i.value.trim().length<5){toast('Kapatırken not zorunlu (≥ 5 karakter)');return;}const a=ACTS[id];a.notes.push(now()+' '+(who==='Ayşe K.'||!who?'Ayşe K.':who)+' kapattı: “'+i.value.trim()+'”');a.st='kapali';a.late=false;log('Aksiyon #'+id+' kapatıldı · bölge müdürü sabah özetinde görür');openAct(id);toast('Aksiyon kapatıldı; olay izine yazıldı');}
+// ---------- Şubem (Ayşe)
+let assignedTo=null,noWork=null,noReason='';const PINS={'Emre T.':true,'Zeynep A.':true,'Burak S.':false,'Deniz Ö.':true};
+function renderSubem(){
+ const dun=document.getElementById('sube-dun');
+ dun.innerHTML='<div class="card" style="border-color:var(--crit)"><div class="row"><b>Kapanış · Emre T. · 23:41</b><span class="chip crit">başarısız</span></div>'+
+  '<div class="item" onclick="backTo=\'s-sube\';openAct(418)"><span class="box crit">!</span><div class="grow"><div class="lbl">Mutfak buzdolabı 6,0 °C</div><div class="mut">aksiyon #418 · kritik · '+(ACTS[418].st==='acik'?'<b style=\'color:var(--crit)\'>açık, vadesi geçti</b>':'<b style=\'color:var(--acc)\'>kapalı</b>')+'</div></div><span class="mut">›</span></div>'+
+  '<div class="item" onclick="backTo=\'s-sube\';openAct(419)"><span class="box warn">✗</span><div class="grow"><div class="lbl">Zemin — yapılamadı: malzeme yok</div><div class="mut">aksiyon #419 · orta · '+(ACTS[419].st==='acik'?'açık':'<b style=\'color:var(--acc)\'>kapalı</b>')+'</div></div><span class="mut">›</span></div>'+
+  '<div class="mut small" style="margin-top:6px">Sabahçı açılış listesinin başında bu ikisini "dün gece" bloğunda gördü (08:04, Zeynep A.)</div></div>';
+ const kap=noWork?'<span class="chip warn">yapılmayacak · '+noWork+'</span>':assignedTo?'<span class="chip acc">'+assignedTo+'</span>':'<span class="chip">herkes · ilk açan alır</span>';
+ document.getElementById('sube-bugun').innerHTML=
+  '<div class="card"><div class="row"><div class="grow"><b>Açılış</b><div class="mut">07:45 – 09:00 · Zeynep A.</div></div><span class="chip ok">✓ 08:04</span></div></div>'+
+  '<div class="card"><div class="row"><div class="grow"><b>Soğuk zincir</b><div class="mut">08:00 ✓ · 14:00 ✓ · 20:00 bekliyor</div></div><span class="chip">2/3</span></div></div>'+
+  '<div class="card"><div class="row"><div class="grow"><b>Saatlik hijyen</b><div class="mut">Zeynep A. · son 16:00</div></div><span class="chip ok">3/6</span></div></div>'+
+  '<div class="card"><div class="row"><div class="grow"><b>Kapanış</b><div class="mut">22:00 – 01:30 · planlı</div></div>'+kap+'</div>'+
+  (noWork?'<div class="mut small" style="margin-top:6px">Eskalasyon durdu; rapora "yapılmayacak ('+noWork+')" düşer, puanlanmaz.</div>':'<div class="row" style="margin-top:10px"><div class="btn grow" onclick="openAssign()">Kişiye ver</div><div class="btn d grow" onclick="document.getElementById(\'sheet-nowork\').classList.add(\'on\')">Yapılmayacak</div></div>')+'</div>';
+ const so=document.getElementById('sube-sorun');
+ so.innerHTML=issues.length?issues.map((it,i)=>'<div class="card"><div class="row"><span class="chip">'+it.cat+'</span><div class="grow"><b>'+it.note+'</b><div class="mut">'+it.who+' · '+it.t+(it.photo?' · fotoğraf':'')+'</div></div></div>'+(it.act?'<div class="mut small" style="margin-top:6px">aksiyon #'+it.act+' açıldı</div>':'<div class="btn" style="margin-top:8px" onclick="issueToAct('+i+')">Aksiyona çevir</div>')+'</div>').join('')
+  :'<div class="card tint"><div class="mut">Bugün sorun bildirilmedi. (Personel "Sorun bildir" ile gönderir; buraya düşer.)</div></div>';
+ const pe=document.getElementById('sube-pers');
+ pe.innerHTML=Object.keys(PINS).map(n=>'<div class="prow"><b class="i">'+n.split(' ').map(x=>x[0]).join('')+'</b><div class="grow">'+n+'</div>'+(PINS[n]?'<span class="chip ok">PIN var</span>':'<span class="chip warn">PIN yok</span>')+'</div>').join('')+
+  '<div class="row" style="margin-top:10px"><div class="btn grow" onclick="openPin()">PIN ata</div><div class="btn g grow" onclick="toast(\'Personel ekle/pasifleştir: web panelinden (Excel); şube müdürü yalnızca PIN verir ve günlük atama yapar\')">Personel yönetimi</div></div>';}
+function openAssign(){const el=document.getElementById('assign-people');el.innerHTML=['Emre T.','Zeynep A.','Burak S.','Deniz Ö.'].map(n=>'<div class="opt" onclick="assignedTo=\''+n+'\';closeSheet(\'sheet-assign\');renderSubem();log(\'Kapanış bugün '+n+'\\\'ye atandı (Ayşe K.)\');toast(\'Kapanış bugün '+n+'\\\'ye atandı; diğerleri listeyi görür ama \\\'X yapıyor\\\' uyarısı alır\')">'+n+'</div>').join('');document.getElementById('sheet-assign').classList.add('on');}
+function pickNo(el,r){document.querySelectorAll('#sheet-nowork .opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');noReason=r;}
+function confirmNoWork(){const n=document.getElementById('nowork-note').value.trim();if(!noReason){toast('Sebep seçin');return;}if(noReason==='Diğer'&&n.length<5){toast('"Diğer" için not zorunlu');return;}noWork=noReason;closeSheet('sheet-nowork');renderSubem();log('Kapanış "yapılmayacak": '+noReason+' (Ayşe K.) → eskalasyon durdu');toast('İşaretlendi: yapılmayacak — '+noReason+'. Bölge müdürü sabah özetinde görür.');}
+function openPin(){const el=document.getElementById('pin-people');document.getElementById('pin-result').style.display='none';el.innerHTML=Object.keys(PINS).map(n=>'<div class="opt" onclick="givePin(\''+n+'\')">'+n+(PINS[n]?' <span class=\'mut\'>(PIN var — yeniden ata)</span>':' <span class=\'mut\'>(PIN yok)</span>')+'</div>').join('');document.getElementById('sheet-pin').classList.add('on');}
+function givePin(n){const pinv=String(Math.floor(1000+Math.random()*9000));PINS[n]=true;const r=document.getElementById('pin-result');r.style.display='block';r.innerHTML='<b>'+n+' için başlangıç PIN\'i: <span style="font-size:22px;letter-spacing:.2em">'+pinv+'</span></b><div class="small mut">Sözlü söyleyin; ilk girişte değiştirmesi istenir. Olay günlüğü: "PIN atandı — Ayşe K. → '+n+'"</div>';log('PIN atandı: Ayşe K. → '+n);renderSubem();}
+function issueToAct(i){const it=issues[i];const id=nextAct++;ACTS[id]={t:it.cat+': '+it.note,pri:it.cat==='Hijyen'?'yüksek':'orta',src:'Sorun bildirimi · '+it.who+' · '+it.t,who:'Ayşe K.',due:'16 Eyl',st:'acik',late:false,notes:[now()+' Ayşe K.: sorun bildiriminden açıldı']};it.act=id;renderSubem();log('Sorun → aksiyon #'+id);toast('Aksiyon #'+id+' açıldı (orta, 72 sa)');}
 // kiosk modu: ?kiosk=1 veya #kiosk
 const KIOSK=/[?&]kiosk=1/.test(location.search)||location.hash==='#kiosk';
 if(KIOSK){document.body.classList.add('kiosk');let idle;const IDLE_MS=120000;

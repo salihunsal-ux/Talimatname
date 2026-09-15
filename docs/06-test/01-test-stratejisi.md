@@ -23,7 +23,7 @@ Amaç: ürünün değer önerisi "kanıt ve kayıt" olduğu için doğruluk (zam
 | Sözleşme (API) | OpenAPI'ye uygunluk; istemci üretimi | Schemathesis / Dredd; üretilen istemci derlemesi CI'da | Her uç nokta |
 | Entegrasyon | Veritabanı, kuyruk, nesne depo, bildirim (sahte sağlayıcılar) | Docker compose test ortamı | Kritik akışlar (UC-07, UC-08, UC-09, UC-13) |
 | Uçtan uca (E2E) | Senaryolar S-01…S-08 | Web: Playwright; mobil: Patrol/integration_test (Flutter) | Her senaryo en az bir E2E; gece koşusu |
-| Kabul (UAT) | TC-001…TC-112 | Elle + otomasyon; pilot zincirlerle UAT | GA öncesi %100 geçiş |
+| Kabul (UAT) | TC-001…TC-119 | Elle + otomasyon; pilot zincirlerle UAT | GA öncesi %100 geçiş |
 | Performans/yük | NFR-02/03/04 | k6 (API), cihaz ölçümü | Eşiklerin altında |
 | Güvenlik | NFR-09 | ZAP/Burp, bağımlılık taraması, dış sızma testi | Kritik/yüksek bulgu sıfır |
 | Erişilebilirlik | NFR-11 | Flutter semantics denetimi, axe (web), elle kontrol | Kontrol listesi |

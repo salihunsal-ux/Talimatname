@@ -1,6 +1,6 @@
 # Kabul test senaryoları
 
-112 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
+119 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
 
 ## UC-01 · Hesap kurulumu
 
@@ -213,3 +213,15 @@
 |---|---|---|---|---|---|
 | TC-111 | Gözden geçirildi | Bölge müdürü işaret + not → detayda görünür; log | FR-1701 | E | v1.1 |
 | TC-112 | İkinci imza | Kalite imzası kaydedilir, PDF'te görünür | FR-1702 | E | v1.1 |
+
+## v1 eklemeleri (ADR-0008, E-1…E-7)
+
+| TC | Test | Ön koşul → Adımlar → Beklenen | FR/BR | Oto | Sürüm |
+|---|---|---|---|---|---|
+| TC-113 | Şube müdürü PIN atar | Telefonsuz personel kayıtlı → Ayşe kioskta "PIN ata" → 4 haneli PIN üretilir, logda "PIN atandı Ayşe → Deniz"; Deniz PIN ile girer → ilk girişte değiştirme istenir; eski PIN geçersiz | FR-0211 | E | v1 |
+| TC-114 | Sabit kural: başarısız cevapta kanıt | "Hayır" / "Uygun değil" / aralık dışı → fotoğraf ve not olmadan kaydedilemez; kritik değilse aksiyon açılmaz; kritikse aksiyon (şube müdürü, 4 sa) | FR-0405, BR-06 | E | v1 |
+| TC-115 | Çalıştırma kilidi: ilk açan alır | Atanmamış çalıştırma; Emre açar → diğer cihazlarda "Emre yapıyor", madde cevaplanamaz; 30 dk kilit yenileme; Emre kapatınca kilit düşer; şube müdürü kilidi kaldırabilir | FR-0521, BR-26 | E | v1 |
+| TC-116 | Açılışta "dün gece" bloğu | Dün kapanışta 1 yapılamadı + 1 kritik başarısız → açılış listesinin başında blok (sebep ve notla); sorun yoksa "Dün gece sorun yok"; blok cevap istemez, sayılmaz; kapalı günden sonra son iş günü esas alınır | FR-0613 | E | v1 |
+| TC-117 | Kritik anında bildirim ve SMS | 23:20 kritik aralık dışı → şube ve bölge müdürüne anında push (sessiz saat muaf); 10 dk içinde teslim/okunma yoksa SMS (sahte sağlayıcıda görünür); okunan push için SMS gitmez; teslim izi logda | FR-1008, BR-11 | B | v1 |
+| TC-118 | İstisna görünümü ve "her şey yolunda" | Dün gece 2 sorunlu hücre → pano varsayılanı yalnızca bu satırları listeler, ızgara "tümünü göster" ile açılır; sorunsuz gün → "Dün gece her şey yolunda" durumu; mobil Bölgem listesi aynı kaynaktan | FR-1219, FR-1201 | E | v1 |
+| TC-119 | Aylık tek sayfa özet | Ağustos verisiyle → % zamanında, geç, kaçırıldı, yapılmayacak; başarısız ve yapılamadı sayıları; şube kırılımı; PDF üretilir, doğrulama kodu ve üretim zamanı var; rakamlar hesaplanmış veriyle eşleşir | FR-1220 | A | v1 |

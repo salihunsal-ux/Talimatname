@@ -10,6 +10,10 @@ Kapanış listesi, [şablon kütüphanesindeki](../../02-urun/07-sablon-kutuphan
 
 Gösterilen davranışlar: onay maddesine ikinci dokunuş → "Yapılamadı" veya "İşareti kaldır"; fotoğraf maddesinde kamera doğrudan açılır, sağ üstte "Yapılamadı"; sıcaklıkta madde başına kabul aralığı (dolaplar 0–4 °C, dondurucu −30…−18 °C), aralık dışı → not + fotoğraf + kritik aksiyon; gönderimde "Başarısız (kritik madde)" ve puan (bilgi). Aynı senaryonun basılı çıktısı: [kanıt raporu örnekleri](../06-kanit-raporu/README.md) (çalıştırma raporu 13 Eylül, Kadıköy).
 
+**Şube müdürü akışı (Ayşe):** kilit ekranında "Ayşe K." + PIN → "Şubem": dün gece (başarısız/yapılamadı → aksiyon), bugünün listeleri, **kapanışı kişiye verme** (UC-19), **"Yapılmayacak"** işaretleme (su kesintisi → eskalasyon durur), personelin bildirdiği **sorunları aksiyona çevirme**, **PIN atama** (E-1). Aksiyon ekranı: not ekle (silinmez), kapatırken not zorunlu, fotoğraf isteğe bağlı. Bölge müdürü detayındaki "Aksiyonu aç" da aynı ekrana gider.
+
+**Çevrimdışı simülasyonu:** görüşmeci panelinde "Wi-Fi kes" — şerit belirir, cevaplar ve fotoğraflar "senk bekliyor" sayacına yazılır, gönderim cihazda kalır; "Wi-Fi bağla" ile senk olur ve zaman damgaları sunucu saatiyle düzeltilir (S-02 Beşiktaş). **Pencere kapandı senaryosu:** 03:45'te listeyi açınca "kilitli — kaçırıldı" sayfası (S-07). **Sorun bildir:** kategori + not + isteğe bağlı fotoğraf → şube müdürüne düşer (UC-11).
+
 **Kiosk modu:** adrese `?kiosk=1` eklenince görüşmeci paneli gizlenir, ekran tam boy olur (tablet, yatay), avatar ızgarası genişler, 2 dakika dokunulmazsa kilit ekranına döner ve PIN'le kaldığı yerden devam eder. Saha kiosk denemesi için: [01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md](../../01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md).
 
 Veri kaydetmez; kamera sahtedir; sıcaklık ± ile girilir. Canlı sürüm (telefon için): bkz. 00-urun-merkezi.md dış bağlantılar.

@@ -107,7 +107,7 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-059 | Mobil: senk durumu ekranı | FR-0708 | TC-056 | S |
 | ST-060 | Backend: kuyruk sınırları ve geç senk bayrağı | FR-0706 | TC-054 | S |
 | ST-061 | Mobil: kaldığı yerden devam (tek kullanıcı) | FR-0603 | TC-048 | S |
-| ST-141 | Backend + mobil: açılış listesinde "dün gece" bloğu (E-3) | FR-0613 | TC-039 | S |
+| ST-141 | Backend + mobil: açılış listesinde "dün gece" bloğu (E-3) | FR-0613 | TC-039, TC-116 | S |
 | ST-062 | Web: pano hücre → detay, durum lejantı | FR-1201 | TC-085 | S |
 
 ### S6 — Senk dayanıklılığı; aksiyon (açık/kapalı); sabit eskalasyon; kiosk; sabah özeti → Alfa
@@ -123,7 +123,7 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-069 | Web: aksiyonlar sayfası (basit) | FR-0907 | TC-065 | S |
 | ST-070 | Backend: kiosk cihaz kaydı (QR), PIN, kısa ömürlü belirteç | FR-0207, 0208, 0210 | TC-008, 013, 015 | M |
 | ST-071 | Mobil: kiosk kilit ekranı, hareketsizlik, PIN sıfırlama | FR-0208…0210 | TC-013…016 | M |
-| ST-142 | Backend + mobil: şube müdürü personele başlangıç PIN'i atar (E-1) | FR-0211 | TC-013 | S |
+| ST-142 | Backend + mobil: şube müdürü personele başlangıç PIN'i atar (E-1) | FR-0211 | TC-013, TC-113 | S |
 | ST-072 | Web: cihaz yönetimi (kiosk QR, kaldırma) | FR-0207 | TC-008 | S |
 | ST-073 | Backend: yapılmayacak akışı | BR-04, FR-0914 | TC-038 | S |
 | ST-075 | Backend: aksiyon bildirimleri (atandı anında; gecikti sabah özetinde) | FR-0910 | TC-071 | S |
@@ -149,7 +149,7 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-088 | Backend: ölçüm günlüğü sorgusu (ekipman zaman serisi, aralık dışı) | FR-1207 | TC-091 | M |
 | ST-091 | İşçi: çalıştırma PDF'i (markalı, doğrulama kodu) | FR-1213, 1218 | TC-095 | M |
 | ST-092 | İşçi: dönem PDF'i (sıcaklık günlüğü), arka plan üretim | FR-1214, 1217 | TC-096, 099 | M |
-| ST-145 | Backend + web: aylık tek sayfa özet (E-7) + PDF | FR-1220 | TC-088 | M |
+| ST-145 | Backend + web: aylık tek sayfa özet (E-7) + PDF | FR-1220 | TC-088, TC-119 | M |
 | ST-090 | Web: raporlar sayfası (aylık özet, sıcaklık günlüğü, galeri) | FR-1207, 1208, 1220 | TC-088, 091, 092 | M |
 | ST-094 | Web: personel oturum sonlandırma; hesap sayfası (marka, tatil takvimi, aydınlatma metni) | FR-0203, 1402 (minimal) | TC-007 | S |
 | ST-097 | Mobil: erişilebilirlik geçişi (44 px, etiketler, %130) | FR-0611 | TC-050 | S |

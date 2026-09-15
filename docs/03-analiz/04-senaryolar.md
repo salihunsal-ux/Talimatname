@@ -67,6 +67,25 @@ UC-07.
 
 - 26 Ekim gecesi (varsayımsal yaz saati geçişi) kapanış penceresi 22:00–01:30: çalıştırma tek üretilir, pencere süresi doğru hesaplanır, rapor tarihi 26 Ekim. **Beklenen:** Çift üretim yok, kaçırma yok. (Türkiye'de yaz saati uygulanmıyor; test, saat dilimi motorunun doğruluğu için başka dilimde de çalıştırılır.)
 
+## S-09 · Yapılamadı'nın sabahı (v1 eklemeleri E-1, E-3, sabit aksiyon)
+
+UC-08, UC-10, UC-12, UC-19. Aktörler: Emre (A-06), Zeynep (A-06), Ayşe (A-05).
+
+1. Cumartesi 23:30 Emre kapanışta "Zemin süpürüldü ve paspaslandı" maddesini **yapılamadı: malzeme yok** (not: paspas deterjanı bitti) işaretler; fotoğraf zorunlu madde olduğu hâlde yapılamadı seçilebilir (kritik değil). **Beklenen:** aksiyon #419 (orta, 72 sa) Ayşe'ye açılır, push gider; çalıştırma "tamamlandı" (kritik yok), puan bilgi amaçlı.
+2. Pazar 07:45 Zeynep açılış listesini açar. **Beklenen:** listenin başında "Dün gece" bloğu: "1 madde yapılamadı — zemin (malzeme yok)"; blok cevap istemez, liste maddesi sayılmaz (FR-0613).
+3. Ayşe 08:10 "Şubem" ekranında dün geceyi görür; deterjan gelince aksiyonu **not zorunlu** olarak kapatır ("2 bidon geldi, zemin yapıldı", fotoğraf isteğe bağlı). **Beklenen:** #419 kapalı; notlar silinemez; olay günlüğünde kapanış kaydı; bölge müdürü sabah özetinde "gecikmiş aksiyon" listesinden düşer.
+4. Aynı sabah Burak hastadır; Ayşe kapanışı bugün için Emre'ye verir (UC-19). Telefonu olmayan yeni personel Deniz için kioskta **PIN atar** (E-1). **Beklenen:** çalıştırma Emre'de görünür, diğerleri "Emre yapıyor" görür; Deniz PIN ile girer, ilk girişte PIN değiştirmesi istenir; her iki işlem logda (FR-0211, FR-0521).
+
+## S-10 · Gece 23:20 kritik sıcaklık (v1 eklemesi E-6)
+
+UC-08, UC-12, UC-13. Aktörler: Emre (A-06), Ayşe (A-05), Murat (A-04).
+
+1. 23:20 Emre mutfak buzdolabını 6,0 °C girer (aralık 0–4, kritik). **Beklenen:** sabit kural (FR-0405): fotoğraf + not zorunlu; kaydedilince aksiyon #418 (kritik, 4 sa) Ayşe'ye; **anında push** Ayşe ve Murat'a — sessiz saat muafiyeti (FR-1008).
+2. Ayşe'nin telefonu kapalıdır; 10 dk içinde teslim/okunma yok. **Beklenen:** 23:30 Ayşe'ye SMS; Murat push'u 23:20'de okudu, SMS gitmez; teslim izi olay günlüğünde.
+3. Emre 23:41 gönderir. **Beklenen:** çalıştırma "başarısız (kritik madde)"; puan %87 yalnızca bilgi; kayıt kilitlenir.
+4. Ayşe 08:05 aksiyonu kapatır (servis, conta değişimi). **Beklenen:** 07:00 sabah özetinde Murat ve Selin "kritik açık, vadesi geçti" görmüştü; kapanış sonrası panoda hücre "başarısız" kalır (geçmiş değişmez), aksiyon "kapalı"; çalıştırma PDF'inde olay izi 23:20 → 23:30 SMS → 08:05.
+5. Aynı gece Bakırköy kapanışı hiç başlamaz. **Beklenen:** gece kimse aranmaz: 01:30 pencere + 120 dk tolerans = 03:30'da "kaçırıldı", Bakırköy şube müdürüne push (sessiz saatte yalnızca push), Murat 07:00 sabah özetinde görür; personel 03:45'te açmaya çalışırsa liste kilitli (BR-11 v1, BR-27).
+
 ## Senaryo → test eşlemesi
 
 | Senaryo | Kabul testleri |
@@ -79,3 +98,5 @@ UC-07.
 | S-06 | TC-029…TC-031, TC-047, TC-108…TC-110 |
 | S-07 | TC-035…TC-038, TC-045, TC-076 |
 | S-08 | TC-032 |
+| S-09 | TC-013, TC-039, TC-057…TC-061, TC-108, TC-113…TC-116 |
+| S-10 | TC-034, TC-036, TC-045, TC-046, TC-073, TC-078, TC-117, TC-118 |
