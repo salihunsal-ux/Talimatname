@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Çalıştırma raporu — Kapanış · Kadıköy · 13.09.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2128;--ink2:#4b5560;--mut:#7b8590;--line:#d6d9d2;--paper:#fff;--bg:#e9e6de;--soft:#f3f1ea;--brand:#1f6f5b;--brand2:#dcebe5;--crit:#b8452f;--crit2:#f3ddd8;--warn:#b7791f;--warn2:#f6ebd2}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--bg);color:var(--ink);font:10.5pt/1.42 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet{width:210mm;min-height:297mm;margin:18px auto;background:var(--paper);padding:13mm 14mm 10mm;box-shadow:0 10px 30px rgba(28,33,40,.14);position:relative;display:flex;flex-direction:column;overflow:hidden}
+.wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.wm span{font:700 64pt Bitter,Georgia,serif;color:rgba(184,69,47,.07);transform:rotate(-26deg);letter-spacing:.06em;white-space:nowrap}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.logo{display:flex;align-items:center;gap:10px}
+.mono{width:34px;height:34px;border:2px solid var(--ink);border-radius:8px;display:flex;align-items:center;justify-content:center;font:700 14pt Bitter,Georgia,serif;flex:none}
+.chain{font:700 13pt Bitter,Georgia,serif;line-height:1.1}
+.chain small{display:block;font:9pt system-ui,sans-serif;color:var(--ink2);font-weight:400;margin-top:2px}
+h1{font:700 18pt/1.15 Bitter,Georgia,serif;margin:8px 0 1px}
+.sub{color:var(--ink2);font-size:10pt}
+.ver{text-align:right;font-size:8.5pt;color:var(--ink2);display:flex;gap:10px;align-items:flex-start;flex:none}
+.ver b{display:block;font:700 10pt ui-monospace,Menlo,Consolas,monospace;color:var(--ink);letter-spacing:.04em}
+.ver .h{font:8pt ui-monospace,Menlo,Consolas,monospace;color:var(--mut);white-space:nowrap}
+.qr{width:64px;height:64px;flex:none}
+.tn{font:700 10.5pt Bitter,Georgia,serif;color:var(--brand)}
+.ft{margin-top:auto;border-top:1px solid var(--line);padding-top:6px;font-size:8pt;color:var(--mut);display:flex;justify-content:space-between;gap:12px}
+.ft b{color:var(--ink2);font-weight:600}
+.sum{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:6px;margin:9px 0 6px}
+.box{border:1px solid var(--line);border-radius:6px;padding:5px 9px}
+.box .l{font-size:8pt;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.box .v{font:700 13pt/1.15 Bitter,Georgia,serif;margin-top:1px;font-variant-numeric:tabular-nums}
+.box .s{font-size:8pt;color:var(--ink2);margin-top:1px;line-height:1.3}
+.box.crit{border-color:var(--crit);background:var(--crit2)} .box.crit .v{color:var(--crit)}
+.box.ok{border-color:var(--brand);background:var(--brand2)} .box.ok .v{color:var(--brand)}
+h2{font:700 11.5pt Bitter,Georgia,serif;margin:10px 0 5px;padding-bottom:2px;border-bottom:1px solid var(--line)}
+h3{font:600 9pt system-ui,sans-serif;margin:8px 0 3px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+table{border-collapse:collapse;width:100%;font-size:9pt;font-variant-numeric:tabular-nums}
+th,td{padding:3px 5px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600;background:var(--soft)}
+td.n,th.n{text-align:right;white-space:nowrap}
+td.c{text-align:center;white-space:nowrap}
+.st{display:inline-flex;align-items:center;gap:4px;font-weight:600;white-space:nowrap}
+.st i{font-style:normal;display:inline-flex;width:14px;height:14px;border-radius:50%;align-items:center;justify-content:center;font-size:9pt;line-height:1;color:#fff;background:var(--brand)}
+.st.x i{background:var(--crit)} .st.u i{background:var(--ink2)} .st.w i{background:var(--warn)} .st.o i{background:#fff;color:var(--mut);border:1px solid var(--mut)}
+.st.x{color:var(--crit)}
+.mut{color:var(--mut)} .small{font-size:8.5pt}
+.note{font-size:8.5pt;color:var(--ink2);background:var(--soft);border-radius:4px;padding:2px 6px;display:inline-block;margin-top:2px}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:4px}
+.ph{position:relative;aspect-ratio:4/3;border-radius:5px;overflow:hidden;background:linear-gradient(135deg,#e6e3da,#cbc8be)}
+.ph svg{position:absolute;inset:0;margin:auto;width:34%;height:34%;opacity:.35}
+.ph .stp{position:absolute;left:0;right:0;bottom:0;background:rgba(28,33,40,.84);color:#fff;font:7pt/1.3 ui-monospace,Menlo,Consolas,monospace;padding:3px 6px}
+.cap{font-size:8.5pt;color:var(--ink2);margin-top:3px} .cap b{color:var(--ink)}
+.tl{list-style:none;margin:2px 0 0;padding:0;font-size:8.6pt}
+.tl li{display:grid;grid-template-columns:58px 1fr;gap:8px;padding:1px 0;border-bottom:1px dotted var(--line)}
+.tl .t{font:9pt ui-monospace,Menlo,Consolas,monospace;color:var(--ink2)}
+.tl .crit{color:var(--crit);font-weight:600}
+.verify{border:1.5px solid var(--ink);border-radius:6px;padding:6px 10px;font-size:8.3pt;margin-top:8px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.verify p{margin:0 0 3px}
+.kpi{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:9px 0 6px}
+.kpi .box .v{font-size:15pt}
+.bars{display:grid;gap:3px;font-size:8.5pt;margin-top:4px}
+.bar{display:grid;grid-template-columns:150px 1fr 44px;gap:6px;align-items:center}
+.bar .tr{height:9px;background:var(--soft);border-radius:2px;overflow:hidden;border:1px solid var(--line)}
+.bar .fl{height:100%;background:var(--brand)} .bar .fl.w{background:var(--warn)} .bar .fl.x{background:var(--crit)}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.oor{color:var(--crit);font-weight:700}
+.miss{color:var(--mut)}
+.tight th,.tight td{padding:2px 4px}
+.legend{font-size:8.5pt;color:var(--ink2);display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--line)}
+@media print{
+  body{background:#fff}
+  .sheet{width:auto;min-height:auto;margin:0;padding:0;box-shadow:none;overflow:visible}
+  .sheet + .sheet{break-before:page}
+  @page{size:A4;margin:12mm 14mm}
+}
+@media screen and (max-width:820px){.sheet{width:auto;margin:0;padding:16px;min-height:0}.sum,.kpi{grid-template-columns:1fr 1fr}.cols,.cols3{grid-template-columns:1fr}.photos{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="sheet"><div class="wm"><span>ÖRNEK VERİ</span></div>
+<div class="hd"><div><div class="logo"><div class="mono">KD</div><div class="chain">Kahve Durağı<small>Anadolu bölgesi · Kadıköy şubesi</small></div></div>
+<h1>Çalıştırma raporu — Kapanış</h1><div class="sub">13 Eylül 2026 Cumartesi · pencere 22:00–01:30 (tolerans 120 dk) · şablon “Kapanış (kafe)” sürüm 3 · çalıştırma #KDK-2026-0913-KAP</div></div>
+<div class="ver"><div><span class="tn">Talimatname</span><br>Doğrulama kodu<b>TN-K7F3A-9C2D</b><span class="h">olay zinciri özeti sha256 9f1c4e0b…c3e7f3a</span><br>Üretim 14.09.2026 07:02:11 (sunucu saati)</div><svg class="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-label="Doğrulama karekodu (örnek)"><rect width="21" height="21" fill="#fff"/><path fill="#1c2128" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2zM8 0h1v1H8zM10 0h2v1h-2zM8 2h2v1H8zM11 2h1v2h-1zM9 4h2v1H9zM8 6h1v1H8zM10 5h1v3h-1zM12 5h1v1h-1zM0 8h1v1H0zM2 8h2v1H2zM5 8h3v1H5zM9 8h1v2H9zM11 8h2v1h-2zM14 8h1v1h-1zM16 8h1v2h-1zM18 8h1v1h-1zM20 8h1v1h-1zM1 10h2v1H1zM4 10h1v1H4zM6 10h2v1H6zM10 10h2v1h-2zM13 10h1v2h-1zM15 10h1v1h-1zM17 10h2v1h-2zM20 10h1v2h-1zM0 12h2v1H0zM3 12h1v1H3zM5 12h3v1H5zM9 12h1v1H9zM11 12h1v1h-1zM14 12h2v1h-2zM17 12h1v2h-1zM19 12h1v1h-1zM8 14h2v1H8zM11 14h2v1h-2zM14 14h1v1h-1zM16 14h1v1h-1zM18 14h3v1h-3zM8 16h1v2H8zM10 16h1v1h-1zM12 16h1v2h-1zM14 16h2v1h-2zM17 16h1v1h-1zM19 16h1v1h-1zM9 18h2v1H9zM13 18h1v1h-1zM15 18h2v1h-2zM18 18h1v2h-1zM20 18h1v1h-1zM8 20h1v1H8zM10 20h3v1h-3zM14 20h1v1h-1zM16 20h2v1h-2z"/></svg></div></div>
+<div class="sum">
+<div class="box crit"><div class="l">Sonuç</div><div class="v">BAŞARISIZ</div><div class="s">kritik madde: mutfak buzdolabı 6,0 °C (madde 4)</div></div>
+<div class="box"><div class="l">Puan (bilgi)</div><div class="v">%87</div><div class="s">13 / 15 geçti · 1 aralık dışı · 1 yapılamadı</div></div>
+<div class="box"><div class="l">Zaman</div><div class="v">22:58 → 23:41</div><div class="s">pencere içinde · 43 dk · cihaz saati farkı +3 sn</div></div>
+<div class="box"><div class="l">Kim / nerede</div><div class="v">Emre T.</div><div class="s">şube tableti KDK-T1 · konum: şube içinde (14 m) · kilit: ilk açan</div></div>
+</div>
+<h3>A · Bar ve mutfak</h3><table><colgroup><col style="width:5%"><col style="width:50%"><col style="width:25%"><col style="width:7%"><col style="width:13%"></colgroup><thead><tr><th class="c">#</th><th>Madde</th><th>Cevap</th><th class="c">Saat</th><th>Kanıt / bağ</th></tr></thead><tbody><tr><td class="c">1</td><td>Espresso makinesi geri yıkama; süt hortumları ve buhar çubuğu temizlendi <span class="mut small">· onay</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:02</td><td class="small"></td></tr><tr><td class="c">2</td><td>Kahve makinesi ve öğütücü temizlendi <span class="mut small">· fotoğraf</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:06</td><td class="small">Fotoğraf 1</td></tr><tr><td class="c">3</td><td>Süt dolabı sıcaklığı <span class="mut small">· sıcaklık 0–4 °C · kritik</span></td><td><span class="st "><i>✓</i>3,1 °C</span></td><td class="c">23:09</td><td class="small"></td></tr><tr><td class="c">4</td><td>Mutfak buzdolabı sıcaklığı <span class="mut small">· sıcaklık 0–4 °C · kritik</span></td><td><span class="st x"><i>✕</i>6,0 °C · aralık dışı</span><br><span class="note">Not: kapı contası gevşek, ürünler süt dolabına taşındı</span></td><td class="c">23:20</td><td class="small">Fotoğraf 2 · aksiyon #418</td></tr><tr><td class="c">5</td><td>Dondurucu sıcaklığı <span class="mut small">· sıcaklık −30…−18 °C · kritik</span></td><td><span class="st "><i>✓</i>−19,5 °C</span></td><td class="c">23:21</td><td class="small"></td></tr><tr><td class="c">6</td><td>Açık ürünler etiketlendi ve dolaba kaldırıldı <span class="mut small">· çoktan seçmeli</span></td><td><span class="st "><i>✓</i>Evet</span></td><td class="c">23:24</td><td class="small"></td></tr><tr><td class="c">7</td><td>Fritöz kapatıldı, yağ süzüldü, kapağı kapatıldı <span class="mut small">· çoktan seçmeli</span></td><td><span class="st "><i>✓</i>Evet</span></td><td class="c">23:25</td><td class="small"></td></tr><tr><td class="c">8</td><td>Tezgâh, kesme yüzeyleri ve lavabo dezenfekte; bulaşık bitti, makine kapağı açık <span class="mut small">· onay</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:27</td><td class="small"></td></tr></tbody></table><h3>B · Salon ve tuvalet</h3><table><colgroup><col style="width:5%"><col style="width:50%"><col style="width:25%"><col style="width:7%"><col style="width:13%"></colgroup><thead><tr><th class="c">#</th><th>Madde</th><th>Cevap</th><th class="c">Saat</th><th>Kanıt / bağ</th></tr></thead><tbody><tr><td class="c">9</td><td>Masalar, sandalyeler ve servis istasyonu silindi <span class="mut small">· onay</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:29</td><td class="small"></td></tr><tr><td class="c">10</td><td>Zemin süpürüldü ve paspaslandı <span class="mut small">· fotoğraf · zorunlu</span></td><td><span class="st u"><i>–</i>Yapılamadı · malzeme yok</span><br><span class="note">Not: paspas deterjanı bitti</span></td><td class="c">23:30</td><td class="small">aksiyon #419</td></tr><tr><td class="c">11</td><td>Tuvaletler temizlendi; sabun, kâğıt havlu, tuvalet kâğıdı dolduruldu <span class="mut small">· onay</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:32</td><td class="small"></td></tr><tr><td class="c">12</td><td>Çöpler dışarı çıkarıldı, kovalara yeni poşet takıldı <span class="mut small">· fotoğraf</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:35</td><td class="small">Fotoğraf 3</td></tr></tbody></table><h3>C · Güvenlik ve kapanış</h3><table><colgroup><col style="width:5%"><col style="width:50%"><col style="width:25%"><col style="width:7%"><col style="width:13%"></colgroup><thead><tr><th class="c">#</th><th>Madde</th><th>Cevap</th><th class="c">Saat</th><th>Kanıt / bağ</th></tr></thead><tbody><tr><td class="c">—</td><td>Kasa kapanışını “Kasa devri” listesinde tamamlayın <span class="mut small">· talimat</span></td><td><span class="mut">cevap istemez</span></td><td class="c"></td><td class="small"></td></tr><tr><td class="c">13</td><td>Gaz vanası kapatıldı <span class="mut small">· çoktan seçmeli · kritik</span></td><td><span class="st "><i>✓</i>Evet</span></td><td class="c">23:37</td><td class="small"></td></tr><tr><td class="c">14</td><td>Ocak, fırın, ızgara, tost makinesi kapalı ve fişleri çekili; ışıklar, klima, tabela kapalı; su vanası kapalı <span class="mut small">· onay</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:38</td><td class="small"></td></tr><tr><td class="c">15</td><td>Kapı ve kepenk kilitlendi, alarm kuruldu <span class="mut small">· fotoğraf</span></td><td><span class="st "><i>✓</i>Yapıldı</span></td><td class="c">23:41</td><td class="small">Fotoğraf 4</td></tr></tbody></table>
+<div class="ft"><span><b>Talimatname ile oluşturuldu</b> · kayıt değiştirilemez; düzeltmeler ek kayıt olarak görünür</span><span>Doğrulama TN-K7F3A-9C2D · üretim 14.09.2026 07:02:11</span><span>Sayfa 1 / 2</span></div></div><div class="sheet"><div class="wm"><span>ÖRNEK VERİ</span></div>
+<div class="hd"><div><div class="logo"><div class="mono">KD</div><div class="chain">Kahve Durağı<small>Anadolu bölgesi · Kadıköy şubesi</small></div></div>
+<h1>Çalıştırma raporu — Kapanış (devam)</h1><div class="sub">Kanıt fotoğrafları, aksiyonlar, olay izi ve doğrulama</div></div>
+<div class="ver"><div><span class="tn">Talimatname</span><br>Doğrulama kodu<b>TN-K7F3A-9C2D</b><span class="h">olay zinciri özeti sha256 9f1c4e0b…c3e7f3a</span><br>Üretim 14.09.2026 07:02:11 (sunucu saati)</div><svg class="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-label="Doğrulama karekodu (örnek)"><rect width="21" height="21" fill="#fff"/><path fill="#1c2128" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2zM8 0h1v1H8zM10 0h2v1h-2zM8 2h2v1H8zM11 2h1v2h-1zM9 4h2v1H9zM8 6h1v1H8zM10 5h1v3h-1zM12 5h1v1h-1zM0 8h1v1H0zM2 8h2v1H2zM5 8h3v1H5zM9 8h1v2H9zM11 8h2v1h-2zM14 8h1v1h-1zM16 8h1v2h-1zM18 8h1v1h-1zM20 8h1v1h-1zM1 10h2v1H1zM4 10h1v1H4zM6 10h2v1H6zM10 10h2v1h-2zM13 10h1v2h-1zM15 10h1v1h-1zM17 10h2v1h-2zM20 10h1v2h-1zM0 12h2v1H0zM3 12h1v1H3zM5 12h3v1H5zM9 12h1v1H9zM11 12h1v1h-1zM14 12h2v1h-2zM17 12h1v2h-1zM19 12h1v1h-1zM8 14h2v1H8zM11 14h2v1h-2zM14 14h1v1h-1zM16 14h1v1h-1zM18 14h3v1h-3zM8 16h1v2H8zM10 16h1v1h-1zM12 16h1v2h-1zM14 16h2v1h-2zM17 16h1v1h-1zM19 16h1v1h-1zM9 18h2v1H9zM13 18h1v1h-1zM15 18h2v1h-2zM18 18h1v2h-1zM20 18h1v1h-1zM8 20h1v1H8zM10 20h3v1h-3zM14 20h1v1h-1zM16 20h2v1h-2z"/></svg></div></div>
+<h2>Kanıt fotoğrafları (4)</h2>
+<div class="photos"><div><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="#1c2128" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg><div class="stp">Kadıköy · 13.09.2026 23:06:41 · Emre T. · KDK-T1</div></div><div class="cap"><b>Fotoğraf 1</b> · madde 2 · Kahve makinesi ve öğütücü · sha256 …7f3a</div></div><div><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="#1c2128" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg><div class="stp">Kadıköy · 13.09.2026 23:20:48 · Emre T. · KDK-T1</div></div><div class="cap"><b>Fotoğraf 2</b> · madde 4 · Mutfak buzdolabı (aralık dışı) · sha256 …c21e</div></div><div><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="#1c2128" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg><div class="stp">Kadıköy · 13.09.2026 23:35:10 · Emre T. · KDK-T1</div></div><div class="cap"><b>Fotoğraf 3</b> · madde 12 · Çöp alanı · sha256 …0be4</div></div><div><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="#1c2128" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg><div class="stp">Kadıköy · 13.09.2026 23:41:00 · Emre T. · KDK-T1</div></div><div class="cap"><b>Fotoğraf 4</b> · madde 15 · Kepenk ve kapı · sha256 …a90d</div></div></div><p class="cap" style="margin:4px 0 0"><b>Damga</b>: şube · tarih-saat · kullanıcı · cihaz, sunucu tarafında basılır; ham dosya ayrıca saklanır. Bayrak yok: kamera içinden çekildi, konum şube içinde, cihaz saati farkı +3 sn.</p>
+<h2>Aksiyonlar (2)</h2>
+<table><thead><tr><th>#</th><th>Kaynak</th><th>Öncelik</th><th>Atanan</th><th>Vade</th><th>Durum</th><th>Kapanış notu</th></tr></thead><tbody>
+<tr><td>#418</td><td>Madde 4 · mutfak buzdolabı 6,0 °C</td><td><span class="st x"><i>✕</i>kritik</span></td><td>Ayşe K. (şube müdürü)</td><td>14 Eyl 03:20</td><td><span class="st "><i>✓</i>kapalı 14 Eyl 08:05</span></td><td class="small">“Servis geldi, kapı contası değişti; sabah ölçüm 3,4 °C.” · 1 fotoğraf</td></tr>
+<tr><td>#419</td><td>Madde 10 · zemin yapılamadı (malzeme yok)</td><td><span class="st w"><i>⏱</i>orta</span></td><td>Ayşe K.</td><td>16 Eyl 23:30</td><td><span class="st o"><i>○</i>açık</span></td><td class="small">—</td></tr>
+</tbody></table>
+<h2>Olay izi (ekle-yalnız günlük)</h2>
+<ul class="tl">
+<li><span class="t">22:00:00</span><span>Pencere açıldı (sistem) · çalıştırma üretildi 7 gün önce</span></li>
+<li><span class="t">22:58:12</span><span>Emre T. PIN ile giriş — şube tableti KDK-T1 · konum şube içinde</span></li>
+<li><span class="t">22:58:30</span><span>Çalıştırma alındı (kilit: Emre T.); diğer kullanıcılar “Emre yapıyor” gördü</span></li>
+<li><span class="t">23:06:41</span><span>Madde 2 fotoğraf yüklendi · sha256 …7f3a · damga basıldı</span></li>
+<li><span class="t">23:20:05</span><span class="crit">Madde 4: 6,0 °C aralık dışı → kritik → aksiyon #418 açıldı (Ayşe K., vade 4 sa) · push Ayşe K. teslim 23:20:07 · push Murat D. teslim 23:20:09</span></li>
+<li><span class="t">23:20:48</span><span>Madde 4 fotoğraf + not kaydedildi · sha256 …c21e</span></li>
+<li><span class="t">23:30:15</span><span>Madde 10 yapılamadı (malzeme yok) → aksiyon #419 (Ayşe K., orta, vade 72 sa) · push Ayşe K. teslim 23:30:16</span></li>
+<li><span class="t">23:41:02</span><span><b>Gönderildi</b> · sonuç: başarısız (kritik madde) · puan %87 · kayıt kilitlendi</span></li>
+<li><span class="t">23:41:03</span><span>Olay zinciri özeti güncellendi (önceki_hash + olay)</span></li>
+<li><span class="t">07:00:00</span><span>Sabah özeti gönderildi: Murat D. (push + e-posta), Selin Y. (e-posta)</span></li>
+<li><span class="t">08:05:30</span><span>Aksiyon #418 kapatıldı — Ayşe K. · not + 1 fotoğraf</span></li>
+</ul>
+<p class="small mut" style="margin:6px 0 0">Cevap saatleri sunucu zamanıdır (Europe/Istanbul). Yapılamadı sebebi personel tarafından seçilmiş, not personelin kendi ifadesidir. Kritik maddede aralık dışı ölçüm çalıştırmayı “başarısız” yapar; puan yalnızca bilgi amaçlıdır (BR-07).</p>
+<div class="verify"><div><p><b>Bu rapor nasıl doğrulanır?</b> Doğrulama kodu ve olay zinciri özeti, Talimatname sunucusundaki ekle-yalnız günlükten türetilir (ADR-0004). Gönderilmiş kayıt değiştirilemez; sonradan yapılan her düzeltme ayrı bir “ek” kaydı olarak eski kaydın yanında görünür. Kanıt dosyalarının SHA-256 özetleri cevaba bağlıdır; damga sunucu zamanıyla basılır.</p><p class="mut">Çevrimiçi doğrulama sayfası (kod girip zincir kontrolü) v1.x kapsamındadır; v1'de kod ve özet raporda taşınır.</p></div><svg class="qr" viewBox="0 0 21 21" shape-rendering="crispEdges" aria-label="Doğrulama karekodu (örnek)"><rect width="21" height="21" fill="#fff"/><path fill="#1c2128" d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2zM8 0h1v1H8zM10 0h2v1h-2zM8 2h2v1H8zM11 2h1v2h-1zM9 4h2v1H9zM8 6h1v1H8zM10 5h1v3h-1zM12 5h1v1h-1zM0 8h1v1H0zM2 8h2v1H2zM5 8h3v1H5zM9 8h1v2H9zM11 8h2v1h-2zM14 8h1v1h-1zM16 8h1v2h-1zM18 8h1v1h-1zM20 8h1v1h-1zM1 10h2v1H1zM4 10h1v1H4zM6 10h2v1H6zM10 10h2v1h-2zM13 10h1v2h-1zM15 10h1v1h-1zM17 10h2v1h-2zM20 10h1v2h-1zM0 12h2v1H0zM3 12h1v1H3zM5 12h3v1H5zM9 12h1v1H9zM11 12h1v1h-1zM14 12h2v1h-2zM17 12h1v2h-1zM19 12h1v1h-1zM8 14h2v1H8zM11 14h2v1h-2zM14 14h1v1h-1zM16 14h1v1h-1zM18 14h3v1h-3zM8 16h1v2H8zM10 16h1v1h-1zM12 16h1v2h-1zM14 16h2v1h-2zM17 16h1v1h-1zM19 16h1v1h-1zM9 18h2v1H9zM13 18h1v1h-1zM15 18h2v1h-2zM18 18h1v2h-1zM20 18h1v1h-1zM8 20h1v1H8zM10 20h3v1h-3zM14 20h1v1h-1zM16 20h2v1h-2z"/></svg></div>
+<div class="ft"><span><b>Talimatname ile oluşturuldu</b> · kayıt değiştirilemez; düzeltmeler ek kayıt olarak görünür</span><span>Doğrulama TN-K7F3A-9C2D · üretim 14.09.2026 07:02:11</span><span>Sayfa 2 / 2</span></div></div></body></html>

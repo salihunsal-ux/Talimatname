@@ -16,7 +16,7 @@ Karar kuralı: üç kapıdan ikisi tutmazsa proje burada biter (fizibilite §10)
 
 | Hafta | Odak | Yapılacaklar | Çıktı |
 |---|---|---|---|
-| 0 (hazırlık) | Kit | Hedef liste onayı (01), ulaşım mesajları (02), not şablonu ve puanlama betiği (03), prototip (05-tasarim/05-prototip), isim kartları (logo tuvali), LOI (04) | Kit hazır; ilk 30 ulaşım mesajı gitti |
+| 0 (hazırlık) | Kit | Hedef liste onayı (01), ulaşım mesajları (02), not şablonu ve puanlama betiği (03), prototip (05-tasarim/05-prototip), kanıt raporu örnekleri — basılı (05-tasarim/06-kanit-raporu), 8 şablonun madde listeleri (02-urun/07), isim kartları (logo tuvali), LOI (04) | Kit hazır; ilk 30 ulaşım mesajı gitti |
 | 1 | Ulaşım + ilk görüşmeler | 40 ulaşım (LinkedIn/e-posta/tanıştırma); hedef 5 randevu; ilk 2–3 görüşme; notlar aynı gün | 3 not, puanlama tablosu dolmaya başladı |
 | 2 | Görüşme | 4–5 görüşme; ilk şube ziyareti; haftalık rapor #1 | 8 not, 1 gözlem |
 | 3 | Görüşme + prototip testi | 4–5 görüşme (Blok 8 prototip + isim kartları devrede); 2 gözlem; fiyat testi cevapları toplanıyor | 13 not, 3 gözlem |

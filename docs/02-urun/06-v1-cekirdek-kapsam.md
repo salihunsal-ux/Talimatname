@@ -24,7 +24,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | Sebep seti (yapılamadı) | malzeme yok · ekipman arızalı · zaman yetmedi · yetkim yok · diğer (not zorunlu) |
 | Sorun kategorisi | ekipman · tedarik · hijyen · diğer |
 | Saklama | 24 ay (kanıt dosyaları); olay günlüğü kalıcı |
-| Kütüphane | 8 şablon: kapanış · açılış · saatlik tuvalet/hijyen · soğuk zincir · haftalık derin temizlik · yağ değişimi · kasa devri · teslimat kabul |
+| Kütüphane | 8 şablon: kapanış · açılış · saatlik tuvalet/hijyen · soğuk zincir · haftalık derin temizlik · yağ değişimi · kasa devri · teslimat kabul — madde içerikleri: [07-sablon-kutuphanesi.md](07-sablon-kutuphanesi.md) (taslak, sahada doğrulanır) |
 
 ## M1 · Organizasyon, kimlik ve yetki
 

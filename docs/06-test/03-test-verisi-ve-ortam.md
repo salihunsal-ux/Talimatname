@@ -12,7 +12,7 @@ Tüm test seviyeleri ve UAT aynı sentetik veri setini kullanır; gerçek müşt
 | İstasyon | 100 (şube başına 4: bar, mutfak, kasa, tuvalet) | Her birinin QR'ı |
 | Kullanıcı | 412: 1 hesap yöneticisi, 1 operasyon müdürü, 1 kalite, 3 bölge müdürü, 25 şube müdürü, 380 personel, 1 gözlemci | Telefonlar sahte (+90 500 …); 10 kullanıcı pasif, 3 maskeli, 18 davet bekliyor |
 | Cihaz | 25 kiosk tablet + 60 kişisel telefon | Push token'ları sahte sağlayıcıya bağlı |
-| Şablon | 6: Kapanış (kafe), Açılış, Saatlik hijyen, Soğuk zincir, Haftalık derin temizlik, Alerjen kontrolü | Kapanış v1 ve v2 (sürümleme testleri); 11 madde türünün tamamı en az bir şablonda |
+| Şablon | 8 (02-urun/07 şablon kütüphanesi: kapanış, açılış, saatlik hijyen, soğuk zincir, haftalık derin temizlik, yağ değişimi, kasa devri, teslimat kabul) | Kapanış v1 ve v2 (sürümleme testleri); 6 madde türü + talimat en az bir şablonda |
 | Plan | 8 | Günlük (gece yarısı aşan), saatlik, haftalık (herkes tamamlasın), aylık, tek seferlik; biri DST şubesinde |
 | Çalıştırma | ~30 gün geçmiş (~5.500) + 7 gün gelecek | Durum dağılımı: %80 tamamlandı, %8 geç, %5 kaçırıldı, %2 yapılmayacak, %5 kapalı; %6 başarısız |
 | Cevap ve kanıt | ~60.000 cevap, ~18.000 sentetik fotoğraf (renkli düz kare + metin), damgalı kopyalar | Bayraklar: %3 galeri, %2 uzak, %5 konum yok, %1 saat farkı |

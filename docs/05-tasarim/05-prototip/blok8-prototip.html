@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Talimatname Prototip</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">
 <style>
@@ -111,7 +113,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="body">
       <div class="mut">Bugün</div>
       <div class="card" onclick="go('s-list')" style="cursor:pointer">
-        <div class="row"><div class="grow"><b>Kapanış listesi</b><div class="mut">22:00 – 01:30 · 12 madde</div></div><span class="chip acc" id="todaychip">1 sa 12 dk kaldı</span></div>
+        <div class="row"><div class="grow"><b>Kapanış listesi</b><div class="mut">22:00 – 01:30 · 15 madde</div></div><span class="chip acc" id="todaychip">1 sa 12 dk kaldı</span></div>
         <div class="prog" style="margin-top:10px"><i id="todayprog" style="width:0%"></i></div>
         <div class="row" style="margin-top:8px"><span class="pill emre" id="lockpill">Sen yapıyorsun</span><span class="mut small">diğerleri "Emre yapıyor" görür</span></div>
       </div>
@@ -128,9 +130,9 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="hd"><div class="back" onclick="go('s-today')">‹</div><div><div class="t">Kapanış listesi</div><div class="s" id="listsub">01:30'a kadar</div></div><div class="r" id="listcount">0 / 12</div></div>
     <div class="body">
       <div class="prog"><i id="listprog" style="width:0%"></i></div>
-      <div class="card" id="sec1"><div class="mut" style="margin-bottom:4px">Bölüm 1 · Bar</div></div>
-      <div class="card" id="sec2"><div class="mut" style="margin-bottom:4px">Bölüm 2 · Mutfak</div></div>
-      <div class="card" id="sec3"><div class="mut" style="margin-bottom:4px">Bölüm 3 · Salon ve kasa</div></div>
+      <div class="card" id="sec1"><div class="mut" style="margin-bottom:4px">A · Bar ve mutfak</div></div>
+      <div class="card" id="sec2"><div class="mut" style="margin-bottom:4px">B · Salon ve tuvalet</div></div>
+      <div class="card" id="sec3"><div class="mut" style="margin-bottom:4px">C · Güvenlik ve kapanış <span style="font-weight:400">· kasa kapanışı “Kasa devri” listesinde</span></div></div>
       <div class="btn p" id="submit" disabled onclick="submit()">Gönder</div>
       <div class="note" id="submitnote">Zorunlu maddeler bitmeden gönderilemez</div>
     </div>
@@ -148,7 +150,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     </div>
     <div class="sheet" id="sheet-temp">
       <h3 id="temp-title">Sıcaklık</h3>
-      <div class="mut">Kabul aralığı <b>0 – 4 °C</b></div>
+      <div class="mut">Kabul aralığı <b id="temp-range">0 – 4 °C</b></div>
       <div class="temp"><div class="b" onclick="tempAdj(-0.5)">−</div><div class="v" id="tempv">3,0</div><div class="b" onclick="tempAdj(0.5)">+</div></div>
       <div class="card tint" id="tempwarn" style="display:none"><b style="color:var(--crit)">Aralık dışı!</b><div class="small">Fotoğraf ve not zorunlu; kritik maddede aksiyon şube müdürüne açılır (4 sa).</div><textarea id="temp-note" rows="2" placeholder="Not: ne gördünüz?" style="margin-top:8px"></textarea></div>
       <div class="row"><div class="btn g grow" onclick="closeSheet('sheet-temp')">Vazgeç</div><div class="btn p grow" onclick="confirmTemp()">Kaydet</div></div>
@@ -158,7 +160,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
   <!-- KAMERA -->
   <section class="scr" id="s-cam">
     <div class="cam"><div class="view"></div><div class="stamp">Kadıköy · 13.09.2026 <span id="camtime"></span><br>Emre T. · şube tableti</div><div class="shutter" onclick="shot()"></div></div>
-    <div class="hd" style="border-top:1px solid var(--line);border-bottom:0"><div class="back" onclick="go('s-list')">‹</div><div><div class="t" id="camtitle">Fotoğraf</div><div class="s">Yalnızca uygulama içi çekim · galeri yok</div></div></div>
+    <div class="hd" style="border-top:1px solid var(--line);border-bottom:0"><div class="back" onclick="go('s-list')">‹</div><div class="grow"><div class="t" id="camtitle">Fotoğraf</div><div class="s">Yalnızca uygulama içi çekim · galeri yok</div></div><div class="r"><span class="chip" style="cursor:pointer" onclick="go('s-list');openChoice(cur)">Yapılamadı</span></div></div>
   </section>
 
   <!-- SONUÇ -->
@@ -181,7 +183,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="body">
       <div class="card" style="border-left:4px solid var(--acc)"><b>Dün gece: 12 şubeden 10'u yolunda</b><div class="mut">2 şube dikkat istiyor · 3 açık aksiyon</div></div>
       <div class="kpi"><div><b>10</b><span>zamanında</span></div><div><b>1</b><span>başarısız</span></div><div><b>1</b><span>kaçırıldı</span></div></div>
-      <div class="card" onclick="go('s-detail')" style="cursor:pointer;border-color:var(--crit)"><div class="row"><span class="box crit">!</span><div class="grow"><b>Kadıköy · Kapanış</b><div class="mut">Tamamlandı 23:41 · <span style="color:var(--crit)">başarısız — buzdolabı 2: 6,0 °C</span></div></div><span class="mut">›</span></div></div>
+      <div class="card" onclick="go('s-detail')" style="cursor:pointer;border-color:var(--crit)"><div class="row"><span class="box crit">!</span><div class="grow"><b>Kadıköy · Kapanış</b><div class="mut">Tamamlandı 23:41 · <span style="color:var(--crit)">başarısız — mutfak buzdolabı: 6,0 °C</span></div></div><span class="mut">›</span></div></div>
       <div class="card" style="border-color:var(--crit)"><div class="row"><span class="box crit">✕</span><div class="grow"><b>Bakırköy · Kapanış</b><div class="mut">Kaçırıldı · 03:30 şube müdürüne bildirildi</div></div><span class="mut">›</span></div></div>
       <div class="mut" style="margin-top:4px">Tümünü göster (ızgara)</div>
       <div class="grid" id="grid"></div>
@@ -195,7 +197,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
     <div class="hd"><div class="back" onclick="go('s-morning')">‹</div><div><div class="t">Kadıköy · Kapanış</div><div class="s">13 Eyl · Emre T. · şube tableti</div></div><div class="r"><span class="chip crit">başarısız</span></div></div>
     <div class="body">
       <div class="card" id="detail-items"></div>
-      <div class="card"><b>Aksiyon #418 · kritik</b><div class="mut">Buzdolabı 2 aralık dışı · Ayşe K. · vade 03:41 · <b style="color:var(--acc)">açık</b></div><div class="row" style="margin-top:8px"><div class="btn grow" onclick="toast('Not eklendi (notlar silinmez)')">Not ekle</div><div class="btn p grow" onclick="toast('Kapatırken not zorunlu, fotoğraf isteğe bağlı')">Kapat</div></div></div>
+      <div class="card"><b>Aksiyon #418 · kritik</b><div class="mut">Mutfak buzdolabı aralık dışı · Ayşe K. · vade 03:20 · <b style="color:var(--acc)">açık</b></div><div class="row" style="margin-top:8px"><div class="btn grow" onclick="toast('Not eklendi (notlar silinmez)')">Not ekle</div><div class="btn p grow" onclick="toast('Kapatırken not zorunlu, fotoğraf isteğe bağlı')">Kapat</div></div></div>
       <div class="card"><b>Olay izi</b><div class="log" id="detail-log"></div></div>
       <div class="btn" onclick="toast('PDF: maddeler, fotoğraflar, zaman damgaları, doğrulama kodu (prototipte üretilmez)')">PDF indir</div>
     </div>
@@ -215,7 +217,7 @@ textarea,input{width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(
   <div class="btn" onclick="go('s-list')">3 · Kapanış listesi</div>
   <div class="btn" onclick="go('s-morning')">4 · Sabah özeti (bölge müdürü)</div>
   <div class="btn" onclick="go('s-detail')">5 · Çalıştırma detayı</div>
-  <p>Blok 8 senaryosu: Emre PIN ile girer, 12 maddeyi yapar; buzdolabı 2'yi 6,0 °C girer (aralık dışı → fotoğraf + not, kritik aksiyon), zemin için "yapılamadı: malzeme yok", gönderir. Sonra Murat'ın sabah özetine geçin. İsim testi için üstteki seçici; sırayı her görüşmede değiştirin.</p>
+  <p>Blok 8 senaryosu: Emre PIN ile girer, 15 maddeyi yapar (şablon: 02-urun/07 Kapanış); mutfak buzdolabını 6,0 °C girer (aralık dışı → fotoğraf + not, kritik aksiyon), zemin için "yapılamadı: malzeme yok", gönderir. Sonra Murat'ın sabah özetine geçin. İsim testi için üstteki seçici; sırayı her görüşmede değiştirin.</p>
   <p>Prototip: veri kaydetmez, kamera çalışmaz (sahte çekim), sıcaklık ± ile girilir.</p>
 </div>
 </div>
@@ -232,18 +234,21 @@ function setBrand(k){const b=BR[k];document.documentElement.style.setProperty('-
 setBrand('talimatname');
 
 const ITEMS=[
- {id:1,sec:1,t:"Kahve makinesi temizlendi",type:"photo",req:true},
- {id:2,sec:1,t:"Süt dolabı sıcaklığı",type:"temp",req:true,crit:false,val:null},
- {id:3,sec:1,t:"Tezgâh dezenfekte edildi",type:"check",req:true},
- {id:4,sec:1,t:"Espresso makinesi kapatıldı, süt hortumları çıkarıldı",type:"check",req:true},
- {id:5,sec:2,t:"Buzdolabı 2 sıcaklığı",type:"temp",req:true,crit:true,val:null},
- {id:6,sec:2,t:"Fritöz yağı süzüldü, kapağı kapatıldı",type:"check",req:true},
- {id:7,sec:2,t:"Zemin yıkandı",type:"check",req:true},
- {id:8,sec:2,t:"Çöpler alındı, poşet takıldı",type:"photo",req:true},
- {id:9,sec:3,t:"Masalar ve sandalyeler silindi",type:"check",req:true},
- {id:10,sec:3,t:"Tuvalet son kontrol",type:"check",req:true},
- {id:11,sec:3,t:"Kasa sayıldı, Z raporu alındı",type:"check",req:true},
- {id:12,sec:3,t:"Işıklar, klima, ana kapı",type:"check",req:false},
+ {id:1,sec:1,t:"Espresso makinesi geri yıkama; süt hortumları ve buhar çubuğu temizlendi",type:"check",req:true},
+ {id:2,sec:1,t:"Kahve makinesi ve öğütücü temizlendi",type:"photo",req:true},
+ {id:3,sec:1,t:"Süt dolabı sıcaklığı",type:"temp",req:true,crit:true,val:null},
+ {id:4,sec:1,t:"Mutfak buzdolabı sıcaklığı",type:"temp",req:true,crit:true,val:null},
+ {id:5,sec:1,t:"Dondurucu sıcaklığı",type:"temp",req:true,crit:true,val:null,lo:-30,hi:-18,start:-19.5},
+ {id:6,sec:1,t:"Açık ürünler etiketlendi ve dolaba kaldırıldı",type:"check",req:true,choice:true},
+ {id:7,sec:1,t:"Fritöz kapatıldı, yağ süzüldü, kapağı kapatıldı",type:"check",req:true,choice:true},
+ {id:8,sec:1,t:"Tezgâh ve lavabo dezenfekte edildi; bulaşık bitti, makine kapağı açık",type:"check",req:true},
+ {id:9,sec:2,t:"Masalar, sandalyeler ve servis istasyonu silindi",type:"check",req:true},
+ {id:10,sec:2,t:"Zemin süpürüldü ve paspaslandı",type:"photo",req:true},
+ {id:11,sec:2,t:"Tuvaletler temizlendi; sabun, kâğıt havlu, tuvalet kâğıdı dolduruldu",type:"check",req:true},
+ {id:12,sec:2,t:"Çöpler dışarı çıkarıldı, kovalara yeni poşet takıldı",type:"photo",req:true},
+ {id:13,sec:3,t:"Gaz vanası kapatıldı",type:"check",req:true,crit:true,choice:true},
+ {id:14,sec:3,t:"Ocak, fırın, ızgara kapalı ve fişleri çekili; ışık, klima, tabela kapalı; su vanası kapalı",type:"check",req:true},
+ {id:15,sec:3,t:"Kapı ve kepenk kilitlendi, alarm kuruldu",type:"photo",req:true},
 ];
 let state={};let cur=null;let tempVal=3.0;let events=[];
 function now(){const d=new Date();return d.toTimeString().slice(0,5);}
@@ -264,7 +269,7 @@ function status(it){const s=state[it.id];if(!s)return null;return s;}
 function renderList(){[1,2,3].forEach(n=>{const sec=document.getElementById('sec'+n);sec.querySelectorAll('.item').forEach(e=>e.remove());ITEMS.filter(i=>i.sec===n).forEach(it=>{const s=status(it);const d=document.createElement('div');d.className='item';
  let box='<span class="box"></span>',meta='';
  if(s){if(s.k==='ok'){box='<span class="box ok">✓</span>';meta=s.meta||'';}if(s.k==='fail'){box='<span class="box crit">!</span>';meta=s.meta||'';}if(s.k==='unable'){box='<span class="box warn">✗</span>';meta='yapılamadı: '+s.reason;}}
- const chips=(it.type==='photo'?' <span class="chip">fotoğraf</span>':'')+(it.type==='temp'?' <span class="chip">0–4 °C</span>':'')+(it.crit?' <span class="chip crit">kritik</span>':'');
+ const chips=(it.type==='photo'?' <span class="chip">fotoğraf</span>':'')+(it.type==='temp'?' <span class="chip">'+rangeTxt(it)+'</span>':'')+(it.choice?' <span class="chip">Evet / Hayır / Uygun değil</span>':'')+(it.crit?' <span class="chip crit">kritik</span>':'');
  d.innerHTML=box+'<div class="grow"><div class="lbl">'+it.t+chips+'</div></div>'+(s&&s.k==='ok'&&it.type==='photo'?'<div class="thumb"></div>':'')+'<div class="meta">'+meta+'</div>';
  d.onclick=()=>tap(it);sec.appendChild(d);});});
  const done=ITEMS.filter(i=>state[i.id]).length;const reqLeft=ITEMS.filter(i=>i.req&&!state[i.id]).length;
@@ -274,8 +279,8 @@ function renderList(){[1,2,3].forEach(n=>{const sec=document.getElementById('sec
 function tap(it){cur=it;const s=state[it.id];
  if(it.type==='check'){if(!s){state[it.id]={k:'ok',meta:now()};log(it.t+' ✓');renderList();if(!it._asked){it._asked=true;toast('Yapamadıysanız maddeye tekrar dokunun: "Yapılamadı"');}return;}
    openChoice(it);return;}
- if(it.type==='photo'){document.getElementById('camtitle').textContent=it.t;document.getElementById('camtime').textContent=now();go('s-cam');return;}
- if(it.type==='temp'){tempVal=it.val??3.0;document.getElementById('temp-title').textContent=it.t;drawTemp();document.getElementById('sheet-temp').classList.add('on');}}
+ if(it.type==='photo'){if(s){openChoice(it);return;}document.getElementById('camtitle').textContent=it.t;document.getElementById('camtime').textContent=now();go('s-cam');return;}
+ if(it.type==='temp'){tempVal=it.val??(it.start??3.0);document.getElementById('temp-title').textContent=it.t;document.getElementById('temp-range').textContent=rangeTxt(it).replace('–',' – ');drawTemp();document.getElementById('sheet-temp').classList.add('on');}}
 function openChoice(it){// işaretli maddeye ikinci dokunuş: işareti kaldır veya yapılamadı
  const sh=document.getElementById('sheet-unable');document.getElementById('unable-title').textContent=it.t;document.querySelectorAll('#sheet-unable .opt').forEach(o=>o.classList.remove('sel'));document.getElementById('unable-note').value='';delete sh.dataset.r;
  sh.classList.add('on');}
@@ -284,9 +289,11 @@ function pickReason(el,r){document.querySelectorAll('#sheet-unable .opt').forEac
 function confirmUnable(){const r=document.getElementById('sheet-unable').dataset.r;const n=document.getElementById('unable-note').value.trim();
  if(!r){toast('Sebep seçin');return;}if(r==='Diğer'&&n.length<5){toast('"Diğer" için not zorunlu (≥ 5 karakter)');return;}
  state[cur.id]={k:'unable',reason:r,note:n};log(cur.t+' yapılamadı: '+r+' → aksiyon #419 Ayşe K. (orta, 72 sa)');closeSheet('sheet-unable');renderList();toast('Kaydedildi · şube müdürüne bildirildi, aksiyon açıldı');}
-function drawTemp(){const v=document.getElementById('tempv');v.textContent=tempVal.toFixed(1).replace('.',',');const bad=tempVal<0||tempVal>4;v.classList.toggle('bad',bad);document.getElementById('tempwarn').style.display=bad?'block':'none';}
+function rangeTxt(it){const lo=it.lo??0,hi=it.hi??4;return (lo<0?'−'+Math.abs(lo):lo)+'–'+(hi<0?'−'+Math.abs(hi):hi)+' °C';}
+function outOfRange(it,v){const lo=it.lo??0,hi=it.hi??4;return v<lo||v>hi;}
+function drawTemp(){const v=document.getElementById('tempv');v.textContent=tempVal.toFixed(1).replace('.',',');const bad=outOfRange(cur,tempVal);v.classList.toggle('bad',bad);document.getElementById('tempwarn').style.display=bad?'block':'none';}
 function tempAdj(d){tempVal=Math.round((tempVal+d)*10)/10;drawTemp();}
-function confirmTemp(){const bad=tempVal<0||tempVal>4;const n=document.getElementById('temp-note').value.trim();
+function confirmTemp(){const bad=outOfRange(cur,tempVal);const n=document.getElementById('temp-note').value.trim();
  if(bad&&n.length<3){toast('Aralık dışı: not zorunlu, sonra fotoğraf');return;}
  cur.val=tempVal;const label=tempVal.toFixed(1).replace('.',',')+' °C';
  if(bad){state[cur.id]={k:'fail',meta:label+' · aralık dışı'};log(cur.t+' '+label+' ARALIK DIŞI'+(cur.crit?' → kritik: aksiyon #418 Ayşe K. (4 sa) + anında bildirim':''));closeSheet('sheet-temp');document.getElementById('temp-note').value='';toast(cur.crit?'Kritik madde: aksiyon açıldı, şube ve bölge müdürüne bildirildi. Şimdi fotoğraf.':'Aralık dışı kaydedildi. Şimdi fotoğraf.');document.getElementById('camtitle').textContent=cur.t;document.getElementById('camtime').textContent=now();setTimeout(()=>go('s-cam'),600);}
@@ -307,9 +314,9 @@ function renderGrid(){const g=document.getElementById('grid');g.innerHTML='';con
 function renderDetail(){const el=document.getElementById('detail-items');el.innerHTML='<div class="mut" style="margin-bottom:4px">Maddeler</div>';
  const src=Object.keys(state).length?ITEMS:null;
  const rows=src?ITEMS.map(it=>{const s=state[it.id];let box='<span class="box"></span>',m='—';if(s){if(s.k==='ok'){box='<span class="box ok">✓</span>';m=s.meta||'';}if(s.k==='fail'){box='<span class="box crit">!</span>';m=s.meta;}if(s.k==='unable'){box='<span class="box warn">✗</span>';m='yapılamadı: '+s.reason;}}return '<div class="item" style="cursor:default">'+box+'<div class="grow"><div class="lbl">'+it.t+'</div></div>'+(s&&it.type==='photo'?'<div class="thumb"></div>':'')+'<div class="meta">'+m+'</div></div>';}).join('')
- :'<div class="item" style="cursor:default"><span class="box ok">✓</span><div class="grow"><div class="lbl">Kahve makinesi temizlendi</div></div><div class="thumb"></div><div class="meta">23:02</div></div><div class="item" style="cursor:default"><span class="box crit">!</span><div class="grow"><div class="lbl">Buzdolabı 2 sıcaklığı</div></div><div class="thumb"></div><div class="meta">6,0 °C · aralık dışı</div></div><div class="item" style="cursor:default"><span class="box warn">✗</span><div class="grow"><div class="lbl">Zemin yıkandı</div></div><div class="meta">yapılamadı: malzeme yok</div></div>';
+ :'<div class="item" style="cursor:default"><span class="box ok">✓</span><div class="grow"><div class="lbl">Kahve makinesi ve öğütücü temizlendi</div></div><div class="thumb"></div><div class="meta">23:06</div></div><div class="item" style="cursor:default"><span class="box crit">!</span><div class="grow"><div class="lbl">Mutfak buzdolabı sıcaklığı</div></div><div class="thumb"></div><div class="meta">6,0 °C · aralık dışı</div></div><div class="item" style="cursor:default"><span class="box warn">✗</span><div class="grow"><div class="lbl">Zemin süpürüldü ve paspaslandı</div></div><div class="meta">yapılamadı: malzeme yok</div></div>';
  el.innerHTML+=rows;
- const lg=events.length?events:["22:00 · pencere açıldı (sistem)","22:58 · Emre T. PIN ile giriş (şube tableti)","23:20 · Buzdolabı 2: 6,0 °C ARALIK DIŞI → kritik aksiyon #418","23:30 · Zemin yıkandı: yapılamadı (malzeme yok) → aksiyon #419","23:41 · Gönderildi · kritik kural → BAŞARISIZ","23:41 · bildirim: Ayşe K. push ✓, Murat D. push ✓","07:00 · sabah özeti: Murat D., Selin Y."];
+ const lg=events.length?events:["22:00 · pencere açıldı (sistem)","22:58 · Emre T. PIN ile giriş (şube tableti)","23:20 · Mutfak buzdolabı: 6,0 °C ARALIK DIŞI → kritik aksiyon #418","23:30 · Zemin süpürüldü ve paspaslandı: yapılamadı (malzeme yok) → aksiyon #419","23:41 · Gönderildi · kritik kural → BAŞARISIZ","23:41 · bildirim: Ayşe K. push ✓, Murat D. push ✓","07:00 · sabah özeti: Murat D., Selin Y."];
  document.getElementById('detail-log').innerHTML=lg.map(e=>'• '+e).join('<br>');}
 renderGrid();
 </script>
