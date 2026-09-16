@@ -124,6 +124,9 @@ REGISTRY = [
         (D+"07-gelistirme/02-repo-ve-ortam-kurulumu.md", "Repo ve ortam kurulumu", "Kod depoları, CI, ortamlar, sırlar, kalite kapıları", []),
         (D+"07-gelistirme/03-backlog-ve-sprint-plani.md", "Backlog ve sprint planı", "EP-01…12, 112 hikâye, S1–S10 (Alfa S6, Beta S8, GA S10), tampon S11–S12, v1.1 listesi", []),
         (D+"07-gelistirme/04-tanimlar-dor-dod.md", "DoR / DoD", "Hazır ve bitti tanımları", []),
+        (D+"07-gelistirme/07-serbest-gelistirici-secimi.md", "Serbest geliştirici seçimi", "İki rol, ilan metni, seçim adımları, 45 dk görüşme soruları, 3 saatlik ücretli mini görevler ve rubrik, mesaj şablonları, sözleşme başlıkları, kurucu hazırlık listesi", ["kaynak"]),
+        (D+"07-gelistirme/ilan/serbest-gelistirici-ilani.html", "İlan (gönderilebilir)", "Tek sayfa A4: ürün, iki rol, çalışma şekli, seçim, başvuru — PDF'i aynı klasörde", ["basılı"]),
+        (D+"07-gelistirme/ilan/serbest-gelistirici-ilani.pdf", "İlan — PDF", "Yazdırmaya/göndermeye hazır", ["basılı"]),
         (D+"07-gelistirme/06-ilk-gun-paketi.md", "Geliştirici ilk gün paketi", "Hesaplar, ortam, okuma sırası, ilk hafta spike'ları, çalışma kuralları, ritim, sağlayıcı soruları", ["kaynak"]),
         (D+"07-gelistirme/05-sprint0-ve-teknik-spike.md", "Sprint 0 ve teknik spike'lar", "Takvim (kritik yol), ekip seçenekleri, 2 haftalık plan, dört spike: çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS; DoD", ["kaynak"]),
         (D+"07-gelistirme/sablonlar/subeler.xlsx", "İçe aktarma: subeler.xlsx", "Kurulum sihirbazı adım 1 — şube listesi şablonu (örnek satır + Açıklama sayfası)", ["dosya"]),
@@ -139,6 +142,7 @@ REGISTRY = [
         (D+"adr/0006-whatsapp-mvp-disi.md", "ADR-0006 WhatsApp MVP dışı", "Push + SMS yedek; kanal-bağımsız bildirim", []),
         (D+"adr/0007-kisi-skoru-yok.md", "ADR-0007 Kişi skoru yok", "Skor şube düzeyinde", []),
         (D+"adr/0008-v1-cekirdek.md", "ADR-0008 v1 çekirdek", "Basit, ilk gün kullanılabilir çekirdek; K1–K21, E1–E7", []),
+        (D+"adr/0009-ekip-modeli-serbest-gelistirici.md", "ADR-0009 Ekip modeli: iki serbest geliştirici", "Seçenek A; Sprint 2 sonu devam/dur kapısı; hedef başlangıç 5 Ekim", []),
     ]),
 ]
 
@@ -359,7 +363,7 @@ def stats():
     br = len(re.findall(r"^- \*\*BR-\d+", read(D + "04-gereksinimler/03-is-kurallari.md"), flags=re.M))
     st = len(set(re.findall(r"^\| (ST-\d{3})", read(D + "07-gelistirme/03-backlog-ve-sprint-plani.md"), flags=re.M)))
     return [
-        ("8", "ADR karar kaydı"),
+        ("9", "ADR karar kaydı"),
         (str(count_ids(D + "02-urun/04-yetenek-haritasi.md", "CAP")), "yetenek (CAP)"),
         (str(count_ids(D + "03-analiz/02-usecase-katalogu.md", "UC")), "use case"),
         (str(len(re.findall(r"^## S-\d+", read(D + "03-analiz/04-senaryolar.md"), flags=re.M))), "uçtan uca senaryo"),
@@ -689,7 +693,8 @@ li.task{list-style:none;margin-left:-22px;display:flex;gap:8px;align-items:flex-
         <li><input type="checkbox" id="t6"><label for="t6">Hukuk incelemesi: LOI 7. maddesi + aydınlatma metni ve veri işleme sözleşmesi taslakları (sekiz soru hazır)<span class="why">04-gereksinimler/hukuki — pilot kurulumundan (7. hafta) önce; ~2 saat avukat</span></label></li>
         <li><input type="checkbox" id="t7"><label for="t7">Blok 8 prototipini telefonda baştan sona dene (PIN → liste → aralık dışı → yapılamadı → gönder → sabah özeti)</label></li>
         <li><input type="checkbox" id="t8"><label for="t8">İkinci görüşmeci / not tutan kişiyi belirle<span class="why">Sprint planı roller; yoksa izinle kayıt + aynı gün not</span></label></li>
-        <li><input type="checkbox" id="t9"><label for="t9">Geliştirme ekibi kararı (A serbest / C teknik ortak) ve ilk iki kişi<span class="why">07-gelistirme/05: Sprint 0 28 Eylül'de başlamazsa pilot kayar; ilk gün paketi hazır</span></label></li>
+        <li><input type="checkbox" id="t9"><label for="t9">İlanı yayınla (LinkedIn, topluluklar, tanıdık tavsiyesi) ve 25–30 Eylül görüşmelerini planla<span class="why">07-gelistirme/07 + ilan/ PDF; mini görev ücreti bütçesi ₺3–5 bin × 3–4 aday; Sprint 0 hedefi 5 Ekim</span></label></li>
+        <li><input type="checkbox" id="t10"><label for="t10">Gün 0 hazırlığı: GitHub organizasyonu ve depolar, Projects panosu, sözleşme + NDA, sağlayıcı hesapları (Apple/Google mağaza başvuruları erken), alan adı<span class="why">06-ilk-gun-paketi "Gün 0" listesi</span></label></li>
       </ul>
       <h3 style="margin-top:28px">Henüz başlamadı</h3>
       <ul style="max-width:80ch">

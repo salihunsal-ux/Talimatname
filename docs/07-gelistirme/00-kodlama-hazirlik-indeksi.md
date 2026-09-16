@@ -56,7 +56,8 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 
 ## Sprint 0 için ek
 
-- [06-ilk-gun-paketi.md](06-ilk-gun-paketi.md) — geliştiriciye gönderilecek ilk gün/ilk hafta paketi (hesaplar, ortam, okuma, spike, çalışma kuralları, ritim).
+- [06-ilk-gun-paketi.md](06-ilk-gun-paketi.md) — geliştiriciye gönderilecek ilk gün/ilk hafta paketi (gün 0 kurucu listesi, e-posta şablonu, hesaplar, ortam, okuma, spike, çalışma kuralları, ritim).
+- [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md) — ilan, görüşme soruları, ücretli mini görevler ve rubrik, sözleşme başlıkları; gönderilebilir ilan [ilan/](ilan/serbest-gelistirici-ilani.html).
 
 - [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md) — takvim (kritik yol), ekip seçenekleri, 2 haftalık Sprint 0 takvimi, dört teknik spike (çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS) ve DoD.
 - [sablonlar/](sablonlar/) — kurulum sihirbazının içe aktarma dosyaları: `subeler.xlsx`, `personel.xlsx` (doğrulama kuralları "Açıklama" sayfasında; `build_sablonlar.py` üretir).

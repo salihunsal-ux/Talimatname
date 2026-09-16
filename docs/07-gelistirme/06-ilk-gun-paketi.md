@@ -1,12 +1,28 @@
 # Geliştirici ilk gün paketi
 
-Sprint 0'a katılan geliştiriciye gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
+Ekip modeli: iki serbest geliştirici (ADR-0009, seçenek A); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md). Bu belge sözleşme imzalanan iki geliştiriciye Sprint 0'ın ilk günü (hedef 5 Ekim 2026) gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
 
 ## Hoş geldin: 5 cümlede ürün
 
 Talimatname, çok şubeli yeme-içme zincirlerinin şubelere verdiği tekrarlı talimatları (açılış, kapanış, hijyen, soğuk zincir) WhatsApp gruplarından çıkarıp kanıtlı ve raporlanabilir hâle getirir. Personel listeyi şube tabletinden veya telefondan tamamlar, fotoğraf ve ölçümle kanıtlar, yapamadığını sebebiyle bildirir. Sistem pencereyi izler, kaçırılanı ve kritik olanı bildirir; yönetici her sabah istisna odaklı bir ızgara, sabah özeti ve doğrulama kodlu PDF ile görür. İlk sürüm bilerek küçük: 4 rol, 6 madde türü, tek sabit kural, sabit eskalasyon (ADR-0008). Kişi puanı yok, WhatsApp yok, biyometri yok.
 
 Ürünü 10 dakikada görmek için: [Blok 8 prototipi](../05-tasarim/05-prototip/blok8-prototip.html) (personel + şube müdürü), [yönetici web prototipi](../05-tasarim/05-prototip/yonetici-web-prototip.html), [örnek çalıştırma PDF'i](../05-tasarim/06-kanit-raporu/01-calistirma-raporu.html). Üçü aynı Kadıköy senaryosunu anlatır.
+
+## Gün 0 — kurucunun hazırlığı (paket gönderilmeden önce)
+
+- [ ] GitHub organizasyonu `talimatname`: `Talimatname` (bu depo, okuma), `talimatname-api`, `talimatname-mobile`, `talimatname-web`, `talimatname-infra` (boş, dal koruması açık); iki geliştirici davet edilmiş
+- [ ] GitHub Projects panosu: S0 kontrol listesi + S1–S2 hikâyeleri (03-backlog) kart olarak yüklü
+- [ ] Sözleşme + NDA + KVKK taahhüdü imzalı (07 §7); mini görev ücretleri ödenmiş
+- [ ] Sağlayıcı hesapları: TR bulut deneme hesabı, SMS sağlayıcı test hesabı, Firebase projesi, Apple Developer ve Google Play (şirket adına — başvuru günler sürer, erken başlayın), e-posta gönderim servisi
+- [ ] Alan adı alınmış (`talimatname.app` → `staging.talimatname.app`) — 03-isim-ve-marka bekleyen iş
+- [ ] Takvim davetleri: her gün 10:00 15 dk; 5 Ekim 11:00 Sprint 0 açılışı (1 saat); 16 Ekim Sprint 0 gözden geçirme
+- [ ] Bu paketi e-postayla gönder (aşağıdaki şablon) — cuma, ilk günden önce
+
+## Gönderim e-postası (şablon)
+
+> Konu: Talimatname — ilk gün paketi (5 Ekim)
+>
+> Merhaba [ad], Pazartesi başlıyoruz. Ekte/aşağıda ilk gün paketi var; okuma sırası ve ortam kurulumu orada. GitHub organizasyonuna davetiniz gitti; `Talimatname` deposu ürün belgeleridir, `docs/07-gelistirme/06-ilk-gun-paketi.md` ile başlayın. Sizin spike'ınız: [Backend: B ve D · Mobil: A ve C] — `docs/07-gelistirme/05-sprint0-ve-teknik-spike.md` §4. Pazartesi 11:00'de 1 saatlik açılışta ürünü prototipler üzerinden anlatacağım; 10:00 günlükleri Salı başlar. Sorular için bana yazın; 24 saat içinde dönerim. — [kurucu]
 
 ## 1. gün
 

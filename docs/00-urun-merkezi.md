@@ -24,6 +24,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | WhatsApp | MVP dışı; push + SMS yedek | [ADR-0006](adr/0006-whatsapp-mvp-disi.md) |
 | Kişi skoru | Yok; şube düzeyinde skor, kişi düzeyinde yalnızca gecikme/eksik görünümü | [ADR-0007](adr/0007-kisi-skoru-yok.md) |
 | Teknoloji | Flutter mobil, React web, Python/FastAPI, PostgreSQL, S3 uyumlu depolama | [ADR-0002](adr/0002-mobil-flutter-web-react.md), [Teknik mimari](07-gelistirme/01-teknik-mimari.md) |
+| Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; Sprint 2 sonu devam/dur kapısı; Sprint 0 başlangıcı 5 Ekim | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
 | Barındırma | Türkiye'de yerel bulut (pilot BT şartlarına göre AB + standart sözleşme seçeneği) | [ADR-0003](adr/0003-veri-tr-barindirma.md) |
 | Kanıt bütünlüğü | Sunucu zamanı, dosya hash'i, ekle-yalnız olay günlüğü (hash zinciri) | [ADR-0004](adr/0004-kanit-butunlugu-hash-zinciri.md) |
 | Tekrar kuralları | RRULE (RFC 5545) + pencere kavramı; gece yarısını aşan pencere aynı iş günü | [ADR-0005](adr/0005-tekrar-kurallari-rrule.md) |
@@ -37,7 +38,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. Barındırma: TR bulut vs AB + standart sözleşme (pilotların BT şartı)
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
-7. Geliştirme ekibi (serbest / yazılım evi / teknik ortak) — Sprint 0'ın 28 Eylül'de başlaması için bu hafta ([07-gelistirme/05](07-gelistirme/05-sprint0-ve-teknik-spike.md))
+7. ~~Geliştirme ekibi~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)); açık kalan: seçim (ilan 17 Eylül → teklif 30 Eylül) ve Sprint 2 sonu devam/dur kapısı
 
 ## Belge navigasyonu (okuma sırası)
 
@@ -47,7 +48,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. Gereksinimler: [Fonksiyonel](04-gereksinimler/01-fonksiyonel-gereksinimler.md) → [Fonksiyonel olmayan](04-gereksinimler/02-fonksiyonel-olmayan.md) → [İş kuralları](04-gereksinimler/03-is-kurallari.md) → [Veri modeli](04-gereksinimler/04-veri-modeli.md) → [API taslağı](04-gereksinimler/05-api-taslagi.md) → [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md) → [Hukuki metin taslakları](04-gereksinimler/hukuki/README.md) (aydınlatma, veri işleme sözleşmesi; avukat incelemesi bekliyor)
 5. Tasarım: [Ekran envanteri ve navigasyon](05-tasarim/01-ekran-envanteri-ve-navigasyon.md) → [Mobil ekranlar](05-tasarim/02-mobil-ekranlar.html) → [Web ekranlar](05-tasarim/03-web-ekranlar.html) → [Tasarım sistemi](05-tasarim/04-tasarim-sistemi.md) → [Blok 8 prototipi](05-tasarim/05-prototip/README.md) → [Kanıt raporu örnekleri](05-tasarim/06-kanit-raporu/README.md) (çalıştırma PDF'i, aylık özet, sıcaklık günlüğü)
 6. Test: [Strateji](06-test/01-test-stratejisi.md) → [Kabul test senaryoları](06-test/02-kabul-test-senaryolari.md) → [Test verisi ve ortam](06-test/03-test-verisi-ve-ortam.md) → [Cihaz matrisi](06-test/04-cihaz-matrisi.md) → [Pilot UAT](06-test/05-pilot-uat-plani.md)
-7. Geliştirme: [Kodlama hazırlık indeksi](07-gelistirme/00-kodlama-hazirlik-indeksi.md) → [Teknik mimari](07-gelistirme/01-teknik-mimari.md) → [Repo ve ortam](07-gelistirme/02-repo-ve-ortam-kurulumu.md) → [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) → [DoR/DoD](07-gelistirme/04-tanimlar-dor-dod.md) → [Sprint 0 ve teknik spike'lar](07-gelistirme/05-sprint0-ve-teknik-spike.md) → [İlk gün paketi](07-gelistirme/06-ilk-gun-paketi.md) → [İçe aktarma şablonları](07-gelistirme/sablonlar/)
+7. Geliştirme: [Kodlama hazırlık indeksi](07-gelistirme/00-kodlama-hazirlik-indeksi.md) → [Teknik mimari](07-gelistirme/01-teknik-mimari.md) → [Repo ve ortam](07-gelistirme/02-repo-ve-ortam-kurulumu.md) → [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) → [DoR/DoD](07-gelistirme/04-tanimlar-dor-dod.md) → [Sprint 0 ve teknik spike'lar](07-gelistirme/05-sprint0-ve-teknik-spike.md) → [Serbest geliştirici seçimi](07-gelistirme/07-serbest-gelistirici-secimi.md) → [İlk gün paketi](07-gelistirme/06-ilk-gun-paketi.md) → [İçe aktarma şablonları](07-gelistirme/sablonlar/)
 
 ## Kimlik şeması (izlenebilirlik)
 

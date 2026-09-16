@@ -14,7 +14,7 @@ Doğrulama sprinti pilotu 9–12. haftada hazırlar ve **K3'ü yazılım Alfa'ya
 
 Sonuç: **Sprint 0 bu iki hafta içinde başlamazsa pilot kayar.** Fizibilite modeli lansmanı 6. ayda varsayar (Baz); üçüncü satır 7–8. aya denk gelir — kabul edilebilir ama tampon biter. Öneri: Sprint 0'ı K1'i beklemeden başlatmak, ancak **Sprint 2 sonunda (K1 raporu elde) devam/dur kararı** koymak: K1 geçmezse geliştirme durur, harcanan iki sprint spike + iskelet olur (yeniden kullanılabilir).
 
-## 2. Ekip kararı (kullanıcı)
+## 2. Ekip kararı — **A seçildi** (ADR-0009, 16 Eylül); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md), ilan [ilan/](ilan/serbest-gelistirici-ilani.html). Hedef başlangıç 5 Ekim (doğrulama haftası 3).
 
 | Seçenek | Aylık maliyet (tahmin) | Artı | Eksi | Ne zaman uygun |
 |---|---|---|---|---|
@@ -80,7 +80,7 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 
 | Ne | Kim | Ne zaman |
 |---|---|---|
-| Ekip seçeneği (A/B/C) ve ilk iki kişinin başlaması | Kurucu | Bu hafta — Sprint 0'ın 28 Eylül'de başlaması için |
+| ~~Ekip seçeneği~~ A seçildi; ilan 17 Eylül, seçim 30 Eylül, başlangıç 5 Ekim | Kurucu | Bu hafta ilan; 30 Eylül teklif |
 | Spike sonuçlarına göre ADR güncellemeleri | Ekip + PO | Sprint 0 gün 9 |
 | Devam/dur kapısı: K1 raporu + Sprint 2 sonu | Kurucu | Doğrulama haftası 4–6 |
 | Sağlayıcı seçimleri (TR bulut, SMS, push) | Backend + PO | Sprint 0 gün 7 |
