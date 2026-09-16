@@ -27,6 +27,7 @@ LIVE = {
     "docs/05-tasarim/marka/Main.dc.html": "https://claude.ai/code/artifact/96cf8183-a732-4988-acd2-731b83545950",
     "docs/05-tasarim/05-prototip/blok8-prototip.html": "https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69",
     "docs/05-tasarim/05-prototip/yonetici-web-prototip.html": "https://claude.ai/code/artifact/96276ca2-4d59-49b2-8bb2-50ec77e394f5",
+    "docs/05-tasarim/07-brosur/talimatname-brosur.html": "https://claude.ai/artifact/3LpwvVXZczJMNLqnKrBVn2",
 }
 
 # (yol, başlık, açıklama, etiketler) — tür uzantıdan: .md gömülü, .py/.txt kod, .html çerçeve, diğer bağlantı
@@ -101,6 +102,14 @@ REGISTRY = [
         (D+"05-tasarim/06-kanit-raporu/02-aylik-ozet.pdf", "Aylık özet — PDF dosyası", "Yazdırmaya hazır A4, 1 sayfa", ["basılı"]),
         (D+"05-tasarim/06-kanit-raporu/03-sicaklik-gunlugu.pdf", "Sıcaklık günlüğü — PDF dosyası", "Yazdırmaya hazır A4, 1 sayfa", ["basılı"]),
         (D+"05-tasarim/06-kanit-raporu/build_reports.py", "Rapor üretici (build_reports.py)", "Üç örneği ve PDF'lerini üretir (Edge headless)", ["betik"]),
+        (D+"05-tasarim/07-brosur/README.md", "Broşür — kullanım notu", "Ne zaman verilir (Blok 8 sonrası, LOI turu), dosyalar, doldurulacak alanlar, fiyat neden yok", []),
+        (D+"05-tasarim/07-brosur/talimatname-brosur.html", "Tanıtım broşürü (A4, 2 sayfa)", "İddia + kapanış ve sıcaklık ekranları + üç adım; merkez görünümü, neden Talimatname, 8 haftalık pilot, iletişim — canlı tuvalde düzenlenebilir", ["kit", "basılı", "canlı sayfa"]),
+        (D+"05-tasarim/07-brosur/talimatname-brosur.pdf", "Broşür — PDF", "Yazdırmaya hazır A4, 2 sayfa", ["basılı"]),
+        (D+"05-tasarim/07-brosur/KioskListe.dc.html", "Ekran tasarımı: kapanış listesi (kiosk)", "Gerçeğe yakın, 390×844; tasarım sistemi token'larıyla", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/Sicaklik.dc.html", "Ekran tasarımı: sıcaklık aralık dışı", "Alt sayfa: kabul aralığı, ± giriş, kritik uyarısı, not, fotoğraf", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/SabahOzeti.dc.html", "Ekran tasarımı: sabah özeti (bölge müdürü)", "Push bildirimi + Bölgem listesi: 12 şubeden 10'u yolunda", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/Pano.dc.html", "Ekran tasarımı: web pano (istisna görünümü)", "1200×760: KPI'lar, dikkat isteyenler tablosu, şube × liste ızgarası", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/build_brosur.py", "Broşür üretici (build_brosur.py)", "Artboard'ları, yazdırma HTML'ini ve PDF'i üretir", ["betik"]),
         (D+"05-tasarim/marka/Main.dc.html", "Marka: Talimatname Mühür sistemi", "Logo artboard'ları (sayfa + mühür işareti, Bitter wordmark)", ["canlı sayfa"]),
         (D+"05-tasarim/marka/YapLutfenA.dc.html", "Marka: yap lütfen A", "İsim testi kartı logo taslağı", []),
         (D+"05-tasarim/marka/YapLutfenB.dc.html", "Marka: yap lütfen B", "İsim testi kartı logo taslağı", []),

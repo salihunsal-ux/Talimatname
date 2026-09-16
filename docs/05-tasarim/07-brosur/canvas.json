@@ -1,0 +1,57 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Broşür · sayfa 1",
+      "x": 0,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "Sayfa2.dc.html",
+      "title": "Broşür · sayfa 2",
+      "x": 900,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "KioskListe.dc.html",
+      "title": "Ekran · kapanış listesi (kiosk)",
+      "x": 0,
+      "y": 1260,
+      "w": 390,
+      "h": 844
+    },
+    {
+      "file": "Sicaklik.dc.html",
+      "title": "Ekran · sıcaklık aralık dışı",
+      "x": 480,
+      "y": 1260,
+      "w": 390,
+      "h": 844
+    },
+    {
+      "file": "SabahOzeti.dc.html",
+      "title": "Ekran · sabah özeti (bölge müdürü)",
+      "x": 960,
+      "y": 1260,
+      "w": 390,
+      "h": 844
+    },
+    {
+      "file": "Pano.dc.html",
+      "title": "Ekran · web pano (istisna görünümü)",
+      "x": 1440,
+      "y": 1260,
+      "w": 1200,
+      "h": 760
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
