@@ -37,6 +37,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. Barındırma: TR bulut vs AB + standart sözleşme (pilotların BT şartı)
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
+7. Geliştirme ekibi (serbest / yazılım evi / teknik ortak) — Sprint 0'ın 28 Eylül'de başlaması için bu hafta ([07-gelistirme/05](07-gelistirme/05-sprint0-ve-teknik-spike.md))
 
 ## Belge navigasyonu (okuma sırası)
 
@@ -46,7 +47,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. Gereksinimler: [Fonksiyonel](04-gereksinimler/01-fonksiyonel-gereksinimler.md) → [Fonksiyonel olmayan](04-gereksinimler/02-fonksiyonel-olmayan.md) → [İş kuralları](04-gereksinimler/03-is-kurallari.md) → [Veri modeli](04-gereksinimler/04-veri-modeli.md) → [API taslağı](04-gereksinimler/05-api-taslagi.md) → [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md)
 5. Tasarım: [Ekran envanteri ve navigasyon](05-tasarim/01-ekran-envanteri-ve-navigasyon.md) → [Mobil ekranlar](05-tasarim/02-mobil-ekranlar.html) → [Web ekranlar](05-tasarim/03-web-ekranlar.html) → [Tasarım sistemi](05-tasarim/04-tasarim-sistemi.md) → [Blok 8 prototipi](05-tasarim/05-prototip/README.md) → [Kanıt raporu örnekleri](05-tasarim/06-kanit-raporu/README.md) (çalıştırma PDF'i, aylık özet, sıcaklık günlüğü)
 6. Test: [Strateji](06-test/01-test-stratejisi.md) → [Kabul test senaryoları](06-test/02-kabul-test-senaryolari.md) → [Test verisi ve ortam](06-test/03-test-verisi-ve-ortam.md) → [Cihaz matrisi](06-test/04-cihaz-matrisi.md) → [Pilot UAT](06-test/05-pilot-uat-plani.md)
-7. Geliştirme: [Kodlama hazırlık indeksi](07-gelistirme/00-kodlama-hazirlik-indeksi.md) → [Teknik mimari](07-gelistirme/01-teknik-mimari.md) → [Repo ve ortam](07-gelistirme/02-repo-ve-ortam-kurulumu.md) → [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) → [DoR/DoD](07-gelistirme/04-tanimlar-dor-dod.md)
+7. Geliştirme: [Kodlama hazırlık indeksi](07-gelistirme/00-kodlama-hazirlik-indeksi.md) → [Teknik mimari](07-gelistirme/01-teknik-mimari.md) → [Repo ve ortam](07-gelistirme/02-repo-ve-ortam-kurulumu.md) → [Backlog ve sprint planı](07-gelistirme/03-backlog-ve-sprint-plani.md) → [DoR/DoD](07-gelistirme/04-tanimlar-dor-dod.md) → [Sprint 0 ve teknik spike'lar](07-gelistirme/05-sprint0-ve-teknik-spike.md) → [İçe aktarma şablonları](07-gelistirme/sablonlar/)
 
 ## Kimlik şeması (izlenebilirlik)
 

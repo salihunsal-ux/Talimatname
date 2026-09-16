@@ -51,6 +51,8 @@ Gizli anahtarlar depoda yok; `.env.example` var; kasa (sağlayıcı KMS veya Vau
 
 ## Sprint 0 kontrol listesi (2 hafta)
 
+Takvim, ekip kararı ve teknik spike'lar: [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md).
+
 - [ ] Depolar açıldı, dal koruması, CODEOWNERS, PR şablonu (DoD kontrol listesi)
 - [ ] `talimatname-api`: iskelet (FastAPI, Alembic, pytest), `audit.emit()` altyapısı, RLS politikası, OpenAPI yayını
 - [ ] `talimatname-mobile`: iskelet (Riverpod, Drift, üretilmiş istemci, tema token'ları 05-tasarim/04)

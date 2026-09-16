@@ -121,6 +121,10 @@ REGISTRY = [
         (D+"07-gelistirme/02-repo-ve-ortam-kurulumu.md", "Repo ve ortam kurulumu", "Kod depoları, CI, ortamlar, sırlar, kalite kapıları", []),
         (D+"07-gelistirme/03-backlog-ve-sprint-plani.md", "Backlog ve sprint planı", "EP-01…12, 112 hikâye, S1–S10 (Alfa S6, Beta S8, GA S10), tampon S11–S12, v1.1 listesi", []),
         (D+"07-gelistirme/04-tanimlar-dor-dod.md", "DoR / DoD", "Hazır ve bitti tanımları", []),
+        (D+"07-gelistirme/05-sprint0-ve-teknik-spike.md", "Sprint 0 ve teknik spike'lar", "Takvim (kritik yol), ekip seçenekleri, 2 haftalık plan, dört spike: çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS; DoD", ["kaynak"]),
+        (D+"07-gelistirme/sablonlar/subeler.xlsx", "İçe aktarma: subeler.xlsx", "Kurulum sihirbazı adım 1 — şube listesi şablonu (örnek satır + Açıklama sayfası)", ["dosya"]),
+        (D+"07-gelistirme/sablonlar/personel.xlsx", "İçe aktarma: personel.xlsx", "Kurulum sihirbazı adım 4 — personel ve roller şablonu (örnek satırlar + Açıklama sayfası)", ["dosya"]),
+        (D+"07-gelistirme/sablonlar/build_sablonlar.py", "Şablon üretici (build_sablonlar.py)", "İki Excel şablonunu üretir (openpyxl)", ["betik"]),
     ]),
     ("Karar kayıtları (ADR)", [
         (D+"adr/0001-calisma-adi-talimatname.md", "ADR-0001 Çalışma adı: Talimatname", "İsim değerlendirmesi ve geçici karar", []),
@@ -308,6 +312,7 @@ OPEN_NOTES = [
     (r"franchise", "Sinyal: <code>franchise_bayi_gorsun</code> cevapları ve franchise ağırlıklı 4 görüşme. Varsayılan: bayi sahibi kendi şubesini şube müdürü yetkisiyle görür; ayrı “Gözlemci” rolü v1.1."),
     (r"barındırma", "Sinyal: <code>barindirma_sarti</code> sayımı (TR sunucu / on-premise / sözleşme yeter / şart yok). Varsayılan ADR-0003: Türkiye'de yerel bulut; “AB + standart sözleşme yeter” çoğunluksa ikinci bölge seçeneği açılır."),
     (r"prob", "Sinyal: <code>prob_talebi</code> oranı ve sıcaklık defteri gözlemi (kaç ekipman, hangi alet). v1'de manuel giriş; görüşmelerin ≥ 1/3'ü isterse v1.1'e Should olarak girer."),
+    (r"ekip", "Sinyal: K1 öncesi başlamak riskli ama beklemek pilotu kaydırır (07-gelistirme/05 §1). Öneri: seçenek A veya C ile Sprint 0'ı 28 Eylül'de başlat; Sprint 2 sonunda K1 raporuyla devam/dur kapısı."),
     (r"marka adı|isim", "Sinyal: isim testi kartları (<code>isim_tercihi</code> sayımı; Talimatname her görüşmede masada). Karar 9–12. haftada ADR ile; alan adları 12 Eylül'de 4/4 boştu — karar günü kapatılır."),
 ]
 

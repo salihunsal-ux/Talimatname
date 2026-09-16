@@ -53,3 +53,9 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - **Silme var mı?** Yok; durum/maskeleme. Yalnızca nesne depodaki dosya saklama/KVKK ile silinir (BR-21, BR-22).
 - **Kişi skoru?** Yok, ADR-0007; kişi düzeyi yalnızca gecikme/eksik listesi.
 - **WhatsApp?** MVP dışı; bildirim servisi kanal-bağımsız (ADR-0006).
+
+## Sprint 0 için ek
+
+- [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md) — takvim (kritik yol), ekip seçenekleri, 2 haftalık Sprint 0 takvimi, dört teknik spike (çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS) ve DoD.
+- [sablonlar/](sablonlar/) — kurulum sihirbazının içe aktarma dosyaları: `subeler.xlsx`, `personel.xlsx` (doğrulama kuralları "Açıklama" sayfasında; `build_sablonlar.py` üretir).
+
