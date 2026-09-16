@@ -45,6 +45,7 @@ REGISTRY = [
         (D+"01-strateji/fizibilite-modeli/build_report.py", "Rapor üretici (build_report.py)", "results.json → fizibilite raporu HTML", ["betik"]),
         (D+"01-strateji/fizibilite-modeli/results.json", "Model sonuçları (results.json)", "Modelin ham sonuç dosyası", []),
         (D+"01-strateji/02-pilot-gorusme-rehberi.html", "Pilot görüşme rehberi", "Görüşme soru blokları, örneklem karışımı, isim ve fiyat testi, gözlem listesi, puanlama rubriği", ["canlı sayfa"]),
+        (D+"01-strateji/04-buyume-firsatlari.md", "Büyüme fırsatları ve boşluklar", "Park listesi: ARPU artıran modüller (sensör, denetim formu, franchise kütüphanesi…), yeni segmentler, gelir kalemleri, kanallar, rakiplere göre boşluklar; K/R/E puanı ve tetikleyici sinyaller", ["park"]),
         (D+"01-strateji/03-isim-ve-marka.md", "İsim ve marka", "Aday isimler, alan adı sorguları (RDAP/TRABIS), marka sistemi, bekleyen işler", []),
         (D+"01-strateji/dogrulama-sprinti/00-sprint-plani.md", "Doğrulama sprinti planı", "12 hafta; K1/K2/K3 kapıları, haftalık plan ve ritim, örneklem dengesi, roller, riskler, bütçe", ["kit"]),
         (D+"01-strateji/dogrulama-sprinti/01-hedef-liste.md", "Hedef zincir listesi", "23 birincil aday (5–100 şube) + ikinci dalga (100+); kutu/format/model etiketli; kişi bilgisi yok", ["kit"]),
