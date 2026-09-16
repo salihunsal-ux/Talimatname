@@ -50,10 +50,13 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | Ş-3 | Madde ayarları | zorunlu · fotoğraf zorunlu · kritik · sıcaklık aralığı. Ağırlık, istasyon bağı, ipucu | v1 (diğerleri v1.1) |
 | Ş-4 | Koşullu mantık | Tek sabit kural | v1 sabit; editör v1.1 |
 | Ş-5 | Puanlama | Yüzde; başarısız = kritik | v1 sabit; ağırlık/eşik v1.1 |
-| Ş-6 | Kütüphane | 8 şablon, kopyala-düzenle | v1 (30'a genişleme v1.1) |
+| Ş-6 | Kütüphane | 8 şablon, kopyala-düzenle; maddeler şablonun içinde | v1 (madde kütüphanesi ve paketler v1.1 — E-8/E-9, ADR-0010) |
 | Ş-7 | Şube türü varyantı | — | v1.1 |
 | Ş-8 | SOP/PDF'ten AI taslak | — | v1.1 |
 | Ş-9 | Formül, kaydırıcı, tekrarlanan bölüm | — | v2 |
+| E-8 | Madde kütüphanesi | Sürümlü, etiketli kütüphane maddeleri; editörde "kütüphaneden ekle"; hesap kütüphanesi; kaynak takibi ve güncelleme bandı (FR-0313…0316) | v1.1 (veri modeli alanları v1'de boş) |
+| E-9 | İşletme türü paketleri | Kafe / hızlı servis / restoran / fırın-pastane paketleri; sihirbazda tür seçimi; hesap içi set uygulama (FR-0317, 0318) | v1.1 |
+| E-10 | Marka kütüphanesi (franchise) ve başka dikey paketleri | Merkez standart setini bayilere dağıtır; perakende/eczane/spor salonu paketleri | v2 |
 
 ## M3 · Planlama
 

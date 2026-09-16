@@ -27,6 +27,7 @@ ADR-0008 ile yeniden çizildi (13 Eylül 2026). Epic = yetenek (CAP). Hikâye = 
 | EP-10 | Hash zinciri, KVKK süreçleri, güvenlik temel | CAP-13 | S9 |
 | EP-11 | Sertleştirme, performans, GA | — | S10 |
 | EP-12 | v1.1 | CAP-11, 15–18 ve ertelenenler | S11+ |
+| EP-13 | Madde kütüphanesi ve işletme türü paketleri (v1.1 ilk sıra, ADR-0010) | CAP-20 | S11–S12 |
 
 ## Sprint planı ve hikâyeler
 
@@ -194,6 +195,7 @@ Pilot bulguları önce. Kalan kapasite v1.1 sırasına göre (aşağıdaki liste
 
 | Sıra | Konu | ST'ler | FR |
 |---|---|---|---|
+| 0 | **Madde kütüphanesi ve paketler** (EP-13): ST-147 kütüphane maddesi varlığı + tohum (JSON içerik) · ST-148 editörde kütüphaneden ekle / hesap kütüphanesine kaydet · ST-149 kaynak takibi ve güncelleme bandı · ST-150 işletme türü paketleri + sihirbaz adımı · ST-151 hesap içi set uygulama; içerik: 200–300 madde, 4 paket (PO + kalite danışmanı, S8'den itibaren) | ST-147…151 | FR-0313…0318 |
 | 1 | Duyuru ve onay (+ imza) | ST-114, 115, 116, 125, 095 | FR-1101…1106 |
 | 2 | Koşul editörü ve kural deneme | ST-055, 056 | FR-0401…0404 |
 | 3 | "Herkes tamamlasın" ve madde bazlı kilit | ST-028 (kalan), ST-047 | FR-0508 (kalan), 0609 |

@@ -49,6 +49,12 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0310 | Yayın: hemen veya tarihli; yayınla birlikte hangi planların etkileneceği listelenir. | v1.1 | UC-05 |
 | FR-0311 | Kütüphane (v1): 8 Türkçe yeme-içme şablonu (kapanış, açılış, saatlik tuvalet/hijyen, soğuk zincir, haftalık derin temizlik, yağ değişimi, kasa devri, teslimat kabul); kopyala-düzenle; kütüphane merkezî güncellenir, kopyalar bağımsız. 30'a genişleme v1.1. | v1 | UC-05 |
 | FR-0312 | Yayın doğrulaması: kritik + yapılamadı izinli çelişkisi, boş bölüm, kanıt zorunlu ama tür fotoğraf/video değil → yayın engellenir, açıklama. | v1 | UC-05 |
+| FR-0313 | Kütüphane maddesi: hesaplar arası paylaşılan, sürümlü, etiketli (alan, işletme türü) madde tanımı; önerilen ayarlarla (zorunlu, fotoğraf, kritik, aralık) gelir; yalnızca içerik ekibi düzenler. (E-8) | v1.1 | UC-05 |
+| FR-0314 | Şablon editöründe "kütüphaneden madde ekle": alan / tür / işletme türü filtresi ve arama; eklenen madde kaynak_madde_id ve kaynak_surum taşır; ayarları değiştirilebilir. (E-8) | v1.1 | UC-05 |
+| FR-0315 | Hesap kütüphanesi: zincir kendi maddesini kaydeder, etiketler, diğer şablonlarında yeniden kullanır; yalnızca o hesapta görünür. (E-8) | v1.1 | UC-05 |
+| FR-0316 | Kaynak güncelleme: kütüphane maddesi/şablonu yeni sürüm alınca ilgili hesap şablonlarında bant; fark görünümü; "uygula" yeni taslak sürüm açar, "yoksay" kaydedilir; yayındaki sürüm kendiliğinden değişmez. (E-8) | v1.1 | UC-05 |
+| FR-0317 | İşletme türü paketleri: paket = sıralı şablon seti + varsayılan planlar; sihirbaz adım 2'de tür seçimi paketi önerir; tek şablonla başlama seçeneği korunur. (E-9) | v1.1 | UC-01, UC-05 |
+| FR-0318 | Hesap içi set uygulama: bir şubenin şablon + plan seti başka şube(ler)e tek işlemle uygulanır; çalıştırmalar 7 gün ileri üretilir. (E-9) | v1.1 | UC-06 |
 
 ## CAP-04 · Koşullu mantık
 

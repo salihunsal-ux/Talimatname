@@ -53,10 +53,12 @@ erDiagram
 | KULLANICI | id, hesap_id, ad, telefon (E.164), eposta?, pin_hash?, sifre_hash?, totp_gizli?, dil, durum (aktif/pasif/maskeli), aydinlatma_onay (sürüm, zaman), konum_izni, olusturma | FR-0107, FR-1307 |
 | ROL_ATAMA | kullanici_id, rol (enum), kapsam_turu (hesap/bölge/şube), kapsam_id | FR-0205 |
 | GRUP | id, hesap_id, ad, kural (JSON: rol/bölge/şube/istasyon/şube_türü) | FR-0206, dinamik |
-| SABLON | id, hesap_id, ad, kategori, kutuphane_kaynak_id?, durum | |
+| SABLON | id, hesap_id, ad, kategori, kutuphane_kaynak_id?, kutuphane_kaynak_surum? (v1.1), isletme_turu? (v1.1), durum | |
+| KUTUPHANE_MADDESI (v1.1) | id, surum, baslik, tur, alan (enum), isletme_turleri (JSON), onerilen_ayarlar (JSON), min?, maks?, birim?, ipucu, mevzuat_notu, degisiklik_notu, durum | FR-0313 |
+| PAKET (v1.1) | id, isletme_turu, ad, sablon_kaynak_idleri (JSON sıralı), varsayilan_planlar (JSON), surum | FR-0317 |
 | SABLON_SURUM | id, sablon_id, surum_no, durum (taslak/yayında/arşiv), ayarlar (yalnızca_kamera, tolerans_varsayilan, sebep_seti_id, esik, gozden_gecirme), yayin_zamani, olusturan | FR-0301 |
 | BOLUM | id, sablon_surum_id, sira, baslik | |
-| MADDE | id, bolum_id, sira, tur (enum), baslik, ipucu, zorunlu, kanit_zorunlu, agirlik, kritik, yapilamadi_izinli, istasyon_turu?, secenekler (JSON), birim, min, maks, medya (talimat için) | FR-0303, FR-0304 |
+| MADDE | id, bolum_id, sira, tur (enum), baslik, ipucu, zorunlu, kanit_zorunlu, agirlik, kritik, yapilamadi_izinli, istasyon_turu?, secenekler (JSON), birim, min, maks, medya (talimat için), kaynak_madde_id? (v1.1), kaynak_surum? (v1.1), degistirildi (v1.1) | FR-0303, FR-0304 |
 | KURAL | id, madde_id, kosul (JSON: op, değer), eylemler (JSON dizi: tür + parametre) | FR-0401 |
 | YANIT_SETI | id, hesap_id, ad, secenekler (JSON: etiket, geçer/geçmez) | |
 | SEBEP_SETI | id, hesap_id, ad, sebepler (JSON) | FR-0802 |

@@ -23,11 +23,12 @@ Kaynak: [v1 çekirdek kapsamı](06-v1-cekirdek-kapsam.md) (ADR-0008). Yetenek (C
 | CAP-17 | Gözden geçirme ve imza | — | Tamamı | v1.1 | UC-20 |
 | CAP-18 | Planlı raporlar ve API | Sabah özeti (E-5, CAP-09'da) | Salt okunur API; webhook | v1.1 | UC-15 |
 | CAP-19 | v2 adayları | — | SSO; formül/kaydırıcı; özel aksiyon tipleri; pano oluşturucu; PDKS/POS/İK | v2 | — |
+| CAP-20 | Madde kütüphanesi ve işletme türü paketleri | Veri modeli alanları (boş); 8 şablon içeriği | Kütüphane maddesi (sürümlü, etiketli), editörde kütüphaneden ekle, hesap kütüphanesi, kaynak güncelleme bandı, işletme türü paketleri, hesap içi set uygulama ([ADR-0010](../adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi.md](08-madde-kutuphanesi.md)); v2: başka dikeyler, marka kütüphanesi (franchise) | v1.1 | UC-05, UC-01 |
 
 ## Sürüm dilimi
 
 - **v1 (GA, 10. sprint):** CAP-01…CAP-10 (v1 içerikleri), CAP-12, CAP-13, CAP-14.
-- **v1.1 (pilot geri bildirimiyle sıralanır):** CAP-11, CAP-15, CAP-17, CAP-18 ve yukarıdaki "v1.1'e bırakılan" sütunu. Aday sıra: duyuru/onay → koşul editörü → herkes tamamlasın → aksiyon yorumları/onayı → raporlar → denetim izi ekranı + TSA → KVKK ekranı → 2FA → ayarlar → Excel/paylaşım → video/imza/barkod → QR → gruplar → varyant → AI.
+- **v1.1 (pilot geri bildirimiyle sıralanır):** CAP-20 (ilk epic, ADR-0010), CAP-11, CAP-15, CAP-17, CAP-18 ve yukarıdaki "v1.1'e bırakılan" sütunu. Aday sıra: madde kütüphanesi ve paketler → duyuru/onay → koşul editörü → herkes tamamlasın → aksiyon yorumları/onayı → raporlar → denetim izi ekranı + TSA → KVKK ekranı → 2FA → ayarlar → Excel/paylaşım → video/imza/barkod → QR → gruplar → varyant → AI.
 - **v2:** CAP-19.
 
 ## Kapsam dışı (bilinçli)

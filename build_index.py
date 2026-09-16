@@ -66,6 +66,7 @@ REGISTRY = [
         (D+"02-urun/04-yetenek-haritasi.md", "Yetenek haritası", "CAP-01…19 yetenekler, v1/v1.1 sürümleri, aktör ve UC bağları", []),
         (D+"02-urun/05-v1-cekirdek-gozden-gecirme.md", "v1 çekirdek — aktör gözüyle gözden geçirme", "Altı aktörün gözüyle inceleme; K1–K21 kesinti, E1–E7 ekleme; sıra ilkesi", []),
         (D+"02-urun/06-v1-cekirdek-kapsam.md", "v1 çekirdek kapsamı", "Kapsamın tek kaynağı: sabitler tablosu ve M1–M9 satırları (v1 / v1.1 / v2)", ["kaynak"]),
+        (D+"02-urun/08-madde-kutuphanesi.md", "Madde kütüphanesi ve paketler (v1.1)", "Kavramlar, Selin'in akışları, içerik planı (200–300 madde, 4 paket), kaynak takibi ve güncelleme bandı, aşamalar, FR-0313…0318", ["v1.1"]),
         (D+"02-urun/07-sablon-kutuphanesi.md", "Şablon kütüphanesi (8 şablon)", "Kapanış, açılış, saatlik hijyen, soğuk zincir, haftalık temizlik, yağ, kasa devri, teslimat kabul — madde madde; taslak, sahada doğrulanır", ["kit", "taslak"]),
     ]),
     ("03 Analiz", [
@@ -152,6 +153,7 @@ REGISTRY = [
         (D+"adr/0007-kisi-skoru-yok.md", "ADR-0007 Kişi skoru yok", "Skor şube düzeyinde", []),
         (D+"adr/0008-v1-cekirdek.md", "ADR-0008 v1 çekirdek", "Basit, ilk gün kullanılabilir çekirdek; K1–K21, E1–E7", []),
         (D+"adr/0009-ekip-modeli-serbest-gelistirici.md", "ADR-0009 Ekip modeli: iki serbest geliştirici", "Seçenek A; Sprint 2 sonu devam/dur kapısı; hedef başlangıç 5 Ekim", []),
+        (D+"adr/0010-madde-kutuphanesi-v1-1.md", "ADR-0010 Madde kütüphanesi ve paketler: v1.1", "v1 değişmez; madde kütüphanesi, kaynak takibi, işletme türü paketleri v1.1 ilk epic; başka dikeyler ve marka kütüphanesi v2", []),
     ]),
 ]
 
@@ -372,7 +374,7 @@ def stats():
     br = len(re.findall(r"^- \*\*BR-\d+", read(D + "04-gereksinimler/03-is-kurallari.md"), flags=re.M))
     st = len(set(re.findall(r"^\| (ST-\d{3})", read(D + "07-gelistirme/03-backlog-ve-sprint-plani.md"), flags=re.M)))
     return [
-        ("9", "ADR karar kaydı"),
+        ("10", "ADR karar kaydı"),
         (str(count_ids(D + "02-urun/04-yetenek-haritasi.md", "CAP")), "yetenek (CAP)"),
         (str(count_ids(D + "03-analiz/02-usecase-katalogu.md", "UC")), "use case"),
         (str(len(re.findall(r"^## S-\d+", read(D + "03-analiz/04-senaryolar.md"), flags=re.M))), "uçtan uca senaryo"),
