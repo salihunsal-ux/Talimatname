@@ -80,6 +80,9 @@ REGISTRY = [
         (D+"04-gereksinimler/04-veri-modeli.md", "Veri modeli", "ER diyagramı, tablolar ve alanlar, v1 enum notu", []),
         (D+"04-gereksinimler/05-api-taslagi.md", "API taslağı", "REST uç noktaları, kimlik, senk, kanıt yükleme, v1.1 işaretleri", []),
         (D+"04-gereksinimler/06-kvkk-ve-guvenlik.md", "KVKK ve güvenlik", "Roller (sorumlu/işleyen), aydınlatma, saklama, biyometri yok, güvenlik kontrolleri", []),
+        (D+"04-gereksinimler/hukuki/README.md", "Hukuki metinler — durum ve avukata sorular", "Taslakların durumu, nerede kullanılacağı, sekiz avukat sorusu (m.9 push, hukuki sebep, maskeleme, kiosk onayı, VERBİS, saklama, ihlal süresi)", ["taslak"]),
+        (D+"04-gereksinimler/hukuki/01-aydinlatma-metni-personel.md", "Personel aydınlatma metni (taslak)", "KVKK m.10 tam metin + uygulama içi kısa katman + konum, kamera ve kiosk ekran metinleri", ["taslak"]),
+        (D+"04-gereksinimler/hukuki/02-veri-isleme-sozlesmesi.md", "Veri işleme sözleşmesi (taslak)", "Veri sorumlusu–veri işleyen sözleşmesi; Ek-1 işleme kapsamı, Ek-2 alt işleyenler, Ek-3 tedbirler", ["taslak"]),
     ]),
     ("05 Tasarım", [
         (D+"05-tasarim/01-ekran-envanteri-ve-navigasyon.md", "Ekran envanteri ve navigasyon", "SCR-M / SCR-W envanteri, navigasyon haritası, sürüm sütunu", []),
@@ -121,6 +124,7 @@ REGISTRY = [
         (D+"07-gelistirme/02-repo-ve-ortam-kurulumu.md", "Repo ve ortam kurulumu", "Kod depoları, CI, ortamlar, sırlar, kalite kapıları", []),
         (D+"07-gelistirme/03-backlog-ve-sprint-plani.md", "Backlog ve sprint planı", "EP-01…12, 112 hikâye, S1–S10 (Alfa S6, Beta S8, GA S10), tampon S11–S12, v1.1 listesi", []),
         (D+"07-gelistirme/04-tanimlar-dor-dod.md", "DoR / DoD", "Hazır ve bitti tanımları", []),
+        (D+"07-gelistirme/06-ilk-gun-paketi.md", "Geliştirici ilk gün paketi", "Hesaplar, ortam, okuma sırası, ilk hafta spike'ları, çalışma kuralları, ritim, sağlayıcı soruları", ["kaynak"]),
         (D+"07-gelistirme/05-sprint0-ve-teknik-spike.md", "Sprint 0 ve teknik spike'lar", "Takvim (kritik yol), ekip seçenekleri, 2 haftalık plan, dört spike: çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS; DoD", ["kaynak"]),
         (D+"07-gelistirme/sablonlar/subeler.xlsx", "İçe aktarma: subeler.xlsx", "Kurulum sihirbazı adım 1 — şube listesi şablonu (örnek satır + Açıklama sayfası)", ["dosya"]),
         (D+"07-gelistirme/sablonlar/personel.xlsx", "İçe aktarma: personel.xlsx", "Kurulum sihirbazı adım 4 — personel ve roller şablonu (örnek satırlar + Açıklama sayfası)", ["dosya"]),
@@ -682,9 +686,10 @@ li.task{list-style:none;margin-left:-22px;display:flex;gap:8px;align-items:flex-
         <li><input type="checkbox" id="t3"><label for="t3">Alan adlarını kaydet: talimatname.com / .com.tr / .app (+ yedek yaplutfen, tamamlist, tembihle)<span class="why">12 Eylül'de 4/4 boştu; durum günlük değişir</span></label></li>
         <li><input type="checkbox" id="t4"><label for="t4">TÜRKPATENT 9 / 35 / 42 sınıflarında “talimatname” sorgusu; temizse kelime + şekil başvurusu<span class="why">Çevrimiçi sorgu oturum istiyor — kullanıcı yapar</span></label></li>
         <li><input type="checkbox" id="t5"><label for="t5">Sosyal hesap adları: @talimatname (Instagram, LinkedIn, X)</label></li>
-        <li><input type="checkbox" id="t6"><label for="t6">LOI 7. madde (veri ve gizlilik) için 1 saatlik hukuk incelemesi<span class="why">04-loi-sablonu; bedel alanı görüşmeden önce doldurulmaz</span></label></li>
+        <li><input type="checkbox" id="t6"><label for="t6">Hukuk incelemesi: LOI 7. maddesi + aydınlatma metni ve veri işleme sözleşmesi taslakları (sekiz soru hazır)<span class="why">04-gereksinimler/hukuki — pilot kurulumundan (7. hafta) önce; ~2 saat avukat</span></label></li>
         <li><input type="checkbox" id="t7"><label for="t7">Blok 8 prototipini telefonda baştan sona dene (PIN → liste → aralık dışı → yapılamadı → gönder → sabah özeti)</label></li>
         <li><input type="checkbox" id="t8"><label for="t8">İkinci görüşmeci / not tutan kişiyi belirle<span class="why">Sprint planı roller; yoksa izinle kayıt + aynı gün not</span></label></li>
+        <li><input type="checkbox" id="t9"><label for="t9">Geliştirme ekibi kararı (A serbest / C teknik ortak) ve ilk iki kişi<span class="why">07-gelistirme/05: Sprint 0 28 Eylül'de başlamazsa pilot kayar; ilk gün paketi hazır</span></label></li>
       </ul>
       <h3 style="margin-top:28px">Henüz başlamadı</h3>
       <ul style="max-width:80ch">

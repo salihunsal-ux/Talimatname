@@ -1,6 +1,6 @@
 # KVKK ve güvenlik
 
-Talimatname, müşteri (zincir) adına **veri işleyen**dir; zincir **veri sorumlusu**dur. Ürün, veri sorumlusunun yükümlülüklerini (aydınlatma, saklama, silme, erişim) yerine getirebilmesi için araç ve şablon sağlar. Bu belge veri envanteri, rol matrisi, saklama ve güvenlik kontrollerini tanımlar; hukuki metinler (veri işleme sözleşmesi, aydınlatma şablonu) ürün içinde indirilebilir belgeler olarak ayrıca hazırlanır (FR-1312) ve avukat incelemesinden geçer.
+Talimatname, müşteri (zincir) adına **veri işleyen**dir; zincir **veri sorumlusu**dur. Ürün, veri sorumlusunun yükümlülüklerini (aydınlatma, saklama, silme, erişim) yerine getirebilmesi için araç ve şablon sağlar. Bu belge veri envanteri, rol matrisi, saklama ve güvenlik kontrollerini tanımlar; hukuki metinler (veri işleme sözleşmesi, aydınlatma şablonu) ürün içinde indirilebilir belgeler olarak ayrıca hazırlanır (FR-1312) ve avukat incelemesinden geçer — taslaklar ve avukata sorular: [hukuki/](hukuki/README.md).
 
 ## Kişisel veri envanteri
 
@@ -78,7 +78,7 @@ Kapsam: R/RW yetkisi her zaman rol atamasının kapsamıyla (hesap/bölge/şube)
 
 ## Uyum kontrol listesi (GA öncesi)
 
-- [ ] Aydınlatma metni ve veri işleme sözleşmesi avukat onaylı
+- [ ] Aydınlatma metni ve veri işleme sözleşmesi avukat onaylı (taslaklar hazır: hukuki/01, hukuki/02)
 - [ ] VERBİS kaydı (Talimatname şirketi için, eşik değerlendirmesi)
 - [ ] Saklama politikası uygulanıyor ve test edildi (TC-105)
 - [ ] Silme/maskeleme akışı test edildi (TC-104)

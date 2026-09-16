@@ -47,7 +47,7 @@ Taraflar, Sağlayıcı'nın şube talimat listelerini kanıtlı ve kayıtlı hâ
 
 ### 7. Veri ve gizlilik
 
-- Taraflar arasında veri işleme sözleşmesi imzalanır (Zincir veri sorumlusu, Sağlayıcı veri işleyen).
+- Taraflar arasında veri işleme sözleşmesi imzalanır (Zincir veri sorumlusu, Sağlayıcı veri işleyen; taslak: 04-gereksinimler/hukuki/02).
 - Veriler [Türkiye'de / AB'de standart sözleşme ile] barındırılır; biyometrik veri işlenmez; konum yalnızca madde tamamlanma anında tek nokta olarak alınır.
 - Pilot sonunda Zincir talep ederse veriler dışa aktarılır ve 30 gün içinde silinir.
 - Taraflar birbirinin ticari bilgilerini üçüncü kişilerle paylaşmaz; Sağlayıcı, Zincir'in adını yazılı izin olmadan referans olarak kullanmaz.

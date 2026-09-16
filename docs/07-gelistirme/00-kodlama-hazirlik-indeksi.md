@@ -31,8 +31,8 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [x] 112 kabul testi (89 v1, 23 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı
 - [x] Mimari, depolar/CI/ortamlar, v1 sprint planı (GA 10. sprint + 2 tampon), DoR/DoD, 8 ADR
 - [ ] Hi-fi tasarım (F8) — tel-çerçeve yeterli, Sprint 4'e kadar hi-fi gerekli (kamera ve madde bileşenleri)
-- [ ] Hukuki metinler (aydınlatma, veri işleme sözleşmesi) — avukat; Beta'ya kadar
-- [ ] 8 şablon içeriği (ST-102) — PO + kalite danışmanı; Sprint 9'a kadar
+- [ ] Hukuki metinler (aydınlatma, veri işleme sözleşmesi) — taslaklar hazır (04-gereksinimler/hukuki), avukat incelemesi pilot öncesi
+- [x] 8 şablon içeriği (ST-102) — taslak hazır (02-urun/07), sahada doğrulanır; Sprint 9'a kadar kesinleşir
 
 ### Kararlar (pilot görüşmelerinden beklenen)
 - [ ] Kiosk modu Must kalıyor mu (tablet oranı)
@@ -55,6 +55,8 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - **WhatsApp?** MVP dışı; bildirim servisi kanal-bağımsız (ADR-0006).
 
 ## Sprint 0 için ek
+
+- [06-ilk-gun-paketi.md](06-ilk-gun-paketi.md) — geliştiriciye gönderilecek ilk gün/ilk hafta paketi (hesaplar, ortam, okuma, spike, çalışma kuralları, ritim).
 
 - [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md) — takvim (kritik yol), ekip seçenekleri, 2 haftalık Sprint 0 takvimi, dört teknik spike (çevrimdışı senk, RRULE pencere, kamera-damga-hash, push→SMS) ve DoD.
 - [sablonlar/](sablonlar/) — kurulum sihirbazının içe aktarma dosyaları: `subeler.xlsx`, `personel.xlsx` (doğrulama kuralları "Açıklama" sayfasında; `build_sablonlar.py` üretir).
