@@ -34,7 +34,7 @@ th{{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)
 <div class="wm">Talimatname</div>
 <h1>İki serbest geliştirici arıyoruz: Flutter · Python/FastAPI</h1>
 <p class="lead">Çok şubeli yeme-içme zincirleri için şube talimat listelerini <b>kanıtlı</b> hâle getiren bir ürün: personel açılış/kapanış/hijyen/soğuk zincir listesini şube tabletinden veya telefonundan tamamlar, fotoğraf ve sıcaklık ölçümüyle kanıtlar, yapamadığını sebebiyle bildirir; merkez her sabah yalnızca istisnaları görür ve denetim kaydını doğrulama kodlu PDF olarak alır. WhatsApp gruplarının yerine geçer.</p>
-<p>İlk sürüm bilerek küçük ve net: 4 rol, 6 madde türü, tek sabit kural, sabit eskalasyon, kişi puanı yok. Kapsam, 162 gereksinim, ekranlar, 119 kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler ve örnek raporlar var. Sizden beklediğimiz: 2 haftalık sprintlerle, sağlam bir ilk sürümü <b>Şubat 2027'de</b> yayına almak; ilk pilotlar Ocak'ta.</p>
+<p>İlk sürüm bilerek küçük ve net: 4 rol, 6 madde türü, tek sabit kural, sabit eskalasyon, kişi puanı yok. Kapsam, 162 gereksinim, ekranlar, 119 kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler ve örnek raporlar var. Sizden beklediğimiz: 2 haftalık sprintlerle, sağlam bir ilk sürümü <b>Mart 2027'de</b> yayına almak; ilk pilotlar Ocak–Şubat'ta.</p>
 
 <div class="cols">
 <div class="role"><h3>Backend / web geliştirici</h3>
@@ -51,7 +51,7 @@ th{{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)
 
 <h2>Çalışma şekli</h2>
 <table><tbody>
-<tr><th>Süre</th><td>Tam zamanlı, uzaktan; Sprint 0 (2 hafta) + 10 sprint ≈ 22 hafta, başlangıç <b>5 Ekim 2026</b>; 2 sprint tampon seçeneği</td></tr>
+<tr><th>Süre</th><td>Tam zamanlı, uzaktan; Sprint 0 (2 hafta) + 10 sprint ≈ 22 hafta, başlangıç <b>19 Ekim 2026</b>; 2 sprint tampon seçeneği</td></tr>
 <tr><th>Ritim</th><td>Her gün 10:00'da 15 dk; 2 haftalık sprint (planlama, demo, geriye bakış); PR + inceleme + CI; ürün sahibi kurucu — sorularınıza 24 saat içinde cevap</td></tr>
 <tr><th>Ücret</th><td>Sprint başına sabit ücret, sprint kabulüyle ödeme; teklifinizi günlük/sprint bazında yazın</td></tr>
 <tr><th>Kapı</th><td>Sprint 2 sonunda pazar doğrulama sonucuyla devam/dur kararı (iki tarafa 2 hafta bildirim; yapılan iş ödenir). Şeffaf olalım: bu bir erken aşama ürünü</td></tr>
@@ -60,10 +60,10 @@ th{{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)
 </tbody></table>
 
 <h2>Seçim</h2>
-<p>1) Başvuru eleme · 2) 45 dakikalık görüşme (prototip üzerinden konuşuruz) · 3) <b>3 saatlik ücretli mini görev</b> (backend: pencere motoru fikstürleri; mobil: çevrimdışı kuyruk + kamera) · 4) referans ve teklif. Takvim: başvuru 24 Eylül'e kadar, görüşmeler 25–30 Eylül.</p>
+<p>1) Başvuru eleme · 2) 45 dakikalık görüşme (prototip üzerinden konuşuruz) · 3) <b>3 saatlik ücretli mini görev</b> (backend: pencere motoru fikstürleri; mobil: çevrimdışı kuyruk + kamera) · 4) referans ve teklif. Takvim: başvuru 9 Ekim'e kadar, görüşmeler 10–15 Ekim.</p>
 <div class="box"><b>Başvuru:</b> {ILETISIM} — CV veya portföy bağlantısı + üç satır: (1) neden bu ürün, (2) çözdüğünüz en zor çevrimdışı veya zaman dilimi problemi, (3) başlayabileceğiniz tarih ve tarifeniz. Konu satırı: "Talimatname — Backend" veya "Talimatname — Mobil".</div>
 <p class="small mut" style="margin-top:8px">Talimatname çalışma adıdır. Ekip: kurucu (ürün sahibi), iki geliştirici, Sprint 3'ten itibaren yarı zamanlı tasarımcı, Sprint 6'dan itibaren yarı zamanlı QA. Teknoloji kararları ve gerekçeleri (ADR) ilk gün paylaşılır.</p>
-<div class="ft"><span>Talimatname · serbest geliştirici ilanı · Eylül 2026</span><span>{ILETISIM}</span></div>
+<div class="ft"><span>Talimatname · serbest geliştirici ilanı · Ekim 2026</span><span>{ILETISIM}</span></div>
 </div>
 </body></html>"""
 

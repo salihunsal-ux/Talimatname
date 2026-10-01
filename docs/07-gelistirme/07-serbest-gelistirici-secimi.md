@@ -1,6 +1,6 @@
 # Serbest geliştirici ilanı ve seçim süreci (ADR-0009, seçenek A)
 
-Hedef takvim: ilan 17 Eylül → başvuru 24 Eylül → görüşme ve mini görev 25–30 Eylül → sözleşme 1–2 Ekim → **Sprint 0 başlangıcı 5 Ekim**. Aday bulunmazsa 12 Ekim'e kaydırılır; daha geç kalırsa 05-sprint0 §1'deki üçüncü satır (pilot Mart) devreye girer.
+Hedef takvim (1 Ekim 2026'da yeniden kuruldu): ilan **2 Ekim** → başvuru 9 Ekim → görüşme ve mini görev 10–15 Ekim → sözleşme 16 Ekim → **Sprint 0 başlangıcı 19 Ekim** → Sprint 1 2 Kasım. Aday bulunmazsa bir hafta kaydırılır; Kasım'a sarkarsa pilot ölçümü Mart'a gider ve tampon tükenir (05-sprint0 §1).
 
 Gönderilebilir ilan metni: [ilan/serbest-gelistirici-ilani.html](ilan/serbest-gelistirici-ilani.html) (PDF'i de aynı klasörde). Depo özel olduğu için adaylar bu belgeyi değil ilanı görür; belgeye erişim sözleşmeyle.
 

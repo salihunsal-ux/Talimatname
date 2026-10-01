@@ -11,7 +11,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | Neyin yerine | WhatsApp grupları, kâğıt formlar, Excel, sıcaklık defteri |
 | Değer | Her iş kanıtla (fotoğraf, ölçüm, zaman, konum) kapanır; yapılmayan iş sebebiyle merkeze düşer; denetim kaydı 3 dakikada PDF |
 | Fiyat çıpası | Zincir: ~₺730/şube/ay (Baz senaryo 15 $) · tekil işletme self-servisi MVP dışı |
-| Durum | Doğrulama sprinti kiti hazır (14 Eylül 2026): hafta 0 — hedef liste onayı ve ilk ulaşım mesajları; Sprint 0 paralel başlayabilir |
+| Durum | **1 Ekim 2026 · hafta 0, saha başlamadı.** Hazırlık tamam (97 belge, 10 ADR, 3 prototip, broşür, ilan ve ilk gün paketi); görüşme notu 0, K1 0/20, K2 0 LOI. Takvim yeniden kuruldu: ilan 2 Ekim, saha 5 Ekim, Sprint 0 19 Ekim, Alfa 22 Ocak, GA 19 Mart 2027 ([05-sprint0 §1](07-gelistirme/05-sprint0-ve-teknik-spike.md)). Bekleyen: ilan yayını, hedef liste onayı + ilk 30 mesaj, alan adı kaydı |
 
 ## Karar haritası
 
@@ -24,7 +24,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | WhatsApp | MVP dışı; push + SMS yedek | [ADR-0006](adr/0006-whatsapp-mvp-disi.md) |
 | Kişi skoru | Yok; şube düzeyinde skor, kişi düzeyinde yalnızca gecikme/eksik görünümü | [ADR-0007](adr/0007-kisi-skoru-yok.md) |
 | Teknoloji | Flutter mobil, React web, Python/FastAPI, PostgreSQL, S3 uyumlu depolama | [ADR-0002](adr/0002-mobil-flutter-web-react.md), [Teknik mimari](07-gelistirme/01-teknik-mimari.md) |
-| Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; Sprint 2 sonu devam/dur kapısı; Sprint 0 başlangıcı 5 Ekim | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
+| Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; Sprint 2 sonu devam/dur kapısı (27 Kasım); Sprint 0 başlangıcı **19 Ekim** | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
 | Madde kütüphanesi | v1'de şablon düzeyinde kütüphane (8 şablon, kopyala-düzenle); madde kütüphanesi + işletme türü paketleri v1.1'in ilk epic'i; başka dikeyler ve marka kütüphanesi v2 | [ADR-0010](adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi](02-urun/08-madde-kutuphanesi.md) |
 | Barındırma | Türkiye'de yerel bulut (pilot BT şartlarına göre AB + standart sözleşme seçeneği) | [ADR-0003](adr/0003-veri-tr-barindirma.md) |
 | Kanıt bütünlüğü | Sunucu zamanı, dosya hash'i, ekle-yalnız olay günlüğü (hash zinciri) | [ADR-0004](adr/0004-kanit-butunlugu-hash-zinciri.md) |
@@ -39,7 +39,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. Barındırma: TR bulut vs AB + standart sözleşme (pilotların BT şartı)
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
-7. ~~Geliştirme ekibi~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)); açık kalan: seçim (ilan 17 Eylül → teklif 30 Eylül) ve Sprint 2 sonu devam/dur kapısı
+7. ~~Geliştirme ekibi~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)); açık kalan: seçim (ilan 2 Ekim → teklif 15 Ekim) ve Sprint 2 sonu devam/dur kapısı (27 Kasım)
 
 ## Belge navigasyonu (okuma sırası)
 

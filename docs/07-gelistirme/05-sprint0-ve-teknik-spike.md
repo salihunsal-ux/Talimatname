@@ -1,20 +1,33 @@
 # Sprint 0 planı ve teknik spike'lar
 
-Tarih: 16 Eylül 2026. Sprint 0'ın kontrol listesi [02-repo-ve-ortam-kurulumu.md](02-repo-ve-ortam-kurulumu.md) içinde; bu belge **takvimi**, **ekip kararını** ve mimari kararların (ADR-0002/0004/0005) riskli kısımlarını kanıtlayacak **dört spike'ı** tanımlar. Spike = zaman kutulu deney; ürün kodu değildir, sonucu bir ADR notu ve (geçerse) Sprint 1–4 hikâyelerine giren örnek kodudur.
+Tarih: 16 Eylül 2026 · **takvim yeniden kuruldu 1 Ekim 2026** (§1). Sprint 0'ın kontrol listesi [02-repo-ve-ortam-kurulumu.md](02-repo-ve-ortam-kurulumu.md) içinde; bu belge **takvimi**, **ekip kararını** ve mimari kararların (ADR-0002/0004/0005) riskli kısımlarını kanıtlayacak **dört spike'ı** tanımlar. Spike = zaman kutulu deney; ürün kodu değildir, sonucu bir ADR notu ve (geçerse) Sprint 1–4 hikâyelerine giren örnek kodudur.
 
-## 1. Takvim: geliştirme kritik yoldadır
+## 1. Takvim (1 Ekim 2026'da yeniden kuruldu)
 
-Doğrulama sprinti pilotu 9–12. haftada hazırlar ve **K3'ü yazılım Alfa'ya ulaşınca** ölçer (S6 sonu). 10 sprint × 2 hafta: Alfa = Sprint 1 başlangıcından 12 hafta sonra.
+Eylül planı ilanın 17 Eylül'de çıkmasını ve Sprint 0'ın 5 Ekim'de başlamasını varsayıyordu; ikisi de olmadı (depoda 16 Eylül'den beri hareket yok, görüşme notu yok). İki haftalık kayma **telafi edilebilir**: ilan bu hafta çıkar ve saha 5 Ekim'de başlarsa pilot ölçümü Şubat 2027'ye gelir — fizibilitenin Baz senaryosundaki lansman varsayımına (6. ay) iki hafta mesafede, tampon S11–S12 duruyor.
 
-| Sprint 1 başlangıcı | Alfa (S6) | Beta (S8) | GA (S10) | Pilot ölçümü (K3) |
-|---|---|---|---|---|
-| Doğrulama haftası 2 (28 Eyl) | Hafta 14 (21 Ara) | Hafta 18 | Hafta 22 | Ocak 2027 |
-| Doğrulama haftası 6 (26 Eki) | Hafta 18 (18 Oca) | Hafta 22 | Hafta 26 | Şubat 2027 |
-| K2 sonrası (hafta 9, 16 Kas) | Hafta 21 (8 Şub) | Hafta 25 | Hafta 29 | Mart 2027 |
+**Yeni taban:** ilan 2 Ekim (Cuma) · saha ulaşımı 5 Ekim · Sprint 0 19–30 Ekim · Sprint 1 2 Kasım.
 
-Sonuç: **Sprint 0 bu iki hafta içinde başlamazsa pilot kayar.** Fizibilite modeli lansmanı 6. ayda varsayar (Baz); üçüncü satır 7–8. aya denk gelir — kabul edilebilir ama tampon biter. Öneri: Sprint 0'ı K1'i beklemeden başlatmak, ancak **Sprint 2 sonunda (K1 raporu elde) devam/dur kararı** koymak: K1 geçmezse geliştirme durur, harcanan iki sprint spike + iskelet olur (yeniden kullanılabilir).
+| | Tarih | Not |
+|---|---|---|
+| İlan yayını, ilk 30 ulaşım mesajı | **2 Ekim** | İlan metni ve PDF hazır; tek eksik iletişim adresi |
+| Doğrulama haftası 1 — ilk görüşmeler | **5 Ekim** | 40 ulaşım, hedef 5 randevu |
+| Aday görüşmeleri + ücretli mini görev | 6–15 Ekim | 07-serbest-gelistirici-secimi §3 |
+| Sözleşme, gün 0 hazırlığı | 16 Ekim | 06-ilk-gun-paketi "Gün 0" |
+| **Sprint 0** (iskelet + 4 spike) | **19–30 Ekim** | Doğrulama haftası 3–4 |
+| Sprint 1 | 2–13 Kasım | |
+| **K1 kapısı** (≥ 12/20 görüşme) | **26 Ekim** (doğrulama haftası 4) | |
+| **Devam/dur kapısı** (K1 raporu + Sprint 2 sonu) | **27 Kasım** | K1 geçmezse geliştirme durur; iki sprintlik iş iskelet + spike olarak kalır |
+| K2 kapısı (≥ 5 LOI) | 23 Kasım (hafta 8) | |
+| **Alfa (S6)** | **22 Ocak 2027** | Pilot kurulumu burada başlar |
+| **Beta (S8)** | **19 Şubat 2027** | 3 pilot zincir, 30+ şube |
+| **GA (S10)** | **19 Mart 2027** | 89 v1 kabul testi %100, pilot UAT imzası |
+| Tampon S11–S12 | 22 Mart – 16 Nisan | |
+| **K3 ölçümü** (pilot 4. hafta) | **Şubat 2027** | Alfa'dan 4 hafta sonra |
 
-## 2. Ekip kararı — **A seçildi** (ADR-0009, 16 Eylül); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md), ilan [ilan/](ilan/serbest-gelistirici-ilani.html). Hedef başlangıç 5 Ekim (doğrulama haftası 3).
+Daha fazla gecikmenin maliyeti: her hafta kayma pilot ölçümünü bir hafta öteler; **Sprint 0 Kasım'a sarkarsa** K3 Mart'a, lansman 8. aya gider ve tampon tükenir (fizibilite Baz senaryosu yeniden koşulmalı). Görüşmeler geliştirmeyi beklemez — saha hattı ekip kararından bağımsız 5 Ekim'de başlayabilir ve başlamalı.
+
+## 2. Ekip kararı — **A seçildi** (ADR-0009, 16 Eylül); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md), ilan [ilan/](ilan/serbest-gelistirici-ilani.html). Hedef başlangıç **19 Ekim** (yeniden kurulan takvim, §1).
 
 | Seçenek | Aylık maliyet (tahmin) | Artı | Eksi | Ne zaman uygun |
 |---|---|---|---|---|
@@ -80,7 +93,7 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 
 | Ne | Kim | Ne zaman |
 |---|---|---|
-| ~~Ekip seçeneği~~ A seçildi; ilan 17 Eylül, seçim 30 Eylül, başlangıç 5 Ekim | Kurucu | Bu hafta ilan; 30 Eylül teklif |
+| ~~Ekip seçeneği~~ A seçildi; ilan **2 Ekim**, seçim 15 Ekim, Sprint 0 **19 Ekim** | Kurucu | İlan bu hafta; 15 Ekim teklif |
 | Spike sonuçlarına göre ADR güncellemeleri | Ekip + PO | Sprint 0 gün 9 |
-| Devam/dur kapısı: K1 raporu + Sprint 2 sonu | Kurucu | Doğrulama haftası 4–6 |
+| Devam/dur kapısı: K1 raporu + Sprint 2 sonu | Kurucu | 27 Kasım (K1: 26 Ekim) |
 | Sağlayıcı seçimleri (TR bulut, SMS, push) | Backend + PO | Sprint 0 gün 7 |

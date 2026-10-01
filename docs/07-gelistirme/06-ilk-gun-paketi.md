@@ -1,6 +1,6 @@
 # Geliştirici ilk gün paketi
 
-Ekip modeli: iki serbest geliştirici (ADR-0009, seçenek A); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md). Bu belge sözleşme imzalanan iki geliştiriciye Sprint 0'ın ilk günü (hedef 5 Ekim 2026) gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
+Ekip modeli: iki serbest geliştirici (ADR-0009, seçenek A); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md). Bu belge sözleşme imzalanan iki geliştiriciye Sprint 0'ın ilk günü (hedef **19 Ekim 2026**; takvim 05-sprint0 §1) gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
 
 ## Hoş geldin: 5 cümlede ürün
 
@@ -15,12 +15,12 @@ Talimatname, çok şubeli yeme-içme zincirlerinin şubelere verdiği tekrarlı 
 - [ ] Sözleşme + NDA + KVKK taahhüdü imzalı (07 §7); mini görev ücretleri ödenmiş
 - [ ] Sağlayıcı hesapları: TR bulut deneme hesabı, SMS sağlayıcı test hesabı, Firebase projesi, Apple Developer ve Google Play (şirket adına — başvuru günler sürer, erken başlayın), e-posta gönderim servisi
 - [ ] Alan adı alınmış (`talimatname.app` → `staging.talimatname.app`) — 03-isim-ve-marka bekleyen iş
-- [ ] Takvim davetleri: her gün 10:00 15 dk; 5 Ekim 11:00 Sprint 0 açılışı (1 saat); 16 Ekim Sprint 0 gözden geçirme
+- [ ] Takvim davetleri: her gün 10:00 15 dk; **19 Ekim** 11:00 Sprint 0 açılışı (1 saat); **30 Ekim** Sprint 0 gözden geçirme
 - [ ] Bu paketi e-postayla gönder (aşağıdaki şablon) — cuma, ilk günden önce
 
 ## Gönderim e-postası (şablon)
 
-> Konu: Talimatname — ilk gün paketi (5 Ekim)
+> Konu: Talimatname — ilk gün paketi (19 Ekim)
 >
 > Merhaba [ad], Pazartesi başlıyoruz. Ekte/aşağıda ilk gün paketi var; okuma sırası ve ortam kurulumu orada. GitHub organizasyonuna davetiniz gitti; `Talimatname` deposu ürün belgeleridir, `docs/07-gelistirme/06-ilk-gun-paketi.md` ile başlayın. Sizin spike'ınız: [Backend: B ve D · Mobil: A ve C] — `docs/07-gelistirme/05-sprint0-ve-teknik-spike.md` §4. Pazartesi 11:00'de 1 saatlik açılışta ürünü prototipler üzerinden anlatacağım; 10:00 günlükleri Salı başlar. Sorular için bana yazın; 24 saat içinde dönerim. — [kurucu]
 

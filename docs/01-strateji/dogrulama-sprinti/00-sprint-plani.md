@@ -2,6 +2,8 @@
 
 Amaç: fizibilitenin üç belirsiz girdisini — ödeme isteği, benimseme, edinme hızı — sahadan ölçmek ve üç kapıdan geçmek. Yöntem ve sorular: [Pilot görüşme rehberi](../02-pilot-gorusme-rehberi.html). Çalışma ürünü değil, **kanıt** üretir: 20 görüşme notu, 8 gözlem, isim testi tepkileri, 5 LOI, 3 pilot.
 
+Takvim (1 Ekim 2026'da yeniden kuruldu): hafta 0 = 28 Eylül–2 Ekim (ilan ve ilk ulaşım) · **hafta 1 = 5 Ekim** · K1 26 Ekim · K2 23 Kasım · pilot hazırlığı Aralık · K3 ölçümü Şubat 2027 (Alfa 22 Ocak). Geliştirme takvimi: 07-gelistirme/05 §1.
+
 ## Kapılar
 
 | Kapı | Hafta | Ölçüt | Geçmezse |
