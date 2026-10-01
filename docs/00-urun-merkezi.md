@@ -11,7 +11,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | Neyin yerine | WhatsApp grupları, kâğıt formlar, Excel, sıcaklık defteri |
 | Değer | Her iş kanıtla (fotoğraf, ölçüm, zaman, konum) kapanır; yapılmayan iş sebebiyle merkeze düşer; denetim kaydı 3 dakikada PDF |
 | Fiyat çıpası | Zincir: ~₺730/şube/ay (Baz senaryo 15 $) · tekil işletme self-servisi MVP dışı |
-| Durum | **1 Ekim 2026 · hafta 0, saha başlamadı.** Hazırlık tamam (97 belge, 10 ADR, 3 prototip, broşür, ilan ve ilk gün paketi); görüşme notu 0, K1 0/20, K2 0 LOI. Takvim yeniden kuruldu: ilan 2 Ekim, saha 5 Ekim, Sprint 0 19 Ekim, Alfa 22 Ocak, GA 19 Mart 2027 ([05-sprint0 §1](07-gelistirme/05-sprint0-ve-teknik-spike.md)). Bekleyen: ilan yayını, hedef liste onayı + ilk 30 mesaj, alan adı kaydı |
+| Durum | **1 Ekim 2026 · hafta 0, saha başlamadı.** Hazırlık tamam (97 belge, 10 ADR, 3 prototip, broşür, ilan ve ilk gün paketi); görüşme notu 0, K1 0/20, K2 0 LOI. Takvim yeniden kuruldu: ilan 2 Ekim, saha 5 Ekim, Sprint 0 19 Ekim, Alfa 22 Ocak, GA 19 Mart 2027 ([05-sprint0 §1](07-gelistirme/05-sprint0-ve-teknik-spike.md)). Bekleyen: ilan yayını, hedef liste onayı + ilk 30 mesaj, **alan adı kaydı (1 Ekim sorgusu: talimatname 4/4 boş; tamamlist.com 14 Eylül'de başkası tarafından alındı)** |
 
 ## Karar haritası
 
