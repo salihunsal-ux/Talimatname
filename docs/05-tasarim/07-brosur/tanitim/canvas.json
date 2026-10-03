@@ -55,6 +55,24 @@
       "print": "fixed"
     },
     {
+      "file": "T7.dc.html",
+      "title": "Tanıtım · sayfa 7",
+      "x": 5280,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T8.dc.html",
+      "title": "Tanıtım · sayfa 8",
+      "x": 6160,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
       "file": "Yapilamadi.dc.html",
       "title": "Ekran · yapılamadı",
       "x": 0,

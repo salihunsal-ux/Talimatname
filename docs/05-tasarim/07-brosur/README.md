@@ -16,19 +16,23 @@ Doldurulacaklar: sayfa 2 altındaki `[Ad Soyad] · [telefon] · [e-posta] · [al
 
 Ekranlar prototiplerle aynı Kadıköy senaryosunu anlatır: 13 Eylül kapanışı, mutfak buzdolabı 6,0 °C, aksiyon #418, sabah özeti.
 
-## Tanıtım dosyası — 6 sayfa (anlatım için)
+## Tanıtım dosyası — 8 sayfa (tek başına ürün tanıtımı)
 
-`build_tanitim.py` → `tanitim/` artboard'ları + `talimatname-tanitim.html` (yazdırma), `.pdf`, `talimatname-tanitim-sayfa.html` (yayın sürümü; dar ekranda sayfa ölçeklenir). Canlı: https://claude.ai/artifact/NDJqDvhikUbqqgtFNTZpQk
+`build_tanitim.py` → `tanitim/` artboard'ları (8 sayfa + 3 ekran) + `talimatname-tanitim.html` (yazdırma), `.pdf`, `talimatname-tanitim-sayfa.html` (yayın sürümü; dar ekranda sayfa ölçeklenir). Canlı: https://claude.ai/artifact/NDJqDvhikUbqqgtFNTZpQk
 
 | Sayfa | İçerik |
 |---|---|
-| 1 | Kapak, tek cümle, "bugün ne oluyor" (WhatsApp / "yapıldı" / saatler), kim için (4 rol), içindekiler |
-| 2 | Bir gecenin akışı 22:00 → 08:05 (zaman çizelgesi), "gece kimse aranmaz" kutusu, önce/sonra karşılaştırması |
-| 3 | Personel tarafı: üç ekran (liste, sıcaklık aralık dışı, yapılamadı), tek kural, 6 madde türü tablosu, kiosk / çevrimdışı / kamera / dün gece |
-| 4 | Yönetici tarafı: sabah özeti ve istisna panosu ekranları, sabit eskalasyon kuralları, üç ölçüt |
-| 5 | Kanıt ve uyum: kanıt zinciri (damga → hash → olay günlüğü → PDF), çalıştırma detayı ekranı, KVKK tablosu |
-| 6 | Kurulum sihirbazı ekranı, 8 hazır şablon, 8 haftalık pilot ve ölçütleri, v1 / v1.1 / v2 yol haritası, iletişim |
+| 1 | Kapak: koyu hero bandı (konumlanma cümlesi + iki ekran kompozisyonu), dört rozet, dört ölçü, "kim için ne kazanır" tablosu, içindekiler |
+| 2 | Sorun ve bedeli: "tanıdık geliyorsa" kontrol listesi, maliyet hesabı (varsayım etiketli), görünmeyen kayıp (kayıt dışı satış), "ne zaman fark edilir" karşılaştırması |
+| 3 | Nasıl çalışır: üç adım + bir gecenin zaman çizelgesi (22:00 → 08:05), "gece kimse aranmaz" kuralı |
+| 4 | Personel deneyimi: iki açıklamalı ekran (numaralı işaretler + açıklama listesi), altı madde türü tablosu, sahadaki gerçekler |
+| 5 | Yönetici deneyimi: sabah özeti ve istisna panosu (açıklamalı), sabit eskalasyon, iki ölçüt |
+| 6 | Kanıt ve uyum: kanıt zinciri altı adım, çalıştırma raporu ekranı, KVKK soru-cevap tablosu |
+| 7 | Karşılaştırma: WhatsApp / kâğıt-Excel / Talimatname tablosu, altı itiraz ve cevabı, "ne değil" |
+| 8 | Pilot ve sonraki adım: koyu CTA bandı (8 haftalık pilot + üç ölçüt), pilot takvimi, yol haritası, iletişim |
 
-Yeni ekran tasarımları: `tanitim/Yapilamadi.dc.html` (mobil alt sayfa), `tanitim/Detay.dc.html` (web çalıştırma detayı), `tanitim/Sihirbaz.dc.html` (web kurulum sihirbazı adım 3). Ortak bileşenler `build_brosur.py`'den gelir; iki belge aynı Kadıköy senaryosunu anlatır.
+Pazarlama düzenlemesi (3 Ekim): sayfa sayısı 6 → 8; maliyet hesabı, alternatif karşılaştırması, itiraz cevapları, pilot takvimi ve CTA eklendi; ekranlara numaralı açıklama işaretleri kondu; kapak ve kapanış koyu banda alındı.
+
+Ekran tasarımları: `tanitim/Yapilamadi.dc.html` (mobil alt sayfa), `tanitim/Detay.dc.html` (web çalıştırma detayı), `tanitim/Sihirbaz.dc.html` (web kurulum sihirbazı adım 3). Ortak bileşenler `build_brosur.py`'den gelir; iki belge aynı Kadıköy senaryosunu anlatır.
 
 Hangisi ne zaman: **2 sayfalık broşür** görüşmede bırakılır; **6 sayfalık tanıtım dosyası** üzerinden ürün anlatılır (ekran paylaşımı veya basılı), karar vericiye ve aday geliştiriciye gönderilir. İkisinde de fiyat yoktur ve iletişim alanları köşeli parantezlidir.
