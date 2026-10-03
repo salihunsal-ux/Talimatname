@@ -1,6 +1,6 @@
 # Görüşme özeti ve kapı sayacı
 
-Üretim: 2026-09-15 · `puanla.py` · 0 görüşme notu (ornek=true olanlar hariç) · 0 şube gözlemi · 0 kiosk denemesi
+Üretim: 2026-10-03 · `puanla.py` · 0 görüşme notu (ornek=true olanlar hariç) · 0 şube gözlemi · 0 kiosk denemesi
 
 | # | Tarih | Zincir | Şube | Kutu | Format | Model | Tür | Acı | Liste | Cihaz | Yetki | Ödeme | Taahhüt | Engel | Toplam /16 | K1 | LOI | İsim |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -36,6 +36,8 @@
 - Barındırma şartı: TR sunucu 0 · on-premise 0 · şart yok 0 · sözleşme yeter 0
 - Fotoğraf/konum itirazı: var 0/0
 - Prob talebi: var 0/0
+- Üretim–satış kontrolü: yok 0 · elle 0 · stok 0 · POS raporu 0 · fark tutarı söyleyen: 0 (A14 eşiği ≥ 5)
+- Kamera: yok 0 · var ama bakılmıyor 0 · var ve bakılıyor 0
 - Franchise bayi görsün: evet 0 · hayır 0
 
 ## Saha kiosk denemesi

@@ -18,6 +18,9 @@ Tarih: 16 Eylül 2026. Bu bir plan değil, **bir kenarda duran liste**: v1 çeki
 | A10 | **Sesle tamamlama / eldivenli mod** | Mutfakta eldivenle dokunmatik zor; "yapıldı" sesle | Benimseme; fark yaratıcı küçük özellik | 1 | 2 | 2 | Kiosk saha denemesinde yanlış dokunuş sayısı |
 | A11 | **Çok dil** (personel: Arapça, Farsça, İngilizce; arayüz) | Blok 5 yabancı personel oranı; şablon maddeleri çevrilir | Zorunluluk kademesi; İstanbul dışı ve turistik bölge | 1 | 1 | 2 | Blok 5 oranı ≥ %15 |
 | A12 | **Benchmark (anonim kıyas)** | "Sektörde kapanış zamanında tamamlanma %81, siz %74" — yalnızca bizde olabilir | Elde tutma + üst kademe; veri kazancı | 2 | 3 | 2 | ≥ 30 zincir, ≥ 500 şube verisi |
+| A14 | **Üretim–satış mutabakatı (L0–L1, donanımsız)** | Kayıt dışı satışın imzası: üretilen > satılan. Sayım ve fire maddeleri + POS adedi + eşik ve aksiyon; haftalık kör malzeme sayımı ikinci kaynak | Fark parayla ifade edilir; ROI doğrudan. Pro kademesi | 3 | 3 | 2 | Blok 3 “üretilen–satılan tutuyor mu” cevabı: ≥ 5 zincir somut tutar söylerse ([ADR-0011](../adr/0011-uretim-satis-mutabakati.md), [S-11](../03-analiz/04-senaryolar.md)) |
+| A15 | **Kamera ile üretim sayımı (L2)** | Fırın ağzı/tezgâh kamerası; adet ve tip otomatik. Personelin beyanından bağımsız sayaç | ARPU çarpanı; donanım + abonelik | 3 | 3 | 3 | A14 sinyali güçlü + bir vardiyalık görüntüyle ölçüm spike'ı (hedef ±%3) |
+| A16 | **POS–kamera olay eşleştirme (L3)** | Çekmece açılışı / tezgâh etkileşimi ↔ fiş kaydı (±30 sn); yurt dışında olgun kategori (exception-based reporting) | Kurumsal kademe; en güçlü kanıt | 2 | 3 | 3 | A15 + POS entegrasyonu (A8); KVKK ölçülülük değerlendirmesi |
 | A13 | **Denetçi doğrulama sayfası (herkese açık)** | PDF'teki doğrulama kodu ile denetçi/franchise merkezi kaydı çevrimiçi doğrular; U-1'in dışa açılması | Güven; satışta fark | 1 | 3 | 1 | Pilot kalite sorumlusu "denetçi kabul eder mi" cevabı |
 
 ## B · Yeni segmentler (SAM ↑)
@@ -75,11 +78,12 @@ Fizibilite ilk dikeyi yeme-içme (SAM ≈ 99.700 lokasyon) seçti; aşağıdakil
 
 Kazanç × rekabet / efor ile ilk beş — hepsi bir sinyale bağlı:
 
-1. **A6 Franchise marka kütüphanesi** — tek satışta çok şube; ADR-0010'un doğal devamı. *Sinyal:* Blok 6.
-2. **A4 Denetim formu** — Mitti'nin çekirdeğini bizim "liste + kanıt" motoruna eklemek; bölge müdürünü ürüne bağlar. *Sinyal:* pilot bölge müdürü kullanımı.
-3. **A1 Sensörler** — ARPU çarpanı; donanım işi olduğundan ortakla. *Sinyal:* prob talebi, aralık dışı olay sayısı.
-4. **B1 Perakende paketi** — en düşük eforlu yeni dikey (aynı motor, yeni içerik). *Sinyal:* GA sonrası 3 perakende görüşmesi.
-5. **A13 Doğrulama sayfası** — ucuz, güven ve pazarlama etkisi büyük. *Sinyal:* kalite sorumlularının denetçi sorusu.
+1. **A14 Üretim–satış mutabakatı (L0–L1)** — donanımsız, v1.1'e girebilir, argümanı doğrudan para: “açıklanamayan 9 adet”. *Sinyal:* Blok 3'teki yeni soru.
+2. **A6 Franchise marka kütüphanesi** — tek satışta çok şube; ADR-0010'un doğal devamı. *Sinyal:* Blok 6.
+3. **A4 Denetim formu** — Mitti'nin çekirdeğini bizim "liste + kanıt" motoruna eklemek; bölge müdürünü ürüne bağlar. *Sinyal:* pilot bölge müdürü kullanımı.
+4. **A1 Sensörler** — ARPU çarpanı; donanım işi olduğundan ortakla. *Sinyal:* prob talebi, aralık dışı olay sayısı.
+5. **B1 Perakende paketi** — en düşük eforlu yeni dikey (aynı motor, yeni içerik). *Sinyal:* GA sonrası 3 perakende görüşmesi.
+6. **A13 Doğrulama sayfası** — ucuz, güven ve pazarlama etkisi büyük. *Sinyal:* kalite sorumlularının denetçi sorusu.
 
 Fizibilite modeline etkisi: hiçbiri Baz senaryoya girmedi; A1/A6/C3 gerçekleşirse ARPU varsayımı (15 $) yukarı revize edilir — 24. ay kapısında yeniden koşulur.
 

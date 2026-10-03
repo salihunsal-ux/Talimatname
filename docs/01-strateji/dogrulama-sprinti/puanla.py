@@ -147,6 +147,8 @@ def main():
               f"- Barındırma şartı: TR sunucu {oran('barindirma_sarti','tr-sunucu')[0]} · on-premise {oran('barindirma_sarti','on-premise')[0]} · şart yok {oran('barindirma_sarti','yok')[0]} · sözleşme yeter {oran('barindirma_sarti','sozlesme-yeter')[0]}",
               f"- Fotoğraf/konum itirazı: var {oran('foto_konum_itirazi','var')[0]}/{oran('foto_konum_itirazi','var')[1]}",
               f"- Prob talebi: var {oran('prob_talebi','var')[0]}/{oran('prob_talebi','var')[1]}",
+              f"- Üretim–satış kontrolü: yok {oran('uretim_satis_kontrolu','yok')[0]} · elle {oran('uretim_satis_kontrolu','elle')[0]} · stok {oran('uretim_satis_kontrolu','stok')[0]} · POS raporu {oran('uretim_satis_kontrolu','pos-raporu')[0]} · fark tutarı söyleyen: {sum(1 for r in merkez if num(r,'uretim_satis_farki_tl') > 0)} (A14 eşiği ≥ 5)",
+              f"- Kamera: yok {oran('kamera_var','yok')[0]} · var ama bakılmıyor {oran('kamera_var','var-bakilmiyor')[0]} · var ve bakılıyor {oran('kamera_var','var-bakiliyor')[0]}",
               f"- Franchise bayi görsün: evet {oran('franchise_bayi_gorsun','evet')[0]} · hayır {oran('franchise_bayi_gorsun','hayir')[0]}", ""]
     lines += kiosk_section(kiosk)
     open(OUT, "w", encoding="utf-8").write("\n".join(lines))

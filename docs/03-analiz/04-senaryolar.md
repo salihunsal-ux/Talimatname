@@ -86,6 +86,21 @@ UC-08, UC-12, UC-13. Aktörler: Emre (A-06), Ayşe (A-05), Murat (A-04).
 4. Ayşe 08:05 aksiyonu kapatır (servis, conta değişimi). **Beklenen:** 07:00 sabah özetinde Murat ve Selin "kritik açık, vadesi geçti" görmüştü; kapanış sonrası panoda hücre "başarısız" kalır (geçmiş değişmez), aksiyon "kapalı"; çalıştırma PDF'inde olay izi 23:20 → 23:30 SMS → 08:05.
 5. Aynı gece Bakırköy kapanışı hiç başlamaz. **Beklenen:** gece kimse aranmaz: 01:30 pencere + 120 dk tolerans = 03:30'da "kaçırıldı", Bakırköy şube müdürüne push (sessiz saatte yalnızca push), Murat 07:00 sabah özetinde görür; personel 03:45'te açmaya çalışırsa liste kilitli (BR-11 v1, BR-27).
 
+## S-11 · Kayıt dışı satış: üretilen ile satılan tutmuyor (v1.1/v2 adayı)
+
+UC-08, UC-12, UC-15. Aktörler: Selin (A-02), Murat (A-04), Ayşe (A-05), Emre (A-06). İlgili karar: [ADR-0011](../adr/0011-uretim-satis-mutabakati.md).
+
+> **Kullanıcı öyküsü.** Zincir sahibi / operasyon müdürü olarak, bir şubede sipariş geçilmeden üretilip elden satılan ürünleri görmek istiyorum; çünkü bu satış kasaya hiç girmiyor ve ancak stok tutmazsa aylar sonra fark ediliyor. Ürünün bana vermesi gereken şey bir suçlama değil, **açıklanamayan fark** sayısıdır.
+
+1. Kapanış listesinde "Bugün üretilen pide (adet)" maddesi (sayı + birim) ve "Fire / iade / personel yemeği (adet)" maddesi doldurulur. **Beklenen:** değerler çalıştırma kaydına girer; kayıt sonradan değişmez.
+2. Sistem gece POS/ÖKC satış adedini okur (entegrasyon yoksa şube müdürü sabah tek alana girer). **Beklenen:** `açıklanamayan fark = üretilen − satılan − açıklanan fire`; şube ve ürün bazında saklanır.
+3. Fark eşiği aşarsa (varsayılan: günlük ≥ %5 veya ≥ 10 adet) **aksiyon açılır** (şube müdürü, 24 saat): "Fark açıklaması". Kapatırken sebep seti zorunlu: fire/hatalı üretim · personel yemeği · ikram/tadım · iade · POS'a geç giriş · sayım hatası · açıklanamıyor. **Beklenen:** sebep "açıklanamıyor" ise kayıt bölge müdürüne yükselir; kişi adı istenmez.
+4. Murat sabah özetinde "Bakırköy: 3 gündür açıklanamayan fark, toplam 41 adet" satırını görür; panoda şube × gün ızgarasında fark hücresi işaretlidir. **Beklenen:** haftalık ve aylık özet, fark adedini ve tahmini tutarı (adet × birim fiyat) gösterir.
+5. Selin incelemeyi kendi mevcut kamera kaydıyla, kendi İK süreciyle yapar. **Beklenen:** Talimatname kişi kimliklendirmesi yapmaz, kişi bazlı skor üretmez (ADR-0007), yalnızca zaman aralığını ve sayıyı verir.
+6. Haftada bir **kör sayım**: şube müdürü hamur/kutu/ambalaj sayar; sistem tüketim ile satışı karşılaştırır. **Beklenen:** malzeme bazlı fark, beyan edilen üretim sayısından bağımsız ikinci kaynaktır (beyanı yapan kişi işin içindeyse tek kaynak yetmez).
+
+**Sınır:** v1'de bu senaryonun L0 kısmı (adım 1, elle karşılaştırma) mevcut madde türleriyle zaten kurulabilir; otomatik mutabakat, eşik ve aksiyon (adım 2–4) v1.1, kamera ile otomatik üretim sayımı (ADR-0011 L2) v2'dir.
+
 ## Senaryo → test eşlemesi
 
 | Senaryo | Kabul testleri |
@@ -100,3 +115,4 @@ UC-08, UC-12, UC-13. Aktörler: Emre (A-06), Ayşe (A-05), Murat (A-04).
 | S-08 | TC-032 |
 | S-09 | TC-013, TC-039, TC-057…TC-061, TC-108, TC-113…TC-116 |
 | S-10 | TC-034, TC-036, TC-045, TC-046, TC-073, TC-078, TC-117, TC-118 |
+| S-11 | (v1.1/v2 — TC'ler ADR-0011 kabulünden sonra yazılır) |

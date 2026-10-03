@@ -27,6 +27,8 @@ aci_olayi_tl: 0         # somut olayın TL bedeli (0 = yok/bilinmiyor)
 denetim_kayit_bulma_saat: 0
 sube_muduru_whatsapp_dk_gun: 0
 bu_yil_cozum_harcamasi_tl: 0
+uretim_satis_kontrolu: ""    # yok · elle · stok · pos-raporu (üretilen ile satılan karşılaştırılıyor mu)
+uretim_satis_farki_tl: 0     # son bulunan farkın aylık/olay bedeli (0 = yok/bilmiyor)
 
 # Cihaz ve personel (Blok 5)
 tablet_sube_orani: 0    # 0–1
@@ -42,6 +44,7 @@ barindirma_sarti: ""           # yok · tr-sunucu · on-premise · sozlesme-yete
 franchise_bayi_gorsun: ""      # evet · hayir · n/a
 sicaklik_ekipman_sube: 0
 prob_talebi: ""                # yok · var
+kamera_var: ""                 # yok · var-bakilmiyor · var-bakiliyor (şubelerde kamera ve kayda kim bakıyor)
 
 # Fiyat (Blok 7) — şube başına aylık ₺
 mevcut_yazilim_tl_sube_ay: 0
