@@ -13,23 +13,8 @@ OUTDIR = os.path.join(HERE, "tanitim")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 INK_BAND = "#171c21"
 
-# ---------------------------------------------------------------- tipografi ve küçük parçalar
-def h1(t, size=40, color=None, mw="22ch"):
-    return ('<h1 style="font-family:' + SERIF + ';font-size:' + str(size) + 'px;line-height:1.06;font-weight:700;margin:0;'
-            'letter-spacing:-0.015em;max-width:' + mw + ';color:' + (color or T["ink"]) + '">' + t + '</h1>')
-
-def h2(t, size=23, color=None):
-    return ('<h2 style="font-family:' + SERIF + ';font-size:' + str(size) + 'px;font-weight:700;margin:0;line-height:1.15;'
-            'letter-spacing:-0.01em;color:' + (color or T["ink"]) + '">' + t + '</h2>')
-
-def h3(t, color=None):
-    return ('<h3 style="font-family:' + SERIF + ';font-size:16px;font-weight:700;margin:0 0 4px;color:' + (color or T["ink"]) + '">' + t + '</h3>')
-
-def p(t, size=14, color=None, mw="76ch"):
-    return ('<p style="margin:0;font-size:' + str(size) + 'px;line-height:1.52;color:' + (color or T["ink2"]) + ';max-width:' + mw + '">' + t + '</p>')
-
-def label(t, color=None):
-    return ('<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:' + (color or T["sessiz"]) + '">' + t + '</div>')
+# ---------------------------------------------------------------- tipografi (ortak bileşenler build_brosur'dan)
+from build_brosur import h1, h2, h3, mp as p, label, pin, shot, legend, stat, table, quote, check, qa, INK_BAND
 
 def page(inner, gap=18, bg=None):
     return ('<div style="box-sizing:border-box;width:794px;height:1123px;background:' + (bg or T["zemin"]) + ';font-family:' + SANS + ';color:' + T["ink"] +
@@ -43,59 +28,6 @@ def foot(no, note=""):
     return ('<div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid ' + T["cizgi"] +
             ';padding-top:9px;font-size:10.5px;color:' + T["sessiz"] + '"><span>' + (note or "Ekranlar ürün tasarımındandır; veriler örnektir.") +
             '</span><span>Talimatname · ' + str(no) + ' / 8</span></div>')
-
-def pin(n, color=None):
-    return ('<span style="display:inline-flex;width:19px;height:19px;border-radius:50%;background:' + (color or T["marka"]) +
-            ';color:#fff;font:700 11px ' + SANS + ';align-items:center;justify-content:center;flex:none">' + str(n) + '</span>')
-
-def shot(inner, w_, h_, s, caption, pins=None):
-    """Ekranı çerçeveler, üstüne numaralı işaret koyar, altına başlık yazar. pins: [(n, left%, top%)]"""
-    marks = ""
-    for n, x, y in (pins or []):
-        marks += ('<div style="position:absolute;left:' + str(x) + '%;top:' + str(y) + '%;transform:translate(-50%,-50%);'
-                  'box-shadow:0 0 0 3px ' + T["zemin"] + ';border-radius:50%">' + pin(n) + '</div>')
-    return ('<div style="display:flex;flex-direction:column;gap:7px"><div style="position:relative;width:' + str(int(w_ * s)) + 'px">'
-            + scaled(inner, w_, h_, s) + marks + '</div>'
-            '<div style="font-size:11.5px;color:' + T["ink2"] + ';font-weight:600">' + caption + '</div></div>')
-
-def legend(items, color=None):
-    out = ""
-    for n, t in items:
-        out += ('<div style="display:flex;gap:9px;align-items:flex-start">' + pin(n, color) +
-                '<div style="font-size:13px;line-height:1.45;color:' + T["ink2"] + '">' + t + '</div></div>')
-    return '<div style="display:flex;flex-direction:column;gap:7px">' + out + '</div>'
-
-def stat(n, l, c=None, dark=False):
-    return ('<div style="flex:1;min-width:0;background:' + ("rgba(255,255,255,.06)" if dark else T["yuzey"]) +
-            ';border:1px solid ' + ("rgba(255,255,255,.14)" if dark else T["cizgi"]) + ';border-radius:12px;padding:12px 14px">'
-            '<div style="font-family:' + SERIF + ';font-size:25px;font-weight:700;line-height:1.05;color:' + (c or ("#fff" if dark else T["ink"])) + '">' + n + '</div>'
-            '<div style="font-size:12px;line-height:1.35;margin-top:4px;color:' + ("rgba(255,255,255,.72)" if dark else T["ink2"]) + '">' + l + '</div></div>')
-
-def table(cols, rows, widths=None, size=12.5, head_bg=None):
-    wc = "".join('<col style="width:' + x + '">' for x in widths) if widths else ""
-    th = "".join('<th style="text-align:left;padding:8px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:' + T["sessiz"] +
-                 ';background:' + (head_bg or T["yuzey2"]) + ';border-bottom:1px solid ' + T["cizgi"] + ';font-weight:700">' + c + '</th>' for c in cols)
-    tr = ""
-    for i, r in enumerate(rows):
-        last = i == len(rows) - 1
-        bb = "0" if last else "1px solid " + T["cizgi"]
-        tr += "<tr>" + "".join('<td style="padding:8px 10px;border-bottom:' + bb + ';vertical-align:top;line-height:1.42">' + c + '</td>' for c in r) + "</tr>"
-    return ('<div style="border:1px solid ' + T["cizgi"] + ';border-radius:11px;overflow:hidden;background:' + T["yuzey"] + '">'
-            '<table style="border-collapse:collapse;width:100%;font-size:' + str(size) + 'px">' + wc + '<thead><tr>' + th + '</tr></thead><tbody>' + tr + '</tbody></table></div>')
-
-def quote(t, who):
-    return ('<div style="border-left:3px solid ' + T["marka"] + ';padding:6px 0 6px 14px">'
-            '<div style="font-family:' + SERIF + ';font-size:17px;line-height:1.35;color:' + T["ink"] + '">“' + t + '”</div>'
-            '<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:5px">' + who + '</div></div>')
-
-def check(t, d=""):
-    return ('<div style="display:flex;gap:9px;align-items:flex-start">' + box("ok") +
-            '<div style="font-size:13.5px;line-height:1.45"><b>' + t + '</b>' + ((" " + d) if d else "") + '</div></div>')
-
-def qa(q, a):
-    return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
-            '<div style="font-size:13.5px;font-weight:700;margin-bottom:3px">' + q + '</div>'
-            '<div style="font-size:12.5px;line-height:1.45;color:' + T["ink2"] + '">' + a + '</div></div>')
 
 # ---------------------------------------------------------------- ekranlar
 def scr_unable():

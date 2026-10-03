@@ -4,11 +4,11 @@ Ne zaman kullanılır: **Blok 8'den sonra** (görüşme rehberi kuralı: ürün 
 
 | Dosya | Ne |
 |---|---|
-| `talimatname-brosur.html` / `.pdf` | Yazdırmaya hazır broşür: sayfa 1 iddia + kapanış listesi ve aralık dışı sıcaklık ekranları + üç adım; sayfa 2 merkez görünümü (pano, sabah özeti, çalıştırma PDF'i), neden Talimatname, 8 haftalık pilot, iletişim |
+| `talimatname-brosur.html` / `.pdf` | Yazdırmaya hazır 2 sayfalık broşür (3 Ekim'de tanıtım dosyasının tasarım diline çekildi): sayfa 1 koyu hero bandı + dört ölçü + "ne değişir" + üç adım; sayfa 2 açıklamalı pano ekranı, alternatif karşılaştırması, iki itiraz cevabı, koyu pilot bandı ve iletişim |
 | `Main.dc.html`, `Sayfa2.dc.html` | Aynı iki sayfanın tasarım tuvali sürümü (düzenlenebilir) |
 | `KioskListe.dc.html`, `Sicaklik.dc.html`, `SabahOzeti.dc.html`, `Pano.dc.html` | Gerçeğe yakın ekran tasarımları (390×844 telefon, 1200×760 web); tasarım sistemi token'larıyla (05-tasarim/04) |
 | `canvas.json` | Tuval yerleşimi |
-| `build_brosur.py` | Hepsini üretir; `--pdf` ile Edge headless PDF |
+| `build_brosur.py` | Hepsini üretir; `--pdf` ile Edge headless PDF. **Ortak pazarlama bileşenleri burada** (koyu bant, h1/h2, ölçü kartı, tablo, numaralı ekran işaretleri, itiraz kutusu) — `build_tanitim.py` bunları içe aktarır, iki belge tek tasarım dilini paylaşır |
 
 Canlı tuval (düzenle, PNG/PDF al): https://claude.ai/artifact/3LpwvVXZczJMNLqnKrBVn2
 

@@ -154,27 +154,117 @@ def step(no, title, text):
     return (f'<div style="display:flex;flex-direction:column;gap:6px;background:{T["yuzey"]};border:1px solid {T["cizgi"]};border-radius:12px;padding:14px 16px">'
             f'<div style="font-family:{SERIF};font-size:28px;font-weight:700;color:{T["marka"]};line-height:1">{no}</div><div style="font-size:15px;font-weight:600">{title}</div><div style="font-size:13.5px;line-height:1.45;color:{T["ink2"]}">{text}</div></div>')
 
+
+# ---------------------------------------------------------------- pazarlama bileşenleri (iki broşür de kullanır)
+INK_BAND = "#171c21"
+
+def h1(t, size=40, color=None, mw="22ch"):
+    return ('<h1 style="font-family:' + SERIF + ';font-size:' + str(size) + 'px;line-height:1.06;font-weight:700;margin:0;'
+            'letter-spacing:-0.015em;max-width:' + mw + ';color:' + (color or T["ink"]) + '">' + t + '</h1>')
+
+def h2(t, size=23, color=None):
+    return ('<h2 style="font-family:' + SERIF + ';font-size:' + str(size) + 'px;font-weight:700;margin:0;line-height:1.15;'
+            'letter-spacing:-0.01em;color:' + (color or T["ink"]) + '">' + t + '</h2>')
+
+def h3(t, color=None):
+    return ('<h3 style="font-family:' + SERIF + ';font-size:16px;font-weight:700;margin:0 0 4px;color:' + (color or T["ink"]) + '">' + t + '</h3>')
+
+def mp(t, size=14, color=None, mw="76ch"):
+    return ('<p style="margin:0;font-size:' + str(size) + 'px;line-height:1.52;color:' + (color or T["ink2"]) + ';max-width:' + mw + '">' + t + '</p>')
+
+def label(t, color=None):
+    return ('<div style="font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:' + (color or T["sessiz"]) + '">' + t + '</div>')
+
+def pin(n, color=None):
+    return ('<span style="display:inline-flex;width:19px;height:19px;border-radius:50%;background:' + (color or T["marka"]) +
+            ';color:#fff;font:700 11px ' + SANS + ';align-items:center;justify-content:center;flex:none">' + str(n) + '</span>')
+
+def shot(inner, w_, h_, sc, caption, pins=None):
+    marks = ""
+    for n, x, y in (pins or []):
+        marks += ('<div style="position:absolute;left:' + str(x) + '%;top:' + str(y) + '%;transform:translate(-50%,-50%);'
+                  'box-shadow:0 0 0 3px ' + T["zemin"] + ';border-radius:50%">' + pin(n) + '</div>')
+    return ('<div style="display:flex;flex-direction:column;gap:7px"><div style="position:relative;width:' + str(int(w_ * sc)) + 'px">'
+            + scaled(inner, w_, h_, sc) + marks + '</div>'
+            '<div style="font-size:11.5px;color:' + T["ink2"] + ';font-weight:600">' + caption + '</div></div>')
+
+def legend(items, color=None):
+    out = ""
+    for n, t in items:
+        out += ('<div style="display:flex;gap:9px;align-items:flex-start">' + pin(n, color) +
+                '<div style="font-size:13px;line-height:1.45;color:' + T["ink2"] + '">' + t + '</div></div>')
+    return '<div style="display:flex;flex-direction:column;gap:7px">' + out + '</div>'
+
+def stat(n, l, c=None, dark=False):
+    return ('<div style="flex:1;min-width:0;background:' + ("rgba(255,255,255,.06)" if dark else T["yuzey"]) +
+            ';border:1px solid ' + ("rgba(255,255,255,.14)" if dark else T["cizgi"]) + ';border-radius:12px;padding:12px 14px">'
+            '<div style="font-family:' + SERIF + ';font-size:25px;font-weight:700;line-height:1.05;color:' + (c or ("#fff" if dark else T["ink"])) + '">' + n + '</div>'
+            '<div style="font-size:12px;line-height:1.35;margin-top:4px;color:' + ("rgba(255,255,255,.72)" if dark else T["ink2"]) + '">' + l + '</div></div>')
+
+def table(cols, rows, widths=None, size=12.5, head_bg=None):
+    wc = "".join('<col style="width:' + x + '">' for x in widths) if widths else ""
+    th = "".join('<th style="text-align:left;padding:8px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:' + T["sessiz"] +
+                 ';background:' + (head_bg or T["yuzey2"]) + ';border-bottom:1px solid ' + T["cizgi"] + ';font-weight:700">' + c + '</th>' for c in cols)
+    tr = ""
+    for i, r in enumerate(rows):
+        bb = "0" if i == len(rows) - 1 else "1px solid " + T["cizgi"]
+        tr += "<tr>" + "".join('<td style="padding:8px 10px;border-bottom:' + bb + ';vertical-align:top;line-height:1.42">' + c + '</td>' for c in r) + "</tr>"
+    return ('<div style="border:1px solid ' + T["cizgi"] + ';border-radius:11px;overflow:hidden;background:' + T["yuzey"] + '">'
+            '<table style="border-collapse:collapse;width:100%;font-size:' + str(size) + 'px">' + wc + '<thead><tr>' + th + '</tr></thead><tbody>' + tr + '</tbody></table></div>')
+
+def quote(t, who):
+    return ('<div style="border-left:3px solid ' + T["marka"] + ';padding:6px 0 6px 14px">'
+            '<div style="font-family:' + SERIF + ';font-size:17px;line-height:1.35;color:' + T["ink"] + '">“' + t + '”</div>'
+            '<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:5px">' + who + '</div></div>')
+
+def check(t, d=""):
+    return ('<div style="display:flex;gap:9px;align-items:flex-start">' + box("ok") +
+            '<div style="font-size:13.5px;line-height:1.45"><b>' + t + '</b>' + ((" " + d) if d else "") + '</div></div>')
+
+def qa(q, a):
+    return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
+            '<div style="font-size:13.5px;font-weight:700;margin-bottom:3px">' + q + '</div>'
+            '<div style="font-size:12.5px;line-height:1.45;color:' + T["ink2"] + '">' + a + '</div></div>')
+
+def sheet(inner, gap=16):
+    return ('<div style="box-sizing:border-box;width:794px;height:1123px;background:' + T["zemin"] + ';font-family:' + SANS + ';color:' + T["ink"] +
+            ';padding:38px 44px 26px;display:flex;flex-direction:column;gap:' + str(gap) + 'px;overflow:hidden">' + inner + '</div>')
+
+def brosur_foot(no, note=""):
+    return ('<div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid ' + T["cizgi"] +
+            ';padding-top:9px;font-size:10.5px;color:' + T["sessiz"] + '"><span>' + (note or "Ekranlar ürün tasarımındandır; veriler örnektir.") +
+            '</span><span>Talimatname · ' + str(no) + ' / 2</span></div>')
+
 def page1():
-    hero_text = (f'<div style="display:flex;flex-direction:column;gap:16px;flex:1;min-width:0">'
-                 f'<h1 style="font-family:{SERIF};font-size:44px;line-height:1.05;font-weight:700;margin:0;color:{T["ink"]};letter-spacing:-0.01em">“Yapıldı” demek yetmez.<br>Kanıtı olsun.</h1>'
-                 f'<p style="font-size:17px;line-height:1.5;margin:0;color:{T["ink2"]}">Çok şubeli yeme-içme zincirleri için açılış, kapanış, hijyen ve soğuk zincir listeleri. Personel şube tabletinden tamamlar, fotoğraf ve sıcaklık ölçümüyle kanıtlar, yapamadığını sebebiyle bildirir. Merkez her sabah yalnızca istisnaları görür.</p>'
-                 f'<div style="display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.4">'
-                 f'<div style="display:flex;gap:10px;align-items:flex-start">{box("ok")}<div><b>WhatsApp gruplarının yerine.</b> Tekrarlı listeler kendiliğinden açılır; “yapıldı abi” yerine damgalı fotoğraf ve ölçüm.</div></div>'
-                 f'<div style="display:flex;gap:10px;align-items:flex-start">{box("ok")}<div><b>Yapılmayan iş sabah masanızda.</b> Kaçırılan liste ve kritik madde yöneticiye düşer; aksiyon açılır, kapanınca not kalır.</div></div>'
-                 f'<div style="display:flex;gap:10px;align-items:flex-start">{box("ok")}<div><b>Denetim kaydı 3 dakikada.</b> Sıcaklık günlüğü ve çalıştırma raporu doğrulama kodlu PDF; kayıt sonradan değiştirilemez.</div></div></div></div>')
-    visual = (f'<div style="position:relative;width:360px;height:660px;flex:none">'
-              f'<div style="position:absolute;left:0;top:0">{scaled(scr_kiosk(), 390, 844, 0.66)}</div>'
-              f'<div style="position:absolute;left:165px;top:236px">{scaled(scr_temp(), 390, 844, 0.5)}</div></div>')
-    steps = (f'<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px">'
+    hero = ('<div style="background:' + INK_BAND + ';border-radius:16px;padding:26px 28px;display:flex;gap:22px;align-items:center;overflow:hidden">'
+            '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px">'
+            + label("Çok şubeli yeme-içme zincirleri için", "rgba(255,255,255,.55)")
+            + h1("Şube talimatları,<br>kanıtıyla.", 40, "#fff", "16ch")
+            + mp("Açılış, kapanış, hijyen ve soğuk zincir listeleri merkez tarafından bir kez kurulur; her gece şubede kendiliğinden açılır; "
+                 "personel fotoğraf ve ölçümle kapatır. Merkez sabah yalnızca aksayanı görür, denetim kaydını tek tuşla alır.", 14, "rgba(255,255,255,.78)", "44ch")
+            + '<div style="display:flex;gap:7px;flex-wrap:wrap">'
+            + "".join('<span style="font-size:11px;font-weight:600;color:#fff;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);'
+                      'border-radius:999px;padding:4px 10px">' + x + '</span>' for x in ["5\u2013100 \u015fube", "T\u00fcrk\u00e7e", "Veriler T\u00fcrkiye\u2019de", "Ki\u015fi puan\u0131 yok"])
+            + '</div></div>'
+            '<div style="flex:none;position:relative;width:240px;height:300px">'
+            '<div style="position:absolute;left:-4px;top:-12px">' + scaled(scr_kiosk(), 390, 844, 0.40) + '</div>'
+            '<div style="position:absolute;left:92px;top:122px;border-radius:10px;box-shadow:0 18px 38px rgba(0,0,0,.4)">' + scaled(scr_morning(), 390, 844, 0.26) + '</div>'
+            '</div></div>')
+    stats = ('<div style="display:flex;gap:10px">'
+             + stat("6\u20138 dk", "kapanış listesinin personele maliyeti")
+             + stat("3 dk", "denetim kaydının PDF olarak çıkması")
+             + stat("1 saat", "ilk şubenin kurulumu; aynı gece başlar")
+             + stat("0", "kişi puanı, biyometri, sohbet", T["marka"]) + '</div>')
+    nicin = ('<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px">'
+             + check("WhatsApp gruplarının yerine.", "Tekrarlı listeler kendiliğinden açılır; “yapıldı abi” yerine damgalı fotoğraf ve ölçüm.")
+             + check("Yapılmayan iş sabah masanızda.", "Kaçırılan liste ve kritik madde yöneticiye düşer; aksiyon açılır, kapanınca not kalır.")
+             + check("Denetim kaydı dakikalar içinde.", "Sıcaklık günlüğü ve çalıştırma raporu doğrulama kodlu PDF; kayıt sonradan değiştirilemez.")
+             + check("Mutfakta çalışır.", "Ortak tablet, PIN ile geçiş; Wi-Fi gidince kayıt cihazda bekler, bağlanınca senklenir.") + '</div>')
+    steps = ('<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:11px">'
              + step("1", "Merkez kurar — 1 saat", "Şubeler Excel’den, kapanış listesi 8 hazır şablondan; pencere şube saatinden hesaplanır. Bu gece başlar.")
-             + step("2", "Personel tamamlar — 6 dakika", "Kioskta adına dokunur, PIN girer; maddeleri işaretler, fotoğrafı uygulama içinden çeker, sıcaklığı girer. Wi-Fi yoksa kayıt cihazda kalır.")
+             + step("2", "Personel tamamlar — 6 dakika", "Kioskta adına dokunur, PIN girer; maddeleri işaretler, fotoğrafı uygulama içinden çeker, sıcaklığı girer.")
              + step("3", "Merkez görür — 07:00", "Sabah özeti: kaçıran, başarısız, yapılamayan. Panoda yalnızca dikkat isteyenler; gerisi “her şey yolunda”.") + '</div>')
-    foot = (f'<div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid {T["cizgi"]};padding-top:12px;font-size:12px;color:{T["sessiz"]}">'
-            f'<span>Ekranlar ürün tasarımından; veriler örnektir.</span><span>Kişi puanı yok · biyometri yok · veriler Türkiye’de</span></div>')
-    return (f'<div style="box-sizing:border-box;width:794px;height:1123px;background:{T["zemin"]};font-family:{SANS};color:{T["ink"]};padding:44px 48px 36px;display:flex;flex-direction:column;gap:22px;overflow:hidden">'
-            f'<div style="display:flex;align-items:center;justify-content:space-between">{wordmark(26)}<div style="font-family:{SERIF};font-size:15px;color:{T["marka"]};font-weight:700">Şube operasyonları, kanıtıyla.</div></div>'
-            f'<div style="display:flex;gap:28px;align-items:flex-start;margin-top:6px">{hero_text}{visual}</div>'
-            f'{steps}<div style="flex:1"></div>{foot}</div>')
+    return sheet(wordmark(25) + hero + stats + label("Ne değişir") + nicin + steps + brosur_foot(1), gap=16)
 
 def pdf_thumb():
     line = lambda w, c=T["cizgi"]: f'<div style="height:5px;width:{w}%;background:{c};border-radius:2px"></div>'
@@ -185,27 +275,42 @@ def pdf_thumb():
             f'{line(88)}{line(64)}<div style="margin-top:auto;font-size:6.5px;color:{T["sessiz"]};font-family:ui-monospace,Menlo,monospace">Doğrulama TN-K7F3A-9C2D</div></div>')
 
 def page2():
-    why = lambda t, d: f'<div style="display:flex;gap:10px;align-items:flex-start">{box("ok")}<div style="font-size:13.5px;line-height:1.4"><b>{t}</b> {d}</div></div>'
-    left = (f'<div style="display:flex;flex-direction:column;gap:12px;flex:1;min-width:0">'
-            f'<h2 style="font-family:{SERIF};font-size:26px;font-weight:700;margin:0;line-height:1.15">Neden Talimatname</h2>'
-            + why("Kanıt mühürlü.", "Fotoğrafa şube, saat ve kişi sunucuda basılır; dosya özeti ve değiştirilemez olay günlüğü. “Fotoğrafı dün çekmiş” tartışması biter.")
-            + why("Kişi puanı yok, iş kanıtı var.", "Personel gözetlenmez; yapılan iş belgelenir. Aydınlatma metni ve veri işleme sözleşmesi hazır; biyometri işlenmez; veriler Türkiye’de.")
-            + why("Mutfakta çalışır.", "Ortak tablet, PIN ile geçiş, 2 dakikada kilit; Wi-Fi gidince kayıt cihazda durur, bağlanınca senklenir. Eldivenle kullanılacak büyüklükte dokunma alanları.")
-            + why("İlk gün kullanılır.", "4 rol, 6 madde türü, tek kural: “Hayır” veya aralık dışı cevapta fotoğraf ve not zorunlu; kritikse aksiyon. Ayar labirenti yok.") + '</div>')
-    pilot = (f'<div style="background:{T["yuzey"]};border:2px solid {T["marka"]};border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:6px">'
-             f'<div style="font-family:{SERIF};font-size:20px;font-weight:700;color:{T["marka"]}">8 haftalık pilot</div>'
-             f'<div style="font-size:13.5px;line-height:1.45;color:{T["ink2"]}">Seçtiğiniz 5–15 şubede kapanış ve soğuk zincir listeleriyle başlarız. Yerinde kurulum 1 gün: kiosk, PIN’ler, şablon uyarlaması, şube müdürüne 30 dakika, personele 10 dakika eğitim. Haftalık 30 dakikalık geri bildirim görüşmesi.</div>'
-             f'<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:10px;margin-top:4px">'
-             + "".join(f'<div style="background:{T["markaA"]};border-radius:10px;padding:10px 12px"><div style="font-family:{SERIF};font-size:22px;font-weight:700;color:{T["marka"]}">{n}</div><div style="font-size:12px;color:{T["ink2"]};line-height:1.3">{l}</div></div>' for n, l in [("≥ %80", "liste pencere içinde tamamlanır"), ("≥ %95", "fotoğraf zorunlu maddede kanıt"), ("≥ %80", "kritik aksiyon vadesinde kapanır")])
-             + f'</div><div style="font-size:12.5px;color:{T["sessiz"]}">4. hafta sonunda birlikte ölçeriz; ölçütler tutarsa yıllık sözleşmeyi konuşuruz, tutmazsa kalan aylar iade. Şube başına aylık ücret görüşmede belirlenir.</div></div>')
-    contact = (f'<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid {T["cizgi"]};padding-top:14px">'
-               f'{wordmark(22)}<div style="font-size:13px;color:{T["ink2"]};text-align:right;line-height:1.5">[Ad Soyad] · [telefon]<br>[e-posta] · [alan adı]</div></div>')
-    top = (f'<div style="display:flex;flex-direction:column;gap:10px"><h2 style="font-family:{SERIF};font-size:26px;font-weight:700;margin:0;line-height:1.15">Merkez ne görür</h2>'
-           f'<div style="font-size:14px;color:{T["ink2"]};line-height:1.4;max-width:640px">07:00’de sabah özeti; panoda yalnızca dikkat isteyen şube × liste hücreleri; her çalıştırma için doğrulama kodlu PDF.</div>'
-           f'<div style="display:flex;gap:16px;align-items:flex-start">{scaled(scr_pano(1200, 760), 1200, 760, 0.38)}'
-           f'<div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">{scaled(scr_morning(), 390, 844, 0.34)}</div></div></div>')
-    return (f'<div style="box-sizing:border-box;width:794px;height:1123px;background:{T["zemin"]};font-family:{SANS};color:{T["ink"]};padding:44px 48px 36px;display:flex;flex-direction:column;gap:20px;overflow:hidden">'
-            f'{top}<div style="display:flex;gap:24px;align-items:flex-start">{left}{pdf_thumb()}</div>{pilot}<div style="flex:1"></div>{contact}</div>')
+    ekranlar = ('<div style="display:flex;gap:14px;align-items:flex-start">'
+                + shot(scr_pano(1200, 760), 1200, 760, 0.345, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
+                + '<div style="flex:1;min-width:0">'
+                + legend([(1, "Altı sayıda gece özeti: zamanında, geç, başarısız, kaçırıldı, yapılamadı, açık aksiyon."),
+                          (2, "Yalnızca sorunlu satırlar listelenir — “her şey yolunda” da bir cevaptır."),
+                          (3, "Şube × liste ızgarası: tüm gün tek bakışta, hücreden detaya.")])
+                + '</div></div>')
+    karsilastirma = table(["", "WhatsApp grupları", "Kâğıt / Excel", "<b>Talimatname</b>"],
+                          [["Liste kendiliğinden açılır", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"],
+                           ["Yapılmayan iş yöneticiye düşer", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"],
+                           ["Kanıt aranabilir, değiştirilemez", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["uyari"] + "'>kısmen</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"],
+                           ["Denetim kaydı dakikalar içinde", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["uyari"] + "'>kısmen</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"]],
+                          widths=["40%", "20%", "18%", "22%"])
+    itiraz = ('<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">'
+              + qa("“Personel kullanmaz.”", "Üç ekran, iki dokunuş; kioskta PIN’le giriş. Mesaj “seni izliyoruz” değil, “yaptığını kanıtlıyorsun”.")
+              + qa("“KVKK sorun çıkarır mı?”", "Kişi puanı ve biyometri yok, konum tek nokta, veriler Türkiye’de; aydınlatma metni ve veri işleme sözleşmesi hazır.") + '</div>')
+    kutu = lambda n, l: ('<div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:10px 12px;flex:1;min-width:0">'
+                         '<div style="font-family:' + SERIF + ';font-size:20px;font-weight:700;color:#fff">' + n + '</div>'
+                         '<div style="font-size:11px;line-height:1.35;color:rgba(255,255,255,.72);margin-top:3px">' + l + '</div></div>')
+    pilot = ('<div style="background:' + INK_BAND + ';border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:11px">'
+             + label("Sonraki adım", "rgba(255,255,255,.55)") + h1("8 haftalık ücretli pilot", 28, "#fff", "22ch")
+             + mp("Seçtiğiniz 5–15 şubede kapanış ve soğuk zincir listeleriyle başlarız. Yerinde kurulum bir gün: kiosk, PIN’ler, şablon uyarlaması, "
+                  "şube müdürüne 30 dakika ve personele 10 dakika eğitim.", 13, "rgba(255,255,255,.78)", "66ch")
+             + '<div style="display:flex;gap:9px">' + kutu("≥ %80", "liste pencere içinde tamamlanır") + kutu("≥ %95", "fotoğraf zorunlu maddede kanıt")
+             + kutu("≥ %80", "kritik aksiyon vadesinde kapanır") + '</div>'
+             + mp("4. hafta sonunda birlikte ölçeriz; ölçütler tutarsa yıllık sözleşmeyi konuşuruz, tutmazsa kalan aylar iade edilir. "
+                  "Şube başına aylık ücret görüşmede belirlenir.", 11.5, "rgba(255,255,255,.62)", "76ch") + '</div>')
+    contact = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'
+               '<div style="display:flex;flex-direction:column;gap:3px">' + wordmark(22) +
+               '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
+               '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
+               '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
+    return sheet(h2("Merkez ne görür", 26)
+                 + mp("07:00’de sabah özeti; panoda yalnızca dikkat isteyen şube × liste hücreleri; her çalıştırma için doğrulama kodlu PDF.")
+                 + ekranlar + label("Alternatifle yan yana") + karsilastirma + itiraz + pilot + contact
+                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=14)
 
 # ---------------------------------------------------------------- dosyalar
 HEAD = '<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <script src="./support.js"></script>\n</head>\n<body>\n<x-dc>\n<helmet>\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">\n  <style>\n    body { margin: 0; background: #e9e6de; }\n    a { color: #1f6f5b; } a:hover { color: #174f41; }\n  </style>\n</helmet>\n'
