@@ -78,3 +78,4 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 - Blok 8 prototipi (telefonda aç): https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69
 - Yönetici web prototipi (LOI turu, masaüstü): https://claude.ai/code/artifact/96276ca2-4d59-49b2-8bb2-50ec77e394f5
 - Tanıtım broşürü ve ekran tasarımları (düzenlenebilir tuval): https://claude.ai/artifact/3LpwvVXZczJMNLqnKrBVn2
+- Tanıtım dosyası — 6 sayfa, ürünü anlatmak için: https://claude.ai/artifact/NDJqDvhikUbqqgtFNTZpQk

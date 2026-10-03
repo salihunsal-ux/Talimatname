@@ -1,0 +1,85 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Tanıtım · sayfa 1",
+      "x": 0,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T2.dc.html",
+      "title": "Tanıtım · sayfa 2",
+      "x": 880,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T3.dc.html",
+      "title": "Tanıtım · sayfa 3",
+      "x": 1760,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T4.dc.html",
+      "title": "Tanıtım · sayfa 4",
+      "x": 2640,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T5.dc.html",
+      "title": "Tanıtım · sayfa 5",
+      "x": 3520,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "T6.dc.html",
+      "title": "Tanıtım · sayfa 6",
+      "x": 4400,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "Yapilamadi.dc.html",
+      "title": "Ekran · yapılamadı",
+      "x": 0,
+      "y": 1280,
+      "w": 390,
+      "h": 844
+    },
+    {
+      "file": "Detay.dc.html",
+      "title": "Ekran · çalıştırma detayı (web)",
+      "x": 1320,
+      "y": 1280,
+      "w": 1200,
+      "h": 760
+    },
+    {
+      "file": "Sihirbaz.dc.html",
+      "title": "Ekran · kurulum sihirbazı (web)",
+      "x": 2640,
+      "y": 1280,
+      "w": 1200,
+      "h": 760
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

@@ -28,6 +28,7 @@ LIVE = {
     "docs/05-tasarim/05-prototip/blok8-prototip.html": "https://claude.ai/code/artifact/229e7396-313c-487b-9a31-ada9caa05e69",
     "docs/05-tasarim/05-prototip/yonetici-web-prototip.html": "https://claude.ai/code/artifact/96276ca2-4d59-49b2-8bb2-50ec77e394f5",
     "docs/05-tasarim/07-brosur/talimatname-brosur.html": "https://claude.ai/artifact/3LpwvVXZczJMNLqnKrBVn2",
+    "docs/05-tasarim/07-brosur/talimatname-tanitim.html": "https://claude.ai/artifact/NDJqDvhikUbqqgtFNTZpQk",
 }
 
 # (yol, başlık, açıklama, etiketler) — tür uzantıdan: .md gömülü, .py/.txt kod, .html çerçeve, diğer bağlantı
@@ -107,6 +108,12 @@ REGISTRY = [
         (D+"05-tasarim/07-brosur/README.md", "Broşür — kullanım notu", "Ne zaman verilir (Blok 8 sonrası, LOI turu), dosyalar, doldurulacak alanlar, fiyat neden yok", []),
         (D+"05-tasarim/07-brosur/talimatname-brosur.html", "Tanıtım broşürü (A4, 2 sayfa)", "İddia + kapanış ve sıcaklık ekranları + üç adım; merkez görünümü, neden Talimatname, 8 haftalık pilot, iletişim — canlı tuvalde düzenlenebilir", ["kit", "basılı", "canlı sayfa"]),
         (D+"05-tasarim/07-brosur/talimatname-brosur.pdf", "Broşür — PDF", "Yazdırmaya hazır A4, 2 sayfa", ["basılı"]),
+        (D+"05-tasarim/07-brosur/talimatname-tanitim.html", "Tanıtım dosyası (A4, 6 sayfa)", "Anlatım belgesi: bir gecenin akışı, personel ve yönetici ekranları, kanıt zinciri ve KVKK, kurulum ve pilot, yol haritası", ["kit", "basılı", "canlı sayfa"]),
+        (D+"05-tasarim/07-brosur/talimatname-tanitim.pdf", "Tanıtım dosyası — PDF", "Yazdırmaya hazır A4, 6 sayfa", ["basılı"]),
+        (D+"05-tasarim/07-brosur/tanitim/Detay.dc.html", "Ekran tasarımı: çalıştırma detayı (web)", "Maddeler, damgalı kanıt fotoğrafları, aksiyon, hash zincirli olay izi, doğrulama kodu", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/tanitim/Sihirbaz.dc.html", "Ekran tasarımı: kurulum sihirbazı (web)", "Adım 3: tekrar ve pencere, atama, sabit eskalasyon, şube başına hesaplanan pencere", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/tanitim/Yapilamadi.dc.html", "Ekran tasarımı: yapılamadı (mobil)", "Sebep seti, not, işareti kaldır; şube müdürüne bildirim", ["tasarım"]),
+        (D+"05-tasarim/07-brosur/build_tanitim.py", "Tanıtım dosyası üretici (build_tanitim.py)", "6 sayfayı, 3 ekranı, yazdırma HTML/PDF ve yayın sürümünü üretir", ["betik"]),
         (D+"05-tasarim/07-brosur/KioskListe.dc.html", "Ekran tasarımı: kapanış listesi (kiosk)", "Gerçeğe yakın, 390×844; tasarım sistemi token'larıyla", ["tasarım"]),
         (D+"05-tasarim/07-brosur/Sicaklik.dc.html", "Ekran tasarımı: sıcaklık aralık dışı", "Alt sayfa: kabul aralığı, ± giriş, kritik uyarısı, not, fotoğraf", ["tasarım"]),
         (D+"05-tasarim/07-brosur/SabahOzeti.dc.html", "Ekran tasarımı: sabah özeti (bölge müdürü)", "Push bildirimi + Bölgem listesi: 12 şubeden 10'u yolunda", ["tasarım"]),
