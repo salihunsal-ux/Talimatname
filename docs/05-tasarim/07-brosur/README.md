@@ -1,4 +1,4 @@
-# Tanıtım belgeleri: 2 sayfalık broşür + 8 sayfalık tanıtım dosyası + 5 sayfalık özellik föyü
+# Tanıtım belgeleri: 2 sayfalık broşür + 8 sayfalık tanıtım dosyası + 9 sayfalık özellik föyü
 
 Ne zaman kullanılır: **Blok 8'den sonra** (görüşme rehberi kuralı: ürün ilk 40 dakika anlatılmaz), LOI turunda karar vericiye, tanıştıran kişi "bir şey gönder" dediğinde ve aday geliştiricilere. Ulaşım mesajlarına eklenmez.
 
@@ -35,9 +35,9 @@ Pazarlama düzenlemesi (3 Ekim): sayfa sayısı 6 → 8; maliyet hesabı, altern
 
 Ekran tasarımları: `tanitim/Yapilamadi.dc.html` (mobil alt sayfa), `tanitim/Detay.dc.html` (web çalıştırma detayı), `tanitim/Sihirbaz.dc.html` (web kurulum sihirbazı adım 3). Ortak bileşenler `build_brosur.py`'den gelir; iki belge aynı Kadıköy senaryosunu anlatır.
 
-## Özellik föyü — 5 sayfa (hangi özellik ne yapar, ekranda nasıl görünür)
+## Özellik föyü — 9 sayfa (hangi özellik ne yapar, ekranda nasıl görünür)
 
-`build_ozellikler.py` → `ozellikler/` artboard'ları (5 sayfa + 4 yeni ekran) + `talimatname-ozellikler.html` (yazdırma), `.pdf`, `talimatname-ozellikler-sayfa.html` (yayın sürümü). Canlı: https://claude.ai/artifact/JDHxYmF8ZnShvi78khafDD
+`build_ozellikler.py` → `ozellikler/` artboard'ları (9 sayfa + 15 ekran) + `talimatname-ozellikler.html` (yazdırma), `.pdf`, `talimatname-ozellikler-sayfa.html` (yayın sürümü). Canlı: https://claude.ai/artifact/JDHxYmF8ZnShvi78khafDD
 
 Kime: **müşteriye** (zincir merkezi: operasyon müdürü, kalite sorumlusu). Dili fayda önce; ADR/FR/SCR/E-kodları, sürüm numaraları ve iç terimler bilerek yok. Sıralama satış mantığına göre: önce merkezin kazancı, sonra kanıt/denetim, sonra sahada benimseme, en son kurulum kolaylığı.
 
@@ -46,11 +46,17 @@ Neden var: tanıtım dosyasının 8. sayfasındaki yol haritası tablosunda her 
 | Sayfa | Tema | İçerik |
 |---|---|---|
 | 1 | Merkez ne görür | Koyu giriş bandı + gruplu içindekiler; 1 her sabah iki dakika (SabahOzeti), 2 sorunsuz gün tek cümledir (Pano) |
-| 2 | Kanıt ve denetim | 3 denetim geldiğinde üç dakika (üç PDF küçük resmi), 4 “fotoğrafı dün çekmiş” tartışması biter (**yeni ekran: Bayraklar**), 5 belge süresi kaçmaz (**yeni ekran: BelgeTakvimi**) |
+| 2 | Kanıt ve denetim | 3 denetim geldiğinde üç dakika (üç PDF küçük resmi), 4 “fotoğrafı dün çekmiş” tartışması biter (Bayraklar), 5 belge süresi kaçmaz (BelgeTakvimi) |
 | 3 | Şubede nasıl yürür | 6 personel altı dakikada bitirir (KioskListe), 7 soğuk zincir kendini savunur (Sicaklik), 8 yapılamayan iş kaybolmaz (Yapilamadi) |
-| 4 | Başlamak | 9 Wi-Fi gidince iş durmaz (**yeni ekran: Cevrimdisi**), 10 liste yazmakla uğraşmazsınız (**yeni ekran: Sablonlar**), 11 bir günde kurulur (Sihirbaz) |
-| 5 | Yol haritası | “İlk sürümü neden dar tuttuk” kutusu; sıradaki sürüm (7 satır) ve daha sonrası (4 satır), her biri iki cümleyle; ekran yok notu |
+| 4 | Başlamak | 9 Wi-Fi gidince iş durmaz (Cevrimdisi), 10 liste yazmakla uğraşmazsınız (Sablonlar), 11 bir günde kurulur (Sihirbaz) |
+| 5 | Sıradaki sürüm | “İlk sürümü neden dar tuttuk” + taslak uyarı bandı; S1 madde kütüphanesi (Kutuphane), S2 üretim–satış mutabakatı (Mutabakat) |
+| 6 | Sıradaki sürüm | S3 benzer kanıt (BenzerKanit), S4 duyuru ve okundu onayı (Duyuru), S5 koşullu maddeler (KosulluMadde) |
+| 7 | Sıradaki sürüm | Geniş kart düzeni (ekran üstte, metin altta): S6 ayrıntılı raporlar (Raporlar), S7 denetim izi (DenetimIzi) |
+| 8 | Daha sonra | D1 franchise marka kütüphanesi (Franchise), D2 sektör paketleri (SektorPaketleri), D3 POS ve İK entegrasyonları (Entegrasyon) |
+| 9 | Daha sonra | D4 kamera ile üretim sayımı (KameraSayim, geniş kart) + koyu “sıradakini siz belirlersiniz” bandı + taslak uyarısı + iletişim |
 
-Yeni ekranlar `ozellikler/Sablonlar.dc.html`, `Cevrimdisi.dc.html`, `Bayraklar.dc.html`, `BelgeTakvimi.dc.html`. BelgeTakvimi aynı zamanda **SCR-W-14'ün tel-çerçevesi yerine geçer** (ekran envanteri 05-tasarim/01). Ortak bileşenler yine `build_brosur.py`'den gelir; mevcut ekranlar `build_tanitim.py`'den içe aktarılır.
+**Yol haritası bölümünün kuralı (s.5–9):** her kartta “tasarım taslağı” rozeti, bölüm başında ve sonunda uyarı bandı — *özellikler henüz geliştirilmedi, sözleşme ve pilot ölçütleri yalnızca ilk dört sayfayı kapsar*. Taslak ekranlar gerçek ekranlardan rozetle ve mor tonlu etiketle ayrılır.
+
+Bugünkü sürüm için yeni ekranlar: `ozellikler/Sablonlar.dc.html`, `Cevrimdisi.dc.html`, `Bayraklar.dc.html`, `BelgeTakvimi.dc.html`. Yol haritası taslakları: `Kutuphane`, `Mutabakat`, `BenzerKanit`, `Duyuru`, `KosulluMadde`, `Raporlar`, `DenetimIzi`, `Franchise`, `SektorPaketleri`, `Entegrasyon`, `KameraSayim` (hepsi `.dc.html`). BelgeTakvimi aynı zamanda **SCR-W-14'ün tel-çerçevesi yerine geçer** (ekran envanteri 05-tasarim/01). Ortak bileşenler yine `build_brosur.py`'den gelir; mevcut ekranlar `build_tanitim.py`'den içe aktarılır.
 
 Hangisi ne zaman: **2 sayfalık broşür** görüşmede bırakılır; **8 sayfalık tanıtım dosyası** üzerinden ürün anlatılır; **özellik föyü** “bu tam olarak ne yapıyor” sorusu geldiğinde bırakılır (müşteri dili; geliştiriciye kapsam belgesi ve gereksinimler verilir) (ekran paylaşımı veya basılı), karar vericiye ve aday geliştiriciye gönderilir. İkisinde de fiyat yoktur ve iletişim alanları köşeli parantezlidir.

@@ -13,7 +13,7 @@ OUTDIR = os.path.join(HERE, "ozellikler")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 from build_brosur import h1, h2, h3, mp as p, label, table, INK_BAND
 
-SAYFA = 5
+SAYFA = 9
 
 def page(inner, gap=14, bg=None):
     return ('<div style="box-sizing:border-box;width:794px;height:1123px;background:' + (bg or T["zemin"]) + ';font-family:' + SANS + ';color:' + T["ink"] +
@@ -34,6 +34,7 @@ def rozet(t, kind="n"):
     if kind == "mobil": bg, fg = T["markaA"], T["marka"]
     if kind == "web": bg, fg = "#e2e8ef", "#3c566e"
     if kind == "pdf": bg, fg = T["uyariA"], T["uyari"]
+    if kind == "taslak": bg, fg = "#ece9f3", "#5b4b86"
     return ('<span style="display:inline-block;padding:2px 9px;border-radius:999px;font-size:10.5px;font-weight:700;'
             'letter-spacing:.04em;text-transform:uppercase;background:' + bg + ';color:' + fg + ';white-space:nowrap">' + t + '</span>')
 
@@ -237,7 +238,7 @@ def icindekiler():
             '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 26px">'
             '<div>' + sol + '</div><div>' + sag + '</div></div>'
             '<div style="font-size:11px;color:' + T["sessiz"] + ';margin-top:8px;border-top:1px solid ' + T["cizgi"] + ';padding-top:7px">'
-            'Son sayfa: bugünkü sürümün dışında kalanlar ve neden beklediği.</div></div>')
+            'Sayfa 5–9: bugünkü sürümün dışında kalanlar — on bir <b>tasarım taslağı</b> ekranla, neden sıraya alındıklarıyla.</div></div>')
 
 def s1():
     giris = ('<div style="background:' + INK_BAND + ';border-radius:14px;padding:18px 24px;display:flex;flex-direction:column;gap:8px">'
@@ -341,62 +342,447 @@ def s4():
                scaled(TT.scr_wizard(1200, 760), 1200, 760, 0.28), "Kurulum sihirbazı · adım 3")
     return page(head("Başlamak") + k9 + k10 + k11 + foot(4), gap=12)
 
+# ---------------------------------------------------------------- yol haritası ekranları (tasarım taslağı)
+def ekran(W, H, baslik, sag_ust, inner, gap=11):
+    return ('<div style="box-sizing:border-box;width:' + str(W) + 'px;height:' + str(H) + 'px;background:' + T["zemin"] + ';font-family:' + SANS +
+            ';color:' + T["ink"] + ';padding:16px 20px;display:flex;flex-direction:column;gap:' + str(gap) + 'px;overflow:hidden;border:1px solid ' + T["cizgi"] + ';border-radius:12px">'
+            '<div style="display:flex;align-items:center;gap:12px">' + w(17) +
+            '<div style="padding-left:12px;border-left:1px solid ' + T["cizgi"] + ';font-family:' + SERIF + ';font-size:17px;font-weight:700">' + baslik + '</div>'
+            '<div style="margin-left:auto;font-size:12.5px;color:' + T["ink2"] + '">' + sag_ust + '</div></div>' + inner + '</div>')
+
+def lbl(t):
+    return '<div style="font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:' + T["sessiz"] + ';font-weight:700;margin-bottom:5px">' + t + '</div>'
+
+def satir(hucreler, basliklar=None, genislikler=None, size=12.5):
+    wc = "".join('<col style="width:' + x + '">' for x in genislikler) if genislikler else ""
+    th = "".join('<th style="text-align:left;padding:7px 9px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:' + T["sessiz"] +
+                 ';background:' + T["yuzey2"] + ';border-bottom:1px solid ' + T["cizgi"] + '">' + c + '</th>' for c in (basliklar or []))
+    tr = ""
+    for i, r in enumerate(hucreler):
+        bb = "0" if i == len(hucreler) - 1 else "1px solid " + T["cizgi"]
+        tr += "<tr>" + "".join('<td style="padding:7px 9px;border-bottom:' + bb + ';vertical-align:top;line-height:1.4">' + c + '</td>' for c in r) + "</tr>"
+    return ('<div style="border:1px solid ' + T["cizgi"] + ';border-radius:10px;overflow:hidden;background:' + T["yuzey"] + '">'
+            '<table style="border-collapse:collapse;width:100%;font-size:' + str(size) + 'px">' + wc +
+            ('<thead><tr>' + th + '</tr></thead>' if basliklar else '') + '<tbody>' + tr + '</tbody></table></div>')
+
+def foto(cap, flag=None, fc=None, en="100%"):
+    f = ('<div style="position:absolute;left:5px;top:5px;background:' + (fc or T["uyari"]) + ';color:#fff;border-radius:999px;padding:2px 8px;font-size:10px;font-weight:700">' + flag + '</div>') if flag else ''
+    return ('<div style="width:' + en + '"><div style="aspect-ratio:4/3;border-radius:8px;background:repeating-linear-gradient(135deg,#dfe3e8 0 9px,#eef1f4 9px 18px);position:relative;overflow:hidden;border:1px solid ' + T["cizgi"] + '">' + f +
+            '<div style="position:absolute;left:0;right:0;bottom:0;background:rgba(28,33,40,.84);color:#fff;font:9px/1.3 ui-monospace,Menlo,Consolas,monospace;padding:3px 5px">' + cap + '</div></div></div>')
+
+# --- S1 madde kütüphanesi ve işletme türü paketleri
+def scr_kutuphane(W=1100, H=620):
+    paket = lambda ad, n, sec=False: ('<div style="border:1.5px solid ' + (T["marka"] if sec else T["cizgi"]) + ';background:' + (T["markaA"] if sec else T["yuzey"]) +
+                                      ';border-radius:10px;padding:9px 11px"><b style="font-size:13px">' + ad + '</b>'
+                                      '<div style="font-size:11.5px;color:' + T["sessiz"] + '">' + n + '</div></div>')
+    md = lambda ad, tur, rozet_="", uyari=False: ('<div style="display:flex;gap:9px;align-items:center;padding:7px 0;border-bottom:1px solid ' + T["cizgi"] + '">'
+                                                  '<div style="width:16px;height:16px;border-radius:4px;border:1.5px solid ' + (T["marka"] if not uyari else T["uyari"]) + ';flex:none"></div>'
+                                                  '<div style="flex:1;min-width:0;font-size:12.5px;line-height:1.35">' + ad +
+                                                  ('<div style="font-size:11px;color:' + T["uyari"] + ';font-weight:600;margin-top:1px">kütüphanede güncellendi — farkı gör</div>' if uyari else '') + '</div>'
+                                                  '<div style="font-size:11px;color:' + T["sessiz"] + ';white-space:nowrap">' + tur + '</div>' + (chip(rozet_) if rozet_ else '') + '</div>')
+    sol = ('<div style="display:flex;flex-direction:column;gap:9px">' + lbl("İşletme türü paketleri")
+           + paket("Kafe · bar", "6 liste · 78 madde", True) + paket("Fırın ve pastane", "5 liste · 64 madde")
+           + paket("Hızlı servis", "6 liste · 71 madde") + paket("Lokanta · ocakbaşı", "5 liste · 59 madde")
+           + '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:9px 11px;font-size:11.5px;line-height:1.45;color:' + T["ink2"] + '">'
+           'Paketi şubenize kopyalarsınız; kütüphane maddesi güncellenince kopyanız bozulmaz, yalnızca uyarı alır.</div></div>')
+    sag = ('<div style="display:flex;flex-direction:column;gap:9px;min-width:0">'
+           + card(lbl("Kafe · bar paketi — kapanış maddeleri") + md("Espresso makinesi geri yıkandı", "onay", "kütüphane")
+                  + md("Süt dolabı sıcaklığı", "sıcaklık 0–4 °C", "kritik") + md("Kahve öğütücü hazneleri temizlendi", "fotoğraf", "kütüphane", uyari=True)
+                  + md("Buzmatik temizlendi ve kurulandı", "onay") + md("Bar tezgâhı dezenfekte edildi", "onay", "kütüphane"), "padding:11px 13px")
+           + '<div style="display:flex;gap:9px"><div style="padding:8px 13px;border-radius:9px;background:' + T["marka"] + ';color:#fff;font-weight:600;font-size:13px">Seçili 4 maddeyi şubeye ekle</div>'
+           '<div style="padding:8px 13px;border-radius:9px;border:1.5px solid ' + T["cizgi"] + ';font-size:13px;color:' + T["ink2"] + '">Farkları incele (1)</div></div></div>')
+    return ekran(W, H, "Madde kütüphanesi", "Kahve Durağı · 12 şube",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:14px;min-height:0">' + sol + sag + '</div>')
+
+# --- S2 üretim–satış mutabakatı
+def scr_mutabakat(W=1100, H=620):
+    kpi = lambda n, l, c: ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:10px 13px">'
+                           '<div style="font-family:' + SERIF + ';font-size:23px;font-weight:700;color:' + c + ';line-height:1.1">' + n + '</div>'
+                           '<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:2px">' + l + '</div></div>')
+    r = lambda u, ur, sa, fi, fa, kr=False: [u, ur, sa, fi,
+                                             '<b style="color:' + (T["kritik"] if kr else T["ink2"]) + '">' + fa + '</b>']
+    tablo = satir([r("Pide · kıymalı", "128", "119", "4 (fire)", "5"),
+                   r("Pide · kaşarlı", "96", "71", "2 (personel yemeği)", "23", True),
+                   r("Lahmacun", "210", "204", "6 (ikram)", "0"),
+                   r("Ayran (şişe)", "180", "176", "0", "4"),
+                   r("Künefe", "44", "43", "1 (hatalı üretim)", "0")],
+                  ["Ürün", "Üretilen", "Satılan", "Açıklanan", "Fark"], ["34%", "15%", "15%", "22%", "14%"])
+    sebep = lambda t, sec=False: ('<div style="padding:7px 10px;border:1.5px solid ' + (T["marka"] if sec else T["cizgi"]) + ';border-radius:9px;font-size:12px;background:' +
+                                  (T["markaA"] if sec else T["yuzey"]) + '">' + t + '</div>')
+    sag = ('<div style="display:flex;flex-direction:column;gap:9px;min-width:0">'
+           + card(lbl("Açıklama gerekiyor · kaşarlı pide") +
+                  '<div style="font-size:12.5px;line-height:1.5;color:' + T["ink2"] + ';margin-bottom:7px">23 adet fark · yaklaşık <b style="color:' + T["ink"] + '">₺2.760</b> · Cmt 13 Eylül akşam vardiyası</div>'
+                  + '<div style="display:flex;flex-direction:column;gap:6px">' + sebep("Fire / hatalı üretim") + sebep("Personel yemeği") + sebep("İkram")
+                  + sebep("Kasaya geç girildi", True) + sebep("Sayım hatası") + sebep("Açıklanamıyor → bölge müdürüne") + '</div>'
+                  '<div style="border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;padding:8px 10px;font-size:12px;color:' + T["ink2"] + ';margin-top:8px">'
+                  'Not: 19:40 civarı kasa kapandı, iki sipariş deftere yazıldı</div>', "padding:11px 13px")
+           + '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:9px 11px;font-size:11.5px;line-height:1.45;color:' + T["ink2"] + '">'
+           'Rapor şube ve vardiya düzeyindedir: kişi adı, kişi puanı ve biyometri yok. Açıklama girilmeden kayıt kapanmaz.</div></div>')
+    sol = ('<div style="display:flex;flex-direction:column;gap:10px;min-width:0">'
+           '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px">'
+           + kpi("₺2.760", "açıklanamayan fark · bu vardiya", T["kritik"]) + kpi("%3,4", "üretime oran", T["uyari"]) + kpi("4", "açıklanan kalem", T["marka"]) + '</div>'
+           + lbl("Üretim sayımı ↔ kasa satışı · Kadıköy · 13 Eylül") + tablo + '</div>')
+    return ekran(W, H, "Üretim–satış mutabakatı", "Kadıköy · akşam vardiyası",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:14px;min-height:0">' + sol + sag + '</div>')
+
+# --- S3 benzer fotoğraf tespiti
+def scr_benzer(W=760, H=430):
+    return ekran(W, H, "Benzer kanıt uyarısı", "Kadıköy · Kapanış · 13 Eylül",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;min-height:0">'
+                 '<div style="display:flex;gap:9px">' + foto("12 · 23:33 · Emre T.") + foto("15 · 23:39 · Emre T.", "benzer %94") + '</div>'
+                 '<div style="display:flex;flex-direction:column;gap:9px">'
+                 + card('<b style="font-size:13.5px">İki kanıt neredeyse aynı</b>'
+                        '<div style="font-size:12px;line-height:1.45;color:' + T["ink2"] + ';margin-top:4px">'
+                        'Çöp alanı ve kepenk maddelerinin fotoğrafları 6 saniye arayla, aynı açıdan çekilmiş. '
+                        'Dosyalar farklı olduğu için gönderim engellenmedi; kayıt incelenmek üzere işaretlendi.</div>'
+                        '<div style="display:flex;gap:8px;margin-top:9px">'
+                        '<div style="padding:7px 12px;border-radius:9px;background:' + T["ink"] + ';color:#fff;font-weight:600;font-size:12.5px">Şube müdürüne sor</div>'
+                        '<div style="padding:7px 12px;border-radius:9px;border:1.5px solid ' + T["cizgi"] + ';font-size:12.5px;color:' + T["ink2"] + '">Uygun, işareti kaldır</div></div>', "padding:11px 13px")
+                 + '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:9px 11px;font-size:11.5px;line-height:1.45;color:' + T["ink2"] + '">'
+                 'Eşik ayarlanabilir. Karar insanda kalır: sistem yalnızca “şuna bakın” der.</div></div></div>')
+
+# --- S4 duyuru ve okundu onayı
+def scr_duyuru(W=900, H=520):
+    tablo = satir([["Kadıköy", "Ayşe K.", "13.09 09:12", chip("onayladı", "ok")],
+                   ["Üsküdar", "Mehmet T.", "13.09 10:40", chip("onayladı", "ok")],
+                   ["Bakırköy", "Deniz A.", "—", chip("okunmadı", "crit")],
+                   ["Ataşehir", "Burak S.", "13.09 11:05", chip("okudu", "warn")],
+                   ["Bornova", "Elif Y.", "13.09 08:55", chip("onayladı", "ok")]],
+                  ["Şube", "Sorumlu", "Okundu", "Durum"], ["26%", "28%", "26%", "20%"])
+    return ekran(W, H, "Duyuru ve okundu onayı", "Yeni fiyat listesi · 13 Eylül",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:13px;min-height:0">'
+                 '<div style="display:flex;flex-direction:column;gap:9px">'
+                 + card('<b style="font-family:' + SERIF + ';font-size:15px">Yeni fiyat listesi 15 Eylül’de geçerli</b>'
+                        '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:5px">'
+                        'Menü fiyatları güncellendi. Kasadaki fiyat etiketlerini 14 Eylül kapanışında değiştirin, '
+                        'eski etiketleri atmayın — sayım yapılacak.</div>'
+                        '<div style="display:flex;gap:7px;align-items:center;margin-top:9px;font-size:11.5px;color:' + T["sessiz"] + '">'
+                        '<span style="padding:3px 9px;border-radius:999px;background:' + T["yuzey2"] + '">fiyat-listesi-eylul.pdf</span>'
+                        '<span>· onay istendi</span></div>', "padding:11px 13px")
+                 + '<div style="background:' + T["markaA"] + ';border-radius:10px;padding:10px 12px">'
+                 '<div style="font-family:' + SERIF + ';font-size:20px;font-weight:700;color:' + T["marka"] + '">10 / 12</div>'
+                 '<div style="font-size:11.5px;color:' + T["ink2"] + '">şube onayladı · 1 okudu, 1 okumadı</div>'
+                 '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:6px">Okumayana 14:00’te hatırlatma gider.</div></div></div>'
+                 '<div style="display:flex;flex-direction:column;gap:7px;min-width:0">' + lbl("Okundu raporu") + tablo + '</div></div>')
+
+# --- S5 koşullu maddeler
+def scr_kosul(W=900, H=520):
+    kural = lambda a, b, sec=False: ('<div style="border:1.5px solid ' + (T["marka"] if sec else T["cizgi"]) + ';background:' + (T["markaA"] if sec else T["yuzey"]) +
+                                     ';border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.5">'
+                                     '<b>Eğer</b> ' + a + '<br><b>o zaman</b> ' + b + '</div>')
+    onizleme = ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:12px;padding:11px 13px">'
+                + lbl("Personel ne görür")
+                + '<div style="font-size:12.5px;display:flex;flex-direction:column;gap:7px">'
+                '<div style="display:flex;gap:8px;align-items:center">' + box("") + '<div>Fritöz kapatıldı, yağ süzüldü</div></div>'
+                '<div style="display:flex;gap:8px;align-items:center;opacity:.5">' + box("") + '<div>Yağ polar madde ölçümü <span style="color:' + T["sessiz"] + '">(gizli)</span></div></div>'
+                '<div style="border-left:3px solid ' + T["marka"] + ';padding-left:9px;color:' + T["ink2"] + '">“Hayır” seçilirse alttaki iki madde açılır: sebep ve fotoğraf.</div></div></div>')
+    return ekran(W, H, "Koşullu maddeler", "Şablon editörü · Kapanış v4 taslak",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:13px;min-height:0">'
+                 '<div style="display:flex;flex-direction:column;gap:9px">' + lbl("Maddeye bağlı kurallar")
+                 + kural("“Fritöz kapatıldı” = <b>Hayır</b>", "<b>Sebep</b> ve <b>fotoğraf</b> maddelerini aç", True)
+                 + kural("“Ekipman arızalı” seçildi", "<b>Servis çağrıldı mı?</b> maddesini aç ve şube müdürüne iş aç")
+                 + kural("Sıcaklık <b>aralık dışı</b>", "<b>İkinci ölçüm (30 dk sonra)</b> maddesini aç")
+                 + '<div style="padding:8px 12px;border-radius:9px;border:1.5px dashed ' + T["cizgi"] + ';font-size:12.5px;color:' + T["sessiz"] + ';text-align:center">+ Kural ekle</div></div>'
+                 + onizleme + '</div>')
+
+# --- S6 ayrıntılı raporlar
+def scr_raporlar(W=1100, H=620):
+    sekme = lambda t, s=False: ('<div style="padding:6px 11px;border-radius:999px;font-size:12.5px;background:' + (T["ink"] if s else T["yuzey"]) +
+                                ';color:' + ("#fff" if s else T["ink2"]) + ';border:1px solid ' + (T["ink"] if s else T["cizgi"]) + '">' + t + '</div>')
+    maddeler = ["Buzdolabı sıcaklığı", "Zemin paspas", "Çöp alanı", "Fritöz yağı", "Tuvalet kontrol", "Kasa sayımı"]
+    subeler = ["Kadıköy", "Üsküdar", "Bakırköy", "Ataşehir", "Bornova", "Kartal", "Şişli"]
+    yogun = {("Kadıköy", 0): 3, ("Bakırköy", 1): 2, ("Bakırköy", 0): 3, ("Kartal", 3): 2, ("Şişli", 4): 1, ("Bornova", 2): 2, ("Ataşehir", 5): 1, ("Üsküdar", 1): 1}
+    renk = {0: "#e8e6dd", 1: T["uyariA"], 2: "#e9b071", 3: T["kritik"]}
+    hucre = ""
+    for s in subeler:
+        hucre += '<div style="font-size:11px;color:' + T["ink2"] + ';display:flex;align-items:center">' + s + '</div>'
+        for i in range(len(maddeler)):
+            hucre += '<div style="height:20px;border-radius:4px;background:' + renk[yogun.get((s, i), 0)] + '"></div>'
+    isi = ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
+           + lbl("En çok başarısız olan maddeler · Eylül")
+           + '<div style="display:grid;grid-template-columns:84px repeat(6, minmax(0,1fr));gap:4px 5px;align-items:center">'
+           + '<div></div>' + "".join('<div style="font-size:9.5px;color:' + T["sessiz"] + ';text-align:center;line-height:1.2">' + m + '</div>' for m in maddeler)
+           + hucre + '</div></div>')
+    siralama = satir([["1 · Üsküdar", "%96", "2", "0"], ["2 · Ataşehir", "%94", "3", "1"], ["3 · Maltepe", "%92", "4", "0"],
+                      ["…", "", "", ""], ["11 · Bakırköy", "%71", "14", "6"], ["12 · Kadıköy", "%68", "17", "8"]],
+                     ["Şube", "Zamanında", "Yapılamadı", "Başarısız"], ["38%", "22%", "20%", "20%"])
+    sebepler = ""
+    for ad, yuzde in [("Malzeme yok", 38), ("Ekipman arızalı", 27), ("Zaman yetmedi", 19), ("Yetkim yok", 9), ("Diğer", 7)]:
+        sebepler += ('<div style="display:flex;gap:9px;align-items:center;font-size:11.5px;padding:3px 0">'
+                     '<div style="width:92px;flex:none;color:' + T["ink2"] + '">' + ad + '</div>'
+                     '<div style="flex:1;height:9px;background:' + T["yuzey2"] + ';border-radius:5px;overflow:hidden">'
+                     '<div style="width:' + str(yuzde) + '%;height:100%;background:' + T["marka"] + '"></div></div>'
+                     '<div style="width:30px;text-align:right;color:' + T["sessiz"] + '">%' + str(yuzde) + '</div></div>')
+    return ekran(W, H, "Raporlar", "Eylül 2026 · 12 şube",
+                 '<div style="display:flex;gap:8px">' + sekme("Tamamlanma", True) + sekme("Maddeler") + sekme("Yapılamadı sebepleri")
+                 + sekme("Ölçümler") + sekme("Aksiyonlar") + '<div style="margin-left:auto;display:flex;gap:8px">'
+                 '<div style="padding:6px 11px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">Excel</div>'
+                 '<div style="padding:6px 11px;border-radius:9px;background:' + T["marka"] + ';color:#fff;font-size:12.5px;font-weight:600">Paylaşım bağlantısı</div></div></div>'
+                 '<div style="display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:13px;min-height:0">' + isi
+                 + '<div style="display:flex;flex-direction:column;gap:9px">' + siralama
+                 + '<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
+                 + lbl("Yapılamadı sebepleri") + sebepler + '</div></div></div>')
+
+# --- S7 denetim izi ekranı
+def scr_izi(W=1000, H=560):
+    olay = lambda t, kim, ne, h: [t, kim, ne, '<span style="font:11px ui-monospace,Menlo,Consolas,monospace;color:' + T["sessiz"] + '">' + h + '</span>']
+    tablo = satir([olay("13.09 22:58", "Emre T.", "Çalıştırma açıldı · kiosk KDK-T1 · konum şube içinde", "a91f…6c2d"),
+                   olay("13.09 23:20", "Emre T.", "Madde 4 cevaplandı: 6,0 °C · aralık dışı · 1 kanıt", "4b07…11ae"),
+                   olay("13.09 23:20", "sistem", "Aksiyon #418 açıldı · kritik · Ayşe K.", "77c3…90f1"),
+                   olay("13.09 23:41", "Emre T.", "Çalıştırma gönderildi · sonuç: başarısız · kilitlendi", "e2aa…35bd"),
+                   olay("14.09 08:05", "Ayşe K.", "Aksiyon #418 kapatıldı · not + 1 kanıt", "1d58…77c0"),
+                   olay("14.09 08:06", "sistem", "Günlük kökü zaman damgası alındı", "0f92…ab41")],
+                  ["Zaman", "Kim", "Olay", "Özet"], ["16%", "14%", "52%", "18%"], size=12)
+    return ekran(W, H, "Denetim izi", "Kadıköy · 13–14 Eylül",
+                 '<div style="display:flex;gap:8px;align-items:center">'
+                 '<div style="padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">Şube: Kadıköy ▾</div>'
+                 '<div style="padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">Olay türü: tümü ▾</div>'
+                 '<div style="padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">13–14 Eylül ▾</div>'
+                 '<div style="margin-left:auto">' + chip("zincir doğrulandı · 6 olay", "ok") + '</div></div>'
+                 + tablo
+                 + '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">'
+                 + card(lbl("Zincir doğrulama") + '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + '">'
+                        'Her olay bir öncekinin özetini taşır. Tek bir kaydı değiştirmek zinciri kırar ve bu sayfada kırmızı görünür. '
+                        'Kayıt silinmez; düzeltme ayrı bir olaydır.</div>', "padding:11px 13px")
+                 + card(lbl("Zaman damgası") + '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + '">'
+                        'Günlük kök, bağımsız bir zaman damgası hizmetinden onay alır: kaydın o tarihte var olduğu üçüncü tarafça doğrulanabilir. '
+                        '<b style="color:' + T["ink"] + '">14.09 08:06</b> · TSA onayı</div>', "padding:11px 13px") + '</div>')
+
+# --- D1 franchise marka kütüphanesi
+def scr_franchise(W=1000, H=560):
+    tablo = satir([["Kahve Durağı Kadıköy", "şirket", "v4", "%96", chip("uyumlu", "ok")],
+                   ["KD Bostancı (franchise)", "franchise", "v4", "%91", chip("uyumlu", "ok")],
+                   ["KD Çekmeköy (franchise)", "franchise", "v3", "%78", chip("eski sürüm", "warn")],
+                   ["KD Gebze (franchise)", "franchise", "v4", "%64", chip("takipte", "crit")],
+                   ["KD İzmit (franchise)", "franchise", "—", "—", chip("kurulmadı", "crit")]],
+                  ["İşletme", "Tip", "Liste sürümü", "Zamanında", "Durum"], ["34%", "16%", "16%", "16%", "18%"])
+    return ekran(W, H, "Marka kütüphanesi", "Kahve Durağı · 4 franchise · 12 şirket şubesi",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);gap:13px;min-height:0">'
+                 '<div style="display:flex;flex-direction:column;gap:9px">'
+                 + card(lbl("Yayınlanan standart") + '<b style="font-family:' + SERIF + ';font-size:15px">Kapanış listesi v4</b>'
+                        '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:4px">'
+                        '15 madde · 4 kritik · 2 Eylül’de yayınlandı. Franchise işletmeleri maddeyi silemez, '
+                        'yalnızca kendi maddelerini ekleyebilir.</div>'
+                        '<div style="display:flex;gap:7px;margin-top:9px">'
+                        '<div style="padding:7px 12px;border-radius:9px;background:' + T["marka"] + ';color:#fff;font-weight:600;font-size:12.5px">v5 yayınla</div>'
+                        '<div style="padding:7px 12px;border-radius:9px;border:1.5px solid ' + T["cizgi"] + ';font-size:12.5px;color:' + T["ink2"] + '">Değişikliği gör</div></div>', "padding:11px 13px")
+                 + '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:9px 11px;font-size:11.5px;line-height:1.45;color:' + T["ink2"] + '">'
+                 'Marka merkezi uyum oranını ve liste sürümünü görür; franchise işletmesinin kendi personel verisini görmez.</div></div>'
+                 '<div style="display:flex;flex-direction:column;gap:7px;min-width:0">' + lbl("Uyum tablosu") + tablo + '</div></div>')
+
+# --- D2 başka sektör paketleri
+def scr_paketler(W=900, H=500):
+    pk = lambda ad, n, ornek: ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
+                               '<b style="font-size:13.5px">' + ad + '</b>'
+                               '<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:2px">' + n + '</div>'
+                               '<div style="font-size:11.5px;color:' + T["ink2"] + ';line-height:1.4;margin-top:5px">' + ornek + '</div>'
+                               '<div style="margin-top:8px;padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:8px;font-size:12px;color:' + T["ink2"] + ';display:inline-block">Önizle</div></div>')
+    return ekran(W, H, "Sektör paketleri", "Hazır şablon ve madde setleri",
+                 '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+                 + pk("Perakende zinciri", "7 liste · 86 madde", "Kepenk ve alarm, kasa devri, reyon sıcaklığı, son kullanma tarihi taraması, vitrin standardı")
+                 + pk("Otel ve konaklama", "9 liste · 112 madde", "Kat temizliği kontrolü, havuz kimyasal ölçümü, kahvaltı açılışı, yangın kaçış yolu turu")
+                 + pk("Akaryakıt istasyonu", "6 liste · 74 madde", "Tank ölçümü, pompa kontrolü, yangın tüpü turu, tuvalet saatlik kontrol, kasa devri")
+                 + pk("Üretim ve depo", "8 liste · 98 madde", "Hat temizliği, metal dedektör doğrulama, soğuk oda ölçümü, forklift günlük kontrol")
+                 + '</div>'
+                 '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.5;color:' + T["ink2"] + '">'
+                 'Paketler aynı çekirdeği kullanır: tekrarlı liste, kanıt, aksiyon ve denetim PDF’i. Değişen yalnızca maddeler, '
+                 'ölçüm aralıkları ve mevzuat notlarıdır.</div>')
+
+# --- D3 POS ve İK entegrasyonları
+def scr_entegrasyon(W=900, H=520):
+    kutu = lambda ad, durum, alt, ok=True: ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + (T["cizgi"] if ok else T["uyari"]) + ';border-radius:11px;padding:11px 13px">'
+                                            '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">'
+                                            '<b style="font-size:13.5px">' + ad + '</b>' + chip(durum, "ok" if ok else "warn") + '</div>'
+                                            '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:4px;line-height:1.45">' + alt + '</div></div>')
+    tablo = satir([["Kadıköy", "KD-01", chip("eşleşti", "ok")], ["Üsküdar", "KD-02", chip("eşleşti", "ok")],
+                   ["Bakırköy", "KD-07", chip("eşleşti", "ok")], ["Bornova", "—", chip("eşleşmedi", "crit")]],
+                  ["Şube", "Kasa mağaza kodu", "Durum"], ["40%", "35%", "25%"])
+    return ekran(W, H, "Entegrasyonlar", "Kahve Durağı",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:13px;min-height:0">'
+                 '<div style="display:flex;flex-direction:column;gap:9px">'
+                 + kutu("Kasa (POS)", "bağlı", "Satış ve iptal verisi 15 dakikada bir alınır. Üretim–satış mutabakatı bu veriyle çalışır. Son senk: 09:42")
+                 + kutu("İK / bordro", "bağlı değil", "Personel ve vardiya bilgisi elle giriliyor. Bağlanırsa işe giriş–çıkış ve vardiya atamaları kendiliğinden güncellenir.", ok=False)
+                 + '<div style="background:' + T["yuzey2"] + ';border-radius:10px;padding:9px 11px;font-size:11.5px;line-height:1.45;color:' + T["ink2"] + '">'
+                 'Bağlantı tek yönlüdür: veriler okunur, karşı sisteme yazılmaz. Hangi alanların alındığı sözleşme ekinde listelenir.</div></div>'
+                 '<div style="display:flex;flex-direction:column;gap:7px;min-width:0">' + lbl("Şube ↔ kasa eşlemesi") + tablo
+                 + '<div style="font-size:11.5px;color:' + T["sessiz"] + ';line-height:1.45">Eşleşmeyen şube mutabakat raporuna girmez; '
+                 'kurulumda bir kez eşlenir.</div></div></div>')
+
+# --- D4 kamera ile üretim sayımı
+def scr_kamera(W=1000, H=560):
+    saatler = [("12:00", 18, 17), ("13:00", 26, 25), ("14:00", 21, 20), ("15:00", 12, 12), ("16:00", 15, 14),
+               ("17:00", 19, 13), ("18:00", 24, 15), ("19:00", 28, 19), ("20:00", 22, 21)]
+    cub = ""
+    for s, u, sa in saatler:
+        fark = u - sa
+        cub += ('<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">'
+                '<div style="height:92px;display:flex;align-items:flex-end;gap:3px">'
+                '<div style="width:11px;height:' + str(int(u * 3.2)) + 'px;background:' + T["ink"] + ';border-radius:2px 2px 0 0"></div>'
+                '<div style="width:11px;height:' + str(int(sa * 3.2)) + 'px;background:' + (T["kritik"] if fark > 3 else T["marka"]) + ';border-radius:2px 2px 0 0"></div></div>'
+                '<div style="font-size:9.5px;color:' + T["sessiz"] + '">' + s + '</div></div>')
+    return ekran(W, H, "Üretim sayımı (kamera)", "Kadıköy · fırın ağzı · 13 Eylül",
+                 '<div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:13px;min-height:0">'
+                 '<div style="display:flex;flex-direction:column;gap:9px;min-width:0">'
+                 + card(lbl("Saat başına üretilen (koyu) ve kasaya giren (renkli)")
+                        + '<div style="display:flex;gap:4px;align-items:flex-end">' + cub + '</div>'
+                        '<div style="font-size:11px;color:' + T["sessiz"] + ';margin-top:7px">17:00–19:00 arasında üretim kasayı aşıyor: 24 adet fark.</div>', "padding:11px 13px")
+                 + '<div style="display:flex;gap:9px">' + foto("fırın ağzı · 18:12 · yalnızca tezgâh", "sayım", T["ink"], "46%")
+                 + '<div style="flex:1;background:' + T["yuzey2"] + ';border-radius:10px;padding:10px 12px;font-size:11.5px;line-height:1.5;color:' + T["ink2"] + '">'
+                 'Kamera yalnızca tezgâh yüzeyini görür ve <b>ürün sayar</b>. Yüz tanıma, kimlik tespiti ve kişi takibi yok; '
+                 'görüntü saklanmaz, yalnızca sayı ve zaman kaydedilir.</div></div></div>'
+                 '<div style="display:flex;flex-direction:column;gap:9px">'
+                 + card('<div style="font-family:' + SERIF + ';font-size:22px;font-weight:700;color:' + T["kritik"] + '">24 adet</div>'
+                        '<div style="font-size:11.5px;color:' + T["sessiz"] + '">açıklanamayan fark · 13 Eylül</div>'
+                        '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:7px">'
+                        'Sayım ±%3 doğrulukla çalışır; eşiğin altındaki farklar rapor edilmez. Fark, sebep girilmeden kapanmaz.</div>', "padding:11px 13px")
+                 + '<div style="background:' + T["uyariA"] + ';border-radius:10px;padding:10px 12px;font-size:11.5px;line-height:1.5;color:' + T["ink2"] + '">'
+                 'Kamera kurulumu işyeri kamera mevzuatına tabidir: personele duyuru, yasak alan kuralları ve hukuk görüşü olmadan kurulmaz.</div></div></div>')
+
+
+def taslak_bant(metin):
+    return ('<div style="background:' + T["uyariA"] + ';border-left:3px solid ' + T["uyari"] + ';border-radius:0 11px 11px 0;padding:10px 13px;'
+            'font-size:12px;line-height:1.5;color:' + T["ink2"] + '">' + metin + '</div>')
+
+def kart_genis(no, baslik, ozet, liste, gorsel, cap):
+    bas = ('<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">'
+           '<span style="font-family:' + SERIF + ';font-size:19px;font-weight:700;color:' + T["marka"] + ';line-height:1">' + str(no) + '</span>'
+           '<span style="font-family:' + SERIF + ';font-size:16.5px;font-weight:700;line-height:1.2">' + baslik + '</span>' + rozet("tasarım taslağı", "taslak") + '</div>')
+    alt = ('<div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;margin-top:8px">'
+           '<div style="font-size:13px;line-height:1.5;color:' + T["ink2"] + '">' + ozet + '</div>'
+           '<div>' + bullets(liste).replace('margin-top:7px', 'margin-top:0') + '</div></div>')
+    return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:13px;padding:13px 15px;display:flex;flex-direction:column;gap:7px">'
+            + bas + '<div style="display:flex;justify-content:center">' + gorsel + '</div>'
+            '<div style="font-size:10.5px;color:' + T["sessiz"] + ';text-align:center">' + cap + '</div>' + alt + '</div>')
+
 def s5():
-    def oge(ad, aciklama):
-        return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:9px 12px">'
-                '<b style="font-size:13px">' + ad + '</b>'
-                '<div style="font-size:12px;line-height:1.45;color:' + T["ink2"] + ';margin-top:3px">' + aciklama + '</div></div>')
-    ilke = ('<div style="background:' + T["markaA"] + ';border-radius:12px;padding:12px 15px">'
-            '<b style="font-family:' + SERIF + ';font-size:15px;color:' + T["marka"] + '">İlk sürümü neden dar tuttuk</b>'
-            '<div style="font-size:12.5px;line-height:1.5;color:' + T["ink2"] + ';margin-top:4px;max-width:86ch">'
-            'Bir özellik ancak şu üç sorudan birini geçerse ilk sürüme girdi: <b>1)</b> Personel bunu görmese kapanış listesi tamamlanmaz mı? '
-            '<b>2)</b> Yönetici bunu görmese kaçırılan iş görünmez mi? <b>3)</b> Bu olmadan denetimde kanıt verilemez mi? '
-            'Geri kalanı silinmedi, sıraya alındı — böylece pilot dört haftada ölçülebiliyor ve ürün ayar labirentine dönüşmüyor.</div></div>')
-    v11 = ("".join([
-        oge("Madde kütüphanesi ve işletme türü paketleri",
-            "Kafe, fırın, hızlı servis gibi işletme türlerine göre hazır madde paketleri; listeyi sıfırdan yazmak yerine kütüphaneden seçip "
-            "şubenize uyarlarsınız. Kütüphanedeki madde güncellenince türetilmiş maddeler uyarı alır."),
-        oge("Benzer fotoğraf tespiti",
-            "Aynı dosyanın yeniden gönderilmesi bugün de engelleniyor. Sıradaki sürümde birkaç saniye arayla çekilmiş, neredeyse aynı kareler de "
-            "“benzer kanıt” olarak işaretlenir."),
-        oge("Üretim–satış mutabakatı",
-            "Kapanışta girilen üretim adedi POS satışıyla karşılaştırılır; aradaki <b>açıklanamayan fark</b> sebepleriyle birlikte raporlanır. "
-            "Şube ve vardiya düzeyinde: kişi puanı ve biyometri yok."),
-        oge("Duyuru ve okundu onayı",
-            "Merkez duyurusu şubelere düşer; kimin okuduğu ve onayladığı rapor olur — “gruba yazdım, gördü mü” sorusu biter."),
-        oge("Koşullu maddeler",
-            "Cevaba göre ek madde açılır: “ekipman arızalı” denince servis bilgisi, “Hayır” denince ek fotoğraf. Bugünkü sürümde kural tek ve sabittir."),
-        oge("Ayrıntılı raporlar",
-            "Şube sıralaması, en çok başarısız olan maddeler, yapılamadı sebeplerinin dağılımı, gecikme takibi, Excel ve paylaşım bağlantısı."),
-        oge("Denetim izi ekranı",
-            "Her olay bugün de değiştirilemez biçimde kaydediliyor; sıradaki sürümde bu kayıt arayüzden okunur hâle gelir ve nitelikli zaman damgası eklenir."),
-    ]))
-    v2 = ("".join([
-        oge("Franchise marka kütüphanesi",
-            "Marka merkezi standart listeyi yayınlar, franchise işletmeleri kendi hesabında kullanır; uyum merkezden izlenir."),
-        oge("Başka sektör paketleri",
-            "Perakende zinciri, otel, akaryakıt istasyonu, üretim gibi alanlara hazır şablon ve madde paketleri."),
-        oge("POS ve İK entegrasyonları",
-            "Personel ve vardiya bilgisi İK sisteminden, satış verisi kasadan gelir; atamalar ve mutabakat elle veri girişi olmadan çalışır."),
-        oge("Kamera ile üretim sayımı",
-            "Fırın ağzı veya tezgâh kamerası üretilen adedi sayar ve satışla karşılaştırır. Hukuki görüş ve ölçüm doğrulaması olmadan başlanmaz; "
-            "kimlik tanıma ve biyometri hiçbir aşamada yok."),
-    ]))
-    not_ = ('<div style="background:' + T["uyariA"] + ';border-radius:11px;padding:11px 13px;font-size:12px;line-height:1.5;color:' + T["ink2"] + '">'
-            '<b>Bu sayfada ekran yok, çünkü bu özellikler henüz tasarlanmadı.</b> Pilot ölçütleri ve sözleşme yalnızca bugünkü sürümü kapsar; '
-            'buradaki satırlar söz değil, sıraya alınmış işlerdir. Sıralarını pilotta sizin şubelerinizden çıkan ihtiyaç belirler.</div>')
-    return page(head("Yol haritası") + h1("Sonra ne geliyor", 27)
-                + p("Bugün teslim edilen sürüm bilerek dar tutuldu. Aşağıdakiler kapsam dışında kaldı — ama silinmedi, sıraya alındı.")
+    ilke = ('<div style="background:' + T["markaA"] + ';border-radius:12px;padding:11px 14px">'
+            '<b style="font-family:' + SERIF + ';font-size:14.5px;color:' + T["marka"] + '">İlk sürümü neden dar tuttuk</b>'
+            '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:3px;max-width:90ch">'
+            'Bir özellik ancak şu üç sorudan birini geçerse bugünkü sürüme girdi: personel görmese liste tamamlanmaz mı, '
+            'yönetici görmese kaçırılan iş görünmez mi, bu olmadan denetimde kanıt verilemez mi. '
+            'Geri kalanı silinmedi — tasarlandı, sıraya alındı.</div></div>')
+    s1k = kart("S1", "Liste yazmak yerine kütüphaneden seçmek", "tasarım taslağı", "taslak",
+               "İşletme türünüze göre hazır madde paketleri gelir; kütüphaneden seçip şubenize uyarlarsınız. "
+               "Yeni şube açtığınızda ya da menü değiştiğinde listeyi baştan kurmazsınız.",
+               ["Kafe, fırın, hızlı servis, lokanta paketleri — her biri liste ve madde seti",
+                "Kütüphanedeki madde güncellenince kopyanız bozulmaz, “güncelleme var” uyarısı alır",
+                "Kendi maddenizi eklersiniz; kütüphane maddesini şubeye göre değiştirebilirsiniz"],
+               scaled(scr_kutuphane(1100, 620), 1100, 620, 0.31), "Madde kütüphanesi ve paketler")
+    s2k = kart("S2", "Üretilen ile satılan karşılaştırılır", "tasarım taslağı", "taslak",
+               "Kapanışta girilen üretim adedi kasa satışıyla karşılaştırılır; aradaki <b>açıklanamayan fark</b> sebepleriyle raporlanır. "
+               "Amaç kimseyi yakalamak değil, farkı ölçülebilir hâle getirmek.",
+               ["Fire, personel yemeği, ikram, kasaya geç giriş gibi sebepler seçilir; açıklama girilmeden kayıt kapanmaz",
+                "Rapor şube ve vardiya düzeyinde: kişi adı, kişi puanı ve biyometri yok",
+                "“Açıklanamıyor” cevabı bölge müdürüne yükselir"],
+               scaled(scr_mutabakat(1100, 620), 1100, 620, 0.31), "Üretim–satış mutabakatı")
+    return page(head("Sıradaki sürüm") + h1("Sonra ne geliyor", 27)
+                + p("Bugün teslim edilen sürüm bilerek dar tutuldu; aşağıdakiler kapsam dışında kaldı ama silinmedi. "
+                    "Bu bölümdeki on bir ekran, o satırların nasıl görüneceğini gösterir.")
                 + ilke
-                + label("Sıradaki sürüm — pilot sonrası")
-                + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' + v11 + '</div>'
-                + label("Daha sonra")
-                + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' + v2 + '</div>'
-                + not_ + foot(5, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=9)
+                + taslak_bant("<b>Bu bölümdeki ekranlar tasarım taslağıdır.</b> Özellikler henüz geliştirilmedi; sıraları pilotta sizin "
+                              "şubelerinizden çıkan ihtiyaca göre belirlenir. Sözleşme ve pilot ölçütleri yalnızca bugünkü sürümü kapsar.")
+                + s1k + s2k + foot(5), gap=11)
+
+def s6():
+    s3k = kart("S3", "Neredeyse aynı iki fotoğraf işaretlenir", "tasarım taslağı", "taslak",
+               "Aynı dosyanın ikinci kez gönderilmesi bugün de engelleniyor. Bu adımda, dosya farklı olsa bile "
+               "birkaç saniye arayla aynı açıdan çekilmiş kareler “benzer kanıt” olarak işaretlenir.",
+               ["Gönderim engellenmez; kayıt incelenmek üzere panoya düşer",
+                "Benzerlik eşiği ayarlanır — gereksiz uyarı istemezsiniz",
+                "Karar insanda kalır: sistem yalnızca “şuna bakın” der"],
+               scaled(scr_benzer(760, 430), 760, 430, 0.45), "Benzer kanıt uyarısı")
+    s4k = kart("S4", "Duyuruyu kimin okuduğu kayda geçer", "tasarım taslağı", "taslak",
+               "Merkez duyurusu şubelere düşer; kimin okuduğu ve onayladığı rapor olur. "
+               "“Gruba yazdım, gördü mü” sorusu sayıya dönüşür.",
+               ["Ek dosya eklenir: fiyat listesi, mevzuat yazısı, görsel standart",
+                "Okumayana otomatik hatırlatma gider",
+                "Onay istenen duyuruda kişi “okudum” değil “uygulayacağım” der"],
+               scaled(scr_duyuru(900, 520), 900, 520, 0.38), "Duyuru ve okundu raporu")
+    s5k = kart("S5", "Liste yalnızca gerektiğinde uzar", "tasarım taslağı", "taslak",
+               "Cevaba göre ek madde açılır: “Hayır” denince sebep ve fotoğraf, “ekipman arızalı” denince servis sorusu. "
+               "Bugünkü sürümde kural tek ve sabittir; bu adımda şablona özel kural tanımlanır.",
+               ["Normal gecede liste kısa kalır, sorun çıkınca derinleşir",
+                "Aralık dışı ölçümde 30 dakika sonra ikinci ölçüm maddesi açılabilir",
+                "Kurallar şablonda tanımlanır; personel tarafında görünmez"],
+               scaled(scr_kosul(900, 520), 900, 520, 0.38), "Koşullu madde kuralları")
+    return page(head("Sıradaki sürüm") + s3k + s4k + s5k + foot(6), gap=11)
+
+def s7():
+    s6k = kart_genis("S6", "Tek seferlik soruların cevabı raporda",
+                     "Şube sıralaması, en çok başarısız olan maddeler, yapılamadı sebeplerinin dağılımı ve gecikme takibi tek sayfada; "
+                     "Excel’e aktarılır ya da hesap açmadan açılan bir bağlantıyla paylaşılır.",
+                     ["Isı haritası: hangi madde hangi şubede tekrar tekrar düşüyor",
+                      "Sebep dağılımı “malzeme yok %38” diyorsa sorun operasyonda değil tedarikte",
+                      "Aylık toplantıya hazır çıktı: ekran görüntüsü almaya gerek kalmaz"],
+                     scaled(scr_raporlar(1100, 620), 1100, 620, 0.46), "Raporlar · ısı haritası, şube sıralaması, sebep dağılımı")
+    s7k = kart_genis("S7", "Kaydın değişmediğini ekranda görmek",
+                     "Her olay bugün de değiştirilemez biçimde kaydediliyor; bu adımda o kayıt arayüzden okunur hâle gelir "
+                     "ve bağımsız bir zaman damgasıyla onaylanır.",
+                     ["Filtreli olay listesi: kim, ne zaman, ne yaptı",
+                      "Zincir doğrulama: tek bir kaydı değiştirmek zinciri kırar ve sayfada görünür",
+                      "Zaman damgası: kaydın o tarihte var olduğunu üçüncü taraf doğrular"],
+                     scaled(scr_izi(1000, 560), 1000, 560, 0.49), "Denetim izi · olay listesi ve zincir doğrulama")
+    return page(head("Sıradaki sürüm") + s6k + s7k + foot(7), gap=11)
+
+def s8():
+    d1k = kart("D1", "Franchise’ta standart merkezden yayınlanır", "tasarım taslağı", "taslak",
+               "Marka merkezi standart listeyi yayınlar; franchise işletmeleri kendi hesabında kullanır, uyum merkezden izlenir. "
+               "Marka standardı ile işletmenin kendi verisi birbirine karışmaz.",
+               ["Franchise standart maddeyi silemez, kendi maddesini ekleyebilir",
+                "Merkez uyum oranını ve liste sürümünü görür; personel verisini görmez",
+                "Yeni sürüm yayınlanınca eski sürümde kalan işletmeler işaretlenir"],
+               scaled(scr_franchise(1000, 560), 1000, 560, 0.34), "Marka kütüphanesi ve uyum tablosu")
+    d2k = kart("D2", "Aynı çekirdek, başka sektörler", "tasarım taslağı", "taslak",
+               "Perakende zinciri, otel, akaryakıt istasyonu ve üretim için hazır şablon setleri. "
+               "Zincirinizin birden fazla işi varsa hepsi tek hesapta yürür.",
+               ["Değişen yalnızca maddeler, ölçüm aralıkları ve mevzuat notları",
+                "Tekrarlı liste, kanıt, aksiyon ve denetim PDF’i aynı kalır",
+                "Bir paketle başlar, kendi maddelerinizle devam edersiniz"],
+               scaled(scr_paketler(900, 500), 900, 500, 0.38), "Sektör paketleri")
+    d3k = kart("D3", "Kasadan ve İK’dan veri kendiliğinden gelir", "tasarım taslağı", "taslak",
+               "Satış verisi kasadan, personel ve vardiya bilgisi İK sisteminden alınır; atamalar ve mutabakat "
+               "elle veri girişi olmadan çalışır.",
+               ["Bağlantı tek yönlü: veri okunur, karşı sisteme yazılmaz",
+                "Şube ↔ kasa eşlemesi kurulumda bir kez yapılır",
+                "Hangi alanların alındığı sözleşme ekinde listelenir"],
+               scaled(scr_entegrasyon(900, 520), 900, 520, 0.38), "Entegrasyon ayarları ve eşleme")
+    return page(head("Daha sonra") + h1("Büyüyünce gerekecekler", 27)
+                + p("Bu satırlar birkaç yüz şubeye, birden fazla markaya ya da başka bir sektöre geçildiğinde anlamlı olur; "
+                    "bugünkü sürümün sahada çalıştığını görmeden sıraya alınmazlar.")
+                + d1k + d2k + d3k + foot(8), gap=11)
+
+def s9():
+    d4k = kart_genis("D4", "Beyana değil ölçüme dayanan sayaç",
+                     "Fırın ağzı veya tezgâh kamerası üretilen adedi sayar ve kasa satışıyla karşılaştırır. "
+                     "Sayımı yapan kişi işin içindeyse beyan tek başına yetmez; bu sayaç bağımsız ikinci kaynaktır.",
+                     ["Kamera yalnızca tezgâhı görür ve ürün sayar: yüz tanıma, kimlik tespiti ve kişi takibi yok",
+                      "Hedef doğruluk ±%3; eşiğin altındaki farklar raporlanmaz",
+                      "Hukuk görüşü, personele duyuru ve yasak alan kuralları olmadan kurulmaz"],
+                     scaled(scr_kamera(1000, 560), 1000, 560, 0.66), "Kamera ile üretim sayımı · saatlik üretim ve kasa karşılaştırması")
+    siralama = ('<div style="background:' + INK_BAND + ';border-radius:13px;padding:15px 20px;display:flex;flex-direction:column;gap:6px">'
+                + label("Sıradakini siz belirlersiniz", "rgba(255,255,255,.55)")
+                + h1("Yol haritası tahminle değil sayıyla sıralanır", 22, "#fff", "40ch")
+                + p("Pilot boyunca hangi eksiğin canınızı yaktığını ölçeriz: kaç kez “bu listeyi kütüphaneden alabilsem”, "
+                    "kaç kez “bu raporu Excel’e alsam” dediniz. Sıradaki sürümün içeriği bu sayılardan çıkar — tahminimizden değil.",
+                    12.5, "rgba(255,255,255,.78)", "88ch") + '</div>')
+    kapanis = taslak_bant("<b>Bu bölümdeki ekranlar üründe yok.</b> Tasarım taslağı olarak hazırlandılar; ne zaman geliştirilecekleri "
+                          "pilot sonrası kararlaştırılır. Satın aldığınız ve pilot ölçütlerinin bağladığı kapsam, bu föyün ilk dört sayfasıdır.")
+    iletisim = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:11px">'
+                '<div style="display:flex;flex-direction:column;gap:3px">' + w(21) +
+                '<div style="font-size:11.5px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
+                '<div style="font-size:13px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
+                '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
+    return page(head("Daha sonra") + d4k + siralama + kapanis + iletisim
+                + foot(9, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=11)
 
 # ---------------------------------------------------------------- üretim
-PAGES = {"Main.dc.html": s1, "O2.dc.html": s2, "O3.dc.html": s3, "O4.dc.html": s4, "O5.dc.html": s5}
-SCREENS = {"Sablonlar.dc.html": scr_sablon, "Cevrimdisi.dc.html": scr_offline, "Bayraklar.dc.html": scr_bayrak, "BelgeTakvimi.dc.html": scr_belge}
+PAGES = {"Main.dc.html": s1, "O2.dc.html": s2, "O3.dc.html": s3, "O4.dc.html": s4,
+         "O5.dc.html": s5, "O6.dc.html": s6, "O7.dc.html": s7, "O8.dc.html": s8, "O9.dc.html": s9}
+SCREENS = {"Sablonlar.dc.html": scr_sablon, "Cevrimdisi.dc.html": scr_offline, "Bayraklar.dc.html": scr_bayrak, "BelgeTakvimi.dc.html": scr_belge,
+           "Kutuphane.dc.html": scr_kutuphane, "Mutabakat.dc.html": scr_mutabakat, "BenzerKanit.dc.html": scr_benzer,
+           "Duyuru.dc.html": scr_duyuru, "KosulluMadde.dc.html": scr_kosul, "Raporlar.dc.html": scr_raporlar,
+           "DenetimIzi.dc.html": scr_izi, "Franchise.dc.html": scr_franchise, "SektorPaketleri.dc.html": scr_paketler,
+           "Entegrasyon.dc.html": scr_entegrasyon, "KameraSayim.dc.html": scr_kamera}
 
 def main():
     os.makedirs(OUTDIR, exist_ok=True)
@@ -405,6 +791,17 @@ def main():
     ab = [{"file": n, "title": "Özellik föyü · sayfa " + str(i + 1), "x": i * 880, "y": 0, "w": 794, "h": 1123, "print": "fixed"}
           for i, n in enumerate(PAGES)]
     for i, (n, t, ww, hh) in enumerate([("Sablonlar.dc.html", "Ekran · şablonlar (web)", 1200, 760),
+                                        ("Kutuphane.dc.html", "Taslak · madde kütüphanesi", 1100, 620),
+                                        ("Mutabakat.dc.html", "Taslak · üretim–satış mutabakatı", 1100, 620),
+                                        ("BenzerKanit.dc.html", "Taslak · benzer kanıt uyarısı", 760, 430),
+                                        ("Duyuru.dc.html", "Taslak · duyuru ve okundu onayı", 900, 520),
+                                        ("KosulluMadde.dc.html", "Taslak · koşullu maddeler", 900, 520),
+                                        ("Raporlar.dc.html", "Taslak · ayrıntılı raporlar", 1100, 620),
+                                        ("DenetimIzi.dc.html", "Taslak · denetim izi", 1000, 560),
+                                        ("Franchise.dc.html", "Taslak · franchise marka kütüphanesi", 1000, 560),
+                                        ("SektorPaketleri.dc.html", "Taslak · sektör paketleri", 900, 500),
+                                        ("Entegrasyon.dc.html", "Taslak · POS ve İK entegrasyonları", 900, 520),
+                                        ("KameraSayim.dc.html", "Taslak · kamera ile üretim sayımı", 1000, 560),
                                         ("Cevrimdisi.dc.html", "Ekran · çevrimdışı (mobil)", 390, 844),
                                         ("Bayraklar.dc.html", "Ekran · kanıt bayrakları (web)", 900, 520),
                                         ("BelgeTakvimi.dc.html", "Ekran · belge takvimi (web, SCR-W-14)", 1200, 760)]):

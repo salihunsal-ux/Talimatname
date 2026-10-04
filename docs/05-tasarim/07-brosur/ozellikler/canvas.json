@@ -46,6 +46,42 @@
       "print": "fixed"
     },
     {
+      "file": "O6.dc.html",
+      "title": "Özellik föyü · sayfa 6",
+      "x": 4400,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O7.dc.html",
+      "title": "Özellik föyü · sayfa 7",
+      "x": 5280,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O8.dc.html",
+      "title": "Özellik föyü · sayfa 8",
+      "x": 6160,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O9.dc.html",
+      "title": "Özellik föyü · sayfa 9",
+      "x": 7040,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
       "file": "Sablonlar.dc.html",
       "title": "Ekran · şablonlar (web)",
       "x": 0,
@@ -54,9 +90,97 @@
       "h": 760
     },
     {
+      "file": "Kutuphane.dc.html",
+      "title": "Taslak · madde kütüphanesi",
+      "x": 1320,
+      "y": 1280,
+      "w": 1100,
+      "h": 620
+    },
+    {
+      "file": "Mutabakat.dc.html",
+      "title": "Taslak · üretim–satış mutabakatı",
+      "x": 2640,
+      "y": 1280,
+      "w": 1100,
+      "h": 620
+    },
+    {
+      "file": "BenzerKanit.dc.html",
+      "title": "Taslak · benzer kanıt uyarısı",
+      "x": 3960,
+      "y": 1280,
+      "w": 760,
+      "h": 430
+    },
+    {
+      "file": "Duyuru.dc.html",
+      "title": "Taslak · duyuru ve okundu onayı",
+      "x": 5280,
+      "y": 1280,
+      "w": 900,
+      "h": 520
+    },
+    {
+      "file": "KosulluMadde.dc.html",
+      "title": "Taslak · koşullu maddeler",
+      "x": 6600,
+      "y": 1280,
+      "w": 900,
+      "h": 520
+    },
+    {
+      "file": "Raporlar.dc.html",
+      "title": "Taslak · ayrıntılı raporlar",
+      "x": 7920,
+      "y": 1280,
+      "w": 1100,
+      "h": 620
+    },
+    {
+      "file": "DenetimIzi.dc.html",
+      "title": "Taslak · denetim izi",
+      "x": 9240,
+      "y": 1280,
+      "w": 1000,
+      "h": 560
+    },
+    {
+      "file": "Franchise.dc.html",
+      "title": "Taslak · franchise marka kütüphanesi",
+      "x": 10560,
+      "y": 1280,
+      "w": 1000,
+      "h": 560
+    },
+    {
+      "file": "SektorPaketleri.dc.html",
+      "title": "Taslak · sektör paketleri",
+      "x": 11880,
+      "y": 1280,
+      "w": 900,
+      "h": 500
+    },
+    {
+      "file": "Entegrasyon.dc.html",
+      "title": "Taslak · POS ve İK entegrasyonları",
+      "x": 13200,
+      "y": 1280,
+      "w": 900,
+      "h": 520
+    },
+    {
+      "file": "KameraSayim.dc.html",
+      "title": "Taslak · kamera ile üretim sayımı",
+      "x": 14520,
+      "y": 1280,
+      "w": 1000,
+      "h": 560
+    },
+    {
       "file": "Cevrimdisi.dc.html",
       "title": "Ekran · çevrimdışı (mobil)",
-      "x": 1320,
+      "x": 15840,
       "y": 1280,
       "w": 390,
       "h": 844
@@ -64,7 +188,7 @@
     {
       "file": "Bayraklar.dc.html",
       "title": "Ekran · kanıt bayrakları (web)",
-      "x": 2640,
+      "x": 17160,
       "y": 1280,
       "w": 900,
       "h": 520
@@ -72,7 +196,7 @@
     {
       "file": "BelgeTakvimi.dc.html",
       "title": "Ekran · belge takvimi (web, SCR-W-14)",
-      "x": 3960,
+      "x": 18480,
       "y": 1280,
       "w": 1200,
       "h": 760
