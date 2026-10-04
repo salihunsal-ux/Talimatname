@@ -1,6 +1,6 @@
 # Kabul test senaryoları
 
-119 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
+125 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-120…TC-125 E-11 ve E-12 ile, TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
 
 ## UC-01 · Hesap kurulumu
 
@@ -225,3 +225,14 @@
 | TC-117 | Kritik anında bildirim ve SMS | 23:20 kritik aralık dışı → şube ve bölge müdürüne anında push (sessiz saat muaf); 10 dk içinde teslim/okunma yoksa SMS (sahte sağlayıcıda görünür); okunan push için SMS gitmez; teslim izi logda | FR-1008, BR-11 | B | v1 |
 | TC-118 | İstisna görünümü ve "her şey yolunda" | Dün gece 2 sorunlu hücre → pano varsayılanı yalnızca bu satırları listeler, ızgara "tümünü göster" ile açılır; sorunsuz gün → "Dün gece her şey yolunda" durumu; mobil Bölgem listesi aynı kaynaktan | FR-1219, FR-1201 | E | v1 |
 | TC-119 | Aylık tek sayfa özet | Ağustos verisiyle → % zamanında, geç, kaçırıldı, yapılmayacak; başarısız ve yapılamadı sayıları; şube kırılımı; PDF üretilir, doğrulama kodu ve üretim zamanı var; rakamlar hesaplanmış veriyle eşleşir | FR-1220 | A | v1 |
+
+## v1 eklemeleri (E-11 kanıt bütünlüğü, E-12 belge takvimi)
+
+| TC | Test | Ön koşul → Adımlar → Beklenen | FR/BR | Oto | Sürüm |
+|---|---|---|---|---|---|
+| TC-120 | Aynı fotoğrafın ikinci kez gönderilmesi | Emre dün kapanışta A fotoğrafını gönderdi → bugün aynı dosyayı yüklemeyi dener → yükleme reddedilir, "bu fotoğraf daha önce gönderildi, yeniden çekin"; deneme olay günlüğüne yazılır; farklı bir fotoğraf kabul edilir | FR-0614 | A | v1 |
+| TC-121 | Kanıt bayrakları | Galeriden yükleme denemesi · konum şubeden 300 m uzakta · cihaz saati 25 dk ileri → üç bayrak cevapta saklanır; çalıştırma detayında ve çalıştırma PDF'inde görünür; bayrak metni suçlama değil "incelenmeli" ifadesidir | FR-0615 | E | v1 |
+| TC-122 | Şüpheli kanıt filtresi | Panoda "şüpheli kanıt" filtresi açılır → yalnızca bayraklı çalıştırmalar listelenir; bayraksız gün için liste boş ve "bayrak yok" der | FR-0615 | E | v1 |
+| TC-123 | Belge kaydı ve dosyası | Yangın tüpü dolum belgesi: şube, geçerlilik bitişi, sorumlu, PDF → kayıt oluşur, dosya damgalanır ve SHA-256'sı bağlanır; geçmiş tarihli bitiş girilirse uyarı ile kaydedilir ve "süresi geçmiş" işaretlenir | FR-0522 | E | v1 |
+| TC-124 | Belge uyarıları ve süresi geçende aksiyon | Bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne push + sabah özeti satırı; tarih geçince yüksek öncelikli aksiyon (7 gün vade) açılır ve şube "belge eksik" işaretlenir; belge yenilenince aksiyon kapanır ve işaret kalkar | FR-0523 | A | v1 |
+| TC-125 | Belge görünümü ve dönem PDF'i | Zincir genelinde "yaklaşanlar ve süresi geçenler" listesi (şube × belge türü) sıralı gelir; dönem PDF'i doğrulama kodu ve üretim zamanı taşır | FR-0524 | E | v1 |

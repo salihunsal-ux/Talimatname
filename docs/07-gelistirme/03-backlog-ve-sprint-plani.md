@@ -89,6 +89,7 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-040 | İşçi: damgalama ve küçük resim | FR-0606 | TC-043 | M |
 | ST-041 | Mobil: kamera doğrudan açılır (2 dokunuş), yalnızca kamera, 1–3 fotoğraf, sıkıştırma | FR-0604, 0605 | TC-041, 042 | M |
 | ST-043 | Mobil: konum yakalama ve bayraklar | FR-0606, BR-15 | TC-044 | S |
+| ST-147 | Backend + mobil: kanıt tekilliği (aynı SHA-256 reddi, olay kaydı) ve kanıt bayrakları (galeri · şube dışı konum · cihaz saati · geç senk) (E-11) | FR-0614, 0615 | TC-120, 121 | M |
 | ST-140 | Backend + mobil: sabit kural — başarısız cevapta fotoğraf + not; kritik → aksiyon; ortak fikstürler (E-… FR-0405) | FR-0405, BR-06, BR-08 | TC-019, 023, 046 | M |
 | ST-044 | Backend: bildirim servisi (kanal-bağımsız), push sürücüsü, teslimat izi | FR-1001, 1005…1007 | TC-035 | M |
 | ST-045 | Backend: sabit iki hatırlatma (açılış, −30 dk) | FR-0509 | TC-035 | S |
@@ -138,8 +139,10 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-079 | Web: çalıştırma detayı tam (kanıt tam boy, damga meta, aksiyonlar, olay izi özeti) | FR-1202 | TC-087 | M |
 | ST-080 | Backend + web: kanıt galerisi (şube + tarih) | FR-1208 | TC-092 | S |
 | ST-081 | Backend: günlük yeniden atama | FR-0519, 0520 | TC-108, 110 | S |
+| ST-149 | Backend: belge kaydı ve dosyası; 30/7 gün uyarıları, süresi geçende yüksek öncelikli aksiyon ve "belge eksik" işareti (E-12) | FR-0522, 0523 | TC-123, 124 | M |
 | ST-144 | Mobil: "Bölgem/Şubem" listesi (şube × dün gece durumu → detay) + şube müdürü günlük atama | FR-1211, 0519 | TC-094, 108 | M |
 | ST-083 | Web: günlük atama (pano) | FR-0519 | TC-108 | S |
+| ST-148 | Web: çalıştırma detayında kanıt bayrakları ve panoda "şüpheli kanıt" filtresi (E-11) | FR-0615 | TC-121, 122 | S |
 | ST-084 | Alfa geri bildirim düzeltmeleri | — | — | M |
 | ST-086 | Mobil: sorun bildir (sabit kategori) | FR-0806 | TC-062 | S |
 | ST-093 | Backend + web: sorun → aksiyona çevir / kapat | FR-0807 | TC-063 | S |
@@ -152,6 +155,7 @@ Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'
 | ST-092 | İşçi: dönem PDF'i (sıcaklık günlüğü), arka plan üretim | FR-1214, 1217 | TC-096, 099 | M |
 | ST-145 | Backend + web: aylık tek sayfa özet (E-7) + PDF | FR-1220 | TC-088, TC-119 | M |
 | ST-090 | Web: raporlar sayfası (aylık özet, sıcaklık günlüğü, galeri) | FR-1207, 1208, 1220 | TC-088, 091, 092 | M |
+| ST-150 | Web + işçi: belge takvimi ekranı (SCR-W-14, yaklaşan ve süresi geçen) + dönem PDF'i (E-12) | FR-0524 | TC-125 | M |
 | ST-094 | Web: personel oturum sonlandırma; hesap sayfası (marka, tatil takvimi, aydınlatma metni) | FR-0203, 1402 (minimal) | TC-007 | S |
 | ST-097 | Mobil: erişilebilirlik geçişi (44 px, etiketler, %130) | FR-0611 | TC-050 | S |
 | ST-098 | Cihaz matrisi otomasyonu (Firebase Test Lab gece) | NFR-06 | — | S |
@@ -216,4 +220,4 @@ Pilot bulguları önce. Kalan kapasite v1.1 sırasına göre (aşağıdaki liste
 
 ## Kapasite notu
 
-v1'de 112 hikâye (S1–S10), 3'ü L (bölünmüş); eski planın 138 hikâyesinden 34'ü v1.1'e gitti, 8 yeni (E-1…E-7 ve KVKK betiği) eklendi. 10 sprint × ~16 gün ≈ 160 geliştirici günü; S/M/L ortalaması 1,5/4/8 gün kabulüyle ~165 gün → S1–S10 hâlâ dolu, **tampon S11–S12'dir** (2 sprint ≈ 32 gün). Eski planda tampon sıfırdı ve kapsam %30 daha büyüktü. Riskli sprintler S3–S6 (motor + çevrimdışı) değişmedi; kayma olursa S8 (PDF/aylık özet) S9'a kayar, Beta bir sprint ötelenir, GA S10 korunur.
+v1'de 116 hikâye (S1–S10), 3'ü L (bölünmüş); eski planın 138 hikâyesinden 34'ü v1.1'e gitti, 12 yeni (E-1…E-7, E-11, E-12 ve KVKK betiği) eklendi. 10 sprint × ~16 gün ≈ 160 geliştirici günü; S/M/L ortalaması 1,5/4/8 gün kabulüyle ~178 gün → S1–S10 kapasitenin üstünde, **tampon S11–S12'dir** (2 sprint ≈ 32 gün) ve E-11/E-12 ile ~13 gün tampondan yenmiştir. Eski planda tampon sıfırdı ve kapsam %30 daha büyüktü. Riskli sprintler S3–S6 (motor + çevrimdışı) değişmedi; kayma olursa S8 (PDF/aylık özet) S9'a kayar, Beta bir sprint ötelenir, GA S10 korunur.

@@ -17,7 +17,7 @@ Gönderilebilir ilan metni: [ilan/serbest-gelistirici-ilani.html](ilan/serbest-g
 ## 2. İlan metni (kısa; tam sürüm ilan/ klasöründe)
 
 > **Talimatname — iki serbest geliştirici arıyoruz (Flutter · Python/FastAPI)**
-> Çok şubeli yeme-içme zincirleri için şube talimat listelerini kanıtlı hâle getiren bir ürün geliştiriyoruz: personel listeyi tabletten tamamlar, fotoğraf ve sıcaklıkla kanıtlar; merkez her sabah istisnaları görür. Kapsam, gereksinimler (162 FR), ekranlar, 119 kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler var. Sizden beklediğimiz: 2 haftalık sprintlerle, küçük ama sağlam bir ilk sürümü Şubat 2027'de yayına almak.
+> Çok şubeli yeme-içme zincirleri için şube talimat listelerini kanıtlı hâle getiren bir ürün geliştiriyoruz: personel listeyi tabletten tamamlar, fotoğraf ve sıcaklıkla kanıtlar; merkez her sabah istisnaları görür. Kapsam, gereksinimler (173 FR), ekranlar, 125 kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler var. Sizden beklediğimiz: 2 haftalık sprintlerle, küçük ama sağlam bir ilk sürümü Şubat 2027'de yayına almak.
 > **Backend/web:** FastAPI, PostgreSQL (RLS), Redis, OpenAPI; sonra React paneli. **Mobil:** Flutter, çevrimdışı öncelikli, kamera, kiosk.
 > Tam zamanlı, uzaktan, ~22 hafta; sprint bazlı ücret; 3 saatlik ücretli mini görevle seçim. Başvuru: [e-posta] — CV/portföy + 3 satır: neden bu ürün, en zor çevrimdışı/zaman dilimi problemi, müsaitlik tarihi.
 

@@ -31,15 +31,17 @@ Mobil sekmeler: **Bugün · Aksiyonlar · (Yönetici: Şubem/Bölgem) · Menü**
 | SCR-W-04 | Şablonlar | Liste (sürüm, yayın durumu, kullanan planlar), kütüphane sekmesi | Tablo, kütüphane kartları | FR-0301, 0310, 0311 | v1 (8 şablon) |
 | SCR-W-05 | Şablon editörü | Bölüm/madde ağacı, madde ayar paneli, koşul editörü, puan/eşik, şablon ayarları, mobil önizleme, yayın doğrulaması | Üç sütun: yapı · ayar · önizleme | FR-0302…0309, 0312, 0401…0404 | v1 (basit editör, sabit kural) |
 | SCR-W-06 | Plan editörü | Şablon sürümü, kapsam ağacı, tekrar ve pencere, atama, hatırlatma, eskalasyon merdiveni, 7 gün önizleme | Form + takvim önizleme | FR-0501…0512, 0517 | v1 (sabit hatırlatma/eskalasyon) |
-| SCR-W-07 | Operasyon panosu | Gün seçici, şube × liste ızgarası, filtreler, hücre durumu, canlı yenileme; günlük atama düzenleme | Izgara, durum lejantı | FR-1201, 0519 | v1 (istisna odaklı) |
-| SCR-W-08 | Çalıştırma detayı | Maddeler ve cevaplar, kanıt küçük resim/tam boy ve damga, puan, aksiyonlar, olay izi, ek kayıt, PDF, gözden geçirme (Should) | İki sütun + galeri | FR-1202, 1213, 0608, 1701 | v1 (gözden geçirme yok) |
+| SCR-W-07 | Operasyon panosu | Gün seçici, şube × liste ızgarası, filtreler (şüpheli kanıt dahil), hücre durumu, canlı yenileme; günlük atama düzenleme | Izgara, durum lejantı, bayrak rozeti | FR-1201, 0519, 0615 | v1 (istisna odaklı) |
+| SCR-W-08 | Çalıştırma detayı | Maddeler ve cevaplar, kanıt küçük resim/tam boy ve damga, kanıt bayrakları (galeri · konum · cihaz saati · geç senk), puan, aksiyonlar, olay izi, ek kayıt, PDF, gözden geçirme (Should) | İki sütun + galeri | FR-1202, 1213, 0608, 0614, 0615, 1701 | v1 (gözden geçirme yok) |
 | SCR-W-09 | Aksiyonlar | Liste/filtre (bana, şube, bölge, gecikmiş, kritik), aksiyon detayı, geçişler, yorumlar, eskalasyon adımları | Tablo + yan panel | FR-0901…0915 | v1 (açık/kapalı) |
 | SCR-W-10 | Duyurular | Oluştur (hedef, ek, onay/imza), onay raporu, hatırlat | Form + rapor | FR-1101…1106 | v1.1 |
 | SCR-W-11 | Raporlar | Tamamlanma/zamanındalık, şube sıralaması, başarısız madde ısı haritası, yapılamadı sebepleri, ölçüm günlüğü, kanıt galerisi, aksiyon raporu, kişi düzeyi takip; dışa aktarım (PDF/Excel/paylaşım) | Sekmeler, filtre çubuğu, grafikler, tablo | FR-1203…1218 | v1 (aylık özet, sıcaklık günlüğü, galeri) |
 | SCR-W-12 | Denetim izi | Olay listesi (filtre), okunabilir olay metni, zincir doğrulama, günlük kök ve RFC 3161 | Tablo + doğrulama paneli | FR-1301…1304 | v1.1 |
 | SCR-W-13 | Ayarlar | Hesap, marka, bildirim varsayılanları, eskalasyon şablonları, sebep/kategori setleri, tatil takvimi, saklama, KVKK talepleri, aydınlatma metni, faturalama sayacı, API/webhook (Should) | Sekmeli ayar sayfaları | FR-1402, 1403, 1307, 1309…1312 | v1 minimal (hesap, tatil takvimi, aydınlatma, şube sayacı) |
 
-Tel-çerçevesi çizilmeyen web ekranları: SCR-W-00 (standart giriş formu + TOTP), SCR-W-04 (tablo + kütüphane kartları), SCR-W-10 (duyuru formu + onay raporu tablosu) — envanterdeki bileşen tanımı geliştirme için yeterli; hi-fi aşamasında (F8) çizilir.
+| SCR-W-14 | Belge takvimi | Şube × belge türü listesi (yaklaşanlar ve süresi geçenler), belge kartı (tür, geçerlilik bitişi, sorumlu, dosya), yeni belge, dönem PDF'i | Tablo + yan panel, durum rozeti | FR-0522…0524 | v1 |
+
+Tel-çerçevesi çizilmeyen web ekranları: SCR-W-00 (standart giriş formu + TOTP), SCR-W-04 (tablo + kütüphane kartları), SCR-W-10 (duyuru formu + onay raporu tablosu), SCR-W-14 (tablo + yan panel; SCR-W-09 düzeniyle aynı) — envanterdeki bileşen tanımı geliştirme için yeterli; hi-fi aşamasında (F8) çizilir.
 
 Web ana gezinme (sol menü): **Pano · Şubeler · Personel · Şablonlar · Planlar · Aksiyonlar · Duyurular · Raporlar · Denetim izi · Ayarlar**. Rol kapsamı menüyü daraltır (bölge müdürü: Pano, Aksiyonlar, Duyurular, Raporlar).
 

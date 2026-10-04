@@ -23,13 +23,13 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 ## Hazırlık kontrol listesi
 
 ### Belge tamlığı (BA/PO)
-- [x] v1 çekirdek kapsamı (ADR-0008): 41 satır v1, 27 v1.1, 6 v2; sabitler tablosu; yetenek haritası
+- [x] v1 çekirdek kapsamı (ADR-0008): 43 satır v1, 27 v1.1, 6 v2; sabitler tablosu; yetenek haritası
 - [x] 14 aktör, 20 use case (ana/alternatif/istisna akışlarıyla), 8 uçtan uca senaryo
-- [x] 162 fonksiyonel gereksinim (118 v1, 44 v1.1), 16 NFR, 27 iş kuralı (v1 sabit parametre tablosuyla)
+- [x] 173 fonksiyonel gereksinim (123 v1, 50 v1.1), 16 NFR, 27 iş kuralı (v1 sabit parametre tablosuyla)
 - [x] Veri modeli (ER + alanlar + enum'lar), API taslağı (uç noktalar + senk sözleşmesi + olay sözlüğü)
-- [x] 25 ekran envanteri (v1: 10 mobil + 12 web), 21 tel-çerçeve v1'e göre güncellendi, navigasyon haritası, tasarım token'ları
-- [x] 112 kabul testi (89 v1, 23 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı
-- [x] Mimari, depolar/CI/ortamlar, v1 sprint planı (GA 10. sprint + 2 tampon), DoR/DoD, 8 ADR
+- [x] 26 ekran envanteri (v1: 10 mobil + 13 web), 21 tel-çerçeve v1'e göre güncellendi (SCR-W-14 belge takvimi hi-fi aşamasında çizilecek), navigasyon haritası, tasarım token'ları
+- [x] 125 kabul testi (102 v1, 23 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı
+- [x] Mimari, depolar/CI/ortamlar, v1 sprint planı (GA 10. sprint + 2 tampon), DoR/DoD, 11 ADR
 - [ ] Hi-fi tasarım (F8) — tel-çerçeve yeterli, Sprint 4'e kadar hi-fi gerekli (kamera ve madde bileşenleri)
 - [ ] Hukuki metinler (aydınlatma, veri işleme sözleşmesi) — taslaklar hazır (04-gereksinimler/hukuki), avukat incelemesi pilot öncesi
 - [x] 8 şablon içeriği (ST-102) — taslak hazır (02-urun/07), sahada doğrulanır; Sprint 9'a kadar kesinleşir

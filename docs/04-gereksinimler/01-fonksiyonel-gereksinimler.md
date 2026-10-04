@@ -91,6 +91,9 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0519 | Şube müdürü günün çalıştırmalarında atananı değiştirebilir; "herkes tamamlasın" listelerinde kişi ekleyip çıkarabilir. | v1 | UC-19 |
 | FR-0520 | Atama değişikliği yeni atanana anında bildirilir; eski atanandan kaldırılır; olay logda. | v1 | UC-19 |
 | FR-0521 | Atanmamış çalıştırma şubedeki herkeste görünür; çalıştırmayı ilk açan kullanıcı alır (çalıştırma kilidi, 30 dk'da yenilenir), diğerleri 'X yapıyor' görür; kilit sahibi bırakırsa veya kilit dolarsa liste serbest kalır; şube müdürü kilidi kaldırabilir. (E-2) | v1 | UC-08, UC-19 |
+| FR-0522 | Belge kaydı: ad, tür (yangın tüpü · baca temizliği · su deposu · periyodik elektrik kontrolü · hijyen eğitimi · portör · ruhsat · diğer), şube (ve isteğe bağlı ekipman), düzenlenme ve geçerlilik bitiş tarihi, sorumlu, dosya (PDF/fotoğraf, damgalı), not. Belge dosyası kanıtla aynı bütünlük kurallarına tabidir. (E-12) | v1 | UC-06 |
+| FR-0523 | Belge uyarıları: geçerlilik bitişine 30 ve 7 gün kala sorumluya ve şube müdürüne push + sabah özeti satırı; tarih geçtiğinde aksiyon açılır (yüksek öncelik, 7 gün vade) ve şube "belge eksik" işaretlenir. (E-12) | v1 | UC-12, UC-13 |
+| FR-0524 | Belge görünümü: zincir genelinde "yaklaşanlar ve süresi geçenler" listesi (şube × belge türü), dönem PDF'i; denetimde tek sayfada sunulur. (E-12) | v1 | UC-15, UC-16 |
 
 ## CAP-06 · Mobil yürütme ve kanıt
 
@@ -109,6 +112,8 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0611 | Dokunma hedefleri ≥ 44 px, ikon + kısa etiket, yüksek kontrast, tek elle akış; ekran okuyucu etiketleri. | v1 | UC-08 |
 | FR-0612 | İstasyon QR'ı taranınca o istasyonun açık listesi/maddeleri açılır; kanıt istasyona bağlanır. | v1.1 | UC-08 |
 | FR-0613 | Açılış listesinin başında 'dün gece' bloğu: önceki iş gününün kapanış çalıştırmasında yapılamayan ve başarısız maddeler (sebep ve notla); yoksa 'dün gece sorun yok'. (E-3) | v1 | UC-08 |
+| FR-0614 | Kanıt tekilliği: yüklenen dosyanın SHA-256 özeti aynı hesapta daha önce kullanılmışsa yükleme reddedilir; kullanıcıya "bu fotoğraf daha önce gönderildi, yeniden çekin" denir; deneme olay günlüğüne yazılır. Yakın kopya (algısal hash) tespiti v1.1. (E-11) | v1 | UC-08 |
+| FR-0615 | Kanıt bayrakları: galeriden yükleme denemesi, konum şube dışında (> 150 m), konum yok, cihaz saati farkı > 10 dk, 24 saatten geç senk — cevapta saklanır; çalıştırma detayında ve çalıştırma PDF'inde görünür; panoda "şüpheli kanıt" filtresi. Bayrak suçlama değil, incelemeye çağrıdır. (E-11) | v1 | UC-08, UC-15 |
 
 ## CAP-07 · Çevrimdışı çalışma
 

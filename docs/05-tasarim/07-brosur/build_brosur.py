@@ -256,9 +256,9 @@ def page1():
              + stat("1 saat", "ilk şubenin kurulumu; aynı gece başlar")
              + stat("0", "kişi puanı, biyometri, sohbet", T["marka"]) + '</div>')
     nicin = ('<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px">'
-             + check("WhatsApp gruplarının yerine.", "Tekrarlı listeler kendiliğinden açılır; “yapıldı abi” yerine damgalı fotoğraf ve ölçüm.")
+             + check("WhatsApp gruplarının yerine.", "Tekrarlı listeler kendiliğinden açılır; “yapıldı abi” yerine damgalı fotoğraf ve ölçüm — aynı fotoğraf ikinci kez gönderilemez.")
              + check("Yapılmayan iş sabah masanızda.", "Kaçırılan liste ve kritik madde yöneticiye düşer; aksiyon açılır, kapanınca not kalır.")
-             + check("Denetim kaydı dakikalar içinde.", "Sıcaklık günlüğü ve çalıştırma raporu doğrulama kodlu PDF; kayıt sonradan değiştirilemez.")
+             + check("Denetim kaydı dakikalar içinde.", "Sıcaklık günlüğü, çalıştırma raporu ve belge takvimi doğrulama kodlu PDF; kayıt sonradan değiştirilemez.")
              + check("Mutfakta çalışır.", "Ortak tablet, PIN ile geçiş; Wi-Fi gidince kayıt cihazda bekler, bağlanınca senklenir.") + '</div>')
     steps = ('<div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:11px">'
              + step("1", "Merkez kurar — 1 saat", "Şubeler Excel’den, kapanış listesi 8 hazır şablondan; pencere şube saatinden hesaplanır. Bu gece başlar.")
@@ -276,7 +276,7 @@ def pdf_thumb():
 
 def page2():
     ekranlar = ('<div style="display:flex;gap:14px;align-items:flex-start">'
-                + shot(scr_pano(1200, 760), 1200, 760, 0.345, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
+                + shot(scr_pano(1200, 760), 1200, 760, 0.315, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
                 + '<div style="flex:1;min-width:0">'
                 + legend([(1, "Altı sayıda gece özeti: zamanında, geç, başarısız, kaçırıldı, yapılamadı, açık aksiyon."),
                           (2, "Yalnızca sorunlu satırlar listelenir — “her şey yolunda” da bir cevaptır."),
@@ -291,11 +291,11 @@ def page2():
     itiraz = ('<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">'
               + qa("“Personel kullanmaz.”", "Üç ekran, iki dokunuş; kioskta PIN’le giriş. Mesaj “seni izliyoruz” değil, “yaptığını kanıtlıyorsun”.")
               + qa("“KVKK sorun çıkarır mı?”", "Kişi puanı ve biyometri yok, konum tek nokta, veriler Türkiye’de; aydınlatma metni ve veri işleme sözleşmesi hazır.") + '</div>')
-    kutu = lambda n, l: ('<div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:10px 12px;flex:1;min-width:0">'
+    kutu = lambda n, l: ('<div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:9px 12px;flex:1;min-width:0">'
                          '<div style="font-family:' + SERIF + ';font-size:20px;font-weight:700;color:#fff">' + n + '</div>'
                          '<div style="font-size:11px;line-height:1.35;color:rgba(255,255,255,.72);margin-top:3px">' + l + '</div></div>')
-    pilot = ('<div style="background:' + INK_BAND + ';border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:11px">'
-             + label("Sonraki adım", "rgba(255,255,255,.55)") + h1("8 haftalık ücretli pilot", 28, "#fff", "22ch")
+    pilot = ('<div style="background:' + INK_BAND + ';border-radius:16px;padding:16px 24px;display:flex;flex-direction:column;gap:9px">'
+             + label("Sonraki adım", "rgba(255,255,255,.55)") + h1("8 haftalık ücretli pilot", 26, "#fff", "22ch")
              + mp("Seçtiğiniz 5–15 şubede kapanış ve soğuk zincir listeleriyle başlarız. Yerinde kurulum bir gün: kiosk, PIN’ler, şablon uyarlaması, "
                   "şube müdürüne 30 dakika ve personele 10 dakika eğitim.", 13, "rgba(255,255,255,.78)", "66ch")
              + '<div style="display:flex;gap:9px">' + kutu("≥ %80", "liste pencere içinde tamamlanır") + kutu("≥ %95", "fotoğraf zorunlu maddede kanıt")
@@ -310,7 +310,7 @@ def page2():
     return sheet(h2("Merkez ne görür", 26)
                  + mp("07:00’de sabah özeti; panoda yalnızca dikkat isteyen şube × liste hücreleri; her çalıştırma için doğrulama kodlu PDF.")
                  + ekranlar + label("Alternatifle yan yana") + karsilastirma + itiraz + pilot + contact
-                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=14)
+                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=10)
 
 # ---------------------------------------------------------------- dosyalar
 HEAD = '<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <script src="./support.js"></script>\n</head>\n<body>\n<x-dc>\n<helmet>\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">\n  <style>\n    body { margin: 0; background: #e9e6de; }\n    a { color: #1f6f5b; } a:hover { color: #174f41; }\n  </style>\n</helmet>\n'

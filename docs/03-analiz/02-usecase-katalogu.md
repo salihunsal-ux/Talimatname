@@ -78,3 +78,5 @@ flowchart LR
 | UC-18 | – | SCR-W-13 | TC-104…TC-107 |
 | UC-19 | SCR-M-10 | SCR-W-07 | TC-108…TC-110 |
 | UC-20 | SCR-M-10 | SCR-W-08 | TC-111…TC-112 |
+
+v1 eklemeleri bu matrisin dışında, kendi bloklarında izlenir: **TC-113…TC-119** (ADR-0008, E-1…E-7), **TC-120…TC-122** (E-11 kanıt bütünlüğü · UC-08, UC-15 · SCR-W-07, SCR-W-08), **TC-123…TC-125** (E-12 belge takvimi · UC-06, UC-12, UC-15 · SCR-W-14).

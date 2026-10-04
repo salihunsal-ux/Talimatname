@@ -312,9 +312,10 @@ def t5():
 def t6():
     zincir = ["Fotoğraf yalnızca uygulama içinden çekilir — galeri kapalı",
               "Sunucu damgalar: şube · tarih-saat · kullanıcı · cihaz; ham dosya ayrıca saklanır",
-              "Dosyanın SHA-256 özeti cevaba bağlanır",
+              "Dosyanın SHA-256 özeti cevaba bağlanır; aynı fotoğraf ikinci kez gönderilemez",
               "Her olay ekle-yalnız günlüğe yazılır, önceki olayın özetiyle zincirlenir",
               "Gönderilen kayıt değişmez; düzeltme ayrı “ek” kaydıdır",
+              "Galeri · şube dışında konum · cihaz saati farkı · toplu geç senk kayıtta bayrakla görünür",
               "PDF doğrulama kodu ve üretim zamanı taşır"]
     akis = "".join('<div style="display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.45">' + pin(i + 1) +
                    '<div style="color:' + T["ink2"] + '">' + t + '</div></div>' for i, t in enumerate(zincir))
@@ -330,12 +331,14 @@ def t6():
                 + p("Ürünün değeri kanıtın sonradan değiştirilememesine dayanır. Cihaz saati değil sunucu zamanı esastır; kayıt silinmez, düzeltme ek kayıt olarak görünür.")
                 + '<div style="display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:16px;align-items:start">'
                 + '<div style="display:flex;flex-direction:column;gap:9px">' + label("Kanıt zinciri") + akis
-                + '<div style="background:' + T["yuzey2"] + ';border-radius:11px;padding:11px 13px;font-size:12.5px;line-height:1.5;color:' + T["ink2"] + '">'
+                + '<div style="background:' + T["yuzey2"] + ';border-radius:11px;padding:9px 12px;font-size:12.3px;line-height:1.5;color:' + T["ink2"] + '">'
                 '<b>Denetim günü:</b> şube ve tarih seçilir; sıcaklık günlüğü ve çalıştırma raporu doğrulama kodlu PDF olarak iner. '
-                'Denetçi hangi ölçümün ne zaman, kim tarafından girildiğini sayfada görür.</div></div>'
+                'Denetçi hangi ölçümün ne zaman, kim tarafından girildiğini sayfada görür.</div>'
+                + '<div style="background:' + T["yuzey2"] + ';border-radius:11px;padding:9px 12px;font-size:12.3px;line-height:1.5;color:' + T["ink2"] + '">'
+                '<b>Belge takvimi:</b> yangın tüpü dolumu, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi ve portör belgeleri geçerlilik bitişiyle kayıtlıdır; 30 ve 7 gün önce uyarır, süresi geçende aksiyon açılır.</div></div>'
                 + '<div style="display:flex;flex-direction:column;gap:7px">' + label("Çalıştırma raporu — denetimde verilen belge")
                 + shot(scr_detail(1200, 760), 1200, 760, 0.335, "Kadıköy · 13 Eylül · doğrulama kodlu") + '</div></div>'
-                + kvkk + foot(6), gap=13)
+                + kvkk + foot(6), gap=11)
 
 def t7():
     ok = '<span style="color:' + T["marka"] + ';font-weight:700">var</span>'
@@ -384,8 +387,8 @@ def t8():
                     ["<b>Hafta 8</b>", "Pilot raporu; yıllık sözleşme görüşmesi veya ayrılma"]],
                    widths=["22%", "78%"])
     yol = table(["Sürüm", "İçerik"],
-                [["<b>v1</b>", "4 rol · 6 madde türü · tek kural · 8 hazır şablon · kiosk ve çevrimdışı · sabit eskalasyon ve 07:00 özeti · istisna panosu · aylık özet · sıcaklık günlüğü · doğrulama kodlu PDF"],
-                 ["<b>v1.1</b>", "Madde kütüphanesi ve işletme türü paketleri · üretim–satış mutabakatı · duyuru ve okundu onayı · koşul editörü · ayrıntılı raporlar · denetim izi ekranı"],
+                [["<b>v1</b>", "4 rol · 6 madde türü · tek kural · 8 hazır şablon · kiosk ve çevrimdışı · sabit eskalasyon ve 07:00 özeti · istisna panosu · aylık özet · sıcaklık günlüğü · belge ve periyodik bakım takvimi · kanıt bütünlüğü bayrakları · doğrulama kodlu PDF"],
+                 ["<b>v1.1</b>", "Madde kütüphanesi ve işletme türü paketleri · yakın kopya fotoğraf tespiti · üretim–satış mutabakatı · duyuru ve okundu onayı · koşul editörü · ayrıntılı raporlar · denetim izi ekranı"],
                  ["<b>v2</b>", "Franchise marka kütüphanesi · başka sektör paketleri · POS ve İK entegrasyonları · kamera ile üretim sayımı"]],
                 widths=["12%", "88%"])
     iletisim = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'

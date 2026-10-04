@@ -69,6 +69,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | P-4 | Otomatik çalıştırma üretimi | 7 gün ileri, benzersiz | v1 |
 | P-5 | Tatil / kapalı gün | Hesap + şube takvimi | v1 |
 | P-6 | Tek seferlik liste | Aynen | v1 |
+| E-12 | Belge ve periyodik bakım takvimi | Tarihli belge kaydı (yangın tüpü dolum, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi ve portör belgeleri, ruhsat): şube/ekipman, geçerlilik bitişi, sorumlu, belge dosyası; 30/7/0 gün uyarıları ve süresi geçende aksiyon; zincir genelinde "yaklaşan ve geçmiş" listesi; dönem PDF'i | v1 |
 | P-7 | Hatırlatma politikası | Sabit iki hatırlatma | v1 sabit; ayar v1.1 |
 | P-8 | Vardiya bazlı tekrar | — | v1.1 |
 
@@ -135,6 +136,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | U-2 | Denetim izi görüntüleyici | PDF'te olay özeti; ekran | v1.1 |
 | U-3 | KVKK akışı | Aydınlatma metni + konum izni açıklaması v1; dışa aktarma/silme destek betiğiyle; ekran | v1 (ekran v1.1) |
 | U-4 | Saklama politikası | Sabit 24 ay, arka plan silme | v1 |
+| E-11 | Kanıt bütünlüğü bayrakları | Aynı dosyanın (SHA-256) ikinci kez gönderilmesi engellenir ve işaretlenir; galeri / konum şube dışında / cihaz saati farkı / toplu geç senk bayrakları çalıştırma detayında ve PDF'te görünür; şüpheli kanıt filtresi | v1 (yakın kopya tespiti v1.1) |
 | U-5 | Güvenlik | TLS, şifreleme, imzalı URL, rol × kapsam, hız sınırı, şifre politikası. 2FA | v1 (2FA v1.1) |
 | U-6 | Biyometri yok | Aynen | v1 |
 
@@ -154,6 +156,6 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 
 | | v1 | v1.1 | v2 |
 |---|---|---|---|
-| Satır | 41 (34 mevcut + 7 E) | 27 | 6 |
+| Satır | 43 (34 mevcut + 9 E) | 27 | 6 |
 
 v1.1 sıralaması pilot geri bildirimiyle yapılır; aday sıra: duyuru/onay → koşul editörü → herkes tamamlasın → aksiyon yorumları/onayı → raporlar → denetim izi ekranı + TSA → KVKK ekranı → 2FA → ayarlar paneli → Excel/paylaşım → video/imza/barkod → QR → gruplar → varyant → AI taslak.
