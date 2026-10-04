@@ -59,6 +59,13 @@ tr:last-child td{border-bottom:0}
 .damga{font:10px/1.3 var(--mono);color:#fff;background:rgba(28,33,40,.84);padding:3px 5px;border-radius:0 0 7px 7px;margin-top:-5px}
 .olay{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:4px 0;border-bottom:1px dotted var(--cizgi);font-size:12.5px}
 .olay b{font:11.5px var(--mono);color:var(--ink2)}
+@media (max-width:560px){
+  .bar-in{padding:7px 12px;gap:6px}
+  .wm{font-size:16px}
+  .bar .pill{font-size:11px;padding:2px 8px;max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bar .btn.kucuk{padding:5px 9px;font-size:12.5px}
+  .wrap{padding:0 11px 40px}
+}
 @media print{
   .bar,.yazdirma-gizle{display:none!important}
   body{background:#fff}
@@ -411,16 +418,27 @@ async function kanitlariYukle(kok){
 function maddeAc(k, m){
   sheetAc(kapat=>{
     const c = Object.assign({}, k.cevaplar[m.no]||{});
-    const parcalar = [el("h3",{style:"font-size:19px;line-height:1.25"}, m.ad)];
+    let notIstendi = false;                              // kullanıcı kendi isteğiyle not/fotoğraf açtıysa
+    const parcalar = [el("h3",{style:"font-size:19px;line-height:1.25;padding-right:40px"}, m.ad)];
     if (m.k) parcalar.push(el("div",{class:"pill crit",style:"align-self:flex-start"},"kritik madde"));
-    let degerGoster = null;
+
+    /* --- not ve kanıt bloğu: varsayılan olarak gizli, kural gerektirince açılır --- */
     const uyariKutu = el("div");
+    const notBaslik = el("div",{class:"ss"},"Not");
+    const notAlani = el("textarea",{class:"giris",rows:"2",placeholder:"Kısa not"}); notAlani.value = c.not||"";
+    const fotoOnizleme = el("div");
+    const dosya = el("input",{type:"file",accept:"image/*",capture:"environment",style:"display:none"});
+    const fotoBtn = el("button",{class:"btn",onclick:()=>dosya.click()},"Fotoğraf ekle");
+    const ekBlok = el("div",{style:"display:none;flex-direction:column;gap:9px"}, notBaslik, notAlani,
+                      el("div",{style:"display:flex;gap:9px;align-items:center"}, fotoBtn, dosya), fotoOnizleme);
+    const notAcBtn = el("button",{class:"btn kucuk",style:"align-self:flex-start",onclick:()=>{ notIstendi = true; yenile(); }},"Not veya fotoğraf ekle");
+
     const yapilamadiBtn = el("button",{class:"btn",style:"color:var(--uyari);border-color:var(--uyari)",onclick:()=>{ kapat(); yapilamadiAc(k,m); }},"Yapılamadı");
     const kaydet = el("button",{class:"btn pri",style:"flex:2"},"Kaydet");
-    const notAlani = el("textarea",{class:"giris",rows:"2",placeholder:"Not (zorunlu)"}); notAlani.value = c.not||"";
-    notAlani.addEventListener("input",()=>{ c.not = notAlani.value; kaydetDurum(); });
-    const fotoOnizleme = el("div");
-    const dosya = el("input",{type:"file",accept:"image/*",capture:"environment",style:"display:none",onchange:async e=>{
+    const altSira = el("div",{style:"display:flex;gap:9px;margin-top:4px"}, yapilamadiBtn, kaydet);
+
+    notAlani.addEventListener("input",()=>{ c.not = notAlani.value; yenile(); });
+    dosya.addEventListener("change", async e=>{
       const f = e.target.files[0]; if(!f) return;
       fotoBtn.textContent = "İşleniyor…"; fotoBtn.disabled = true;
       try{
@@ -429,58 +447,79 @@ function maddeAc(k, m){
         await Depo.kanitYaz(id, {foto:veri, kosma:k.id, madde:m.no, zaman:simdi().toISOString(), kisi:S.kisi?S.kisi.ad:"", sube:S.sube});
         c.kanit = id; onizle();
       }catch(err){ alert("Fotoğraf işlenemedi: "+err); }
-      fotoBtn.textContent = "Fotoğraf çek"; fotoBtn.disabled = false; kaydetDurum();
-    }});
-    const fotoBtn = el("button",{class:"btn",onclick:()=>dosya.click()},"Fotoğraf çek");
+      fotoBtn.disabled = false; yenile();
+    });
     const onizle = async ()=>{ fotoOnizleme.innerHTML=""; if(!c.kanit) return;
       const v = await Depo.kanitOku(c.kanit);
       if (v) fotoOnizleme.append(el("div",{}, el("img",{class:"foto",src:v.foto,style:"max-height:170px"}),
         el("div",{class:"damga"}, SUBELER.find(x=>x.id===S.sube).ad+" · "+saatStr(new Date(v.zaman))+" · "+(v.kisi||"")+" · sunucu damgası"))); };
     onizle();
+
+    /* --- tür bileşenleri --- */
     if (m.tur==="sicaklik" || m.tur==="sayi"){
       const bas = (c.deger!==undefined?c.deger:m.bas);
+      c.deger = bas;
       const gos = el("div",{style:"font-size:42px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums"}, String(bas));
-      degerGoster = gos; c.deger = bas;
       const adim = m.tur==="sicaklik"?0.1:5;
-      const degis = n => { c.deger = Math.round((c.deger + n)*10)/10; gos.textContent = String(c.deger);
-        gos.style.color = (m.alt!==undefined && (c.deger<m.alt||c.deger>m.ust)) ? "var(--kritik)" : "var(--ink)"; uyariGuncelle(); };
+      const degis = n => { c.deger = Math.round((c.deger + n)*10)/10; gos.textContent = String(c.deger); yenile(); };
       if (m.alt!==undefined) parcalar.push(el("div",{class:"ss"},"Kabul aralığı "+m.alt+" – "+m.ust+" °C"));
       parcalar.push(el("div",{style:"display:flex;align-items:center;justify-content:center;gap:16px;margin:4px 0"},
         el("button",{class:"btn",style:"width:58px;height:58px;font-size:24px",onclick:()=>degis(-adim)},"−"), gos,
         el("button",{class:"btn",style:"width:58px;height:58px;font-size:24px",onclick:()=>degis(adim)},"+")));
-      gos.style.color = (m.alt!==undefined && (bas<m.alt||bas>m.ust)) ? "var(--kritik)" : "var(--ink)";
+      var deger_gos = gos;
     } else if (m.tur==="onay"){
-      const yap = ()=>{ c.deger=true; sec(); }, hay = ()=>{ c.deger=false; sec(); };
-      const be = el("button",{class:"sec",style:"flex:1;justify-content:center",onclick:yap},"Evet");
-      const bh = el("button",{class:"sec",style:"flex:1;justify-content:center",onclick:hay},"Hayır");
-      const sec = ()=>{ be.className="sec"+(c.deger===true?" on":""); bh.className="sec"+(c.deger===false?" on":""); uyariGuncelle(); };
-      parcalar.push(el("div",{style:"display:flex;gap:9px"}, be, bh)); sec();
+      const be = el("button",{class:"sec",style:"flex:1;justify-content:center;min-height:56px;font-weight:600",onclick:()=>{ c.deger=true; secildi(); }},"Evet");
+      const bh = el("button",{class:"sec",style:"flex:1;justify-content:center;min-height:56px;font-weight:600",onclick:()=>{ c.deger=false; secildi(); }},"Hayır");
+      var secimDugmeleri = ()=>{ be.className="sec"+(c.deger===true?" on":""); bh.className="sec"+(c.deger===false?" on":""); };
+      parcalar.push(el("div",{style:"display:flex;gap:9px"}, be, bh)); secimDugmeleri();
     } else if (m.tur==="secim"){
-      const dugmeler = m.secenekler.map(s=>el("button",{class:"sec",onclick:()=>{ c.deger=s; cizSec(); }}, s));
-      const cizSec = ()=>{ dugmeler.forEach((d,i)=>d.className="sec"+(c.deger===m.secenekler[i]?" on":"")); uyariGuncelle(); };
-      parcalar.push(el("div",{style:"display:flex;flex-direction:column;gap:8px"}, ...dugmeler)); cizSec();
+      const dugmeler = m.secenekler.map(s=>el("button",{class:"sec",style:"min-height:50px",onclick:()=>{
+        if (s==="Yapılamadı"){ kapat(); yapilamadiAc(k,m); return; }
+        c.deger=s; secildi(); }}, s));
+      var secimDugmeleri = ()=>{ dugmeler.forEach((d,i)=>d.className="sec"+(c.deger===m.secenekler[i]?" on":"")); };
+      parcalar.push(el("div",{style:"display:flex;flex-direction:column;gap:8px"}, ...dugmeler)); secimDugmeleri();
     } else if (m.tur==="metin"){
       const ta = el("textarea",{class:"giris",rows:"3",placeholder:"Kısa not"}); ta.value = c.deger||"";
-      ta.addEventListener("input",()=>{ c.deger = ta.value; });
+      ta.addEventListener("input",()=>{ c.deger = ta.value; yenile(); });
       parcalar.push(ta);
     }
-    function uyariGuncelle(){
+
+    /* --- kurallar --- */
+    function gerekli(){                                   // [not gerekli, fotoğraf gerekli]
       const dd = cevapDurum(m, c);
-      uyariKutu.innerHTML="";
+      if (dd==="basarisiz") return [true, true];          // tek sabit kural
+      if (m.f && dd==="ok") return [false, true];         // fotoğraf zorunlu madde
+      return [false, false];
+    }
+    function yenile(){
+      const dd = cevapDurum(m, c);
+      const [notGer, fotoGer] = gerekli();
+      if (deger_gos) deger_gos.style.color = (m.alt!==undefined && (c.deger<m.alt||c.deger>m.ust)) ? "var(--kritik)" : "var(--ink)";
+      if (secimDugmeleri) secimDugmeleri();
+      // uyarı kutusu
+      uyariKutu.innerHTML = "";
       if (dd==="basarisiz"){
         uyariKutu.append(el("div",{style:"background:var(--kritikA);border:1px solid var(--kritik);border-radius:11px;padding:11px 13px;font-size:13.5px;line-height:1.45"},
           el("b",{style:"color:var(--kritik)"}, m.alt!==undefined?"Aralık dışı. ":"Olumsuz cevap. "),
           "Fotoğraf ve not zorunlu."+(m.k?" Kritik madde: şube ve bölge müdürüne bildirilir, aksiyon açılır.":"")));
+      } else if (fotoGer && !c.kanit){
+        uyariKutu.append(el("div",{style:"background:var(--yuzey2);border-radius:11px;padding:10px 12px;font-size:13px;line-height:1.45"},
+          el("b",{},"Bu maddede fotoğraf zorunlu. "), "Diğer maddelerde fotoğraf istenmez."));
       }
-      kaydetDurum();
-    }
-    function kaydetDurum(){
-      const dd = cevapDurum(m, c);
-      const eksik = (dd==="bos") || (dd==="basarisiz" && (!c.not || !c.kanit)) || (m.f && dd==="ok" && !c.kanit);
+      // blok görünürlüğü ve etiketler
+      const goster = notGer || fotoGer || notIstendi || c.not || c.kanit;
+      ekBlok.style.display = goster ? "flex" : "none";
+      notAcBtn.style.display = goster ? "none" : "inline-flex";
+      notBaslik.textContent = notGer ? "Not (zorunlu)" : "Not (isteğe bağlı)";
+      notAlani.placeholder = notGer ? "Ne oldu, ne yapıldı?" : "Kısa not";
+      fotoBtn.textContent = c.kanit ? "Fotoğrafı değiştir" : (fotoGer ? "Fotoğraf çek (zorunlu)" : "Fotoğraf ekle");
+      fotoBtn.className = "btn" + (fotoGer && !c.kanit ? " pri" : "");
+      // kaydet durumu
+      const eksik = (dd==="bos") || (notGer && !c.not) || (fotoGer && !c.kanit);
       kaydet.disabled = eksik;
-      kaydet.textContent = eksik ? (dd==="bos"?"Cevap verin":"Fotoğraf ve not gerekli") : "Kaydet";
+      kaydet.textContent = dd==="bos" ? "Cevap verin" : eksik ? (notGer && !c.not && fotoGer && !c.kanit ? "Fotoğraf ve not gerekli" : (!c.not&&notGer?"Not gerekli":"Fotoğraf gerekli")) : "Kaydet";
     }
-    kaydet.addEventListener("click", async ()=>{
+    async function kaydetEt(){
       c.zaman = saatStr(simdi());
       k.cevaplar[m.no] = c;
       const dd = cevapDurum(m,c);
@@ -491,10 +530,15 @@ function maddeAc(k, m){
         olay(k, "Aksiyon açıldı · kritik · "+SORUMLU);
       }
       await Depo.kosmaYaz(k); kapat(); ciz();
-    });
-    uyariGuncelle();
-    parcalar.push(uyariKutu, el("div",{class:"ss"},"Not"), notAlani, el("div",{style:"display:flex;gap:9px;align-items:center"}, fotoBtn, dosya), fotoOnizleme,
-      el("div",{style:"display:flex;gap:9px;margin-top:4px"}, yapilamadiBtn, kaydet));
+    }
+    function secildi(){                                   // onay/seçim: gerek yoksa tek dokunuşta kaydet
+      const [notGer, fotoGer] = gerekli();
+      if (!notGer && !fotoGer && !notIstendi && !c.not && !c.kanit){ kaydetEt(); return; }
+      yenile();
+    }
+    kaydet.addEventListener("click", kaydetEt);
+    yenile();
+    parcalar.push(uyariKutu, notAcBtn, ekBlok, altSira);
     return parcalar;
   });
 }
@@ -718,8 +762,10 @@ function ayarYay(){ Depo.ayarYaz({kaydirma:S.kaydirma, guncellendi:new Date().to
 /* ---------------------------------------------------------------- sheet */
 function sheetAc(yapici){
   const kat = el("div",{class:"sheet",onclick:e=>{ if(e.target===kat) kapat(); }});
-  const ic = el("div",{class:"sheet-in"});
+  const ic = el("div",{class:"sheet-in",style:"position:relative"});
   function kapat(){ kat.remove(); }
+  const kapatBtn = el("button",{"aria-label":"Kapat",style:"position:absolute;right:12px;top:10px;width:34px;height:34px;border-radius:50%;background:var(--yuzey2);color:var(--ink2);font-size:19px;line-height:1",onclick:kapat},"×");
+  ic.append(kapatBtn);
   ic.append(...[].concat(yapici(kapat)));
   kat.append(ic); document.body.append(kat);
 }

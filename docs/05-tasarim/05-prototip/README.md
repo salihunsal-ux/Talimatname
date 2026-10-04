@@ -12,6 +12,8 @@ Tıklanabilir prototiplerden farkı: **kayıt tutar**. Pencere ve tolerans gerç
 
 **Demoda olmayan (üründe var):** push ve SMS, gerçek kimlik ve rol güvenliği, 72 saatlik çevrimdışı kuyruk, sunucu tarafı damga ve hash zinciri, belge takvimi, aylık özet ve sıcaklık günlüğü PDF'leri, madde kütüphanesi. Veriler **Türkiye'de değil** (Anthropic altyapısı): gerçek personel adı, gerçek müşteri verisi ve kişi yüzü içeren fotoğraf girilmez — ADR-0003 gereği gerçek pilot bu demoyla yapılmaz.
 
+**Kanıt ne zaman istenir (4 Ekim düzeltmesi).** Fotoğraf ve not her maddede değil, yalnızca iki durumda zorunludur: (1) cevap olumsuzsa — “Hayır”, “uygun değil” veya ölçüm aralık dışı (tek sabit kural, FR-0405): fotoğraf + not, madde kritikse aksiyon; (2) maddenin kendisi *fotoğraf zorunlu* işaretliyse — kapanış listesinde 15 maddenin **4'ü** (kahve makinesi, zemin, çöp alanı, kepenk). Normal gecede 11 madde tek dokunuşla kapanır. İlk sürümde arayüz her maddede “Not (zorunlu)” ve “Fotoğraf çek” gösteriyordu — kural doğruydu ama ekran yanlış şey söylüyordu; not/fotoğraf bloğu artık yalnızca gerektiğinde açılır, gerekmediğinde “Not veya fotoğraf ekle” bağlantısı durur ve onay maddesinde “Evet” tek dokunuşta kaydeder.
+
 **Demo saati.** "Demo ayarı" sekmesinden saat ilerletilir: *pencereyi aç*, *toleransı doldur (kaçırıldı)*, *sıfırla*. Paylaşımlı modda kaydırma tüm cihazlarda ortaktır, böylece tablet ve pano aynı saati görür.
 
 **Nerede kullanılır:** görüşmede iki cihazla canlı gösterim (tablet + dizüstü, ikisi de sizin hesabınızla), kendi test şubenizde bir gecelik deneme, saha kiosk denemesi kitinin ([07-kiosk-saha-denemesi](../../01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md)) sahte ekran yerine çalışan sürümle koşulması.
