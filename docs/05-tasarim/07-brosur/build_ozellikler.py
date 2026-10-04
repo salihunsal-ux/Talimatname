@@ -209,7 +209,7 @@ def paper(baslik, rozet_t, rozet_c, satirlar, kare=False, kod="TN-K7F3A-9C2D"):
     line = lambda x, c=None: '<div style="height:5px;width:' + str(x) + '%;background:' + (c or T["cizgi"]) + ';border-radius:2px"></div>'
     kareler = ('<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:2px 0">'
                + "".join('<div style="height:20px;background:repeating-linear-gradient(135deg,#e6e3da 0 4px,#cbc8be 4px 8px);border-radius:2px"></div>' for _ in range(3)) + '</div>') if kare else ""
-    return ('<div style="width:150px;height:200px;background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';box-shadow:0 8px 20px rgba(28,33,40,.14);'
+    return ('<div style="box-sizing:border-box;width:150px;height:200px;background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';box-shadow:0 8px 20px rgba(28,33,40,.14);'
             'padding:12px;display:flex;flex-direction:column;gap:6px;flex:none">'
             '<div style="display:flex;justify-content:space-between;align-items:center">'
             '<div style="font-family:' + SERIF + ';font-size:9px;font-weight:700">' + baslik + '</div>'
@@ -220,175 +220,179 @@ def paper(baslik, rozet_t, rozet_c, satirlar, kare=False, kod="TN-K7F3A-9C2D"):
 
 # ---------------------------------------------------------------- sayfalar
 def icindekiler():
-    oge = lambda n, t, sf: ('<div style="display:flex;gap:7px;align-items:baseline;font-size:11.5px;line-height:1.4">'
+    grup = lambda t: ('<div style="font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:' + T["marka"] +
+                      ';margin:6px 0 2px">' + t + '</div>')
+    oge = lambda n, t, sf: ('<div style="display:flex;gap:7px;align-items:baseline;font-size:11.5px;line-height:1.45">'
                             '<span style="color:' + T["marka"] + ';font-weight:700;width:14px;flex:none">' + str(n) + '</span>'
                             '<span style="flex:1;min-width:0">' + t + '</span>'
                             '<span style="color:' + T["sessiz"] + ';flex:none">s.' + str(sf) + '</span></div>')
-    ler = [("Kurulum sihirbazı ve dört rol", 1), ("Sekiz hazır şablon, altı madde türü", 1), ("Kiosk ve PIN ile giriş", 2),
-           ("Ölçüm maddeleri ve tek sabit kural", 2), ("Yapılamadı akışı", 2), ("Çevrimdışı çalışma", 3),
-           ("Sabit eskalasyon ve 07:00 sabah özeti", 3), ("İstisna panosu", 3), ("Çalıştırma detayı ve kanıt bütünlüğü", 4),
-           ("Belge ve periyodik bakım takvimi", 4), ("Denetimde verilen belgeler", 4)]
-    kol = "".join(oge(i + 1, t, sf) for i, (t, sf) in enumerate(ler))
-    return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:12px;padding:12px 15px">'
-            + label("v1'de gelen on bir özellik") +
-            '<div style="column-count:2;column-gap:26px;margin-top:7px">' + kol + '</div>'
+    sol = (grup("Merkez ne görür") + oge(1, "Her sabah iki dakika", 1) + oge(2, "Sorunsuz gün tek cümledir", 1)
+           + grup("Kanıt ve denetim") + oge(3, "Denetim geldiğinde üç dakika", 2) + oge(4, "“Fotoğrafı dün çekmiş” tartışması biter", 2)
+           + oge(5, "Belge süresi kaçmaz", 2))
+    sag = (grup("Şubede nasıl yürür") + oge(6, "Personel altı dakikada bitirir", 3) + oge(7, "Soğuk zincir kendini savunur", 3)
+           + oge(8, "Yapılamayan iş kaybolmaz", 3)
+           + grup("Başlamak") + oge(9, "Wi-Fi gidince iş durmaz", 4) + oge(10, "Liste yazmakla uğraşmazsınız", 4)
+           + oge(11, "Bir günde kurulur, aynı gece başlar", 4))
+    return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:12px;padding:11px 15px">'
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 26px">'
+            '<div>' + sol + '</div><div>' + sag + '</div></div>'
             '<div style="font-size:11px;color:' + T["sessiz"] + ';margin-top:8px;border-top:1px solid ' + T["cizgi"] + ';padding-top:7px">'
-            'Son sayfada v1.1 ve v2: bilerek ertelenen satırlar, neden ertelendikleriyle.</div></div>')
+            'Son sayfa: bugünkü sürümün dışında kalanlar ve neden beklediği.</div></div>')
 
 def s1():
-    giris = ('<div style="background:' + INK_BAND + ';border-radius:14px;padding:20px 24px;display:flex;flex-direction:column;gap:9px">'
-             + label("Yol haritasının uzun hâli", "rgba(255,255,255,.55)")
-             + h1("Hangi özellik ne yapar,<br>ekranda nasıl görünür", 28, "#fff", "26ch")
-             + p("Broşürdeki yol haritası tablosunda her satır tek cümleydi. Bu föy, <b>v1'de gelen on bir özelliği</b> birer ekranla "
-                 "ve kısa açıklamayla gösterir; v1.1 ve v2 satırları son sayfada, henüz ekranı olmadığı için yalnızca metinle anlatılır.",
-                 13, "rgba(255,255,255,.78)", "70ch") + '</div>')
-    k1 = kart(1, "Kurulum sihirbazı ve dört rol", "web", "web",
-              "Merkez hesabı dört adımda kurar: marka ve şubeler (Excel'den), şablon, plan, personel. Roller sabittir — Yönetici, "
-              "Bölge müdürü, Şube müdürü, Personel — ve herkes yalnızca kendi kapsamını görür.",
-              ["25 satırlık şube dosyası tek seferde yüklenir; hatalı satırlar rapor olarak döner",
-               "Pencere saatleri şubenin kendi çalışma saatinden hesaplanır; gece yarısını aşan pencere aynı iş gününe yazılır",
-               "İlk şubenin kurulumu ~1 saat; liste aynı gece açılır"],
-              scaled(TT.scr_wizard(1200, 760), 1200, 760, 0.28), "Kurulum sihirbazı · adım 3")
-    k2 = kart(2, "Sekiz hazır şablon, altı madde türü", "web", "web",
-              "Kapanış, açılış, saatlik hijyen, soğuk zincir, haftalık derin temizlik, fritöz yağı, kasa devri ve teslimat kabul "
-              "listeleri 73 maddeyle hazır gelir. Kopyalanır, şubeye göre düzenlenir; yayındaki sürüm bozulmaz.",
-              ["Altı madde türü: onay, çoktan seçmeli, sayı, sıcaklık, metin, fotoğraf (1–3) — artı talimat satırı",
-               "Her madde zorunlu / fotoğraf zorunlu / kritik olarak işaretlenebilir",
-               "Şablon sürümlenir: düzenleme yeni sürüm açar, çalışan planlar etkilenmez"],
-              scaled(scr_sablon(1200, 760), 1200, 760, 0.28), "Şablonlar ve madde türleri")
-    return page(head("v1 · 1–2") + giris + icindekiler() + k1 + k2 + foot(1), gap=13)
-
-def s2():
-    k3 = kart(3, "Kiosk ve PIN ile giriş", "kiosk / mobil", "mobil",
-              "Şube tableti tek hesapla açık durur; personel kendi adına dokunup dört haneli PIN'ini girer. Telefonu olmayan "
-              "personel de kayıt dışı kalmaz — şube müdürü PIN'i kendisi atar.",
-              ["İki dakika hareketsizlikte kilitlenir, kaldığı yerden devam eder",
-               "Listeyi ilk açan alır; diğer cihazlarda “Emre yapıyor” görünür",
-               "İsteyen kendi telefonundan tamamlar; kiosk zorunlu değil"],
-              scaled(B.scr_kiosk(), 390, 844, 0.30), "Kapanış listesi · şube tableti")
-    k4 = kart(4, "Ölçüm maddeleri ve tek sabit kural", "mobil", "mobil",
-              "Sıcaklık gibi ölçümlerde kabul aralığı maddenin içinde yazar. “Hayır”, “uygun değil” veya aralık dışı cevap tek bir "
-              "sabit kuralı işletir: fotoğraf ve not zorunlu; madde kritikse aksiyon açılır ve anında bildirilir.",
-              ["Kural v1'de ayarlanmaz — her şubede aynı çalışır, ayar labirenti yok",
-               "Kritik maddede şube ve bölge müdürüne anında push; 10 dakikada okunmazsa SMS",
-               "Girilen her ölçüm sıcaklık günlüğüne düşer"],
-              scaled(B.scr_temp(), 390, 844, 0.30), "Aralık dışı ölçüm · kural devrede")
-    k5 = kart(5, "Yapılamadı akışı", "mobil", "mobil",
-              "Personel yapamadığı maddeyi sebebiyle bildirir. İş sessizce kaybolmaz: şube müdürüne 72 saatlik aksiyon olarak düşer "
-              "ve ertesi sabah açılış listesinin başında görünür.",
-              ["Sabit sebep seti: malzeme yok · ekipman arızalı · zaman yetmedi · yetkim yok · diğer (not zorunlu)",
-               "“Dün gece” bloğu: önceki vardiyanın yapılamayan ve başarısız maddeleri",
-               "Aksiyon kapanırken not zorunlu; kapanış olay izine yazılır"],
-              scaled(TT.scr_unable(), 390, 844, 0.30), "Yapılamadı · sebep seçimi")
-    return page(head("v1 · 3–5") + k3 + k4 + k5 + foot(2), gap=12)
-
-def s3():
-    k6 = kart(6, "Çevrimdışı çalışma", "mobil", "mobil",
-              "Mutfakta bağlantı kesilse de liste cihazda devam eder. Kayıtlar 72 saate kadar kuyrukta bekler, bağlantı gelince "
-              "sırayla gönderilir; hiçbir cevap “internet yoktu” diye kaybolmaz.",
-              ["Fotoğraf cihazda ~300 KB'a sıkıştırılır, kuyrukta saklanır",
-               "Zaman damgası cihaz saatiyle değil sunucu saatiyle düzeltilir",
-               "24 saatten geç senkronlanan kayıt bayrakla işaretlenir"],
-              scaled(scr_offline(), 390, 844, 0.30), "Çevrimdışı · kuyrukta bekleyen kayıtlar")
-    k7 = kart(7, "Sabit eskalasyon ve 07:00 sabah özeti", "mobil / e-posta", "mobil",
-              "Kimin neyi ne zaman öğreneceği sabittir ve tek yerde yazar. Gece kimse aranmaz: yalnızca kritik maddeler anında "
-              "bildirilir, gerisi sabah 07:00 özetinde toplanır.",
-              ["Kaçırılan liste → şube müdürüne anında, bölge müdürüne 07:00 özetinde",
-               "Sessiz saat 23:00–07:00; yöneticiye gece yalnızca kritik bildirim",
-               "Özet push ve e-posta olarak aynı metinle gider"],
+    giris = ('<div style="background:' + INK_BAND + ';border-radius:14px;padding:18px 24px;display:flex;flex-direction:column;gap:8px">'
+             + label("Özellik föyü", "rgba(255,255,255,.55)")
+             + h1("Her özelliğin karşılığı:<br>ekranda ne görürsünüz", 26, "#fff", "30ch")
+             + p("Broşürdeki yol haritasında her satır tek cümleydi. Burada on bir özelliğin her biri bir ekranla: merkezin ne gördüğü, "
+                 "şubenin ne yaptığı, denetimde ne verdiğiniz.", 13, "rgba(255,255,255,.78)", "76ch") + '</div>')
+    k1 = kart(1, "Her sabah iki dakika", "telefon + e-posta", "mobil",
+              "Dün gece şubelerin kaçı yolunda? Cevap 07:00'de telefonunuzda ve e-postanızda; yalnızca aksayanlar, sebebiyle. "
+              "Gece kimse aranmaz — sadece gıda güvenliği, iş güvenliği ve parayla ilgili kritik maddeler anında bildirilir.",
+              ["Kaçırılan liste şube müdürüne anında düşer; size sabah özetinde gelir",
+               "Kritik madde başarısızsa anında bildirim, 10 dakikada okunmazsa SMS",
+               "Sessiz saat 23:00–07:00: gece telefonunuz çalmaz"],
               scaled(B.scr_morning(), 390, 844, 0.30), "Sabah özeti · bölge müdürü")
-    k8 = kart(8, "İstisna panosu", "web", "web",
-              "Merkez ekranının varsayılanı “her şey yolunda”dır: yalnızca dikkat isteyen şube × liste hücreleri listelenir. "
-              "Sorunsuz bir gün tek cümleyle cevaplanır.",
+    k2 = kart(2, "Sorunsuz gün tek cümledir", "web", "web",
+              "Elli şubeyi tek tek gezmezsiniz: panonun varsayılanı “her şey yolunda”dır ve yalnızca dikkat isteyen hücreler listelenir. "
+              "Tüm günün şube × liste ızgarası tek bakışta durur.",
               ["Altı sayı: zamanında, geç, başarısız, kaçırıldı, yapılamadı, açık aksiyon",
-               "Izgarada tüm gün tek bakışta; hücreden çalıştırma detayına tek tıkla",
+               "Hücreden o gecenin tamamına ve fotoğraflara tek tıkla inersiniz",
                "Gün, bölge ve “şüpheli kanıt” filtreleri"],
               scaled(B.scr_pano(1200, 760), 1200, 760, 0.28), "Operasyon panosu · merkez")
-    return page(head("v1 · 6–8") + k6 + k7 + k8 + foot(3), gap=12)
+    return page(head("Merkez ne görür") + giris + icindekiler() + k1 + k2 + foot(1, "Ekranlar ürün tasarımındandır; veriler örnektir. · Sürüm 1.1 · 4 Ekim 2026"), gap=12)
+
+def s2():
+    pdf_grup = ('<div style="display:flex;gap:9px">'
+                + paper("Çalıştırma raporu", "BAŞARISIZ · kritik madde", T["kritik"],
+                        [("90", None), ("70", None), ("85", None), ("60", T["kritikA"]), ("80", None)], kare=True)
+                + paper("Aylık özet", "EYLÜL · 12 ŞUBE", T["marka"],
+                        [("85", None), ("65", T["markaA"]), ("75", None), ("55", None), ("80", None), ("70", T["markaA"]), ("60", None)], kod="TN-9B2E1-44AC")
+                + paper("Sıcaklık günlüğü", "1–30 EYLÜL · 3 ÖLÇÜM/GÜN", T["marka"],
+                        [("90", None), ("88", None), ("86", None), ("84", T["kritikA"]), ("88", None), ("85", None), ("80", None)], kod="TN-3C7D0-18BF") + '</div>')
+    pdfler = scaled(pdf_grup, 468, 200, 0.72)
+    k3 = kart(3, "Denetim geldiğinde üç dakika", "PDF", "pdf",
+              "Denetçi kaydı istediğinde klasör karıştırmazsınız. Üç çıktı doğrulama kodlu PDF olarak iner: bir gecenin tamamını "
+              "fotoğraflarıyla gösteren çalıştırma raporu, aylık tek sayfa özet ve sıcaklık günlüğü.",
+              ["Hangi ölçümün ne zaman, kim tarafından girildiği satır satır görünür",
+               "Her PDF üretim zamanı ve doğrulama kodu taşır",
+               "Kanıt dosyaları 24 ay saklanır, sonra otomatik silinir"],
+              pdfler, "Çalıştırma raporu · aylık özet · sıcaklık günlüğü", sol_w=340)
+    k4 = kart(4, "“Fotoğrafı dün çekmiş” tartışması biter", "web", "web",
+              "Fotoğraf yalnızca uygulama içinden çekilir, sunucu damgalar ve kayıt gönderildikten sonra değişmez. "
+              "Aynı fotoğraf ikinci kez gönderilemez; sistem dosyayı tanır ve reddeder.",
+              ["Galeriden yükleme denemesi, şube dışı konum ve cihaz saati farkı kayıtta işaretlenir",
+               "Panoda tek filtreyle incelenmesi gereken kayıtlar listelenir",
+               "İşaret bir suçlama değil: kimse puanlanmaz, kayıt personeli de korur"],
+              scaled(scr_bayrak(900, 520), 900, 520, 0.40), "Kanıtlar ve bütünlük işaretleri")
+    k5 = kart(5, "Belge süresi kaçmaz", "web", "web",
+              "Yangın tüpü dolumu, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi ve portör belgeleri "
+              "tarihleriyle durur. Süre dolmadan uyarır; geçerse işi kendisi açar.",
+              ["Bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne bildirim",
+               "Tarih geçerse iş açılır ve şube “belge eksik” olarak görünür",
+               "Zincirin tamamı tek listede; denetim için dönem PDF’i"],
+              scaled(scr_belge(1200, 760), 1200, 760, 0.28), "Belge takvimi · zincir görünümü")
+    return page(head("Kanıt ve denetim") + k3 + k4 + k5 + foot(2), gap=12)
+
+def s3():
+    k6 = kart(6, "Personel altı dakikada bitirir", "şube tableti", "mobil",
+              "Şube tableti açık durur; personel adına dokunup dört haneli PIN'ini girer, maddeleri işaretler, fotoğrafı uygulamadan çeker. "
+              "Telefonu olmayan personel de kayıt dışı kalmaz.",
+              ["Eğitim 10 dakika: üç ekran, iki dokunuş; eldivenle kullanılacak büyüklükte",
+               "Listeyi ilk açan alır, diğer cihazlarda “Emre yapıyor” görünür",
+               "İki dakika hareketsizlikte kilitlenir, kaldığı yerden devam eder"],
+              scaled(B.scr_kiosk(), 390, 844, 0.30), "Kapanış listesi · şube tableti")
+    k7 = kart(7, "Soğuk zincir kendini savunur", "mobil", "mobil",
+              "Kabul aralığı maddenin içinde yazar. Aralık dışı ölçüm ya da “Hayır” cevabı tek bir sabit kuralı işletir: "
+              "fotoğraf ve not zorunlu, madde kritikse iş açılır ve anında bildirilir.",
+              ["Kural her şubede aynı çalışır — ayarlanacak bir şey yok",
+               "Girilen her ölçüm sıcaklık günlüğüne düşer, denetimde oradan çıkar",
+               "İş kapanırken not zorunlu: ne yapıldığı kayda geçer"],
+              scaled(B.scr_temp(), 390, 844, 0.30), "Aralık dışı ölçüm · kural devrede")
+    k8 = kart(8, "Yapılamayan iş kaybolmaz", "mobil", "mobil",
+              "Personel yapamadığını sebebiyle bildirir. İş sessizce düşmez: şube müdürüne 72 saatlik iş olarak açılır ve "
+              "ertesi sabah açılış listesinin başında görünür.",
+              ["Sabit sebepler: malzeme yok · ekipman arızalı · zaman yetmedi · yetkim yok · diğer",
+               "Sebepler merkezde birikir; tekrar eden eksik görünür hâle gelir",
+               "“Dün gece” bloğu: sabahçı, önceki vardiyanın açık bıraktığını görür"],
+              scaled(TT.scr_unable(), 390, 844, 0.30), "Yapılamadı · sebep seçimi")
+    return page(head("Şubede nasıl yürür") + k6 + k7 + k8 + foot(3), gap=12)
 
 def s4():
-    k9 = kart(9, "Çalıştırma detayı ve kanıt bütünlüğü", "web", "web",
-              "Bir gecenin tamamı tek sayfada: madde madde cevaplar, fotoğraflar, aksiyonlar ve olay izi. Kanıt sonradan "
-              "değiştirilemez — dosya sunucuda damgalanır, SHA-256 özeti cevaba bağlanır, kayıt kilitlenir.",
-              ["Aynı fotoğraf ikinci kez gönderilemez; deneme olay izine yazılır",
-               "Galeri denemesi, şube dışı konum, cihaz saati farkı ve geç senk bayrak olarak görünür",
-               "Bayrak suçlama değil, incelemeye çağrıdır — kişi puanına dönüşmez"],
-              scaled(scr_bayrak(900, 520), 900, 520, 0.36), "Kanıtlar ve bütünlük bayrakları")
-    k10 = kart(10, "Belge ve periyodik bakım takvimi", "web", "web",
-               "Yangın tüpü dolumu, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi ve portör belgeleri "
-               "tarihleriyle kayıtlıdır. Süre dolmadan uyarır; geçerse kendiliğinden iş açar.",
-               ["Bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne bildirim",
-                "Tarih geçince yüksek öncelikli aksiyon açılır, şube “belge eksik” işaretlenir",
-                "Zincir genelinde yaklaşanlar ve geçmişler tek listede; dönem PDF'i denetimde verilir"],
-               scaled(scr_belge(1200, 760), 1200, 760, 0.28), "Belge takvimi · zincir görünümü")
-    pdf_grup = ('<div style="display:flex;gap:9px">'
-              + paper("Çalıştırma raporu", "BAŞARISIZ · kritik madde", T["kritik"],
-                      [("90", None), ("70", None), ("85", None), ("60", T["kritikA"]), ("80", None)], kare=True)
-              + paper("Aylık özet", "EYLÜL · 12 ŞUBE", T["marka"],
-                      [("85", None), ("65", T["markaA"]), ("75", None), ("55", None), ("80", None), ("70", T["markaA"]), ("60", None)], kod="TN-9B2E1-44AC")
-              + paper("Sıcaklık günlüğü", "1–30 EYLÜL · 3 ÖLÇÜM/GÜN", T["marka"],
-                      [("90", None), ("88", None), ("86", None), ("84", T["kritikA"]), ("88", None), ("85", None), ("80", None)], kod="TN-3C7D0-18BF") + '</div>')
-    pdfler = scaled(pdf_grup, 468, 200, 0.64)
-    k11 = kart(11, "Denetimde verilen belgeler", "PDF", "pdf",
-               "Üç çıktı doğrulama kodlu PDF olarak iner: bir gecenin tamamını fotoğraflarıyla gösteren çalıştırma raporu, "
-               "aylık tek sayfa özet ve HACCP sıcaklık günlüğü. Denetçi kaydı sayfadan okur.",
-               ["Her PDF üretim zamanı ve doğrulama kodu taşır",
-                "Hangi ölçümün ne zaman, kim tarafından girildiği satır satır görünür",
-                "Kanıt dosyaları 24 ay saklanır, sonra otomatik silinir"],
-               pdfler, "Çalıştırma raporu · aylık özet · sıcaklık günlüğü", sol_w=302)
-    ilke = ('<div style="background:' + T["markaA"] + ';border-radius:12px;padding:12px 15px">'
-            '<b style="font-family:' + SERIF + ';font-size:15px;color:' + T["marka"] + '">Bir özellik v1’e nasıl girdi?</b>'
-            '<div style="font-size:12.5px;line-height:1.5;color:' + T["ink2"] + ';margin-top:4px;max-width:80ch">'
-            'Üç sorudan birine “evet” gerekiyordu: <b>1)</b> Personel bunu görmese kapanış listesi tamamlanmaz mı? '
-            '<b>2)</b> Yönetici bunu görmese kaçırılan iş görünmez mi? <b>3)</b> Bu olmadan denetimde kanıt verilemez mi? '
-            'Hayır olan her satır v1.1’e yazıldı, silinmedi (ADR-0008).</div></div>')
-    return page(head("v1 · 9–11") + k9 + k10 + k11 + ilke + foot(4), gap=12)
+    k9 = kart(9, "Wi-Fi gidince iş durmaz", "mobil", "mobil",
+              "Mutfakta bağlantı kesilse de liste cihazda devam eder; kayıtlar 72 saate kadar bekler ve bağlantı gelince sırayla gönderilir. "
+              "Hiçbir cevap “internet yoktu” diye kaybolmaz.",
+              ["Fotoğraf cihazda küçültülüp kuyrukta saklanır",
+               "Saat cihazdan değil sunucudan alınır; damga sonradan düzeltilir",
+               "Geç ulaşan kayıt işaretlenir, silinmez"],
+              scaled(scr_offline(), 390, 844, 0.30), "Çevrimdışı · kuyrukta bekleyen kayıtlar")
+    k10 = kart(10, "Liste yazmakla uğraşmazsınız", "web", "web",
+               "Kapanış, açılış, saatlik hijyen, soğuk zincir, haftalık derin temizlik, fritöz yağı, kasa devri ve teslimat kabul listeleri "
+               "73 maddeyle hazır gelir; kopyalayıp kendi işletmenize göre düzenlersiniz.",
+               ["Altı madde türü: onay, seçim, sayı, sıcaklık, metin, fotoğraf",
+                "Her madde zorunlu, fotoğraf zorunlu veya kritik olarak işaretlenebilir",
+                "Düzenleme yeni sürüm açar; o sırada çalışan planlar bozulmaz"],
+               scaled(scr_sablon(1200, 760), 1200, 760, 0.28), "Şablonlar ve madde türleri")
+    k11 = kart(11, "Bir günde kurulur, aynı gece başlar", "web", "web",
+               "Şubeler Excel'den yüklenir, liste hazır şablondan seçilir, saatler şubenin kendi çalışma saatinden hesaplanır. "
+               "Dört adım; ilk liste kurulumun olduğu gece açılır.",
+               ["25 satırlık şube dosyası tek seferde; hatalı satırlar rapor olarak döner",
+                "Dört rol — yönetici, bölge müdürü, şube müdürü, personel — herkes yalnızca kendi kapsamını görür",
+                "Gece yarısını aşan pencere aynı iş gününe yazılır"],
+               scaled(TT.scr_wizard(1200, 760), 1200, 760, 0.28), "Kurulum sihirbazı · adım 3")
+    return page(head("Başlamak") + k9 + k10 + k11 + foot(4), gap=12)
 
 def s5():
     def oge(ad, aciklama):
-        return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:10px 12px">'
+        return ('<div style="background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:9px 12px">'
                 '<b style="font-size:13px">' + ad + '</b>'
                 '<div style="font-size:12px;line-height:1.45;color:' + T["ink2"] + ';margin-top:3px">' + aciklama + '</div></div>')
+    ilke = ('<div style="background:' + T["markaA"] + ';border-radius:12px;padding:12px 15px">'
+            '<b style="font-family:' + SERIF + ';font-size:15px;color:' + T["marka"] + '">İlk sürümü neden dar tuttuk</b>'
+            '<div style="font-size:12.5px;line-height:1.5;color:' + T["ink2"] + ';margin-top:4px;max-width:86ch">'
+            'Bir özellik ancak şu üç sorudan birini geçerse ilk sürüme girdi: <b>1)</b> Personel bunu görmese kapanış listesi tamamlanmaz mı? '
+            '<b>2)</b> Yönetici bunu görmese kaçırılan iş görünmez mi? <b>3)</b> Bu olmadan denetimde kanıt verilemez mi? '
+            'Geri kalanı silinmedi, sıraya alındı — böylece pilot dört haftada ölçülebiliyor ve ürün ayar labirentine dönüşmüyor.</div></div>')
     v11 = ("".join([
         oge("Madde kütüphanesi ve işletme türü paketleri",
-            "Şablon sıfırdan yazılmaz: kafe, fırın, hızlı servis gibi türlere göre hazır madde paketleri gelir; kütüphaneden seçip şubeye uyarlarsınız. "
-            "Kütüphane maddesi güncellenince türetilmiş maddeler “güncelleme var” işareti alır (ADR-0010)."),
-        oge("Yakın kopya fotoğraf tespiti",
-            "Aynı dosya v1'de zaten engelleniyor. v1.1'de birkaç saniye arayla çekilmiş, neredeyse aynı kareler de algısal karşılaştırmayla “benzer kanıt” olarak işaretlenir."),
+            "Kafe, fırın, hızlı servis gibi işletme türlerine göre hazır madde paketleri; listeyi sıfırdan yazmak yerine kütüphaneden seçip "
+            "şubenize uyarlarsınız. Kütüphanedeki madde güncellenince türetilmiş maddeler uyarı alır."),
+        oge("Benzer fotoğraf tespiti",
+            "Aynı dosyanın yeniden gönderilmesi bugün de engelleniyor. Sıradaki sürümde birkaç saniye arayla çekilmiş, neredeyse aynı kareler de "
+            "“benzer kanıt” olarak işaretlenir."),
         oge("Üretim–satış mutabakatı",
-            "Kapanışta girilen üretim adedi POS satışıyla karşılaştırılır; aradaki <b>açıklanamayan fark</b> sebep setiyle birlikte raporlanır. "
-            "Şube ve vardiya düzeyinde; kişi puanı ve biyometri yok (ADR-0011)."),
+            "Kapanışta girilen üretim adedi POS satışıyla karşılaştırılır; aradaki <b>açıklanamayan fark</b> sebepleriyle birlikte raporlanır. "
+            "Şube ve vardiya düzeyinde: kişi puanı ve biyometri yok."),
         oge("Duyuru ve okundu onayı",
-            "Merkez duyurusu şubelere düşer, kimin okuduğu ve onayladığı rapor olur — “gruba yazdım, gördü mü” sorusu biter."),
-        oge("Koşul editörü",
-            "Madde cevabına göre ek madde açılır: “ekipman arızalı” denince servis bilgisi, “Hayır” denince ek fotoğraf. v1'de kural tek ve sabittir."),
+            "Merkez duyurusu şubelere düşer; kimin okuduğu ve onayladığı rapor olur — “gruba yazdım, gördü mü” sorusu biter."),
+        oge("Koşullu maddeler",
+            "Cevaba göre ek madde açılır: “ekipman arızalı” denince servis bilgisi, “Hayır” denince ek fotoğraf. Bugünkü sürümde kural tek ve sabittir."),
         oge("Ayrıntılı raporlar",
-            "Şube sıralaması, başarısız madde ısı haritası, yapılamadı sebep dağılımı, kişi düzeyinde gecikme takibi, Excel ve paylaşım bağlantısı."),
+            "Şube sıralaması, en çok başarısız olan maddeler, yapılamadı sebeplerinin dağılımı, gecikme takibi, Excel ve paylaşım bağlantısı."),
         oge("Denetim izi ekranı",
-            "Olay günlüğü v1'de de tutuluyor ama ekranı yok; v1.1'de filtrelenebilir liste, zincir doğrulama ve RFC 3161 zaman damgası gelir."),
+            "Her olay bugün de değiştirilemez biçimde kaydediliyor; sıradaki sürümde bu kayıt arayüzden okunur hâle gelir ve nitelikli zaman damgası eklenir."),
     ]))
     v2 = ("".join([
         oge("Franchise marka kütüphanesi",
             "Marka merkezi standart listeyi yayınlar, franchise işletmeleri kendi hesabında kullanır; uyum merkezden izlenir."),
         oge("Başka sektör paketleri",
-            "Perakende zinciri, otel, akaryakıt istasyonu, üretim gibi dikeylere hazır şablon ve madde paketleri."),
+            "Perakende zinciri, otel, akaryakıt istasyonu, üretim gibi alanlara hazır şablon ve madde paketleri."),
         oge("POS ve İK entegrasyonları",
-            "Personel ve vardiya bilgisi İK sisteminden, satış verisi POS'tan gelir; atama ve mutabakat elle veri girişi olmadan çalışır."),
+            "Personel ve vardiya bilgisi İK sisteminden, satış verisi kasadan gelir; atamalar ve mutabakat elle veri girişi olmadan çalışır."),
         oge("Kamera ile üretim sayımı",
-            "Fırın ağzı veya tezgâh kamerası üretilen adedi sayar, satışla karşılaştırır. Hukuk görüşü ve ölçüm doğrulaması (±%3 hedefi) olmadan başlanmaz; "
-            "kimlik tanıma ve biyometri hiçbir kademede yok."),
+            "Fırın ağzı veya tezgâh kamerası üretilen adedi sayar ve satışla karşılaştırır. Hukuki görüş ve ölçüm doğrulaması olmadan başlanmaz; "
+            "kimlik tanıma ve biyometri hiçbir aşamada yok."),
     ]))
     not_ = ('<div style="background:' + T["uyariA"] + ';border-radius:11px;padding:11px 13px;font-size:12px;line-height:1.5;color:' + T["ink2"] + '">'
-            '<b>Bu sayfada ekran yok, çünkü henüz çizilmedi.</b> v1.1 ve v2 satırlarının kapsamı ve sırası pilot bulgularına göre belirlenir; '
-            'bir özellik yol haritasına ancak sahadan gelen bir sinyalle girer. Taahhüt edilen tek şey v1’lerdir.</div>')
-    return page(head("v1.1 ve v2") + h1("Sonra ne geliyor", 28)
-                + p("Bu satırlar v1'in kapsamı dışında. Burada olmaları “yapılacak” sözü değil, “bilerek ertelendi” kaydıdır: "
-                    "ilk sürüm dar tutuldu ki pilot dört haftada ölçülebilsin.")
-                + label("v1.1 — pilot sonrası, sıra bulgularla belirlenir")
+            '<b>Bu sayfada ekran yok, çünkü bu özellikler henüz tasarlanmadı.</b> Pilot ölçütleri ve sözleşme yalnızca bugünkü sürümü kapsar; '
+            'buradaki satırlar söz değil, sıraya alınmış işlerdir. Sıralarını pilotta sizin şubelerinizden çıkan ihtiyaç belirler.</div>')
+    return page(head("Yol haritası") + h1("Sonra ne geliyor", 27)
+                + p("Bugün teslim edilen sürüm bilerek dar tutuldu. Aşağıdakiler kapsam dışında kaldı — ama silinmedi, sıraya alındı.")
+                + ilke
+                + label("Sıradaki sürüm — pilot sonrası")
                 + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' + v11 + '</div>'
-                + label("v2 — entegrasyon ve yeni dikeyler")
+                + label("Daha sonra")
                 + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">' + v2 + '</div>'
-                + not_ + foot(5, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=11)
+                + not_ + foot(5, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=9)
 
 # ---------------------------------------------------------------- üretim
 PAGES = {"Main.dc.html": s1, "O2.dc.html": s2, "O3.dc.html": s3, "O4.dc.html": s4, "O5.dc.html": s5}

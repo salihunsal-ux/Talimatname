@@ -39,16 +39,18 @@ Ekran tasarımları: `tanitim/Yapilamadi.dc.html` (mobil alt sayfa), `tanitim/De
 
 `build_ozellikler.py` → `ozellikler/` artboard'ları (5 sayfa + 4 yeni ekran) + `talimatname-ozellikler.html` (yazdırma), `.pdf`, `talimatname-ozellikler-sayfa.html` (yayın sürümü). Canlı: https://claude.ai/artifact/JDHxYmF8ZnShvi78khafDD
 
-Neden var: tanıtım dosyasının 8. sayfasındaki yol haritası tablosunda her özellik tek cümleydi. Föy, **v1'de gelen 11 özelliği** birer ekran görseli, iki cümlelik açıklama ve üç maddelik ayrıntıyla gösterir; v1.1 ve v2 satırları son sayfada yalnızca metinle anlatılır (ekranları henüz çizilmedi, çizilmiş gibi gösterilmez).
+Kime: **müşteriye** (zincir merkezi: operasyon müdürü, kalite sorumlusu). Dili fayda önce; ADR/FR/SCR/E-kodları, sürüm numaraları ve iç terimler bilerek yok. Sıralama satış mantığına göre: önce merkezin kazancı, sonra kanıt/denetim, sonra sahada benimseme, en son kurulum kolaylığı.
 
-| Sayfa | İçerik |
-|---|---|
-| 1 | Koyu giriş bandı + içindekiler; 1 kurulum sihirbazı ve dört rol (Sihirbaz), 2 sekiz şablon ve altı madde türü (**yeni ekran: Sablonlar**) |
-| 2 | 3 kiosk ve PIN (KioskListe), 4 ölçüm ve tek sabit kural (Sicaklik), 5 yapılamadı akışı (Yapilamadi) |
-| 3 | 6 çevrimdışı çalışma (**yeni ekran: Cevrimdisi**), 7 sabit eskalasyon ve 07:00 özeti (SabahOzeti), 8 istisna panosu (Pano) |
-| 4 | 9 çalıştırma detayı ve kanıt bütünlüğü (**yeni ekran: Bayraklar**, E-11), 10 belge ve periyodik bakım takvimi (**yeni ekran: BelgeTakvimi** = SCR-W-14, E-12), 11 denetimde verilen üç PDF; "bir özellik v1'e nasıl girdi" kutusu (ADR-0008) |
-| 5 | v1.1 (7 satır) ve v2 (4 satır): her biri iki cümleyle, neden ertelendiğiyle; ekran yok notu |
+Neden var: tanıtım dosyasının 8. sayfasındaki yol haritası tablosunda her özellik tek cümleydi. Föy, **bugünkü sürümde gelen 11 özelliği** birer ekran görseli, iki cümlelik açıklama ve üç maddelik ayrıntıyla gösterir; sıradaki sürüm ve sonrası son sayfada yalnızca metinle anlatılır (ekranları henüz çizilmedi, çizilmiş gibi gösterilmez).
+
+| Sayfa | Tema | İçerik |
+|---|---|---|
+| 1 | Merkez ne görür | Koyu giriş bandı + gruplu içindekiler; 1 her sabah iki dakika (SabahOzeti), 2 sorunsuz gün tek cümledir (Pano) |
+| 2 | Kanıt ve denetim | 3 denetim geldiğinde üç dakika (üç PDF küçük resmi), 4 “fotoğrafı dün çekmiş” tartışması biter (**yeni ekran: Bayraklar**), 5 belge süresi kaçmaz (**yeni ekran: BelgeTakvimi**) |
+| 3 | Şubede nasıl yürür | 6 personel altı dakikada bitirir (KioskListe), 7 soğuk zincir kendini savunur (Sicaklik), 8 yapılamayan iş kaybolmaz (Yapilamadi) |
+| 4 | Başlamak | 9 Wi-Fi gidince iş durmaz (**yeni ekran: Cevrimdisi**), 10 liste yazmakla uğraşmazsınız (**yeni ekran: Sablonlar**), 11 bir günde kurulur (Sihirbaz) |
+| 5 | Yol haritası | “İlk sürümü neden dar tuttuk” kutusu; sıradaki sürüm (7 satır) ve daha sonrası (4 satır), her biri iki cümleyle; ekran yok notu |
 
 Yeni ekranlar `ozellikler/Sablonlar.dc.html`, `Cevrimdisi.dc.html`, `Bayraklar.dc.html`, `BelgeTakvimi.dc.html`. BelgeTakvimi aynı zamanda **SCR-W-14'ün tel-çerçevesi yerine geçer** (ekran envanteri 05-tasarim/01). Ortak bileşenler yine `build_brosur.py`'den gelir; mevcut ekranlar `build_tanitim.py`'den içe aktarılır.
 
-Hangisi ne zaman: **2 sayfalık broşür** görüşmede bırakılır; **8 sayfalık tanıtım dosyası** üzerinden ürün anlatılır; **özellik föyü** “bu tam olarak ne yapıyor” sorusu geldiğinde ve aday geliştiriciye verilir (ekran paylaşımı veya basılı), karar vericiye ve aday geliştiriciye gönderilir. İkisinde de fiyat yoktur ve iletişim alanları köşeli parantezlidir.
+Hangisi ne zaman: **2 sayfalık broşür** görüşmede bırakılır; **8 sayfalık tanıtım dosyası** üzerinden ürün anlatılır; **özellik föyü** “bu tam olarak ne yapıyor” sorusu geldiğinde bırakılır (müşteri dili; geliştiriciye kapsam belgesi ve gereksinimler verilir) (ekran paylaşımı veya basılı), karar vericiye ve aday geliştiriciye gönderilir. İkisinde de fiyat yoktur ve iletişim alanları köşeli parantezlidir.

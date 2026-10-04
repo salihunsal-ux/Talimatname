@@ -268,7 +268,7 @@ def page1():
 
 def pdf_thumb():
     line = lambda w, c=T["cizgi"]: f'<div style="height:5px;width:{w}%;background:{c};border-radius:2px"></div>'
-    return (f'<div style="width:150px;height:200px;background:{T["yuzey"]};border:1px solid {T["cizgi"]};box-shadow:0 8px 20px rgba(28,33,40,.14);padding:12px;display:flex;flex-direction:column;gap:6px;flex:none">'
+    return (f'<div style="box-sizing:border-box;width:150px;height:200px;background:{T["yuzey"]};border:1px solid {T["cizgi"]};box-shadow:0 8px 20px rgba(28,33,40,.14);padding:12px;display:flex;flex-direction:column;gap:6px;flex:none">'
             f'<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:{SERIF};font-size:9px;font-weight:700">Çalıştırma raporu</div><div style="width:18px;height:18px;background:{T["ink"]};border-radius:2px"></div></div>'
             f'<div style="font-size:7px;color:{T["kritik"]};font-weight:700">BAŞARISIZ · kritik madde</div>{line(90)}{line(70)}{line(85)}{line(60,T["kritikA"])}{line(80)}{line(75)}'
             f'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:2px">' + "".join(f'<div style="height:22px;background:repeating-linear-gradient(135deg,#e6e3da 0 4px,#cbc8be 4px 8px);border-radius:2px"></div>' for _ in range(3)) + '</div>'
