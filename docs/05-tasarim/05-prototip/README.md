@@ -1,6 +1,21 @@
 # Prototipler
 
-İki tıklanabilir prototip, tek dosya, bağımlılık yok, veri kaydetmez.
+İki tıklanabilir prototip (veri kaydetmez) ve bir **çalışan saha demosu** (veri saklar). Hepsi tek dosya, bağımlılık yok.
+
+## 0. Saha demosu — çalışan sürüm (4 Ekim 2026)
+
+`saha-demosu.html` → https://claude.ai/artifact/WGKqPtVDturkaRaoLRtiRy
+
+Tıklanabilir prototiplerden farkı: **kayıt tutar**. Pencere ve tolerans gerçek saatle işler, madde cevapları ve cihaz kamerasıyla çekilen kanıt saklanır, kritik madde ve yapılamadı aksiyon açar, gönderim kaydı kilitler, merkez panosu aynı kaydı görür ve doğrulama kodlu raporu yazdırır.
+
+**İki mod.** Artifact veri tabanına yalnızca yazma yetkisi olan hesaplar (sahibi ve e-postayla davet edilen düzenleyiciler; kurumsal planda şirket üyeleri) yazabilir — onlarda *paylaşımlı mod* çalışır: tablette doldurulan liste merkez panosunda canlı görünür. Diğer herkeste *yerel mod*: akış birebir aynıdır, veriler yalnızca o cihazda kalır. Mod üst çubukta yazar.
+
+**Demoda olmayan (üründe var):** push ve SMS, gerçek kimlik ve rol güvenliği, 72 saatlik çevrimdışı kuyruk, sunucu tarafı damga ve hash zinciri, belge takvimi, aylık özet ve sıcaklık günlüğü PDF'leri, madde kütüphanesi. Veriler **Türkiye'de değil** (Anthropic altyapısı): gerçek personel adı, gerçek müşteri verisi ve kişi yüzü içeren fotoğraf girilmez — ADR-0003 gereği gerçek pilot bu demoyla yapılmaz.
+
+**Demo saati.** "Demo ayarı" sekmesinden saat ilerletilir: *pencereyi aç*, *toleransı doldur (kaçırıldı)*, *sıfırla*. Paylaşımlı modda kaydırma tüm cihazlarda ortaktır, böylece tablet ve pano aynı saati görür.
+
+**Nerede kullanılır:** görüşmede iki cihazla canlı gösterim (tablet + dizüstü, ikisi de sizin hesabınızla), kendi test şubenizde bir gecelik deneme, saha kiosk denemesi kitinin ([07-kiosk-saha-denemesi](../../01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md)) sahte ekran yerine çalışan sürümle koşulması.
+
 
 ## 1. Blok 8 prototipi (personel + bölge müdürü, telefon)
 
