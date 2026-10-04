@@ -396,7 +396,9 @@ def t8():
                 '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
                 '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
-    return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası") + yol + iletisim
+    foy = ('<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:-4px">'
+           'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, 5 sayfa).</div>')
+    return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası") + yol + foy + iletisim
                 + foot(8, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=13)
 
 # ---------------------------------------------------------------- üretim

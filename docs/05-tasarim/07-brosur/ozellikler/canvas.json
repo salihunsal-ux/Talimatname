@@ -1,0 +1,84 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Özellik föyü · sayfa 1",
+      "x": 0,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O2.dc.html",
+      "title": "Özellik föyü · sayfa 2",
+      "x": 880,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O3.dc.html",
+      "title": "Özellik föyü · sayfa 3",
+      "x": 1760,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O4.dc.html",
+      "title": "Özellik föyü · sayfa 4",
+      "x": 2640,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O5.dc.html",
+      "title": "Özellik föyü · sayfa 5",
+      "x": 3520,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "Sablonlar.dc.html",
+      "title": "Ekran · şablonlar (web)",
+      "x": 0,
+      "y": 1280,
+      "w": 1200,
+      "h": 760
+    },
+    {
+      "file": "Cevrimdisi.dc.html",
+      "title": "Ekran · çevrimdışı (mobil)",
+      "x": 1320,
+      "y": 1280,
+      "w": 390,
+      "h": 844
+    },
+    {
+      "file": "Bayraklar.dc.html",
+      "title": "Ekran · kanıt bayrakları (web)",
+      "x": 2640,
+      "y": 1280,
+      "w": 900,
+      "h": 520
+    },
+    {
+      "file": "BelgeTakvimi.dc.html",
+      "title": "Ekran · belge takvimi (web, SCR-W-14)",
+      "x": 3960,
+      "y": 1280,
+      "w": 1200,
+      "h": 760
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
