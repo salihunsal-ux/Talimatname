@@ -59,4 +59,6 @@ Neden var: tanıtım dosyasının 8. sayfasındaki yol haritası tablosunda her 
 
 Bugünkü sürüm için yeni ekranlar: `ozellikler/Sablonlar.dc.html`, `Cevrimdisi.dc.html`, `Bayraklar.dc.html`, `BelgeTakvimi.dc.html`. Yol haritası taslakları: `Kutuphane`, `Mutabakat`, `BenzerKanit`, `Duyuru`, `KosulluMadde`, `Raporlar`, `DenetimIzi`, `Franchise`, `SektorPaketleri`, `Entegrasyon`, `KameraSayim` (hepsi `.dc.html`). BelgeTakvimi aynı zamanda **SCR-W-14'ün tel-çerçevesi yerine geçer** (ekran envanteri 05-tasarim/01). Ortak bileşenler yine `build_brosur.py`'den gelir; mevcut ekranlar `build_tanitim.py`'den içe aktarılır.
 
+Her iki tanıtım belgesi de föye gönderme yapar: 2 sayfalık broşürün iletişim şeridinde ve tanıtım dosyasının 8. sayfasında yol haritası tablosunun altında “özellik föyü (A4, 9 sayfa)” satırı vardır — föy güncellenince sayfa sayısı iki yerde de düzeltilmelidir.
+
 Hangisi ne zaman: **2 sayfalık broşür** görüşmede bırakılır; **8 sayfalık tanıtım dosyası** üzerinden ürün anlatılır; **özellik föyü** “bu tam olarak ne yapıyor” sorusu geldiğinde bırakılır (müşteri dili; geliştiriciye kapsam belgesi ve gereksinimler verilir) (ekran paylaşımı veya basılı), karar vericiye ve aday geliştiriciye gönderilir. İkisinde de fiyat yoktur ve iletişim alanları köşeli parantezlidir.

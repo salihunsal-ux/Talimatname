@@ -276,7 +276,7 @@ def pdf_thumb():
 
 def page2():
     ekranlar = ('<div style="display:flex;gap:14px;align-items:flex-start">'
-                + shot(scr_pano(1200, 760), 1200, 760, 0.315, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
+                + shot(scr_pano(1200, 760), 1200, 760, 0.29, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
                 + '<div style="flex:1;min-width:0">'
                 + legend([(1, "Altı sayıda gece özeti: zamanında, geç, başarısız, kaçırıldı, yapılamadı, açık aksiyon."),
                           (2, "Yalnızca sorunlu satırlar listelenir — “her şey yolunda” da bir cevaptır."),
@@ -304,13 +304,14 @@ def page2():
                   "Şube başına aylık ücret görüşmede belirlenir.", 11.5, "rgba(255,255,255,.62)", "76ch") + '</div>')
     contact = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'
                '<div style="display:flex;flex-direction:column;gap:3px">' + wordmark(22) +
-               '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
+               '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div>'
+               '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:2px">Her özelliğin açıklaması ve ekranı: <b>özellik föyü</b> (A4, 9 sayfa)</div></div>'
                '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     return sheet(h2("Merkez ne görür", 26)
                  + mp("07:00’de sabah özeti; panoda yalnızca dikkat isteyen şube × liste hücreleri; her çalıştırma için doğrulama kodlu PDF.")
                  + ekranlar + label("Alternatifle yan yana") + karsilastirma + itiraz + pilot + contact
-                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=10)
+                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=9)
 
 # ---------------------------------------------------------------- dosyalar
 HEAD = '<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <script src="./support.js"></script>\n</head>\n<body>\n<x-dc>\n<helmet>\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">\n  <style>\n    body { margin: 0; background: #e9e6de; }\n    a { color: #1f6f5b; } a:hover { color: #174f41; }\n  </style>\n</helmet>\n'
