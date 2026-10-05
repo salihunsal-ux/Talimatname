@@ -114,6 +114,7 @@ tr:last-child td{border-bottom:0}
     <button class="btn kucuk" data-git="merkez" data-uzun="Merkez panosu" data-kisa="Pano">Merkez panosu</button>
     <button class="btn kucuk" data-git="belge" data-uzun="Belge takvimi" data-kisa="Belge">Belge takvimi</button>
     <button class="btn kucuk" data-git="urun" data-uzun="Üründe var" data-kisa="Ürün">Üründe var</button>
+    <button class="btn kucuk" data-git="yol" data-uzun="Yol haritası" data-kisa="Yol">Yol haritası</button>
     <button class="btn kucuk" data-git="ayar" data-uzun="Demo ayarı" data-kisa="Ayar">Demo ayarı</button>
   </div>
 </div></div>
@@ -194,6 +195,7 @@ const S = {
   rol:(location.hash.replace("#","")||"kiosk"),
   sube:localStorage.getItem("td.sube")||"kadikoy",
   kisi:null, kaydirma:0, kosmalar:{}, kanitlar:{}, belgeler:{}, sorunlar:{}, acik:null, supheli:false, belgeFiltre:false,
+  ilgiler:{}, gorusme:localStorage.getItem("td.gorusme")||"",        // yol haritası işaretleri (görüşme aleti)
   panoGorunum:"pano", aksiyonFiltre:"acik", kilitMesaji:false,
 };
 function simdi(){ return new Date(Date.now() + S.kaydirma*60000); }
@@ -272,6 +274,20 @@ const Depo = {
     if (S.mod==="paylasimli"){ try{ await S.db.doc("belgeler/"+id).delete(); return; }catch(e){} }
     const hepsi = YerelDepo.oku("td.belgeler")||{}; delete hepsi[id]; YerelDepo.yaz("td.belgeler",hepsi); ciz();
   },
+  async ilgiYaz(x){
+    S.ilgiler[x.id] = x;
+    if (S.mod==="paylasimli"){ try{ await S.db.doc("ilgiler/"+x.id).set(x); ciz(); return; }catch(e){ console.warn(e); } }
+    const hepsi = YerelDepo.oku("td.ilgiler")||{}; hepsi[x.id]=x; YerelDepo.yaz("td.ilgiler",hepsi); ciz();
+  },
+  async ilgiSil(id){
+    delete S.ilgiler[id];
+    if (S.mod==="paylasimli"){ try{ await S.db.doc("ilgiler/"+id).delete(); ciz(); return; }catch(e){} }
+    const hepsi = YerelDepo.oku("td.ilgiler")||{}; delete hepsi[id]; YerelDepo.yaz("td.ilgiler",hepsi); ciz();
+  },
+  async ilgileriSil(){
+    if (S.mod==="paylasimli"){ try{ const q = await S.db.collection("ilgiler").limit(300).get(); for (const d of q.docs) await S.db.doc("ilgiler/"+d.id).delete(); }catch(e){ console.warn(e); } }
+    YerelDepo.yaz("td.ilgiler",{}); S.ilgiler={}; ciz();
+  },
   async ozetOku(h){
     if (S.mod==="paylasimli"){ try{ const d = await S.db.doc("ozetler/"+h).get(); if (d.exists) return d.data(); return null; }catch(e){} }
     const hepsi = YerelDepo.oku("td.ozetler")||{}; return hepsi[h]||null;
@@ -318,6 +334,10 @@ async function depoBaslat(){
         const y = {}; snap.docs.forEach(d=>{ y[d.id]=d.data(); });
         S.belgeler = y; ciz();
       }, e=>{ console.warn("belge aboneliği:", e.code); });
+      db.collection("ilgiler").limit(300).onSnapshot(snap=>{
+        const y = {}; snap.docs.forEach(d=>{ y[d.id]=d.data(); });
+        S.ilgiler = y; ciz();
+      }, e=>{ console.warn("ilgi aboneliği:", e.code); });
       db.doc("demo/ayar").onSnapshot(snap=>{
         const a = snap.exists ? snap.data() : null;
         if (a && typeof a.kaydirma === "number" && a.kaydirma !== S.kaydirma){ S.kaydirma = a.kaydirma; ciz(); }
@@ -328,6 +348,7 @@ async function depoBaslat(){
     S.kosmalar = YerelDepo.oku("td.kosmalar")||{};
     S.belgeler = YerelDepo.oku("td.belgeler")||{};
     S.sorunlar = YerelDepo.oku("td.sorunlar")||{};
+    S.ilgiler = YerelDepo.oku("td.ilgiler")||{};
     const a = YerelDepo.oku("td.ayar"); if (a && typeof a.kaydirma==="number") S.kaydirma = a.kaydirma;
   }
   modRozet(); ciz();
@@ -1908,6 +1929,158 @@ function aylikOzet(){
   raporAc(govde, "Aylık tek sayfa özet");
 }
 
+/* ---------------------------------------------------------------- yol haritası (görüşme aleti, üründe yok) */
+/* Satırlar: kapsam belgesinin v1.1/v2 satırları + büyüme listesi (01-strateji/04); dil föyle aynı (05-tasarim/07-brosur). */
+const YOL = [
+  {b:"sonraki", kod:"Ş-8 · E-9", ad:"Liste yazmak yerine kütüphaneden seçmek",
+   o:"İşletme türünüze göre hazır madde paketleri gelir; yeni şube açınca ya da menü değişince listeyi baştan kurmazsınız.", f:"föy s.5"},
+  {b:"sonraki", kod:"A14", ad:"Üretilen ile satılan karşılaştırılır",
+   o:"Kapanışta girilen üretim adedi kasa satışıyla karşılaştırılır; açıklanamayan fark sebepleriyle raporlanır. Kişi adı ve kişi puanı yok.", f:"föy s.5"},
+  {b:"sonraki", kod:"E-11 devamı", ad:"Neredeyse aynı iki fotoğraf işaretlenir",
+   o:"Aynı dosya bugün de reddediliyor; bu adımda dosya farklı olsa bile aynı açıdan çekilmiş kareler “benzer kanıt” diye işaretlenir.", f:"föy s.6"},
+  {b:"sonraki", kod:"D-1…D-4", ad:"Duyuruyu kimin okuduğu kayda geçer",
+   o:"Merkez duyurusu şubelere düşer; kimin okuduğu ve onayladığı rapor olur. Ek dosya eklenir, okumayana hatırlatma gider.", f:"föy s.6"},
+  {b:"sonraki", kod:"Ş-4 editörü", ad:"Liste yalnızca gerektiğinde uzar",
+   o:"Cevaba göre ek madde açılır. Bugünkü sürümde kural tek ve sabit; bu adımda şablona özel kural tanımlanır.", f:"föy s.6"},
+  {b:"sonraki", kod:"R-2 · R-3 · R-7", ad:"Tek seferlik soruların cevabı raporda",
+   o:"Şube sıralaması, en çok düşen maddeler, yapılamadı sebeplerinin dağılımı ve gecikme takibi tek sayfada.", f:"föy s.7"},
+  {b:"sonraki", kod:"U-2", ad:"Kaydın değişmediğini ekranda görmek",
+   o:"Olay izi arayüzden okunur hâle gelir: filtreli liste, zincir doğrulama ve bağımsız zaman damgası.", f:"föy s.7"},
+  {b:"sonraki", kod:"W-5", ad:"Excel’e aktarım ve kendi sisteminize bağlantı",
+   o:"Rapor ve kayıtlar dışa aktarım API’si ve webhook ile akar; aylık toplantı dosyası elle hazırlanmaz."},
+  {b:"sonraki", kod:"W-3", ad:"Bildirim ve eskalasyon ayarları",
+   o:"Kime, ne zaman, hangi kanaldan gideceğini siz belirlersiniz. Bugünkü sürümde bu merdiven sabit."},
+  {b:"sonraki", kod:"P-8", ad:"Vardiya bazlı tekrar",
+   o:"Liste güne değil vardiyaya bağlanır; sabah ve akşam ekibi kendi listesini görür."},
+  {b:"sonraki", kod:"Y-11", ad:"QR ile istasyondan başlatma",
+   o:"Personel istasyondaki QR’ı okutur, doğru liste doğrudan açılır; menüde aramaz."},
+  {b:"sonraki", kod:"Ş-7", ad:"Şube türü varyantı",
+   o:"Aynı listenin AVM şubesi, cadde şubesi, üretim mutfağı varyantları; tek şablon çatallanır."},
+  {b:"sonraki", kod:"O-7", ad:"Akıllı gruplar",
+   o:"Bölge, şube türü ya da etikete göre otomatik gruplar; yeni şube kurala göre doğru gruba düşer."},
+  {b:"sonraki", kod:"R-9", ad:"Kişi düzeyinde gecikme takibi",
+   o:"Yöneticiye kişi bazında gecikme ve eksik görünümü. Kişi puanı yine yok — bu sınır bilerek konuldu."},
+
+  {b:"sonra", kod:"E-10", ad:"Franchise’ta standart merkezden yayınlanır",
+   o:"Marka merkezi standart listeyi yayınlar; franchise kendi hesabında kullanır, uyum merkezden izlenir.", f:"föy s.8"},
+  {b:"sonra", kod:"E-10 paket", ad:"Aynı çekirdek, başka sektörler",
+   o:"Perakende, otel, akaryakıt ve üretim için hazır şablon setleri; zincirin birden fazla işi tek hesapta yürür.", f:"föy s.8"},
+  {b:"sonra", kod:"W-6 · A16", ad:"Kasadan ve İK’dan veri kendiliğinden gelir",
+   o:"Satış kasadan, personel ve vardiya İK sisteminden okunur; bağlantı tek yönlü, karşı sisteme yazılmaz.", f:"föy s.8"},
+  {b:"sonra", kod:"A15", ad:"Beyana değil ölçüme dayanan sayaç",
+   o:"Fırın ağzı veya tezgâh kamerası üretilen adedi sayar. Yüz tanıma ve kişi takibi yok; hukuk görüşü olmadan kurulmaz.", f:"föy s.9"},
+  {b:"sonra", kod:"O-9", ad:"SSO ve dizin senkronu",
+   o:"Kurumsal hesapla giriş; personel listesi İK dizininden gelir, elle kullanıcı açılmaz."},
+  {b:"sonra", kod:"Ş-9", ad:"Formül, kaydırıcı, tekrarlanan bölüm",
+   o:"Hesaplanan alanlar ve “her dolap için tekrarla” bölümleri; karmaşık ölçüm listeleri için."},
+  {b:"sonra", kod:"A-7", ad:"Özel aksiyon tipleri ve tekrarlı aksiyon",
+   o:"Bakım, satın alma, şikâyet gibi kendi aksiyon tipleriniz; tekrarlayan işler kendiliğinden açılır."},
+  {b:"sonra", kod:"R-10", ad:"Özel pano",
+   o:"Her yöneticinin kendi seçtiği kutular; bölge müdürü ile kalite müdürü aynı panoyu görmek zorunda değil."},
+
+  {b:"fikir", kod:"A17", ad:"Müşteriye görünen “son kontrol” kartı",
+   o:"Tuvalet ya da masa QR’ı: müşteri okutunca “en son 14:20’de kontrol edildi” görür; kişi adı görünmez."},
+  {b:"fikir", kod:"A18", ad:"Dış servis için misafir aksiyon kapatma",
+   o:"Servis firması bağlantıyla gelir, fotoğraf ve notla aksiyonu kapatır; hesap açmaz."},
+  {b:"fikir", kod:"A19", ad:"Tekrar eden sorun görünümü",
+   o:"“Bakırköy’de dondurucu üç haftada dördüncü kez”: aynı madde + aynı şube kalıbı ve kök neden alanı."},
+  {b:"fikir", kod:"A20", ad:"Açılış saati uyumu",
+   o:"“Kapı açıldı” maddesinin zaman damgasından şube açılış gecikmesi raporu."},
+];
+const YOL_BOLUM = {
+  sonraki:{ad:"Sıradaki sürüm", rozet:"tasarlandı · sıraya alındı",    renk:"var(--uyari)"},
+  sonra:  {ad:"Daha sonra",     rozet:"tasarım taslağı",               renk:"var(--sessiz)"},
+  fikir:  {ad:"Fikir",          rozet:"yalnızca fikir · tasarlanmadı", renk:"var(--sessiz)"},
+};
+const ilgiId = (gorusme, kod) => (gorusme+"__"+kod).replace(/[^A-Za-z0-9_-]/g,"_");
+
+function yolCiz(app){
+  const gorusme = (S.gorusme||"").trim();
+  const isaretli = kod => gorusme ? S.ilgiler[ilgiId(gorusme,kod)] : null;
+
+  /* başlık bandı — bu sekme ürün ekranı değil, görüşme yüzeyidir */
+  app.append(el("div",{style:"background:var(--ink);color:#fff;border-radius:16px;padding:15px 17px;margin:16px 0 12px"},
+    el("div",{class:"etiket",style:"color:rgba(255,255,255,.55)"},"Yol haritası · geliştirilmedi"),
+    el("div",{style:"font-family:var(--serif);font-size:21px;font-weight:700;margin-top:2px"},"Sıradakini siz belirlersiniz"),
+    el("div",{style:"font-size:13px;line-height:1.5;opacity:.82;margin-top:4px",html:
+      "Aşağıdakiler <b>üründe yok</b>: tasarlandı, sıraya alındı. Sözleşme ve pilot ölçütleri yalnızca bugünkü sürümü bağlar. "+
+      "İşaretlediğiniz satırlar, sıradaki sürümün içeriğini tahminle değil sayıyla belirler."}),
+    el("div",{style:"font-size:12px;opacity:.6;margin-top:6px"},
+      "Ekran taslakları özellik föyünde (PDF); burada yalnızca satırlar ve işaretler tutulur.")));
+
+  /* görüşme kodu: şirket ya da kişi adı değil */
+  const giris = el("input",{class:"giris",placeholder:"Görüşme kodu (örn. tuck)",style:"max-width:220px"});
+  giris.value = S.gorusme||"";
+  giris.addEventListener("input",()=>{ S.gorusme = giris.value; localStorage.setItem("td.gorusme", giris.value); });
+  giris.addEventListener("change",()=>ciz());
+  app.append(el("div",{class:"kart",style:"margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"},
+    el("div",{style:"flex:1;min-width:230px"},
+      el("div",{class:"etiket"},"Görüşme"),
+      el("div",{class:"ss",style:"margin-top:2px", html:
+        "Şirket ya da kişi adı yazmayın; görüşme notundaki <b>zincir_kodu</b> ne ise onu yazın (örn. tuck). Bu demo Anthropic altyapısında saklanır (ADR-0003)."})),
+    giris,
+    el("button",{class:"btn kucuk",onclick:()=>ilgiRaporu()},"İlgi raporu")));
+  if (!gorusme) app.append(el("div",{class:"uyari-bant"},
+    "İşaretleme için önce görüşme kodu girin (not dosyasındaki zincir_kodu). Kod olmadan satırları okuyabilirsiniz ama işaret kaydedilmez."));
+
+  ["sonraki","sonra","fikir"].forEach(b=>{
+    const bilgi = YOL_BOLUM[b], satirlar = YOL.filter(y=>y.b===b);
+    app.append(el("div",{style:"display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:16px 0 7px"},
+      el("div",{class:"etiket"}, bilgi.ad+" ("+satirlar.length+")"),
+      el("span",{class:"pill gri",style:"color:"+bilgi.renk}, bilgi.rozet)));
+    satirlar.forEach(y=>{
+      const im = isaretli(y.kod);
+      const kart = el("div",{class:"kart",style:"margin-bottom:8px"+(im?";border-color:var(--marka);background:var(--markaA)":"")});
+      kart.append(el("div",{style:"display:flex;gap:9px;align-items:baseline;flex-wrap:wrap"},
+        el("b",{style:"font-size:14.5px"}, y.ad),
+        el("span",{class:"pill gri",style:"font-size:10px"}, y.kod),
+        y.f? el("span",{class:"ss"}, y.f) : null));
+      kart.append(el("div",{class:"ss",style:"margin-top:3px;line-height:1.45"}, y.o));
+      kart.append(el("button",{class:"btn kucuk"+(im?" pri":""),style:"margin-top:8px",onclick:async()=>{
+        if (!gorusme){ giris.focus(); return; }
+        if (im) await Depo.ilgiSil(ilgiId(gorusme,y.kod));
+        else await Depo.ilgiYaz({id:ilgiId(gorusme,y.kod), kod:y.kod, ad:y.ad, bolum:y.b, gorusme, not:"", zaman:new Date().toISOString()});
+      }}, im ? "✓ Kullanırdık" : "Kullanırdık"));
+      if (im){
+        const not = el("input",{class:"giris",placeholder:"Kendi cümlesi (isteğe bağlı)",style:"margin-top:8px"});
+        not.value = im.not||"";
+        let bekle = null;
+        not.addEventListener("input",()=>{ clearTimeout(bekle); bekle = setTimeout(()=>Depo.ilgiYaz({...im, not:not.value}), 700); });
+        kart.append(not, el("div",{class:"ss",style:"margin-top:4px"}, gorusme+" · "+saatStr(new Date(im.zaman))+" işaretledi"));
+      }
+      app.append(kart);
+    });
+  });
+  app.append(el("div",{class:"ss",style:"margin-top:14px;line-height:1.5"},
+    "Bu sekme üründe yoktur; görüşmede not almak için vardır. İşaretler “Kayıtları sil” ile silinmez — ayrı kayıttır, Demo ayarından temizlenir."));
+}
+
+/* iç kullanım: hangi satır kaç görüşmede işaretlendi */
+function ilgiRaporu(){
+  const hepsi = Object.values(S.ilgiler||{});
+  const gorusmeler = [...new Set(hepsi.map(x=>x.gorusme))];
+  const grup = {};
+  hepsi.forEach(x=>{ (grup[x.kod] = grup[x.kod] || {kod:x.kod, ad:x.ad, bolum:x.bolum, kayit:[]}).kayit.push(x); });
+  const sira = Object.values(grup).sort((a,b)=> b.kayit.length - a.kayit.length || a.ad.localeCompare(b.ad,"tr"));
+  const satir = g => '<tr><td><b>'+g.ad+'</b><div class="rn">'+g.kod+' · '+(YOL_BOLUM[g.bolum]||{ad:""}).ad+'</div></td>'+
+    '<td style="width:70px;text-align:center"><b>'+g.kayit.length+'</b></td>'+
+    '<td style="width:150px">'+g.kayit.map(k=>k.gorusme).join(", ")+'</td>'+
+    '<td>'+g.kayit.filter(k=>k.not).map(k=>'“'+k.not+'” ('+k.gorusme+')').join('<br>')+'</td></tr>';
+  const govde =
+    '<h1>İlgi raporu — yol haritası</h1>'+
+    '<div class="rss">'+gorusmeler.length+' görüşme · '+hepsi.length+' işaret · '+new Date().toLocaleDateString("tr-TR")+
+      ' · <b>iç kullanım</b>: görüşmede alınan not, ürün raporu değildir</div>'+
+    (sira.length
+      ? '<table><thead><tr><th>Satır</th><th>Görüşme</th><th>Kodlar</th><th>Kendi cümleleri</th></tr></thead><tbody>'+sira.map(satir).join("")+'</tbody></table>'
+      : '<div class="rss" style="margin-top:14px">Henüz işaret yok. Görüşmede “kullanırdık” denen satırları işaretleyin; sıralama buradan çıkar.</div>')+
+    '<h3>Hiç işaretlenmeyenler</h3><div class="rss">'+(YOL.filter(y=>!grup[y.kod]).map(y=>y.ad).join(" · ")||"—")+'</div>'+
+    '<div class="rss" style="margin-top:12px">Kodları görüşme notuna da yazın: <b>yol_haritasi_istenen</b> alanı (puanla.py bu alandan “Yol haritası talebi” tablosunu üretir).</div>'+
+    '<div class="rss" style="margin-top:8px">Sıralama kuralı: bir satır ne kadar çok <b>farklı görüşmede</b> işaretlendiyse o kadar yukarı çıkar. '+
+      'Tek görüşmenin ısrarı sıralamayı belirlemez; sayı, pilot kapsamı tartışmasına girdi olur.</div>'+
+    '<div class="rkod">Doğrulama kodu '+kod("ilgi_"+gorusmeler.length+"_"+hepsi.length)+' · üretildi '+new Date().toLocaleString("tr-TR")+' · DEMO ÇIKTISI</div>';
+  raporAc(govde, "Yol haritası ilgi raporu · iç kullanım");
+}
+
 /* ---------------------------------------------------------------- çizim: ayar */
 function ayarCiz(app){
   app.append(el("h1",{style:"font-size:24px;margin:16px 0 10px"},"Demo ayarı"));
@@ -1934,7 +2107,10 @@ function ayarCiz(app){
     el("div",{class:"ss"}, Object.keys(S.kosmalar).length+" çalıştırma kaydı · mod: "+
       (S.mod==="paylasimli"?"paylaşımlı (cihazlar arası)":S.mod==="okuma"?"okuma (yazma yetkiniz yok)":"yerel (yalnızca bu cihaz)")));
   kutu2.append(el("div",{style:"display:flex;gap:8px;flex-wrap:wrap"},
-    el("button",{class:"btn kucuk",onclick:async()=>{ if(confirm("Tüm demo kayıtları silinsin mi?")) await Depo.hepsiniSil(); }},"Kayıtları sil")));
+    el("button",{class:"btn kucuk",onclick:async()=>{ if(confirm("Tüm demo kayıtları silinsin mi? Yol haritası işaretleri silinmez.")) await Depo.hepsiniSil(); }},"Kayıtları sil"),
+    el("button",{class:"btn kucuk",onclick:async()=>{ if(confirm("Yol haritası ilgi işaretleri silinsin mi? Görüşme notları gider.")) await Depo.ilgileriSil(); }},
+      "İlgi kayıtlarını sil ("+Object.keys(S.ilgiler||{}).length+")")));
+  kutu2.append(el("div",{class:"ss"},"“Kayıtları sil” çalıştırma, kanıt, belge ve sorun kayıtlarını siler; yol haritası işaretleri görüşmeler arasında biriktiği için ayrı tutulur."));
   kutu2.append(el("div",{class:"ss"},"Paylaşımlı mod yalnızca bu artifact'a yazma yetkisi olan hesaplarda çalışır (sahibi ve e-postayla davet edilen düzenleyiciler). Diğer herkeste akış aynıdır, veriler cihazda kalır."));
   app.append(kutu2);
 
@@ -1981,13 +2157,14 @@ function ciz(){
   else if (S.rol==="ozet") ozetCiz(app);
   else if (S.rol==="belge") belgeCiz(app);
   else if (S.rol==="urun") urunCiz(app);
+  else if (S.rol==="yol") yolCiz(app);
   else ayarCiz(app);
 }
 document.querySelectorAll("[data-git]").forEach(b=>b.addEventListener("click",()=>{
   document.querySelector(".sheet")?.remove();          // açık alt sayfa sekme değişince kapanır
   S.rol = b.dataset.git; S.acik = null; location.hash = S.rol; ciz();
 }));
-window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","urun","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
+window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","urun","yol","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
 setInterval(()=>{ if (S.rol==="merkez"||S.rol==="ozet") ciz(); else $("#saatRozet").textContent = saatStr(simdi())+" · demo saati"; }, 30000);
 
 ciz();

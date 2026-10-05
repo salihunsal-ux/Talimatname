@@ -67,6 +67,7 @@ loi: ""                        # evet · sartli · hayir · konusulmadi
 loi_sartlari: ""
 yillik_sozlesme_niyeti: ""     # evet · belki · hayir
 en_buyuk_itiraz: ""
+yol_haritasi_istenen: ""       # demodaki "Yol haritasi" sekmesinde isaretlenen satir kodlari, virgulle: "R-3, A14, W-5"
 
 # Rubrik (0–3 / 0–2; rehber §08) — iki görüşmeci uzlaşısı
 p_aci: 0

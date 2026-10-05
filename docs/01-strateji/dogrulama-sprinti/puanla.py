@@ -150,6 +150,16 @@ def main():
               f"- Üretim–satış kontrolü: yok {oran('uretim_satis_kontrolu','yok')[0]} · elle {oran('uretim_satis_kontrolu','elle')[0]} · stok {oran('uretim_satis_kontrolu','stok')[0]} · POS raporu {oran('uretim_satis_kontrolu','pos-raporu')[0]} · fark tutarı söyleyen: {sum(1 for r in merkez if num(r,'uretim_satis_farki_tl') > 0)} (A14 eşiği ≥ 5)",
               f"- Kamera: yok {oran('kamera_var','yok')[0]} · var ama bakılmıyor {oran('kamera_var','var-bakilmiyor')[0]} · var ve bakılıyor {oran('kamera_var','var-bakiliyor')[0]}",
               f"- Franchise bayi görsün: evet {oran('franchise_bayi_gorsun','evet')[0]} · hayır {oran('franchise_bayi_gorsun','hayir')[0]}", ""]
+    # ---- yol haritasi talebi (demo "Yol haritasi" sekmesinde isaretlenen satirlar)
+    yol = {}
+    for r in rows:
+        for k in str(r.get("yol_haritasi_istenen", "")).replace(";", ",").split(","):
+            k = k.strip()
+            if k: yol[k] = yol.get(k, 0) + 1
+    lines += ["## Yol haritası talebi (v1.1 / v2 sıralaması)", "",
+              "| Satır kodu | Kaç görüşmede istendi |", "|---|---|"]
+    lines += [f"| {k} | {v} |" for k, v in sorted(yol.items(), key=lambda x: -x[1])] or ["| — | 0 |"]
+    lines += ["", "Sıralama tahminle değil bu sayıyla kurulur; tek görüşmenin ısrarı bir satırı yukarı çıkarmaz.", ""]
     lines += kiosk_section(kiosk)
     open(OUT, "w", encoding="utf-8").write("\n".join(lines))
     print(f"{len(rows)} not → {OUT}\nK1 {k1}/{len(merkez)} · K2 LOI {loi} · pilot adayı {len(adaylar)} · gözlem {len(gozlem)} · kiosk {len(kiosk)}")
