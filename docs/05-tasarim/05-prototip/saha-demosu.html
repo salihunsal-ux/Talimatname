@@ -43,7 +43,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.2}
 .kutucuk.un{background:var(--uyariA);border-color:var(--uyari);color:var(--uyari);font-weight:700}
 #toastlar{position:fixed;right:12px;top:70px;z-index:70;display:flex;flex-direction:column;gap:8px;max-width:330px;pointer-events:none}
 .toast{background:var(--ink);color:#fff;border-radius:13px;padding:11px 13px;box-shadow:0 14px 34px rgba(0,0,0,.3);transition:opacity .5s,transform .5s}
-@media (max-width:560px){ #toastlar{left:10px;right:10px;max-width:none;top:auto;bottom:14px} }
+@media (max-width:560px){ #toastlar{left:10px;right:10px;max-width:none;top:110px;bottom:auto} }   /* yapışkan gönder çubuğunu kapatmasın */
 .sheet{position:fixed;inset:0;background:rgba(28,33,40,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .sheet-in{background:var(--yuzey);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:92vh;overflow:auto;padding:18px 18px 26px;display:flex;flex-direction:column;gap:11px}
 @media(min-width:640px){.sheet{align-items:center}.sheet-in{border-radius:18px;max-height:88vh}}
@@ -1061,6 +1061,8 @@ function raporAc(govde, ustMetin){
 function bildirimToast(baslik, metin, kanal){
   let kat = document.querySelector("#toastlar");
   if (!kat){ kat = el("div",{id:"toastlar"}); document.body.append(kat); }
+  const cubuk = document.querySelector(".bar");                  // üst çubuk yüksekliği ekrana göre değişir
+  if (cubuk){ kat.style.top = Math.round(cubuk.getBoundingClientRect().height + 10) + "px"; kat.style.bottom = "auto"; }
   const t = el("div",{class:"toast"},
     el("div",{style:"display:flex;align-items:center;gap:7px;margin-bottom:3px"},
       el("div",{style:"width:26px;height:26px;border-radius:7px;background:var(--marka);display:flex;align-items:center;justify-content:center;flex:none"},
