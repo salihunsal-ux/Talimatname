@@ -37,6 +37,7 @@ puanla.py tablosu (kutu / format / model / İstanbul dışı) — dolan kutular:
 | İsim | | |
 | Fiyat (van Westendorp ara sonuç) | | |
 | FR/BR değişikliği | | |
+| Yol haritası sırası (v1.1 talebi) | | |
 
 ## Sonraki hafta
 - Randevular:

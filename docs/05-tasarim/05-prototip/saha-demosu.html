@@ -274,10 +274,10 @@ const Depo = {
     if (S.mod==="paylasimli"){ try{ await S.db.doc("belgeler/"+id).delete(); return; }catch(e){} }
     const hepsi = YerelDepo.oku("td.belgeler")||{}; delete hepsi[id]; YerelDepo.yaz("td.belgeler",hepsi); ciz();
   },
-  async ilgiYaz(x){
+  async ilgiYaz(x, sessiz){                               // sessiz: not yazarken yeniden çizme, odak kaybolmasın
     S.ilgiler[x.id] = x;
-    if (S.mod==="paylasimli"){ try{ await S.db.doc("ilgiler/"+x.id).set(x); ciz(); return; }catch(e){ console.warn(e); } }
-    const hepsi = YerelDepo.oku("td.ilgiler")||{}; hepsi[x.id]=x; YerelDepo.yaz("td.ilgiler",hepsi); ciz();
+    if (S.mod==="paylasimli"){ try{ await S.db.doc("ilgiler/"+x.id).set(x); if(!sessiz) ciz(); return; }catch(e){ console.warn(e); } }
+    const hepsi = YerelDepo.oku("td.ilgiler")||{}; hepsi[x.id]=x; YerelDepo.yaz("td.ilgiler",hepsi); if(!sessiz) ciz();
   },
   async ilgiSil(id){
     delete S.ilgiler[id];
@@ -633,7 +633,7 @@ function listeCiz(k, d){
       eks.length? eks.length+" zorunlu madde eksik" : "Gönder"));
     alt.append(el("div",{class:"ss",style:"text-align:center"}, eks.length? "Eksikler: "+eks.slice(0,3).map(m=>m.no).join(", ")+(eks.length>3?"…":"") : "Gönderince liste kilitlenir"));
   } else {
-    alt.append(el("div",{style:"font-weight:600"}, k.sonuc==="basarili"?"Gönderildi · tamamlandı":"Gönderildi · başarısız (kritik madde)"),
+    alt.append(el("div",{style:"font-weight:600"}, k.sonuc==="basarili"?(k.gec?"Gönderildi · geç tamamlandı":"Gönderildi · tamamlandı"):"Gönderildi · başarısız (kritik madde)"),
                el("div",{class:"ss"}, (k.puan!=null? "Puan %"+k.puan+" (bilgi) · ":"")+"Doğrulama kodu "+kod(k.id)));
   }
   kutu.append(alt);
@@ -1099,13 +1099,22 @@ async function rapor(k){
   raporAc(govde, "Denetimde verilen belge · yazdırın ya da PDF olarak kaydedin");
 }
 
+function raporKapat(){                                   // katman sekme değişince de kapanmalı
+  document.querySelector("#rapor")?.remove();
+  document.body.classList.remove("rapor-acik");
+}
+document.addEventListener("keydown", e=>{                 // ESC: önce alt sayfa, sonra rapor katmanı
+  if (e.key!=="Escape") return;
+  const sh = document.querySelector(".sheet");
+  if (sh) sh.remove(); else raporKapat();
+});
 function raporAc(govde, ustMetin){
   document.querySelector("#rapor")?.remove();
   const kat = el("div",{id:"rapor"});
   const ust = el("div",{class:"rust yazdirma-gizle"},
     el("div",{class:"ss"}, ustMetin||"Denetimde verilen belge · yazdırın ya da PDF olarak kaydedin"),
     el("div",{style:"display:flex;gap:8px;margin-left:auto"},
-      el("button",{class:"btn kucuk",onclick:()=>{ document.body.classList.remove("rapor-acik"); kat.remove(); }},"Kapat"),
+      el("button",{class:"btn kucuk",onclick:raporKapat},"Kapat"),
       el("button",{class:"btn kucuk dar",onclick:()=>window.print()},"Yazdır / PDF")));
   kat.append(ust, el("div",{class:"ric", html:govde}));
   document.body.append(kat);
@@ -2045,7 +2054,7 @@ function yolCiz(app){
         const not = el("input",{class:"giris",placeholder:"Kendi cümlesi (isteğe bağlı)",style:"margin-top:8px"});
         not.value = im.not||"";
         let bekle = null;
-        not.addEventListener("input",()=>{ clearTimeout(bekle); bekle = setTimeout(()=>Depo.ilgiYaz({...im, not:not.value}), 700); });
+        not.addEventListener("input",()=>{ clearTimeout(bekle); bekle = setTimeout(()=>Depo.ilgiYaz({...S.ilgiler[im.id], not:not.value}, true), 700); });
         kart.append(not, el("div",{class:"ss",style:"margin-top:4px"}, gorusme+" · "+saatStr(new Date(im.zaman))+" işaretledi"));
       }
       app.append(kart);
@@ -2161,10 +2170,10 @@ function ciz(){
   else ayarCiz(app);
 }
 document.querySelectorAll("[data-git]").forEach(b=>b.addEventListener("click",()=>{
-  document.querySelector(".sheet")?.remove();          // açık alt sayfa sekme değişince kapanır
+  document.querySelector(".sheet")?.remove(); raporKapat();   // açık alt sayfa ve rapor katmanı sekme değişince kapanır
   S.rol = b.dataset.git; S.acik = null; location.hash = S.rol; ciz();
 }));
-window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","urun","yol","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
+window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","urun","yol","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); raporKapat(); S.rol=h; ciz(); } });
 setInterval(()=>{ if (S.rol==="merkez"||S.rol==="ozet") ciz(); else $("#saatRozet").textContent = saatStr(simdi())+" · demo saati"; }, 30000);
 
 ciz();
