@@ -140,6 +140,7 @@ const LISTELER = {
   kapanis: {ad:"Kapanış listesi", capa:"kapanis", oncesi:60, sonrasi:90, tolerans:120},
   acilis:  {ad:"Açılış listesi",  capa:"acilis",  oncesi:45, sonrasi:30, tolerans:60},
 };
+const LISTE_SIRA = ["acilis","kapanis"];      // ekranlarda ve kacirma taramasinda ayni sira
 const MADDELER = {
  kapanis: [
   {no:1, bolum:"A · Bar ve mutfak", ad:"Espresso makinesi geri yıkandı; süt hortumları temizlendi", tur:"onay", z:true},
@@ -427,11 +428,13 @@ function olcumSatirlari(gunSayisi=30, subeId=null){
     if (subeId && k.sube!==subeId) return;
     const g = new Date(k.gun+"T12:00:00"); if (g < sinir) return;
     maddeler(k.liste).forEach(m=>{
-      if (m.tur!=="sicaklik") return;
+      const olcum = m.tur==="sicaklik" || (m.tur==="sayi" && m.alt!==undefined);   // R-4: ekipman zaman serisi
+      if (!olcum) return;
       const c = k.cevaplar[m.no]; if (!c || c.deger===undefined || c.yapilamadi) return;
       const disi = (m.alt!==undefined) && (c.deger < m.alt || c.deger > m.ust);
       satirlar.push({gun:k.gun, saat:c.zaman||"", sube:k.sube, liste:k.liste, nokta:m.ad,
-                     deger:c.deger, alt:m.alt, ust:m.ust, kim:k.kisi||"", disi, not:c.not||"",
+                     deger:c.deger, alt:m.alt, ust:m.ust, birim:(m.tur==="sicaklik"?" °C":(m.birim?" "+m.birim:"")),
+                     kim:k.kisi||"", disi, not:c.not||"",
                      aksiyon:(k.aksiyonlar||[]).some(a=>a.madde===m.no)});
     });
   });
@@ -452,8 +455,8 @@ function sicaklikGunlugu(gunSayisi=30, subeId=null){
       '<tr>'+
       '<td>'+x.gun+'</td><td>'+x.saat+'</td><td>'+subeAd(x.sube)+'</td><td>'+listeAdi(x.liste).replace(" listesi","")+'</td>'+
       '<td>'+x.nokta+(x.not?'<div class="rn">not: '+x.not+'</div>':'')+(x.aksiyon?'<div class="rn">aksiyon açıldı</div>':'')+'</td>'+
-      '<td class="'+(x.disi?'rk':'')+'">'+x.deger+' °C'+(x.disi?' · aralık dışı':'')+'</td>'+
-      '<td>'+(x.alt!==undefined?x.alt+" – "+x.ust+" °C":"")+'</td><td>'+x.kim+'</td></tr>').join("")
+      '<td class="'+(x.disi?'rk':'')+'">'+x.deger+(x.birim||'')+(x.disi?' · aralık dışı':'')+'</td>'+
+      '<td>'+(x.alt!==undefined?x.alt+" – "+x.ust+(x.birim||""):"")+'</td><td>'+x.kim+'</td></tr>').join("")
       : '<tr><td colspan="8">Bu dönemde ölçüm kaydı yok.</td></tr>')+
     '</tbody></table>'+
     '<div class="rss" style="margin-top:12px">Ölçümler listeler tamamlanırken kaydedilir; aralık dışı değerler fotoğraf ve not zorunluluğu doğurur, kritik maddede aksiyon açar. '+
@@ -520,6 +523,12 @@ function kioskCiz(app){
     if (d==="planlandi"){
       kart.append(el("div",{class:"ss"},"Pencere açılınca liste burada belirir."),
         el("button",{class:"btn kucuk",style:"align-self:flex-start",onclick:()=>{ S.kaydirma += Math.round((p.bas-simdi())/60000)+5; ayarYay(); ciz(); }},"Pencereyi aç (saati ilerlet)"));
+    } else if (d==="kacirildi" && !(k && k.durum==="gonderildi")){
+      kart.append(el("div",{class:"uyari-bant",style:"margin:0"},
+        "Pencere "+saatStr(p.bit)+"'de kapandı, tolerans "+saatStr(p.tol)+"'de doldu. Bu liste sonradan tamamlanamaz; "+
+        "“kaçırıldı” olarak kaydedildi. Şube müdürüne bildirildi; bölge müdürü sabah özetinde görür."));
+      if (k) kart.append(el("button",{class:"btn kucuk",style:"align-self:flex-start",
+        onclick:()=>{ S.acik = "liste:"+liste; ciz(); }},"Girilen cevapları gör"));
     } else {
       kart.append(el("button",{class:"btn "+(d==="acik"?"pri":""),style:"align-self:flex-start",onclick:async()=>{
         if (!kosmaBul(S.sube, gun, liste)){
@@ -608,7 +617,7 @@ function pinSor(p){
 }
 
 function listeCiz(k, d){
-  const kilit = k.durum==="gonderildi";
+  const kilit = k.durum==="gonderildi" || d==="kacirildi";   // kaçırılan çalıştırma da salt okunur
   const kutu = el("div",{style:"margin-top:14px;display:flex;flex-direction:column;gap:12px"});
   let bolum = null, kart = null;
   maddeler(k.liste).forEach(m=>{
@@ -633,8 +642,13 @@ function listeCiz(k, d){
       eks.length? eks.length+" zorunlu madde eksik" : "Gönder"));
     alt.append(el("div",{class:"ss",style:"text-align:center"}, eks.length? "Eksikler: "+eks.slice(0,3).map(m=>m.no).join(", ")+(eks.length>3?"…":"") : "Gönderince liste kilitlenir"));
   } else {
-    alt.append(el("div",{style:"font-weight:600"}, k.sonuc==="basarili"?(k.gec?"Gönderildi · geç tamamlandı":"Gönderildi · tamamlandı"):"Gönderildi · başarısız (kritik madde)"),
-               el("div",{class:"ss"}, (k.puan!=null? "Puan %"+k.puan+" (bilgi) · ":"")+"Doğrulama kodu "+kod(k.id)));
+    if (k.durum!=="gonderildi"){
+      alt.append(el("div",{style:"font-weight:600;color:var(--kritik)"},"Kaçırıldı — bu liste sonradan gönderilemez"),
+                 el("div",{class:"ss"},"Girilen cevaplar kayıtta kalır ve çalıştırma detayında görünür."));
+    } else {
+      alt.append(el("div",{style:"font-weight:600"}, k.sonuc==="basarili"?(k.gec?"Gönderildi · geç tamamlandı":"Gönderildi · tamamlandı"):"Gönderildi · başarısız (kritik madde)"),
+                 el("div",{class:"ss"}, (k.puan!=null? "Puan %"+k.puan+" (bilgi) · ":"")+"Doğrulama kodu "+kod(k.id)));
+    }
   }
   kutu.append(alt);
   setTimeout(()=>kanitlariYukle(kutu),0);
@@ -856,7 +870,7 @@ async function gonder(k){
   const p = pencere(k.sube, k.gun, k.liste);          // listeye gore pencere; yoksa kapanis varsayilani gec hesabini bozuyordu
   k.gec = simdi() > p.bit;
   olay(k, "Gönderildi · "+(kritikBasarisiz?"başarısız (kritik madde)":"tamamlandı")+(k.gec?" · geç":"")+" · kayıt kilitlendi");
-  bildirimTetikle("gonderim", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, liste:listeAdi(k.liste).replace(" listesi",""), sonuc:k.sonuc});
+  bildirimTetikle("gonderim", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, liste:listeAdi(k.liste).replace(" listesi",""), sonuc:k.sonuc, gec:k.gec});
   await Depo.kosmaYaz(k); S.acik="liste:"+k.liste; ciz();
 }
 
@@ -864,7 +878,6 @@ async function gonder(k){
 function merkezCiz(app){
   const t = simdi();
   if (S.panoGorunum==="aksiyon"){ aksiyonCiz(app); return; }
-  const LISTE_SIRA = ["acilis","kapanis"];
   app.append(el("div",{style:"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 12px"},
     el("h1",{style:"font-size:26px"},"Operasyon panosu"),
     el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},
@@ -909,7 +922,7 @@ function merkezCiz(app){
     const tbody = el("tbody",{});
     dikkat.forEach(({sube,liste,k,d})=>{
       const ac = k ? (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length : 0;
-      tbody.append(el("tr",{style:"cursor:pointer",onclick:()=>{ if(k){ S.acik="detay:"+k.id; ciz(); } }},
+      tbody.append(el("tr",{style:"cursor:pointer",onclick:()=>{ if(k){ S.acik="detay:"+k.id; ciz(); } else kayitYokAc(sube, liste, d); }},
         el("td",{style:"font-weight:600"},sube.ad), el("td",{}, listeAdi(liste).replace(" listesi","")),
         el("td",{}, el("span",{class:"pill "+(d==="basarili"?"ok":(d==="acik"||d==="gec")?"warn":"crit")}, DURUM_AD[d])),
         el("td",{class:"mut"}, k ? (k.gonderim? saatStr(new Date(k.gonderim))+" · "+(k.kisi||"") : "gönderim yok")+(ac?" · "+ac+" açık aksiyon":"") : "kayıt yok"),
@@ -1003,6 +1016,22 @@ function ozetCiz(app){
           el("div",{class:"ss"}, yolunda.map(x=>x.sube.ad).join(", "))))));
   }
   app.append(el("div",{class:"ss",style:"margin-top:12px"},"Panodaki ızgara tüm listeleri (açılış ve kapanış) gösterir; bu özet yalnızca gece listesini kapsar."));
+}
+
+/* kayit hic olusmamis hucre: tiklayinca ne oldugunu anlatan alt sayfa */
+function kayitYokAc(sube, liste, d){
+  const gun = isGunu(sube.id, simdi()), p = pencere(sube.id, gun, liste);
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"}, sube.ad+" · "+listeAdi(liste)),
+    el("span",{class:"pill "+(d==="kacirildi"?"crit":"gri"),style:"align-self:flex-start"}, DURUM_AD[d]),
+    el("div",{class:"ss",style:"line-height:1.5"},
+      d==="kacirildi"
+        ? "Liste hiç açılmadı. Pencere "+saatStr(p.bas)+"–"+saatStr(p.bit)+", tolerans "+saatStr(p.tol)+
+          "'de doldu; çalıştırma “kaçırıldı” sayıldı ve kapatılamaz. Şube müdürüne anında, bölge müdürüne 07:00 özetinde bildirilir."
+        : "Bu listede henüz kayıt yok. Pencere "+saatStr(p.bas)+"–"+saatStr(p.bit)+" arasında açılır."),
+    d==="kacirildi" ? el("div",{class:"ss"},"Aksiyon listesinde “kaçırılan liste” olarak açık duruyor (24 saat vade); şube müdürü not yazarak kapatır.") : null,
+    el("button",{class:"btn pri",onclick:()=>{ kapat(); if(d==="kacirildi"){ S.panoGorunum="aksiyon"; ciz(); } }},
+      d==="kacirildi" ? "Aksiyon listesine git" : "Kapat")]);
 }
 
 function detayCiz(k){
@@ -1150,7 +1179,7 @@ function bildirimTetikle(tur, veri){
   if (tur==="yapilamadi") bildirimToast("Yapılamadı",
     veri.sube+" · "+veri.madde+" ("+veri.sebep+")", "Şube müdürüne push");
   if (tur==="gonderim") bildirimToast("Çalıştırma gönderildi",
-    veri.sube+" · "+veri.liste+" · "+(veri.sonuc==="basarisiz"?"başarısız":"tamamlandı"), "Bildirim yok; 07:00 özetinde görünür");
+    veri.sube+" · "+veri.liste+" · "+(veri.sonuc==="basarisiz"?"başarısız":veri.gec?"geç tamamlandı":"tamamlandı"), "Bildirim yok; 07:00 özetinde görünür");
   if (tur==="sorun") bildirimToast("Sorun bildirildi",
     veri.sube+" · "+veri.kategori, "Şube müdürüne push");
 }
@@ -1599,9 +1628,30 @@ function tumAksiyonlar(){
     (k.aksiyonlar||[]).forEach(a=> out.push({...a, kaynak:"liste", kosma:k, sube:k.sube, liste:k.liste, vadeT:aksiyonVade(a,k)}));
   });
   Object.values(S.sorunlar||{}).forEach(s=>{
+    if (s.kaynak==="kacirma"){ out.push({...s, kosma:null, vadeT:aksiyonVade(s,null)}); return; }
     out.push({...s, kaynak:"sorun", baslik:s.kategori+" — "+s.metin, kosma:null, vadeT:aksiyonVade(s,null)});
   });
+  kacirilanlar().forEach(x=>{ if (!(S.sorunlar||{})[x.id]) out.push({...x, kosma:null, vadeT:aksiyonVade(x,null)}); });
   out.sort((a,b)=> new Date(a.acildi) < new Date(b.acildi) ? 1 : -1);
+  return out;
+}
+/* FR-0902 / FR-0911: kaçırılan çalıştırma otomatik aksiyon açar (BR-10: yüksek öncelik, 24 sa) */
+function kacirilanlar(){
+  const t = simdi(), out = [];
+  SUBELER.forEach(sube=>{
+    [oncekiGun(isGunu(sube.id,t)), isGunu(sube.id,t)].forEach(gun=>{
+      LISTE_SIRA.forEach(liste=>{
+        const k = kosmaBul(sube.id, gun, liste);
+        if (k && k.durum==="gonderildi") return;
+        if (durumHesapla(k, t, sube.id, gun, liste) !== "kacirildi") return;
+        const p = pencere(sube.id, gun, liste);
+        out.push({id:"kacirma_"+sube.id+"_"+gun+"_"+liste, kaynak:"kacirma", sube:sube.id, liste, gun,
+          baslik:"Kaçırılan liste — "+listeAdi(liste).replace(" listesi",""),
+          not:"Tolerans "+saatStr(p.tol)+"'de doldu; liste gönderilmedi.",
+          sorumlu:SORUMLU, acildi:p.tol.toISOString(), vade:new Date(p.tol.getTime()+24*3600000).toISOString(), durum:"acik"});
+      });
+    });
+  });
   return out;
 }
 function aksiyonGecikti(a, t){ return a.durum==="acik" && t > a.vadeT; }
@@ -1629,7 +1679,7 @@ function aksiyonCiz(app){
     kart.append(el("div",{style:"display:flex;align-items:center;gap:8px;flex-wrap:wrap"},
       el("b",{style:"font-size:14.5px"}, a.baslik),
       el("span",{class:"pill "+(a.durum==="kapali"?"ok":gec?"crit":"warn")}, a.durum==="kapali"?"kapalı":gec?"vadesi geçti":"açık"),
-      el("span",{class:"pill gri"}, a.kaynak==="sorun" ? "sorun bildirimi" : listeAdi(a.liste).replace(" listesi","")),
+      el("span",{class:"pill gri"}, a.kaynak==="sorun" ? "sorun bildirimi" : a.kaynak==="kacirma" ? "kaçırılan liste" : listeAdi(a.liste).replace(" listesi","")),
       el("span",{class:"ss"}, (sube?sube.ad:a.sube)+" · açıldı "+saatStr(new Date(a.acildi))+" · vade "+saatStr(a.vadeT)+" · "+(a.sorumlu||SORUMLU))));
     if (a.not) kart.append(el("div",{class:"ss",style:"margin-top:3px"}, a.not));
     if (a.kanit) kart.append(el("img",{class:"foto",style:"width:120px;height:90px;margin-top:6px","data-kanit":a.kanit}));
@@ -1640,9 +1690,10 @@ function aksiyonCiz(app){
       const not = el("input",{class:"giris",placeholder:"Kapanış notu (zorunlu)",style:"margin-top:8px"});
       const btn = el("button",{class:"btn kucuk pri",style:"margin-top:8px",onclick:async()=>{
         if(!not.value.trim()){ not.focus(); return; }
-        if (a.kaynak==="sorun"){
-          const s2 = {...S.sorunlar[a.id], durum:"kapali", kapanisNotu:not.value.trim(), kapandi:simdi().toISOString()};
-          await Depo.sorunYaz(s2);
+        if (a.kaynak==="sorun" || a.kaynak==="kacirma"){
+          const temel = S.sorunlar[a.id] || {id:a.id, kaynak:a.kaynak, sube:a.sube, liste:a.liste, gun:a.gun,
+            baslik:a.baslik, kategori:a.kategori, metin:a.not, sorumlu:a.sorumlu, acildi:a.acildi, vade:a.vade};
+          await Depo.sorunYaz({...temel, durum:"kapali", kapanisNotu:not.value.trim(), kapandi:simdi().toISOString()});
         } else {
           const k = a.kosma, hedef = (k.aksiyonlar||[]).find(x=>x.id===a.id);
           hedef.durum="kapali"; hedef.kapanisNotu=not.value.trim(); hedef.kapandi=simdi().toISOString();
