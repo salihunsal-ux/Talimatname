@@ -18,6 +18,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 input,select,textarea{font:inherit;color:inherit}
 h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.2}
 .wrap{max-width:1180px;margin:0 auto;padding:0 14px 48px}
+@media (min-width:900px){ body.kiosk-gorunum #app{max-width:860px} }   /* şube tableti ekranı masaüstünde de tablet genişliğinde */
 .bar{position:sticky;top:0;z-index:30;background:var(--yuzey);border-bottom:1px solid var(--cizgi)}
 .bar-in{max-width:1180px;margin:0 auto;padding:9px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .sekmeler{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
@@ -224,7 +225,7 @@ function ozetGunu(t){ const d=new Date(t.getTime()); if (d.getHours() < 18) d.se
 function durumHesapla(k, t, subeId, gun, liste){
   const sid = k ? k.sube : subeId, g = k ? k.gun : gun, li = (k && k.liste) ? k.liste : (liste||"kapanis");
   if (!sid || !g) return "planlandi";
-  if (k && k.durum==="gonderildi") return k.sonuc;   // basarili | basarisiz
+  if (k && k.durum==="gonderildi") return (k.sonuc==="basarili" && k.gec) ? "gec" : k.sonuc;   // FR-0514: geç tamamlanan ayrı durum
   const p = pencere(sid, g, li);
   if (t > p.tol) return "kacirildi";                  // gönderim yok, tolerans doldu
   if (t >= p.bas) return "acik";
@@ -488,7 +489,7 @@ function kioskCiz(app){
     kart.append(el("div",{style:"display:flex;align-items:center;justify-content:space-between;gap:10px"},
       el("div",{}, el("div",{style:"font-size:20px;font-weight:700"}, listeAdi(liste)),
         el("div",{class:"ss"}, saatStr(p.bas)+" – "+saatStr(p.bit)+" · "+(k&&k.kisi?k.kisi+" yapıyor":"henüz açılmadı"))),
-      el("span",{class:"pill "+(d==="basarisiz"||d==="kacirildi"?"crit":d==="basarili"?"ok":d==="acik"?"warn":"gri")}, sayac)));
+      el("span",{class:"pill "+(d==="basarisiz"||d==="kacirildi"?"crit":d==="basarili"?"ok":(d==="acik"||d==="gec")?"warn":"gri")}, sayac)));
     if (k){
       const tamam = maddeler(liste).filter(m=>cevapDurum(m,k.cevaplar[m.no])!=="bos").length;
       kart.append(el("div",{style:"height:9px;border-radius:5px;background:var(--yuzey2);overflow:hidden"},
@@ -630,7 +631,8 @@ function maddeAc(k, m){
     const c = Object.assign({}, k.cevaplar[m.no]||{});
     let notIstendi = false;                              // kullanıcı kendi isteğiyle not/fotoğraf açtıysa
     const parcalar = [el("h3",{style:"font-size:19px;line-height:1.25;padding-right:40px"}, m.ad)];
-    if (m.k) parcalar.push(el("div",{class:"pill crit",style:"align-self:flex-start"},"kritik madde"));
+    if (m.k) parcalar.push(el("div",{class:"pill crit",style:"align-self:flex-start"},"kritik madde"),
+                       el("div",{class:"ss"},"Kritik maddede “yapılamadı” seçeneği yok. Sorun varsa ölçümü girip fotoğraf ve notla kaydedin."));
 
     /* --- not ve kanıt bloğu: varsayılan olarak gizli, kural gerektirince açılır --- */
     const uyariKutu = el("div");
@@ -646,7 +648,7 @@ function maddeAc(k, m){
 
     const yapilamadiBtn = el("button",{class:"btn",style:"color:var(--uyari);border-color:var(--uyari)",onclick:()=>{ kapat(); yapilamadiAc(k,m); }},"Yapılamadı");
     const kaydet = el("button",{class:"btn pri",style:"flex:2"},"Kaydet");
-    const altSira = el("div",{style:"display:flex;gap:9px;margin-top:4px"}, yapilamadiBtn, kaydet);
+    const altSira = el("div",{style:"display:flex;gap:9px;margin-top:4px"}, m.k?null:yapilamadiBtn, kaydet);   // FR-0304: kritik maddede yapılamadı yok
 
     notAlani.addEventListener("input",()=>{ c.not = notAlani.value; yenile(); });
     dosya.addEventListener("change", async e=>{
@@ -772,11 +774,41 @@ function maddeAc(k, m){
     return parcalar;
   });
 }
+/* FR-0801 sabit sebep seti — hesap düzeyinde yönetimi v1.1 (FR-0802) */
+const SEBEPLER = ["Malzeme yok","Ekipman arızalı","Zaman yetmedi","Yetkim yok","Diğer (not zorunlu)"];
 function yapilamadiAc(k, m){
   sheetAc(kapat=>{
     const c = {yapilamadi:true, sebep:null, not:"", zaman:saatStr(simdi())};
     const not = el("textarea",{class:"giris",rows:"2",placeholder:"Not"});
     const kaydet = el("button",{class:"btn kritik",style:"flex:2",disabled:"disabled"},"Kaydet ve bildir");
+    /* FR-0801: not ve fotoğraf isteğe bağlı — kanıt bütünlüğü kuralları (E-11) burada da işler */
+    const onizleme = el("div"), kopyaKutu = el("div");
+    const dosya = el("input",{type:"file",accept:"image/*",capture:"environment",style:"display:none"});
+    const fotoBtn = el("button",{class:"btn",onclick:()=>dosya.click()},"Fotoğraf ekle (isteğe bağlı)");
+    dosya.addEventListener("change", async e=>{
+      const f=e.target.files[0]; if(!f) return;
+      fotoBtn.textContent="İşleniyor…"; fotoBtn.disabled=true; kopyaKutu.innerHTML="";
+      try{
+        const ozet = await dosyaOzeti(f), onceki = ozet ? await Depo.ozetOku(ozet) : null;
+        if (onceki){
+          kopyaKutu.append(el("div",{style:"background:var(--kritikA);border:1px solid var(--kritik);border-radius:11px;padding:10px 12px;font-size:13px;line-height:1.45"},
+            el("b",{style:"color:var(--kritik)"},"Bu fotoğraf daha önce gönderildi. "),
+            "Madde "+onceki.madde+" · "+saatStr(new Date(onceki.zaman))+" · yeniden çekin."));
+          olay(k, "Aynı fotoğraf ikinci kez gönderilmek istendi — reddedildi (madde "+m.no+", yapılamadı)");
+        } else {
+          const bayraklar = dosyaBayraklari(f), veri = await kucult(f), id = uuid();
+          await Depo.kanitYaz(id,{foto:veri, kosma:k.id, madde:m.no, zaman:simdi().toISOString(), kisi:S.kisi?S.kisi.ad:"", sube:S.sube, ozet, bayraklar});
+          if (ozet) await Depo.ozetYaz(ozet,{kosma:k.id, madde:m.no, zaman:simdi().toISOString(), kisi:S.kisi?S.kisi.ad:"", sube:S.sube});
+          c.kanit=id; c.ozet=ozet; c.bayraklar=bayraklar;
+          onizleme.innerHTML="";
+          onizleme.append(el("img",{class:"foto",src:veri,style:"max-height:150px"}),
+            el("div",{class:"damga"}, SUBELER.find(x=>x.id===S.sube).ad+" · "+saatStr(simdi())+" · "+(S.kisi?S.kisi.ad:"")+" · damgalı"));
+          if (bayraklar.length) onizleme.append(el("div",{class:"ss",style:"margin-top:4px"},"İşaretlendi: "+bayraklar.map(b=>b.metin).join(" · ")));
+        }
+      }catch(err){ alert("Fotoğraf işlenemedi"); }
+      e.target.value=""; fotoBtn.disabled=false;
+      fotoBtn.textContent = c.kanit ? "Fotoğrafı değiştir" : "Fotoğraf ekle (isteğe bağlı)";
+    });
     const dugmeler = SEBEPLER.map(s=>el("button",{class:"sec",onclick:()=>{ c.sebep=s; ciz2(); }}, s));
     const ciz2 = ()=>{ dugmeler.forEach((d,i)=>d.className="sec"+(c.sebep===SEBEPLER[i]?" on":""));
       kaydet.disabled = !c.sebep || (c.sebep.startsWith("Diğer") && !not.value.trim()); };
@@ -791,6 +823,7 @@ function yapilamadiAc(k, m){
     return [el("h3",{style:"font-size:19px;line-height:1.25"},"Yapılamadı — "+m.ad),
       el("div",{class:"ss"},"Sebep seçin; iş kaybolmaz, şube müdürüne 72 saatlik aksiyon olarak düşer."),
       el("div",{style:"display:flex;flex-direction:column;gap:8px"}, ...dugmeler), not,
+      el("div",{style:"display:flex;gap:9px;align-items:center"}, fotoBtn, dosya), kopyaKutu, onizleme,
       el("div",{style:"display:flex;gap:9px"}, el("button",{class:"btn",style:"flex:1",onclick:kapat},"Vazgeç"), kaydet)];
   });
 }
@@ -799,7 +832,7 @@ async function gonder(k){
   k.durum = "gonderildi"; k.sonuc = kritikBasarisiz ? "basarisiz" : "basarili";
   k.puan = puanHesapla(k);
   k.gonderim = simdi().toISOString();
-  const p = pencere(k.sube, k.gun);
+  const p = pencere(k.sube, k.gun, k.liste);          // listeye gore pencere; yoksa kapanis varsayilani gec hesabini bozuyordu
   k.gec = simdi() > p.bit;
   olay(k, "Gönderildi · "+(kritikBasarisiz?"başarısız (kritik madde)":"tamamlandı")+(k.gec?" · geç":"")+" · kayıt kilitlendi");
   bildirimTetikle("gonderim", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, liste:listeAdi(k.liste).replace(" listesi",""), sonuc:k.sonuc});
@@ -826,20 +859,21 @@ function merkezCiz(app){
     hucreler.push({sube, liste, gun, k, d: durumHesapla(k, t, sube.id, gun, liste)});
   });});
 
-  const say = {basarili:0, basarisiz:0, kacirildi:0, acik:0, planlandi:0, aksiyon:0, yapilamadi:0};
-  say.aksiyon += Object.values(S.sorunlar||{}).filter(x=>x.durum==="acik").length;   // bildirilen sorunlar da iş kuyruğunda
+  const say = {basarili:0, basarisiz:0, kacirildi:0, acik:0, planlandi:0, gec:0, aksiyon:0, yapilamadi:0};
   hucreler.forEach(({k,d,liste})=>{ say[d]=(say[d]||0)+1;
-    if(k){ say.aksiyon += (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length;
-           say.yapilamadi += maddeler(liste).filter(m=>cevapDurum(m,k.cevaplar[m.no])==="yapilamadi").length; } });
+    if(k){ say.yapilamadi += maddeler(liste).filter(m=>cevapDurum(m,k.cevaplar[m.no])==="yapilamadi").length; } });
+  say.aksiyon = tumAksiyonlar().filter(a=>a.durum==="acik").length;   // "Aksiyonlar (n)" düğmesiyle aynı sayma: açık iş kuyruğu (eski günler ve bildirilen sorunlar dahil)
   const kpiKutu = el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin-bottom:14px"});
-  [["Tamamlandı",say.basarili,"var(--marka)"],["Başarısız",say.basarisiz,"var(--kritik)"],["Kaçırıldı",say.kacirildi,"var(--kritik)"],
+  [["Tamamlandı",say.basarili,"var(--marka)"],["Geç",say.gec,"var(--uyari)"],["Başarısız",say.basarisiz,"var(--kritik)"],["Kaçırıldı",say.kacirildi,"var(--kritik)"],
    ["Açık liste",say.acik,"var(--uyari)"],["Yapılamadı",say.yapilamadi,"var(--ink)"],["Açık aksiyon",say.aksiyon,"var(--uyari)"]]
    .forEach(([ad,n,c])=>kpiKutu.append(el("div",{class:"kpi"}, el("b",{style:"color:"+c},String(n)), el("span",{class:"ss"},ad))));
   app.append(kpiKutu);
 
   const dikkat = S.supheli
     ? hucreler.filter(h=> h.k && kosmaBayraklari(h.k).length)
-    : hucreler.filter(h=> h.d==="basarisiz" || h.d==="kacirildi" || (h.k&&(h.k.aksiyonlar||[]).some(a=>a.durum==="acik")));
+    : hucreler.filter(h=> h.d==="basarisiz" || h.d==="kacirildi" || h.d==="gec"
+        || (h.k && maddeler(h.liste).some(m=>cevapDurum(m,h.k.cevaplar[m.no])==="yapilamadi"))
+        || (h.k&&(h.k.aksiyonlar||[]).some(a=>a.durum==="acik")));   // FR-1201 istisna görünümü
   app.append(el("div",{class:"etiket",style:"margin-bottom:6px"},
     (S.supheli?"Şüpheli kanıt taşıyan çalıştırmalar (":"Dikkat isteyenler (")+dikkat.length+")"));
   if (!dikkat.length){
@@ -856,7 +890,7 @@ function merkezCiz(app){
       const ac = k ? (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length : 0;
       tbody.append(el("tr",{style:"cursor:pointer",onclick:()=>{ if(k){ S.acik="detay:"+k.id; ciz(); } }},
         el("td",{style:"font-weight:600"},sube.ad), el("td",{}, listeAdi(liste).replace(" listesi","")),
-        el("td",{}, el("span",{class:"pill "+(d==="basarili"?"ok":d==="acik"?"warn":"crit")}, DURUM_AD[d])),
+        el("td",{}, el("span",{class:"pill "+(d==="basarili"?"ok":(d==="acik"||d==="gec")?"warn":"crit")}, DURUM_AD[d])),
         el("td",{class:"mut"}, k ? (k.gonderim? saatStr(new Date(k.gonderim))+" · "+(k.kisi||"") : "gönderim yok")+(ac?" · "+ac+" açık aksiyon":"") : "kayıt yok"),
         el("td",{style:"text-align:right;color:var(--sessiz)"},"›")));
     });
@@ -876,7 +910,7 @@ function merkezCiz(app){
     });
   });
   iz.append(izgara);
-  iz.append(el("div",{class:"ss",style:"margin-top:8px"},"Yeşil tamamlandı · kırmızı başarısız veya kaçırıldı · sarı açık · gri henüz açılmadı"));
+  iz.append(el("div",{class:"ss",style:"margin-top:8px"},"Yeşil tamamlandı · kırmızı başarısız veya kaçırıldı · sarı açık veya geç · gri henüz açılmadı"));
   app.append(iz);
 
   if (S.acik && S.acik.startsWith("detay:")){
@@ -892,7 +926,7 @@ function ozetCiz(app){
     const k = kosmaBul(sube.id, gun, "kapanis");
     return {sube, k, d: durumHesapla(k, t, sube.id, gun, "kapanis")};
   });
-  const sorunlu = satirlar.filter(x=> x.d==="basarisiz" || x.d==="kacirildi" || (x.k&&(x.k.aksiyonlar||[]).some(a=>a.durum==="acik")));
+  const sorunlu = satirlar.filter(x=> x.d==="basarisiz" || x.d==="kacirildi" || x.d==="gec" || (x.k&&(x.k.aksiyonlar||[]).some(a=>a.durum==="acik")));
   const yolunda = satirlar.filter(x=> x.d==="basarili" && !(x.k&&(x.k.aksiyonlar||[]).some(a=>a.durum==="acik")));
   const acikAksiyon = satirlar.reduce((n,x)=> n + (x.k?(x.k.aksiyonlar||[]).filter(a=>a.durum==="acik").length:0), 0);
 
@@ -916,21 +950,24 @@ function ozetCiz(app){
   const kpi = (n,l,c)=>el("div",{class:"kpi"}, el("b",{style:"color:"+c},String(n)), el("span",{class:"ss"},l));
   app.append(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:12px 0"},
     kpi(yolunda.length,"yolunda","var(--marka)"),
+    kpi(satirlar.filter(x=>x.d==="gec").length,"geç","var(--uyari)"),
     kpi(satirlar.filter(x=>x.d==="basarisiz").length,"başarısız","var(--kritik)"),
     kpi(satirlar.filter(x=>x.d==="kacirildi").length,"kaçırıldı","var(--kritik)"),
     kpi(acikAksiyon,"açık aksiyon","var(--uyari)")));
 
   sorunlu.forEach(({sube,k,d})=>{
     const md = maddeler("kapanis");
-    const sebep = k ? md.filter(m=>["basarisiz","yapilamadi"].includes(cevapDurum(m,k.cevaplar[m.no])))
+    let sebep = k ? md.filter(m=>["basarisiz","yapilamadi"].includes(cevapDurum(m,k.cevaplar[m.no])))
                         .map(m=>{ const c=k.cevaplar[m.no]; return m.ad+(cevapDurum(m,c)==="yapilamadi"?" (yapılamadı: "+c.sebep+")":(c.deger!==undefined?" "+c.deger+(m.tur==="sicaklik"?" °C":""):"")); }).join(" · ")
                   : "gönderim yok · şube müdürüne bildirildi";
+    if (k && !sebep) sebep = d==="gec" ? "Tüm maddeler yolunda; liste pencere kapandıktan sonra gönderildi."
+                                     : "Madde cevapları yolunda; açık aksiyon takipte.";
     const aks = k ? (k.aksiyonlar||[]).filter(a=>a.durum==="acik") : [];
-    const kart = el("div",{class:"kart",style:"margin-bottom:9px;border-color:var(--kritik);cursor:"+(k?"pointer":"default"),
+    const kart = el("div",{class:"kart",style:"margin-bottom:9px;border-color:"+(d==="gec"?"var(--uyari)":"var(--kritik)")+";cursor:"+(k?"pointer":"default"),
       onclick:()=>{ if(k){ S.rol="merkez"; location.hash="merkez"; S.acik="detay:"+k.id; ciz(); } }},
       el("div",{style:"display:flex;align-items:center;gap:9px;flex-wrap:wrap"},
         el("b",{style:"font-size:15px"}, sube.ad+" · Kapanış"),
-        el("span",{class:"pill crit"}, DURUM_AD[d]),
+        el("span",{class:"pill "+(d==="gec"?"warn":"crit")}, DURUM_AD[d]),
         k&&k.gonderim? el("span",{class:"ss"}, saatStr(new Date(k.gonderim))+" · "+(k.kisi||"")) : null),
       el("div",{class:"ss",style:"margin-top:4px;line-height:1.45"}, sebep),
       aks.length? el("div",{style:"font-size:13px;color:var(--kritik);font-weight:600;margin-top:5px"},
@@ -953,7 +990,7 @@ function detayCiz(k){
   const d = durumHesapla(k, simdi(), k.sube, k.gun, k.liste);
   kutu.append(el("div",{style:"display:flex;align-items:center;gap:10px;flex-wrap:wrap"},
     el("h2",{style:"font-size:20px"}, sube.ad+" · "+listeAdi(k.liste).replace(" listesi","")+" · "+tarihStr(new Date(k.gun+"T12:00:00"))),
-    el("span",{class:"pill "+(d==="basarili"?"ok":d==="acik"?"warn":"crit")}, DURUM_AD[d]),
+    el("span",{class:"pill "+(d==="basarili"?"ok":(d==="acik"||d==="gec")?"warn":"crit")}, DURUM_AD[d]),
     el("div",{style:"margin-left:auto;display:flex;gap:8px"},
       el("button",{class:"btn kucuk",onclick:()=>{ S.acik=null; ciz(); }},"Kapat"),
       el("button",{class:"btn kucuk dar",onclick:()=>rapor(k)},"Rapor / yazdır"))));
@@ -1026,7 +1063,7 @@ async function rapor(k){
   const govde =
     '<h1>Çalıştırma raporu — '+sube.ad+' · '+listeAdi(k.liste)+'</h1>'+
     '<div class="rss">'+k.gun+' · pencere '+saatStr(p.bas)+'–'+saatStr(p.bit)+' · gönderim '+(k.gonderim?saatStr(new Date(k.gonderim)):"—")+' · '+(k.kisi||"")+
-      ' · sonuç: <b>'+(k.sonuc==="basarisiz"?"BAŞARISIZ (kritik madde)":k.sonuc==="basarili"?"tamamlandı":"açık")+'</b>'+
+      ' · sonuç: <b>'+(k.sonuc==="basarisiz"?"BAŞARISIZ (kritik madde)":k.sonuc==="basarili"?(k.gec?"geç tamamlandı":"tamamlandı"):"açık")+'</b>'+
       (k.puan!=null? ' · puan %'+k.puan+' (bilgi)' : '')+'</div>'+
     '<table><thead><tr><th>#</th><th>Madde</th><th>Cevap</th><th>Saat</th></tr></thead><tbody>'+maddeler(k.liste).map(satir).join("")+'</tbody></table>'+
     '<h3>Kanıt fotoğrafları ('+fotolar.length+')</h3>'+
@@ -1114,9 +1151,9 @@ function otpGosterim(){
       } else {
         govde.append(el("div",{style:"background:var(--markaA);border-radius:12px;padding:13px 15px"},
           el("b",{style:"color:var(--marka)"},"Doğrulandı (simülasyon)"),
-          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px"},
+          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px", html:
             "+90 "+tel+" · Emre T. · Personel · Kadıköy<br>Bu kişi yalnızca kendi şubesinin bugünkü listelerini görür; "+
-            "başka şubenin kaydına erişim denemesi üründe 403 ile reddedilir.")),
+            "başka şubenin kaydına erişim denemesi üründe 403 ile reddedilir."})),
           el("div",{class:"ss"},"Demoda oturum açılmadı; kimlik doğrulanmadı."),
           el("button",{class:"btn pri",onclick:kapat},"Kapat"));
       }
@@ -1141,7 +1178,7 @@ function sablonOnizle(ad, meta){
   const maddeler_ = SABLON_ONIZLEME[ad] || [];
   sheetAc(kapat=>[
     el("h3",{style:"font-size:19px;padding-right:40px"}, ad),
-    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"), el("span",{class:"ss"}, meta)),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("gosterim"), el("span",{class:"ss"}, meta)),
     el("div",{class:"kart"}, ...maddeler_.map((m,i)=>el("div",{style:"display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:"+(i===maddeler_.length-1?"0":"1px solid var(--cizgi)")},
       el("div",{class:"kutucuk",style:"width:22px;height:22px;border-radius:6px"}), el("div",{style:"font-size:13.5px;line-height:1.35"}, m)))),
     el("div",{class:"uyari-bant"},"Bu şablon üründe doldurulabilir; demoda yalnızca madde listesi gösterilir. Çalışan iki liste: açılış ve kapanış."),
@@ -1158,8 +1195,8 @@ function kvkkTalep(){
       if (sonuc){
         govde.append(el("div",{style:"background:var(--markaA);border-radius:12px;padding:13px 15px"},
           el("b",{style:"color:var(--marka)"},"Talep kaydı açıldı (simülasyon)"),
-          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px"},
-            "Kayıt no "+sonuc+" · tür: "+secim+"<br>Üründe veri sorumlusuna bildirim gider, 30 gün içinde cevaplanır ve karşılığı denetim izine yazılır.")),
+          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px", html:
+            "Kayıt no "+sonuc+" · tür: "+secim+"<br>Üründe veri sorumlusuna bildirim gider, 30 gün içinde cevaplanır ve karşılığı denetim izine yazılır."})),
           el("div",{class:"ss"},"Demoda hiçbir kayıt oluşturulmadı."),
           el("button",{class:"btn pri",onclick:kapat},"Kapat"));
         return;
@@ -1844,6 +1881,10 @@ function aylikOzet(){
     r.aksiyon += (k.aksiyonlar||[]).length;
     r.acikAksiyon += (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length;
   });
+  Object.values(S.sorunlar||{}).forEach(x=>{                       // liste dışı bildirilen sorunlar da açık aksiyondur
+    const r = satir[x.sube]; if(!r) return;
+    if (String(x.acildi||"").slice(0,7) !== ay) return;
+    r.aksiyon++; if (x.durum==="acik") r.acikAksiyon++; });
   SUBELER.forEach(s=>{ const r=satir[s.id]; r.kacirildi = Math.max(0, beklenen - r.toplam); });
   const topla = alan => SUBELER.reduce((n,s)=> n + satir[s.id][alan], 0);
   const yuzde = (a,b)=> b ? Math.round(a/b*100)+"%" : "—";
@@ -1927,6 +1968,7 @@ addEventListener("resize", barEtiketleri);
 
 function ciz(){
   const app = $("#app"); app.innerHTML = "";
+  document.body.classList.toggle("kiosk-gorunum", S.rol==="kiosk");
   barEtiketleri();
   $("#saatRozet").textContent = saatStr(simdi())+" · demo saati";
   $("#saatRozet").className = "pill" + (S.kaydirma?" warn":" gri");
