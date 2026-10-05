@@ -14,6 +14,14 @@ Tıklanabilir prototiplerden farkı: **kayıt tutar**. Pencere ve tolerans gerç
 
 **İki liste ve sabah özeti (5 Ekim).** Demo artık tek listeli değil: **açılış** (9 madde, şubenin açılış saatinden türetilen pencere: −45/+30 dk, tolerans 60) ve **kapanış** (15 madde, −60/+90 dk, tolerans 120) listeleri birlikte çalışır; kiosk ikisini de gösterir, pano ızgarası iki sütunlu, çalıştırma kaydı `şube_gün_liste` kimliğiyle ayrılır. Açılış listesinin başında **“dün gece” bloğu** (E-3) durur: önceki gecenin başarısız ve yapılamayan maddeleri, sebepleri ve hâlâ açık aksiyon sayısı; kayıt yoksa “dün gece kapanış gönderilmemiş” uyarısı, sorun yoksa yeşil “dün gece sorun yok”. Dördüncü sekme **Sabah özeti** (E-5): bölge müdürünün 07:00 görünümü — bildirim kartı, dört sayı, sorunlu şube kartları (tıklayınca panodaki detaya gider) ve “bu özet gerçek üründe push + e-posta olarak gider, demoda gönderilmez” bandı.
 
+**Simülasyon katmanı (5 Ekim).** Kullanıcı kararı: sunucu gerektiren yetenekler de *çalışıyormuş gibi* gösterilsin, ama her ekranda rozetle. Üç sınır konuldu ve koda yazıldı:
+
+1. **Kanal eylemi taklit edilmez.** Hiçbir yerde “SMS gönderildi” yazmaz; “giderdi · demoda gönderilmez” denir. Demo, pilot sözleşmesinde taahhüt doğurmamalı.
+2. **Sonuç iddiası üretilmez.** Kurgu müşteri sayısı, başarı yüzdesi, referans yoktur; veri yalnızca akışı gösterir.
+3. **Gerçek risk gizlenmez.** Taklit edilen yerler Sprint 0'daki dört spike'ın konusu; demo onların yerine geçmez.
+
+Eklenen davranışlar: kural tetiklendiği anda ekranda **bildirim kartı** (kritik madde, yapılamadı, gönderim, sorun) — “simülasyon” etiketli; **telefonla giriş akışı** (numara → 6 haneli kod → “doğrulandı (simülasyon)” + rol kapsamı); **şablon önizleme** (çalışmayan altı şablonun madde listesi); **KVKK talep akışı** (tür seç → kayıt no üretilir, kayıt oluşmaz); **dönem faturası önizlemesi** (aktif şube sayacından, tutar yok); **hash zincirini bozma denemesi** (bir olayı değiştir → zincir gerçekten yeniden hesaplanır ve “zincir kırıldı” çıkar).
+
 **“Üründe var” sekmesi (5 Ekim).** v1'in sunucu gerektiren kısmı artık demoda **etiketli gösterim** olarak duruyor — çalışmıyor ama görülüyor. Kural: çalışmayan her öğede rozet var — *çalışmaz · gösterim*, *kısmen çalışır* ya da *simülasyon · gerçek veriden*. Sekiz kart:
 
 | Kart | Durum | Ne gösterir |

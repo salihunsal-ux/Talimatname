@@ -41,6 +41,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.2}
 .kutucuk{width:28px;height:28px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;border:2px solid var(--ink);background:var(--yuzey)}
 .kutucuk.ok{background:var(--marka);border-color:var(--marka)} .kutucuk.crit{background:var(--kritikA);border-color:var(--kritik)}
 .kutucuk.un{background:var(--uyariA);border-color:var(--uyari);color:var(--uyari);font-weight:700}
+#toastlar{position:fixed;right:12px;top:70px;z-index:70;display:flex;flex-direction:column;gap:8px;max-width:330px;pointer-events:none}
+.toast{background:var(--ink);color:#fff;border-radius:13px;padding:11px 13px;box-shadow:0 14px 34px rgba(0,0,0,.3);transition:opacity .5s,transform .5s}
+@media (max-width:560px){ #toastlar{left:10px;right:10px;max-width:none;top:auto;bottom:14px} }
 .sheet{position:fixed;inset:0;background:rgba(28,33,40,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .sheet-in{background:var(--yuzey);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:92vh;overflow:auto;padding:18px 18px 26px;display:flex;flex-direction:column;gap:11px}
 @media(min-width:640px){.sheet{align-items:center}.sheet-in{border-radius:18px;max-height:88vh}}
@@ -754,6 +757,7 @@ function maddeAc(k, m){
       if (dd==="basarisiz" && m.k){
         k.aksiyonlar = (k.aksiyonlar||[]).concat([{id:uuid(), madde:m.no, baslik:m.ad, sorumlu:SORUMLU, acildi:simdi().toISOString(), durum:"acik", not:""}]);
         olay(k, "Aksiyon açıldı · kritik · "+SORUMLU);
+        bildirimTetikle("kritik", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, madde:m.ad});
       }
       await Depo.kosmaYaz(k); kapat(); ciz();
     }
@@ -781,6 +785,7 @@ function yapilamadiAc(k, m){
       k.cevaplar[m.no] = c;
       k.aksiyonlar = (k.aksiyonlar||[]).concat([{id:uuid(), madde:m.no, baslik:m.ad+" (yapılamadı)", sorumlu:SORUMLU, acildi:simdi().toISOString(), durum:"acik", not:c.sebep}]);
       olay(k, "Madde "+m.no+" yapılamadı ("+c.sebep+") → aksiyon açıldı");
+      bildirimTetikle("yapilamadi", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, madde:m.ad, sebep:c.sebep});
       await Depo.kosmaYaz(k); kapat(); ciz();
     });
     return [el("h3",{style:"font-size:19px;line-height:1.25"},"Yapılamadı — "+m.ad),
@@ -797,6 +802,7 @@ async function gonder(k){
   const p = pencere(k.sube, k.gun);
   k.gec = simdi() > p.bit;
   olay(k, "Gönderildi · "+(kritikBasarisiz?"başarısız (kritik madde)":"tamamlandı")+(k.gec?" · geç":"")+" · kayıt kilitlendi");
+  bildirimTetikle("gonderim", {sube:(SUBELER.find(x=>x.id===k.sube)||{}).ad, liste:listeAdi(k.liste).replace(" listesi",""), sonuc:k.sonuc});
   await Depo.kosmaYaz(k); S.acik="liste:"+k.liste; ciz();
 }
 
@@ -1049,6 +1055,169 @@ function raporAc(govde, ustMetin){
   kat.scrollTop = 0;
 }
 
+/* ---------------------------------------------------------------- simülasyon katmanı
+   Kural: taklit edilen her şey ekranda "simülasyon" der. Kanal eylemi "gönderildi" diye
+   yazılmaz; "giderdi" denir — demo, pilot sözleşmesinde taahhüt doğurmamalı. */
+function bildirimToast(baslik, metin, kanal){
+  let kat = document.querySelector("#toastlar");
+  if (!kat){ kat = el("div",{id:"toastlar"}); document.body.append(kat); }
+  const t = el("div",{class:"toast"},
+    el("div",{style:"display:flex;align-items:center;gap:7px;margin-bottom:3px"},
+      el("div",{style:"width:26px;height:26px;border-radius:7px;background:var(--marka);display:flex;align-items:center;justify-content:center;flex:none"},
+        el("svg",{viewBox:"0 0 24 24",width:"14",height:"14",fill:"none",stroke:"#fff","stroke-width":"2","stroke-linecap":"round","stroke-linejoin":"round",
+          html:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"></path><path d="M10 20a2 2 0 0 0 4 0"></path>'})),
+      el("b",{style:"font-size:13px"}, baslik),
+      el("span",{class:"pill",style:"background:rgba(255,255,255,.14);color:#fff;font-size:10px;margin-left:auto"},"simülasyon")),
+    el("div",{style:"font-size:12.5px;line-height:1.4;opacity:.9"}, metin),
+    el("div",{style:"font-size:11px;opacity:.7;margin-top:3px"}, kanal+" · demoda gönderilmez"));
+  kat.append(t);
+  setTimeout(()=>{ t.style.opacity="0"; t.style.transform="translateY(-6px)"; }, 5200);
+  setTimeout(()=>t.remove(), 5900);
+}
+/* kural tetiklendiğinde çağrılır */
+function bildirimTetikle(tur, veri){
+  if (tur==="kritik") bildirimToast("Kritik madde · anında",
+    veri.sube+" · "+veri.madde+" başarısız — aksiyon açıldı", "Şube ve bölge müdürüne push, 10 dk'da okunmazsa SMS");
+  if (tur==="yapilamadi") bildirimToast("Yapılamadı",
+    veri.sube+" · "+veri.madde+" ("+veri.sebep+")", "Şube müdürüne push");
+  if (tur==="gonderim") bildirimToast("Çalıştırma gönderildi",
+    veri.sube+" · "+veri.liste+" · "+(veri.sonuc==="basarisiz"?"başarısız":"tamamlandı"), "Bildirim yok; 07:00 özetinde görünür");
+  if (tur==="sorun") bildirimToast("Sorun bildirildi",
+    veri.sube+" · "+veri.kategori, "Şube müdürüne push");
+}
+
+/* --- OTP girişi (simülasyon) */
+function otpGosterim(){
+  sheetAc(kapat=>{
+    let adim = 1, tel = "";
+    const govde = el("div",{style:"display:flex;flex-direction:column;gap:9px"});
+    const ciz2 = ()=>{
+      govde.innerHTML = "";
+      if (adim===1){
+        const inp = el("input",{class:"giris",type:"tel",placeholder:"5__ ___ __ __",value:tel});
+        govde.append(el("div",{class:"ss"},"Telefon numaranız"), inp,
+          el("button",{class:"btn pri",onclick:()=>{ tel = inp.value||"532 000 00 00"; adim=2; ciz2(); }},"Kodu gönder"),
+          el("div",{class:"ss"},"Üründe 6 haneli kod SMS ile gelir. Demoda SMS gönderilmez; herhangi bir kod kabul edilir."));
+      } else if (adim===2){
+        const kutular = [];
+        const sira = el("div",{style:"display:flex;gap:7px"});
+        for (let i=0;i<6;i++){ const k = el("input",{class:"giris",maxlength:"1",style:"text-align:center;font-size:22px;padding:10px 0"}); kutular.push(k); sira.append(k); }
+        kutular[0] && setTimeout(()=>kutular[0].focus(),60);
+        sira.addEventListener("input", e=>{ const i = kutular.indexOf(e.target); if (e.target.value && i<5) kutular[i+1].focus(); });
+        govde.append(el("div",{class:"ss"}, "+90 "+tel+" numarasına gönderilen kod"), sira,
+          el("div",{style:"background:var(--yuzey2);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink2)"},
+            "Demo kodu: istediğinizi yazın. Üründe kod 3 dakika geçerlidir, 3 yanlış denemede hesap 15 dakika kilitlenir."),
+          el("button",{class:"btn pri",onclick:()=>{ adim=3; ciz2(); }},"Doğrula"),
+          el("button",{class:"btn",onclick:()=>{ adim=1; ciz2(); }},"Numarayı değiştir"));
+      } else {
+        govde.append(el("div",{style:"background:var(--markaA);border-radius:12px;padding:13px 15px"},
+          el("b",{style:"color:var(--marka)"},"Doğrulandı (simülasyon)"),
+          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px"},
+            "+90 "+tel+" · Emre T. · Personel · Kadıköy<br>Bu kişi yalnızca kendi şubesinin bugünkü listelerini görür; "+
+            "başka şubenin kaydına erişim denemesi üründe 403 ile reddedilir.")),
+          el("div",{class:"ss"},"Demoda oturum açılmadı; kimlik doğrulanmadı."),
+          el("button",{class:"btn pri",onclick:kapat},"Kapat"));
+      }
+    };
+    ciz2();
+    return [el("h3",{style:"font-size:19px;padding-right:40px"},"Telefonla giriş"),
+      el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"),
+        el("span",{class:"ss"},"Akış gerçek, doğrulama sahte")), govde];
+  });
+}
+
+/* --- şablon önizleme (simülasyon) */
+const SABLON_ONIZLEME = {
+  "Saatlik tuvalet ve hijyen kontrolü": ["Tuvaletler temiz ve kokusuz","Sabun, kâğıt havlu, tuvalet kâğıdı tam","Zemin kuru","Çöp kovası boşaltıldı","Ayna ve lavabo silindi","Kontrol kartı imzalandı","Eksik varsa not"],
+  "Soğuk zincir sıcaklık kaydı": ["Süt dolabı (0–4 °C)","Mutfak buzdolabı (0–4 °C)","Teşhir vitrini (0–5 °C)","Dondurucu (−30…−18 °C)","Sıcak dolap (≥63 °C)"],
+  "Haftalık derin temizlik": ["Davlumbaz filtresi yıkandı","Fırın içi temizlendi","Buzdolabı rafları boşaltılıp silindi","Depo rafları düzenlendi","Zemin giderleri açıldı","Haşere tuzakları kontrol edildi","Camlar silindi","Sandalye altları temizlendi","Kullanılan kimyasallar kaydedildi","Fotoğraf: depo ve mutfak"],
+  "Fritöz yağı kontrolü ve değişimi": ["Fritöz 1 — polar madde ölçümü (%)","Fritöz 1 — yağ değişti mi","Fritöz 2 — polar madde ölçümü (%)","Fritöz 2 — yağ değişti mi","Atık yağ teslim edildi (fotoğraf)"],
+  "Kasa devri": ["Sayım yapıldı, fark (₺)","Z raporu alındı","POS slipleri sayıldı","Bozukluk kasası tamam","Kasa kasaya kilitlendi","Devralan kişi","Not"],
+  "Teslimat kabul": ["İrsaliye kontrol edildi (fotoğraf)","Araç sıcaklığı (°C)","Ürün sıcaklığı (°C)","Son kullanma tarihleri kontrol edildi","Ambalaj hasarı var mı","Eksik/fazla kalem","Soğuk zincire kaldırıldı","Reddedilen ürün","Not"],
+};
+function sablonOnizle(ad, meta){
+  const maddeler_ = SABLON_ONIZLEME[ad] || [];
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"}, ad),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"), el("span",{class:"ss"}, meta)),
+    el("div",{class:"kart"}, ...maddeler_.map((m,i)=>el("div",{style:"display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:"+(i===maddeler_.length-1?"0":"1px solid var(--cizgi)")},
+      el("div",{class:"kutucuk",style:"width:22px;height:22px;border-radius:6px"}), el("div",{style:"font-size:13.5px;line-height:1.35"}, m)))),
+    el("div",{class:"uyari-bant"},"Bu şablon üründe doldurulabilir; demoda yalnızca madde listesi gösterilir. Çalışan iki liste: açılış ve kapanış."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- KVKK talebi (simülasyon) */
+function kvkkTalep(){
+  sheetAc(kapat=>{
+    let secim = null, sonuc = null;
+    const govde = el("div",{style:"display:flex;flex-direction:column;gap:9px"});
+    const ciz2 = ()=>{
+      govde.innerHTML="";
+      if (sonuc){
+        govde.append(el("div",{style:"background:var(--markaA);border-radius:12px;padding:13px 15px"},
+          el("b",{style:"color:var(--marka)"},"Talep kaydı açıldı (simülasyon)"),
+          el("div",{style:"font-size:12.5px;line-height:1.5;color:var(--ink2);margin-top:4px"},
+            "Kayıt no "+sonuc+" · tür: "+secim+"<br>Üründe veri sorumlusuna bildirim gider, 30 gün içinde cevaplanır ve karşılığı denetim izine yazılır.")),
+          el("div",{class:"ss"},"Demoda hiçbir kayıt oluşturulmadı."),
+          el("button",{class:"btn pri",onclick:kapat},"Kapat"));
+        return;
+      }
+      ["Verilerime erişmek istiyorum","Düzeltme talep ediyorum","Silinmesini istiyorum"].forEach(x=>{
+        govde.append(el("button",{class:"sec"+(secim===x?" on":""),onclick:()=>{ secim=x; ciz2(); }}, x));
+      });
+      govde.append(el("button",{class:"btn pri",disabled:secim?null:"disabled",onclick:()=>{
+        sonuc = "KVKK-"+String(Math.floor(Math.random()*9000)+1000); ciz2(); }},"Talep oluştur"));
+    };
+    ciz2();
+    return [el("h3",{style:"font-size:19px;padding-right:40px"},"Veri sahibi talebi"),
+      el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim")), govde];
+  });
+}
+
+/* --- fatura önizlemesi (simülasyon) */
+function faturaOnizleme(){
+  const t = simdi(), ay = t.getFullYear()+"-"+iki(t.getMonth()+1);
+  const AY_AD = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  const aktif = [...new Set(Object.values(S.kosmalar).filter(k=>k.gun.startsWith(ay)).map(k=>k.sube))];
+  const govde =
+    '<h1>Dönem faturası — önizleme</h1>'+
+    '<div class="rss">Kahve Durağı · '+AY_AD[t.getMonth()]+' '+t.getFullYear()+' · SİMÜLASYON, ödeme alınmaz</div>'+
+    '<table><thead><tr><th>Kalem</th><th>Adet</th><th>Birim</th><th>Tutar</th></tr></thead><tbody>'+
+    '<tr><td>Aktif şube aboneliği<div class="rn">ay içinde en az bir çalıştırma üreten şube</div></td><td>'+aktif.length+'</td>'+
+    '<td>şube / ay</td><td>görüşmede belirlenir</td></tr>'+
+    '<tr><td>Pasif şube<div class="rn">çalıştırma üretmeyen şube ücretlendirilmez</div></td><td>'+(SUBELER.length-aktif.length)+'</td><td>—</td><td>0</td></tr>'+
+    '<tr><td><b>Toplam</b></td><td colspan="2"></td><td><b>sözleşmedeki birim fiyat × '+aktif.length+'</b></td></tr>'+
+    '</tbody></table>'+
+    '<div class="rss" style="margin-top:12px">Aktif şubeler: '+(aktif.map(id=>(SUBELER.find(s=>s.id===id)||{}).ad).join(", ")||"—")+'. '+
+    'Ay içinde açılan şube oransal eklenir, kapanan şube bir sonraki dönemde düşer. Demoda tutar gösterilmez ve ödeme alınmaz.</div>'+
+    '<div class="rkod">SİMÜLASYON · '+kod("fatura_"+ay)+' · üretildi '+new Date().toLocaleString("tr-TR")+'</div>';
+  raporAc(govde, "Fatura önizlemesi · simülasyon");
+}
+
+/* --- hash zinciri: kaydı bozma denemesi */
+async function zinciriBoz(zincir, kutu){
+  if (!zincir.length) return;
+  const i = Math.min(1, zincir.length-1);
+  zincir[i].ne = zincir[i].ne + " (değiştirildi)";
+  let onceki = "0".repeat(16), kirik = -1;
+  for (let j=0;j<zincir.length;j++){
+    const veri = new TextEncoder().encode(onceki + zincir[j].t + zincir[j].kim + zincir[j].ne);
+    const h = await crypto.subtle.digest("SHA-256", veri);
+    const yeni = Array.from(new Uint8Array(h)).slice(0,8).map(b=>b.toString(16).padStart(2,"0")).join("");
+    if (yeni !== zincir[j].ozet && kirik < 0) kirik = j;
+    zincir[j].yeniOzet = yeni; onceki = yeni;
+  }
+  kutu.innerHTML = "";
+  kutu.append(el("div",{style:"background:var(--kritikA);border:1px solid var(--kritik);border-radius:11px;padding:11px 13px;font-size:13px;line-height:1.45"},
+    el("b",{style:"color:var(--kritik)"},"Zincir kırıldı. "),
+    (kirik+1)+". olaydan itibaren tüm özetler değişti; kayıt kurcalanmış sayılır ve denetim izi ekranında kırmızı görünür."));
+  zincir.forEach((z,j)=> kutu.append(el("div",{style:"display:grid;grid-template-columns:52px 1fr;gap:8px;padding:5px 0;border-bottom:1px dotted var(--cizgi)"},
+    el("b",{style:"font:11.5px var(--mono);color:var(--ink2)"}, saatStr(new Date(z.t))),
+    el("div",{}, el("div",{style:"font-size:12.5px;line-height:1.4"+(j>=kirik?";color:var(--kritik)":"")}, z.ne+" · "+z.kim),
+      el("div",{style:"font:10.5px var(--mono);color:"+(j>=kirik?"var(--kritik)":"var(--sessiz)")},
+        "eski "+z.ozet+" → yeni "+z.yeniOzet)))));
+}
+
 /* ---------------------------------------------------------------- "üründe var, demoda çalışmaz" gösterimi */
 function gosterimRozet(tip){
   if (tip==="sim")  return el("span",{class:"pill",style:"background:#ece9f3;color:#5b4b86"},"simülasyon · gerçek veriden");
@@ -1155,7 +1324,9 @@ function bildirimKutusu(){
       o.acil? el("span",{class:"pill crit",style:"font-size:10.5px"},"anında") : null)),
     el("div",{class:"uyari-bant"},"Gerçek üründe bu satırlar push bildirimi, SMS ve e-posta olarak gider; teslim ve okunma durumu kaydedilir. "+
       "Demoda hiçbiri gönderilmez — liste yalnızca kuralın ne yapacağını gösterir."),
-    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+    el("div",{style:"display:flex;gap:9px"},
+      el("button",{class:"btn",style:"flex:1",onclick:()=>{ bildirimTetikle("kritik", {sube:"Kadıköy", madde:"Mutfak buzdolabı sıcaklığı"}); }},"Bildirimi ekranda dene"),
+      el("button",{class:"btn pri",style:"flex:1",onclick:kapat},"Kapat"))]);
 }
 
 /* --- 2. kurulum sihirbazı (tıklanabilir, kaydetmez) */
@@ -1215,7 +1386,8 @@ function sablonGosterim(){
     el("h3",{style:"font-size:19px;padding-right:40px"},"Şablon kütüphanesi"),
     el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yarim"),
       el("span",{class:"ss"},"v1 sekiz şablonla gelir; demoda ikisi çalışır")),
-    ...sablonlar.map(([ad,meta,acik])=>el("div",{class:"sec",style:acik?"border-color:var(--marka)":"opacity:.75"},
+    ...sablonlar.map(([ad,meta,acik])=>el("div",{class:"sec",style:"cursor:pointer;"+(acik?"border-color:var(--marka)":""),
+      onclick:()=>{ if(!acik){ document.querySelector(".sheet")?.remove(); sablonOnizle(ad, meta); } }},
       el("div",{style:"flex:1"}, el("div",{style:"font-weight:600;font-size:13.5px"}, ad), el("div",{class:"ss"}, meta)),
       acik? el("span",{class:"pill ok"},"demoda çalışıyor") : el("span",{class:"pill gri"},"gösterim"))),
     el("div",{class:"uyari-bant"},"Şablonlar düzenlenebilir ve sürümlenir: yayındaki planı bozmadan yeni sürüm açılır. Demoda şablon editörü yoktur."),
@@ -1231,11 +1403,8 @@ function rolGosterim(){
     el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yok"),
       el("span",{class:"ss"},"Demoda kimlik doğrulanmaz; PIN'ler ekranda yazar")),
     el("div",{class:"kart",style:"display:flex;flex-direction:column;gap:8px"},
-      el("div",{class:"ss"},"Personel girişi"),
-      el("div",{class:"giris",style:"color:var(--sessiz)"},"+90 5__ ___ __ __"),
-      el("div",{style:"display:flex;gap:8px"}, ...["•","•","•","•","•","•"].map(()=>el("div",{class:"giris",style:"text-align:center;flex:1"},"•"))),
-      el("div",{class:"ss"},"Tek kullanımlık kod SMS ile gelir · 3 denemede kilitlenir"),
-      el("button",{class:"btn",disabled:"disabled"},"Kodu gönder (demoda kapalı)")),
+      el("div",{class:"ss"},"Personel girişi · telefon + tek kullanımlık kod"),
+      el("button",{class:"btn pri",onclick:()=>{ document.querySelector(".sheet")?.remove(); otpGosterim(); }},"Giriş akışını dene (simülasyon)")),
     el("div",{class:"etiket",style:"margin-top:4px"},"Rol × kapsam"),
     el("div",{class:"kart"},
       rol("Yönetici","tüm marka","Panonun tamamı, raporlar, şablon ve plan kurulumu, hesap ayarları"),
@@ -1297,6 +1466,10 @@ async function zincirGosterim(){
         el("div",{style:"font:10.5px var(--mono);color:var(--sessiz)"}, "önceki "+z.onceki.slice(0,8)+" → özet "+z.ozet)))),
     el("div",{class:"uyari-bant"},"Her olay bir öncekinin özetini taşır; tek bir satırı değiştirmek sonraki tüm özetleri bozar ve ekranda görünür. "+
       "Özetler burada tarayıcıda hesaplandı; üründe sunucuda tutulur, günlük kök bağımsız bir zaman damgası hizmetine onaylatılır."),
+    (function(){ const kutu = el("div",{style:"display:flex;flex-direction:column;gap:6px"});
+      const btn = el("button",{class:"btn",onclick:async()=>{ btn.disabled=true; btn.textContent="Zincir yeniden hesaplandı"; await zinciriBoz(zincir, kutu); }},
+        "Bir kaydı değiştirmeyi dene");
+      return el("div",{style:"display:flex;flex-direction:column;gap:9px"}, btn, kutu); })(),
     el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
 }
 
@@ -1315,8 +1488,7 @@ function kvkkGosterim(){
     el("div",{class:"kart"},
       el("div",{class:"etiket",style:"margin-bottom:4px"},"Veri sahibi talebi"),
       el("div",{style:"display:flex;flex-direction:column;gap:7px"},
-        ...["Verilerime erişmek istiyorum","Düzeltme talep ediyorum","Silinmesini istiyorum"].map(x=>el("div",{class:"sec",style:"opacity:.75"}, x)),
-        el("button",{class:"btn",disabled:"disabled"},"Talep oluştur (demoda kapalı)"),
+        el("button",{class:"btn pri",onclick:()=>{ document.querySelector(".sheet")?.remove(); kvkkTalep(); }},"Talep akışını dene (simülasyon)"),
         el("div",{class:"ss"},"Üründe talep kaydı açılır, 30 gün içinde cevaplanır ve karşılığı denetim izine yazılır."))),
     el("div",{class:"uyari-bant", html:"Demodaki veriler <b>Türkiye'de değil</b>; gerçek personel adı ve kişi yüzü içeren fotoğraf girilmemelidir. "+
       "Üründe barındırma Türkiye'dedir ve alt işleyen listesi sözleşme ekindedir."}),
@@ -1335,7 +1507,8 @@ function faturaGosterim(){
       el("div",{style:"font-family:var(--serif);font-size:30px;font-weight:700"}, aktif.size+" / "+SUBELER.length),
       el("div",{class:"ss"},"Ay içinde en az bir çalıştırma üreten şube aktif sayılır. Fatura bu sayıdan hesaplanır."),
       el("div",{style:"margin-top:8px;font-size:12.5px;color:var(--ink2);line-height:1.5", html:
-        "Şube başına aylık ücret · <b>görüşmede belirlenir</b><br>Demoda tutar gösterilmez, ödeme alınmaz."})),
+        "Şube başına aylık ücret · <b>görüşmede belirlenir</b><br>Demoda tutar gösterilmez, ödeme alınmaz."}),
+      el("button",{class:"btn pri",style:"margin-top:9px",onclick:()=>{ document.querySelector(".sheet")?.remove(); faturaOnizleme(); }},"Dönem faturası önizlemesi")),
     el("div",{class:"uyari-bant"},"Üründe fatura dönemi kapanınca aktif şube sayısı dondurulur; ay içinde açılan şube oransal eklenir, kapanan şube bir sonraki dönemde düşer."),
     el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
 }
@@ -1443,7 +1616,7 @@ function sorunBildir(){
       await Depo.sorunYaz({id:uuid(), sube:S.sube, kategori:secili.kategori, metin:metin.value.trim(),
         kanit:kanitId, kim:S.kisi?S.kisi.ad:"", sorumlu:SORUMLU, acildi:simdi().toISOString(), durum:"acik"});
       kapat(); ciz();
-      alert("Bildirildi. Şube müdürüne iş olarak düştü.");
+      bildirimTetikle("sorun", {sube:(SUBELER.find(x=>x.id===S.sube)||{}).ad, kategori:secili.kategori});
     });
     return [el("h3",{style:"font-size:19px;padding-right:40px"},"Sorun bildir"),
       el("div",{class:"ss"},"Liste dışında bir sorun: ekipman, malzeme, hijyen ya da güvenlik. Şube müdürüne iş olarak düşer."),
