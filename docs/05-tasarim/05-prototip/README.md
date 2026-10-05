@@ -14,6 +14,13 @@ Tıklanabilir prototiplerden farkı: **kayıt tutar**. Pencere ve tolerans gerç
 
 **İki liste ve sabah özeti (5 Ekim).** Demo artık tek listeli değil: **açılış** (9 madde, şubenin açılış saatinden türetilen pencere: −45/+30 dk, tolerans 60) ve **kapanış** (15 madde, −60/+90 dk, tolerans 120) listeleri birlikte çalışır; kiosk ikisini de gösterir, pano ızgarası iki sütunlu, çalıştırma kaydı `şube_gün_liste` kimliğiyle ayrılır. Açılış listesinin başında **“dün gece” bloğu** (E-3) durur: önceki gecenin başarısız ve yapılamayan maddeleri, sebepleri ve hâlâ açık aksiyon sayısı; kayıt yoksa “dün gece kapanış gönderilmemiş” uyarısı, sorun yoksa yeşil “dün gece sorun yok”. Dördüncü sekme **Sabah özeti** (E-5): bölge müdürünün 07:00 görünümü — bildirim kartı, dört sayı, sorunlu şube kartları (tıklayınca panodaki detaya gider) ve “bu özet gerçek üründe push + e-posta olarak gider, demoda gönderilmez” bandı.
 
+**Aksiyon listesi, sorun bildirimi, kiosk kilidi ve puan (5 Ekim).** v1'in eklenebilir kalan dört satırı:
+
+- **A-6 · aksiyon listesi:** panodaki “Aksiyonlar (N)” düğmesi tüm aksiyonları tek listede toplar — çalıştırmalardan gelenler ve personelin bildirdiği sorunlar. Filtreler açık / gecikmiş / tümü; her kartta şube, kaynak, açılış ve **vade** (kritik madde 4 saat, yapılamadı ve sorun 72 saat), vadesi geçen kırmızı. Not yazmadan kapatılamaz; “Çalıştırmayı aç” ilgili geceye gider.
+- **Y-7 · sorun bildir:** kiosk “Bugün” ekranında düğme. Sabit kategori (ekipman arızası, malzeme eksik, hijyen/haşere, güvenlik, diğer), zorunlu açıklama, isteğe bağlı fotoğraf; şube müdürüne iş olarak düşer ve aksiyon listesinde görünür.
+- **O-5 · kiosk kilidi:** 2 dakika hareketsizlikte oturum kapanır, giriş ekranında “kilitlendi, PIN'inizle girince liste kaldığı yerden devam eder” uyarısı çıkar. Ayrıca elle “Çıkış” düğmesi.
+- **Ş-5 · puan:** gönderimde zorunlu maddelerin yüzdesi hesaplanır; kiosk sonucunda, çalıştırma detayında ve raporda “puan %93 (bilgi)” olarak görünür. Sonucu belirleyen puan değil, kritik maddedir.
+
 **Belge takvimi ve aylık özet (5 Ekim).** Broşürde ve föyde v1 özelliği olarak satılan iki satır demoda da çalışıyor:
 
 - **E-12 · belge takvimi:** beşinci sekme. Yangın tüpü dolumu, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi, portör muayenesi ve ruhsat kayıtları şube, geçerlilik bitişi, sorumlu ve isteğe bağlı belge fotoğrafıyla tutulur; kalan gün sayısı demo saatine göre hesaplanır, 30 ve 7 gün eşikleri renklenir, süresi geçen kayıt “belge eksik” sayılır. Belge ekleme (tür seçilince bitiş tarihi türün süresine göre önerilir), yenileme, silme, “yaklaşan ve geçmiş” filtresi ve doğrulama kodlu **dönem PDF'i**. Boş ekranda “örnek kayıtları oluştur” düğmesi var.
