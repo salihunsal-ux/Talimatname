@@ -59,6 +59,20 @@ tr:last-child td{border-bottom:0}
 .damga{font:10px/1.3 var(--mono);color:#fff;background:rgba(28,33,40,.84);padding:3px 5px;border-radius:0 0 7px 7px;margin-top:-5px}
 .olay{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:4px 0;border-bottom:1px dotted var(--cizgi);font-size:12.5px}
 .olay b{font:11.5px var(--mono);color:var(--ink2)}
+#rapor{position:fixed;inset:0;z-index:60;background:var(--yuzey);overflow:auto;-webkit-overflow-scrolling:touch}
+#rapor .rust{position:sticky;top:0;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--yuzey2);border-bottom:1px solid var(--cizgi)}
+#rapor .ric{max-width:820px;margin:0 auto;padding:22px 20px 60px;font-size:13px;line-height:1.5}
+#rapor h1{font-size:21px;margin:0 0 2px} #rapor h3{font-size:16px;margin:18px 0 8px}
+#rapor .rss{color:var(--sessiz);font-size:12px}
+#rapor table{border-collapse:collapse;width:100%;margin-top:14px;font-size:12.5px}
+#rapor th{background:var(--yuzey2);text-align:left;padding:6px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--sessiz)}
+#rapor td{padding:6px 8px;border-bottom:1px solid var(--cizgi);vertical-align:top}
+#rapor td.rk{color:var(--kritik);font-weight:700}
+#rapor .rn{color:var(--sessiz);font-size:11px}
+#rapor .rfoto{display:flex;flex-wrap:wrap;gap:10px}
+#rapor .rf{width:160px} #rapor .rf img{width:160px;height:120px;object-fit:cover;border:1px solid var(--cizgi);border-radius:6px;display:block}
+#rapor .rd{font:10px var(--mono);color:#fff;background:rgba(28,33,40,.84);padding:2px 4px;border-radius:0 0 5px 5px}
+#rapor .rkod{margin-top:20px;border-top:1px solid var(--cizgi);padding-top:8px;font:11px var(--mono);color:var(--sessiz)}
 @media (max-width:560px){
   .bar-in{padding:7px 12px;gap:6px}
   .wm{font-size:16px}
@@ -70,6 +84,10 @@ tr:last-child td{border-bottom:0}
   .bar,.yazdirma-gizle{display:none!important}
   body{background:#fff}
   .wrap{max-width:none;padding:0}
+  body.rapor-acik > *:not(#rapor){display:none!important}
+  body.rapor-acik #rapor{position:static;overflow:visible}
+  body.rapor-acik #rapor .ric{max-width:none;padding:0}
+  @page{size:A4;margin:14mm}
 }
 </style>
 
@@ -586,7 +604,7 @@ function merkezCiz(app){
   kosmalar.forEach(({sube,k},i)=>{ const d=durumHesapla(k,t,sube.id,isGunu(sube.id,t)); say[d]=(say[d]||0)+1;
     if(k){ say.aksiyon += (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length;
            say.yapilamadi += MADDELER.filter(m=>cevapDurum(m,k.cevaplar[m.no])==="yapilamadi").length; } });
-  const kpiKutu = el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:9px;margin-bottom:14px"});
+  const kpiKutu = el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin-bottom:14px"});
   [["Tamamlandı",say.basarili,"var(--marka)"],["Başarısız",say.basarisiz,"var(--kritik)"],["Kaçırıldı",say.kacirildi,"var(--kritik)"],
    ["Açık liste",say.acik,"var(--uyari)"],["Yapılamadı",say.yapilamadi,"var(--ink)"],["Açık aksiyon",say.aksiyon,"var(--uyari)"]]
    .forEach(([ad,n,c])=>kpiKutu.append(el("div",{class:"kpi"}, el("b",{style:"color:"+c},String(n)), el("span",{class:"ss"},ad))));
@@ -604,7 +622,7 @@ function merkezCiz(app){
     const tbody = el("tbody",{});
     dikkat.forEach(({sube,k})=>{
       const d = durumHesapla(k,t,sube.id,isGunu(sube.id,t));
-      const ac = (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length;
+      const ac = k ? (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length : 0;   // kaçırılan listede kayıt yoktur
       tbody.append(el("tr",{style:"cursor:pointer",onclick:()=>{ S.acik="detay:"+(k?k.id:""); ciz(); }},
         el("td",{style:"font-weight:600"},sube.ad), el("td",{},"Kapanış"),
         el("td",{}, el("span",{class:"pill "+(d==="basarili"?"ok":d==="acik"?"warn":"crit")}, DURUM_AD[d])),
@@ -693,33 +711,32 @@ function detayCiz(k){
 
 async function rapor(k){
   const sube = SUBELER.find(x=>x.id===k.sube);
-  const w = window.open("", "_blank");
-  if (!w){ alert("Tarayıcı yeni sekmeyi engelledi."); return; }
   const fotolar = [];
   for (const m of MADDELER){ const c = k.cevaplar[m.no]; if (c && c.kanit){ const v = await Depo.kanitOku(c.kanit); if (v) fotolar.push({m, v}); } }
   const satir = m => { const c = k.cevaplar[m.no], dd = cevapDurum(m,c); if (dd==="bos") return "";
     const cevap = dd==="yapilamadi" ? "Yapılamadı — "+c.sebep : (m.tur==="onay"?(c.deger?"Evet":"Hayır"):m.tur==="metin"?(c.deger||""):String(c.deger)+(m.tur==="sicaklik"?" °C":""));
-    return `<tr><td>${m.no}</td><td>${m.ad}${c.not?'<div class="n">not: '+c.not+'</div>':''}</td><td class="${dd==='basarisiz'?'k':''}">${cevap}</td><td>${c.zaman||""}</td></tr>`; };
-  w.document.write(`<!doctype html><meta charset="utf-8"><title>Çalıştırma raporu — ${sube.ad}</title>
-  <style>body{font:13px/1.5 ${getComputedStyle(document.body).fontFamily};color:#1c2128;margin:28px}
-  h1{font-family:Bitter,Georgia,serif;font-size:21px;margin:0 0 2px} .ss{color:#7b8590;font-size:12px}
-  table{border-collapse:collapse;width:100%;margin-top:14px;font-size:12.5px}
-  th{background:#efece4;text-align:left;padding:6px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#7b8590}
-  td{padding:6px 8px;border-bottom:1px solid #d6d9d2;vertical-align:top} td.k{color:#b8452f;font-weight:700}
-  .n{color:#7b8590;font-size:11px} .foto{display:inline-block;width:150px;margin:0 9px 9px 0}
-  .foto img{width:150px;height:112px;object-fit:cover;border:1px solid #d6d9d2;border-radius:6px}
-  .d{font:10px ui-monospace,monospace;color:#fff;background:rgba(28,33,40,.84);padding:2px 4px;margin-top:-4px;border-radius:0 0 5px 5px}
-  .kod{margin-top:20px;border-top:1px solid #d6d9d2;padding-top:8px;font:11px ui-monospace,monospace;color:#7b8590}</style>
-  <h1>Çalıştırma raporu — ${sube.ad} · Kapanış</h1>
-  <div class="ss">${k.gun} · pencere ${saatStr(pencere(k.sube,k.gun).bas)}–${saatStr(pencere(k.sube,k.gun).bit)} · gönderim ${k.gonderim?saatStr(new Date(k.gonderim)):"—"} · ${k.kisi||""} · sonuç: <b>${k.sonuc==="basarisiz"?"BAŞARISIZ (kritik madde)":k.sonuc==="basarili"?"tamamlandı":"açık"}</b></div>
-  <table><thead><tr><th>#</th><th>Madde</th><th>Cevap</th><th>Saat</th></tr></thead><tbody>${MADDELER.map(satir).join("")}</tbody></table>
-  <h3 style="font-family:Bitter,Georgia,serif;margin:18px 0 8px">Kanıt fotoğrafları (${fotolar.length})</h3>
-  ${fotolar.map(f=>`<span class="foto"><img src="${f.v.foto}"><div class="d">${sube.ad} · ${new Date(f.v.zaman).toLocaleString("tr-TR")} · ${f.v.kisi||""}</div><div class="ss">madde ${f.m.no}</div></span>`).join("")}
-  <h3 style="font-family:Bitter,Georgia,serif;margin:18px 0 8px">Olay izi</h3>
-  <table><tbody>${(k.olaylar||[]).map(o=>`<tr><td style="width:70px">${saatStr(new Date(o.t))}</td><td>${o.ne}</td><td style="width:150px">${o.kim}</td></tr>`).join("")}</tbody></table>
-  <div class="kod">Doğrulama kodu ${kod(k.id)} · üretildi ${new Date().toLocaleString("tr-TR")} · DEMO ÇIKTISI</div>
-  <script>setTimeout(()=>window.print(),400)<\/script>`);
-  w.document.close();
+    return '<tr><td>'+m.no+'</td><td>'+m.ad+(c.not?'<div class="rn">not: '+c.not+'</div>':'')+'</td><td class="'+(dd==='basarisiz'?'rk':'')+'">'+cevap+'</td><td>'+(c.zaman||"")+'</td></tr>'; };
+  const p = pencere(k.sube, k.gun);
+  const govde =
+    '<h1>Çalıştırma raporu — '+sube.ad+' · Kapanış</h1>'+
+    '<div class="rss">'+k.gun+' · pencere '+saatStr(p.bas)+'–'+saatStr(p.bit)+' · gönderim '+(k.gonderim?saatStr(new Date(k.gonderim)):"—")+' · '+(k.kisi||"")+
+      ' · sonuç: <b>'+(k.sonuc==="basarisiz"?"BAŞARISIZ (kritik madde)":k.sonuc==="basarili"?"tamamlandı":"açık")+'</b></div>'+
+    '<table><thead><tr><th>#</th><th>Madde</th><th>Cevap</th><th>Saat</th></tr></thead><tbody>'+MADDELER.map(satir).join("")+'</tbody></table>'+
+    '<h3>Kanıt fotoğrafları ('+fotolar.length+')</h3>'+
+    '<div class="rfoto">'+fotolar.map(f=>'<span class="rf"><img src="'+f.v.foto+'"><div class="rd">'+sube.ad+' · '+new Date(f.v.zaman).toLocaleString("tr-TR")+' · '+(f.v.kisi||"")+'</div><div class="rss">madde '+f.m.no+'</div></span>').join("")+'</div>'+
+    '<h3>Olay izi</h3><table><tbody>'+(k.olaylar||[]).map(o=>'<tr><td style="width:66px">'+saatStr(new Date(o.t))+'</td><td>'+o.ne+'</td><td style="width:160px">'+o.kim+'</td></tr>').join("")+'</tbody></table>'+
+    '<div class="rkod">Doğrulama kodu '+kod(k.id)+' · üretildi '+new Date().toLocaleString("tr-TR")+' · DEMO ÇIKTISI</div>';
+
+  const kat = el("div",{id:"rapor"});
+  const ust = el("div",{class:"rust yazdirma-gizle"},
+    el("div",{class:"ss"},"Denetimde verilen belge · yazdırın ya da PDF olarak kaydedin"),
+    el("div",{style:"display:flex;gap:8px;margin-left:auto"},
+      el("button",{class:"btn kucuk",onclick:()=>{ document.body.classList.remove("rapor-acik"); kat.remove(); }},"Kapat"),
+      el("button",{class:"btn kucuk dar",onclick:()=>window.print()},"Yazdır / PDF")));
+  kat.append(ust, el("div",{class:"ric", html:govde}));
+  document.body.append(kat);
+  document.body.classList.add("rapor-acik");
+  kat.scrollTop = 0;
 }
 
 /* ---------------------------------------------------------------- çizim: ayar */
