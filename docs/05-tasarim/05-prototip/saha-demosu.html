@@ -50,7 +50,8 @@ table{border-collapse:collapse;width:100%;font-size:13.5px}
 th{text-align:left;padding:8px 10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--sessiz);background:var(--yuzey2);border-bottom:1px solid var(--cizgi)}
 td{padding:8px 10px;border-bottom:1px solid var(--cizgi);vertical-align:top}
 tr:last-child td{border-bottom:0}
-.tablo{border:1px solid var(--cizgi);border-radius:11px;overflow:hidden;background:var(--yuzey)}
+.tablo{border:1px solid var(--cizgi);border-radius:11px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--yuzey)}
+.tablo table{min-width:480px}
 .izgara{display:grid;gap:4px 6px;align-items:center;font-size:12px}
 .hucre{height:24px;border-radius:5px;cursor:pointer}
 .kpi{background:var(--yuzey);border:1px solid var(--cizgi);border-radius:12px;padding:10px 12px}
@@ -104,6 +105,7 @@ tr:last-child td{border-bottom:0}
     <button class="btn kucuk" data-git="kiosk" data-uzun="Şube tableti" data-kisa="Tablet">Şube tableti</button>
     <button class="btn kucuk" data-git="ozet" data-uzun="Sabah özeti" data-kisa="Özet">Sabah özeti</button>
     <button class="btn kucuk" data-git="merkez" data-uzun="Merkez panosu" data-kisa="Pano">Merkez panosu</button>
+    <button class="btn kucuk" data-git="belge" data-uzun="Belge takvimi" data-kisa="Belge">Belge takvimi</button>
     <button class="btn kucuk" data-git="ayar" data-uzun="Demo ayarı" data-kisa="Ayar">Demo ayarı</button>
   </div>
 </div></div>
@@ -183,7 +185,7 @@ const S = {
   mod:"yerel", db:null, yazabilir:false,
   rol:(location.hash.replace("#","")||"kiosk"),
   sube:localStorage.getItem("td.sube")||"kadikoy",
-  kisi:null, kaydirma:0, kosmalar:{}, kanitlar:{}, acik:null, uyandir:null,
+  kisi:null, kaydirma:0, kosmalar:{}, kanitlar:{}, belgeler:{}, acik:null, supheli:false, belgeFiltre:false,
 };
 function simdi(){ return new Date(Date.now() + S.kaydirma*60000); }
 
@@ -246,6 +248,16 @@ const Depo = {
     if (S.mod==="paylasimli"){ try{ const s = await S.db.doc("kanitlar/"+id).get(); if (s.exists){ S.kanitlar[id]=s.data(); return s.data(); } }catch(e){} }
     const hepsi = YerelDepo.oku("td.kanitlar")||{}; return hepsi[id]||null;
   },
+  async belgeYaz(b){
+    S.belgeler[b.id] = b;
+    if (S.mod==="paylasimli"){ try{ await S.db.doc("belgeler/"+b.id).set(b); return true; }catch(e){ console.warn(e); } }
+    const hepsi = YerelDepo.oku("td.belgeler")||{}; hepsi[b.id]=b; YerelDepo.yaz("td.belgeler",hepsi); ciz(); return true;
+  },
+  async belgeSil(id){
+    delete S.belgeler[id];
+    if (S.mod==="paylasimli"){ try{ await S.db.doc("belgeler/"+id).delete(); return; }catch(e){} }
+    const hepsi = YerelDepo.oku("td.belgeler")||{}; delete hepsi[id]; YerelDepo.yaz("td.belgeler",hepsi); ciz();
+  },
   async ozetOku(h){
     if (S.mod==="paylasimli"){ try{ const d = await S.db.doc("ozetler/"+h).get(); if (d.exists) return d.data(); return null; }catch(e){} }
     const hepsi = YerelDepo.oku("td.ozetler")||{}; return hepsi[h]||null;
@@ -264,8 +276,9 @@ const Depo = {
            const q2 = await S.db.collection("kanitlar").limit(300).get(); for (const d of q2.docs) await S.db.doc("kanitlar/"+d.id).delete(); }catch(e){ console.warn(e); }
     }
     if (S.mod==="paylasimli"){ try{ const q3 = await S.db.collection("ozetler").limit(300).get(); for (const d of q3.docs) await S.db.doc("ozetler/"+d.id).delete(); }catch(e){} }
-    YerelDepo.yaz("td.kosmalar",{}); YerelDepo.yaz("td.kanitlar",{}); YerelDepo.yaz("td.ozetler",{});
-    S.kosmalar={}; S.kanitlar={}; ciz();
+    if (S.mod==="paylasimli"){ try{ const q4 = await S.db.collection("belgeler").limit(300).get(); for (const d of q4.docs) await S.db.doc("belgeler/"+d.id).delete(); }catch(e){} }
+    YerelDepo.yaz("td.kosmalar",{}); YerelDepo.yaz("td.kanitlar",{}); YerelDepo.yaz("td.ozetler",{}); YerelDepo.yaz("td.belgeler",{});
+    S.kosmalar={}; S.kanitlar={}; S.belgeler={}; ciz();
   },
 };
 
@@ -282,6 +295,10 @@ async function depoBaslat(){
         const y = {}; snap.docs.forEach(d=>{ y[d.id]=d.data(); });
         S.kosmalar = y; ciz();
       }, e=>{ console.warn("kosma aboneliği:", e.code); });
+      db.collection("belgeler").limit(200).onSnapshot(snap=>{
+        const y = {}; snap.docs.forEach(d=>{ y[d.id]=d.data(); });
+        S.belgeler = y; ciz();
+      }, e=>{ console.warn("belge aboneliği:", e.code); });
       db.doc("demo/ayar").onSnapshot(snap=>{
         const a = snap.exists ? snap.data() : null;
         if (a && typeof a.kaydirma === "number" && a.kaydirma !== S.kaydirma){ S.kaydirma = a.kaydirma; ciz(); }
@@ -290,6 +307,7 @@ async function depoBaslat(){
   }catch(e){ console.warn("db yok:", e); }
   if (S.mod !== "paylasimli" && S.mod !== "okuma"){
     S.kosmalar = YerelDepo.oku("td.kosmalar")||{};
+    S.belgeler = YerelDepo.oku("td.belgeler")||{};
     const a = YerelDepo.oku("td.ayar"); if (a && typeof a.kaydirma==="number") S.kaydirma = a.kaydirma;
   }
   modRozet(); ciz();
@@ -767,6 +785,7 @@ function merkezCiz(app){
     el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},
       el("button",{class:"btn kucuk"+(S.supheli?" pri":""),onclick:()=>{ S.supheli=!S.supheli; ciz(); }},"Şüpheli kanıt"),
       el("button",{class:"btn kucuk",onclick:()=>sicaklikGunlugu(30)},"Sıcaklık günlüğü"),
+      el("button",{class:"btn kucuk",onclick:()=>aylikOzet()},"Aylık özet"),
       el("div",{class:"ss"}, tarihStr(t)+" · "+saatStr(t)+" · canlı"))));
 
   const hucreler = [];
@@ -1001,6 +1020,224 @@ function raporAc(govde, ustMetin){
   kat.scrollTop = 0;
 }
 
+/* ---------------------------------------------------------------- belge ve periyodik bakım takvimi (E-12) */
+const BELGE_TURLERI = [
+  {id:"yangin", ad:"Yangın tüpü dolumu", sure:12},
+  {id:"baca", ad:"Baca temizliği", sure:6},
+  {id:"su", ad:"Su deposu temizliği", sure:6},
+  {id:"elektrik", ad:"Periyodik elektrik kontrolü", sure:12},
+  {id:"hijyen", ad:"Hijyen eğitimi belgesi", sure:24},
+  {id:"portor", ad:"Portör muayenesi", sure:6},
+  {id:"ruhsat", ad:"İşyeri açma ruhsatı", sure:60},
+];
+function belgeAdi(tur){ return (BELGE_TURLERI.find(x=>x.id===tur)||{ad:tur}).ad; }
+function kalanGun(bitis, t){ return Math.ceil((new Date(bitis+"T12:00:00") - new Date(gunStr(t)+"T12:00:00"))/86400000); }
+function belgeDurum(b, t){
+  const g = kalanGun(b.bitis, t);
+  if (g < 0) return {kod:"gecti", ad:"süresi geçti", renk:"crit", g};
+  if (g <= 7) return {kod:"yakin7", ad:g+" gün kaldı", renk:"crit", g};
+  if (g <= 30) return {kod:"yakin30", ad:g+" gün kaldı", renk:"warn", g};
+  return {kod:"guncel", ad:"güncel", renk:"ok", g};
+}
+
+function belgeCiz(app){
+  const t = simdi();
+  const hepsi = Object.values(S.belgeler||{}).sort((a,b)=> a.bitis < b.bitis ? -1 : 1);
+  app.append(el("div",{style:"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 10px"},
+    el("h1",{style:"font-size:26px"},"Belge takvimi"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},
+      el("button",{class:"btn kucuk"+(S.belgeFiltre?" pri":""),onclick:()=>{ S.belgeFiltre=!S.belgeFiltre; ciz(); }},"Yaklaşan ve geçmiş"),
+      el("button",{class:"btn kucuk",onclick:()=>belgeEkle()},"Belge ekle"),
+      hepsi.length? el("button",{class:"btn kucuk dar",onclick:()=>belgeDonemRaporu()},"Dönem PDF'i") : null)));
+
+  if (!hepsi.length){
+    app.append(el("div",{class:"kart",style:"display:flex;flex-direction:column;gap:9px"},
+      el("div",{style:"font-weight:600"},"Henüz belge kaydı yok"),
+      el("div",{class:"ss"},"Yangın tüpü dolumu, baca ve su deposu temizliği, periyodik elektrik kontrolü, hijyen eğitimi ve portör belgeleri tarihleriyle burada durur; "+
+        "bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne bildirim gider, tarih geçerse iş açılır."),
+      el("div",{style:"display:flex;gap:8px;flex-wrap:wrap"},
+        el("button",{class:"btn pri",onclick:()=>belgeEkle()},"Belge ekle"),
+        el("button",{class:"btn",onclick:()=>ornekBelgeler()},"Örnek kayıtları oluştur"))));
+    return;
+  }
+
+  const say = {gecti:0, yakin:0, guncel:0};
+  hepsi.forEach(b=>{ const d = belgeDurum(b,t); if(d.kod==="gecti") say.gecti++; else if(d.kod==="guncel") say.guncel++; else say.yakin++; });
+  const eksikSube = new Set(hepsi.filter(b=>belgeDurum(b,t).kod==="gecti").map(b=>b.sube)).size;
+  const kpi=(n,l,c)=>el("div",{class:"kpi"}, el("b",{style:"color:"+c},String(n)), el("span",{class:"ss"},l));
+  app.append(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin-bottom:14px"},
+    kpi(say.gecti,"süresi geçmiş","var(--kritik)"), kpi(say.yakin,"30 gün içinde","var(--uyari)"),
+    kpi(say.guncel,"güncel","var(--marka)"), kpi(eksikSube,"“belge eksik” şube","var(--kritik)")));
+
+  const liste = S.belgeFiltre ? hepsi.filter(b=>belgeDurum(b,t).kod!=="guncel") : hepsi;
+  const tb = el("div",{class:"tablo"});
+  const tablo = el("table",{}, el("thead",{},el("tr",{},...["Şube","Belge","Geçerlilik bitişi","Kalan","Sorumlu","Durum"].map(h=>el("th",{},h)))));
+  const tbody = el("tbody",{});
+  liste.forEach(b=>{
+    const d = belgeDurum(b,t), sube = SUBELER.find(x=>x.id===b.sube);
+    tbody.append(el("tr",{style:"cursor:pointer",onclick:()=>belgeAc(b)},
+      el("td",{style:"font-weight:600"}, sube?sube.ad:b.sube),
+      el("td",{}, belgeAdi(b.tur), b.not? el("div",{class:"ss"}, b.not) : null),
+      el("td",{style:"white-space:nowrap"}, b.bitis),
+      el("td",{style:"white-space:nowrap;font-weight:600;color:"+(d.kod==="gecti"?"var(--kritik)":d.kod==="guncel"?"var(--ink2)":"var(--uyari)")},
+         d.kod==="gecti" ? (-d.g)+" gün geçti" : d.g+" gün"),
+      el("td",{class:"mut"}, b.sorumlu||SORUMLU),
+      el("td",{}, el("span",{class:"pill "+d.renk}, d.ad))));
+  });
+  tablo.append(tbody); tb.append(tablo); app.append(tb);
+  app.append(el("div",{class:"uyari-bant", html:
+    "Uyarı takvimi: bitişe <b>30</b> ve <b>7</b> gün kala sorumluya ve şube müdürüne bildirim; tarih geçince yüksek öncelikli iş açılır ve şube “belge eksik” görünür. "+
+    "Demoda bildirim gönderilmez; uyarı bu ekranda ve dönem PDF'inde hesaplanır."}));
+}
+
+function belgeAc(b){
+  const t = simdi(), d = belgeDurum(b,t), sube = SUBELER.find(x=>x.id===b.sube);
+  sheetAc(kapat=>{
+    const parcalar = [
+      el("h3",{style:"font-size:19px;padding-right:40px"}, (sube?sube.ad:b.sube)+" · "+belgeAdi(b.tur)),
+      el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"},
+        el("span",{class:"pill "+d.renk}, d.ad), el("span",{class:"ss"},"Geçerlilik bitişi "+b.bitis+" · sorumlu "+(b.sorumlu||SORUMLU))),
+    ];
+    if (b.kanit) parcalar.push(el("div",{id:"belgeFoto"}));
+    if (d.kod==="gecti"){
+      parcalar.push(el("div",{style:"background:var(--kritikA);border:1px solid var(--kritik);border-radius:11px;padding:11px 13px;font-size:13px;line-height:1.45"},
+        el("b",{style:"color:var(--kritik)"},"Süresi geçti. "),
+        "Şube “belge eksik” işaretli; yüksek öncelikli iş açık (vade 7 gün). Yeni belge yüklenince kapanır."));
+    }
+    const yeniTarih = el("input",{class:"giris",type:"date",value:b.bitis});
+    parcalar.push(el("div",{class:"ss"},"Yenileme: yeni geçerlilik bitişi"), yeniTarih,
+      el("div",{style:"display:flex;gap:9px;margin-top:4px"},
+        el("button",{class:"btn",style:"flex:1",onclick:async()=>{ if(confirm("Bu belge kaydı silinsin mi?")){ await Depo.belgeSil(b.id); kapat(); ciz(); } }},"Sil"),
+        el("button",{class:"btn pri",style:"flex:2",onclick:async()=>{
+          const y = {...b, bitis:yeniTarih.value, yenilendi:simdi().toISOString()};
+          await Depo.belgeYaz(y); kapat(); ciz();
+        }},"Yenilendi olarak kaydet")));
+    setTimeout(async()=>{
+      if (!b.kanit) return;
+      const v = await Depo.kanitOku(b.kanit); const k = document.querySelector("#belgeFoto");
+      if (v && k) k.append(el("img",{class:"foto",src:v.foto,style:"max-height:150px"}), el("div",{class:"damga"},"belge dosyası · "+saatStr(new Date(v.zaman))));
+    },0);
+    return parcalar;
+  });
+}
+
+function belgeEkle(){
+  sheetAc(kapat=>{
+    const bugun = gunStr(simdi());
+    const subeSec = el("select",{class:"giris"}, ...SUBELER.map(s=>el("option",{value:s.id}, s.ad)));
+    const turSec = el("select",{class:"giris"}, ...BELGE_TURLERI.map(x=>el("option",{value:x.id}, x.ad+" · "+x.sure+" ay")));
+    const tarih = el("input",{class:"giris",type:"date",value:bugun});
+    const sorumlu = el("input",{class:"giris",value:SORUMLU});
+    let kanitId = null;
+    const onizleme = el("div");
+    const dosya = el("input",{type:"file",accept:"image/*",style:"display:none"});
+    const dosyaBtn = el("button",{class:"btn",onclick:()=>dosya.click()},"Belge fotoğrafı ekle (isteğe bağlı)");
+    dosya.addEventListener("change", async e=>{
+      const f = e.target.files[0]; if(!f) return;
+      dosyaBtn.textContent="İşleniyor…"; dosyaBtn.disabled=true;
+      try{
+        const veri = await kucult(f); kanitId = uuid();
+        await Depo.kanitYaz(kanitId, {foto:veri, belge:true, zaman:simdi().toISOString(), kisi:S.kisi?S.kisi.ad:"", sube:subeSec.value});
+        onizleme.innerHTML=""; onizleme.append(el("img",{class:"foto",src:veri,style:"max-height:140px"}));
+      }catch(err){ alert("Dosya işlenemedi"); }
+      dosyaBtn.textContent="Belge fotoğrafını değiştir"; dosyaBtn.disabled=false;
+    });
+    // varsayılan bitiş: türün süresi kadar ileri
+    const tarihGuncelle = ()=>{ const tur = BELGE_TURLERI.find(x=>x.id===turSec.value); const d = simdi();
+      d.setMonth(d.getMonth()+ (tur?tur.sure:12)); tarih.value = gunStr(d); };
+    turSec.addEventListener("change", tarihGuncelle); tarihGuncelle();
+    return [el("h3",{style:"font-size:19px;padding-right:40px"},"Belge ekle"),
+      el("div",{class:"ss"},"Şube"), subeSec,
+      el("div",{class:"ss"},"Belge türü"), turSec,
+      el("div",{class:"ss"},"Geçerlilik bitişi"), tarih,
+      el("div",{class:"ss"},"Sorumlu"), sorumlu,
+      el("div",{style:"display:flex;gap:9px;align-items:center"}, dosyaBtn, dosya), onizleme,
+      el("div",{style:"display:flex;gap:9px;margin-top:4px"},
+        el("button",{class:"btn",style:"flex:1",onclick:kapat},"Vazgeç"),
+        el("button",{class:"btn pri",style:"flex:2",onclick:async()=>{
+          await Depo.belgeYaz({id:uuid(), sube:subeSec.value, tur:turSec.value, bitis:tarih.value,
+                               sorumlu:sorumlu.value||SORUMLU, kanit:kanitId, eklendi:simdi().toISOString()});
+          kapat(); ciz();
+        }},"Kaydet"))];
+  });
+}
+
+async function ornekBelgeler(){
+  const t = simdi(), ay = (n)=>{ const d=new Date(t.getTime()); d.setDate(d.getDate()+n); return gunStr(d); };
+  const kayitlar = [
+    {sube:"kadikoy", tur:"yangin",   bitis:ay(-5),  sorumlu:SORUMLU},
+    {sube:"bornova", tur:"su",       bitis:ay(-2),  sorumlu:"Deniz A."},
+    {sube:"bakirkoy",tur:"baca",     bitis:ay(7),   sorumlu:"Mehmet T."},
+    {sube:"uskudar", tur:"portor",   bitis:ay(21),  sorumlu:SORUMLU},
+    {sube:"kadikoy", tur:"elektrik", bitis:ay(72),  sorumlu:"Bölge · Murat D."},
+    {sube:"uskudar", tur:"hijyen",   bitis:ay(120), sorumlu:SORUMLU},
+    {sube:"bakirkoy",tur:"ruhsat",   bitis:ay(400), sorumlu:"Merkez"},
+  ].filter(x=> SUBELER.some(s=>s.id===x.sube));
+  for (const r of kayitlar) await Depo.belgeYaz({id:uuid(), ...r, eklendi:simdi().toISOString()});
+  ciz();
+}
+
+function belgeDonemRaporu(){
+  const t = simdi();
+  const hepsi = Object.values(S.belgeler||{}).sort((a,b)=> a.bitis < b.bitis ? -1 : 1);
+  const subeAd = id => (SUBELER.find(x=>x.id===id)||{ad:id}).ad;
+  const gecti = hepsi.filter(b=>belgeDurum(b,t).kod==="gecti").length;
+  const govde =
+    '<h1>Belge ve periyodik bakım takvimi</h1>'+
+    '<div class="rss">'+SUBELER.length+' şube · '+hepsi.length+' belge · <b class="'+(gecti?'rk':'')+'">'+gecti+' süresi geçmiş</b> · '+gunStr(t)+' itibarıyla</div>'+
+    '<table><thead><tr><th>Şube</th><th>Belge</th><th>Geçerlilik bitişi</th><th>Kalan</th><th>Sorumlu</th><th>Durum</th></tr></thead><tbody>'+
+    hepsi.map(b=>{ const d=belgeDurum(b,t); return '<tr><td>'+subeAd(b.sube)+'</td><td>'+belgeAdi(b.tur)+'</td><td>'+b.bitis+'</td>'+
+      '<td class="'+(d.kod==="gecti"?"rk":"")+'">'+(d.kod==="gecti" ? (-d.g)+" gün geçti" : d.g+" gün")+'</td>'+
+      '<td>'+(b.sorumlu||SORUMLU)+'</td><td class="'+(d.kod==="gecti"?"rk":"")+'">'+d.ad+'</td></tr>'; }).join("")+
+    '</tbody></table>'+
+    '<div class="rss" style="margin-top:12px">Bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne bildirim gider; tarih geçince yüksek öncelikli iş açılır ve şube “belge eksik” işaretlenir. '+
+    'Belge dosyaları kayıtla birlikte saklanır ve denetimde bu liste ile birlikte sunulur.</div>'+
+    '<div class="rkod">Doğrulama kodu '+kod("belge_"+gunStr(t)+"_"+hepsi.length)+' · üretildi '+new Date().toLocaleString("tr-TR")+' · DEMO ÇIKTISI</div>';
+  raporAc(govde, "Belge takvimi · dönem raporu");
+}
+
+/* ---------------------------------------------------------------- aylık tek sayfa özet (E-7) */
+function aylikOzet(){
+  const t = simdi(), ay = t.getFullYear()+"-"+iki(t.getMonth()+1);
+  const kayitlar = Object.values(S.kosmalar).filter(k=> k.gun.startsWith(ay));
+  const subeAd = id => (SUBELER.find(x=>x.id===id)||{ad:id}).ad;
+  const satir = {};
+  SUBELER.forEach(s=> satir[s.id] = {zamaninda:0, gec:0, kacirildi:0, basarisiz:0, yapilamadi:0, kanit:0, aksiyon:0, acikAksiyon:0, toplam:0});
+  // beklenen çalıştırma sayısı: ayın başından bugüne, şube × liste
+  const gunSayisi = t.getDate();
+  const beklenen = gunSayisi * 2;
+  kayitlar.forEach(k=>{
+    const r = satir[k.sube]; if(!r) return;
+    r.toplam++;
+    if (k.durum==="gonderildi"){ if (k.sonuc==="basarisiz") r.basarisiz++; if (k.gec) r.gec++; else r.zamaninda++; }
+    r.yapilamadi += maddeler(k.liste).filter(m=>cevapDurum(m,k.cevaplar[m.no])==="yapilamadi").length;
+    r.kanit += Object.values(k.cevaplar||{}).filter(c=>c.kanit).length;
+    r.aksiyon += (k.aksiyonlar||[]).length;
+    r.acikAksiyon += (k.aksiyonlar||[]).filter(a=>a.durum==="acik").length;
+  });
+  SUBELER.forEach(s=>{ const r=satir[s.id]; r.kacirildi = Math.max(0, beklenen - r.toplam); });
+  const topla = alan => SUBELER.reduce((n,s)=> n + satir[s.id][alan], 0);
+  const yuzde = (a,b)=> b ? Math.round(a/b*100)+"%" : "—";
+  const AY_AD = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  const govde =
+    '<h1>Aylık özet — '+AY_AD[t.getMonth()]+' '+t.getFullYear()+'</h1>'+
+    '<div class="rss">'+SUBELER.length+' şube · ayın ilk '+gunSayisi+' günü · şube başına beklenen '+beklenen+' liste (açılış + kapanış)</div>'+
+    '<table><thead><tr><th>Şube</th><th>Gönderilen</th><th>Zamanında</th><th>Geç</th><th>Kaçırılan</th><th>Başarısız</th><th>Yapılamadı</th><th>Kanıt</th><th>Açık aksiyon</th></tr></thead><tbody>'+
+    SUBELER.map(s=>{ const r=satir[s.id]; return '<tr><td><b>'+s.ad+'</b></td><td>'+r.toplam+' / '+beklenen+'</td>'+
+      '<td>'+r.zamaninda+' · '+yuzde(r.zamaninda,beklenen)+'</td><td>'+r.gec+'</td>'+
+      '<td class="'+(r.kacirildi?'rk':'')+'">'+r.kacirildi+'</td><td class="'+(r.basarisiz?'rk':'')+'">'+r.basarisiz+'</td>'+
+      '<td>'+r.yapilamadi+'</td><td>'+r.kanit+'</td><td class="'+(r.acikAksiyon?'rk':'')+'">'+r.acikAksiyon+'</td></tr>'; }).join("")+
+    '<tr><td><b>Toplam</b></td><td><b>'+topla("toplam")+' / '+beklenen*SUBELER.length+'</b></td>'+
+    '<td><b>'+topla("zamaninda")+' · '+yuzde(topla("zamaninda"), beklenen*SUBELER.length)+'</b></td><td><b>'+topla("gec")+'</b></td>'+
+    '<td><b>'+topla("kacirildi")+'</b></td><td><b>'+topla("basarisiz")+'</b></td><td><b>'+topla("yapilamadi")+'</b></td>'+
+    '<td><b>'+topla("kanit")+'</b></td><td><b>'+topla("acikAksiyon")+'</b></td></tr>'+
+    '</tbody></table>'+
+    '<div class="rss" style="margin-top:12px">“Kaçırılan”, pencere ve tolerans dolduğu hâlde gönderilmemiş listedir. Yüzdeler beklenen liste sayısına göre hesaplanır. '+
+    'Demoda ayın yalnızca kayıt girilen günleri doludur; gerçek kullanımda her gün otomatik üretilir.</div>'+
+    '<div class="rkod">Doğrulama kodu '+kod("aylik_"+ay)+' · üretildi '+new Date().toLocaleString("tr-TR")+' · DEMO ÇIKTISI</div>';
+  raporAc(govde, "Aylık tek sayfa özet");
+}
+
 /* ---------------------------------------------------------------- çizim: ayar */
 function ayarCiz(app){
   app.append(el("h1",{style:"font-size:24px;margin:16px 0 10px"},"Demo ayarı"));
@@ -1034,7 +1271,7 @@ function ayarCiz(app){
   const kutu3 = el("div",{class:"kart",style:"margin-top:12px;max-width:620px"});
   kutu3.append(el("div",{class:"etiket",style:"margin-bottom:6px"},"Bu demoda olmayan (üründe var)"),
     el("div",{class:"ss",style:"line-height:1.6"},
-      "Push bildirimi ve SMS (sabah özeti ekranda hesaplanır, gönderilmez) · gerçek kimlik ve rol güvenliği · 72 saatlik çevrimdışı kuyruk · sunucu tarafı damga ve hash zinciri · belge takvimi · aylık özet · yakın kopya (benzer kare) tespiti · konum ve cihaz saati bayrakları · madde kütüphanesi · kurulum sihirbazı."));
+      "Push bildirimi ve SMS (sabah özeti ekranda hesaplanır, gönderilmez) · gerçek kimlik ve rol güvenliği · 72 saatlik çevrimdışı kuyruk · sunucu tarafı damga ve hash zinciri · yakın kopya (benzer kare) tespiti · konum ve cihaz saati bayrakları · madde kütüphanesi ve 8 şablon (demoda 2 liste) · kurulum sihirbazı ve Excel içe aktarma · eskalasyon ve hatırlatmalar."));
   app.append(kutu3);
 }
 function ayarYay(){ Depo.ayarYaz({kaydirma:S.kaydirma, guncellendi:new Date().toISOString()}); }
@@ -1069,13 +1306,14 @@ function ciz(){
   if (S.rol==="kiosk") kioskCiz(app);
   else if (S.rol==="merkez") merkezCiz(app);
   else if (S.rol==="ozet") ozetCiz(app);
+  else if (S.rol==="belge") belgeCiz(app);
   else ayarCiz(app);
 }
 document.querySelectorAll("[data-git]").forEach(b=>b.addEventListener("click",()=>{
   document.querySelector(".sheet")?.remove();          // açık alt sayfa sekme değişince kapanır
   S.rol = b.dataset.git; S.acik = null; location.hash = S.rol; ciz();
 }));
-window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
+window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
 setInterval(()=>{ if (S.rol==="merkez"||S.rol==="ozet") ciz(); else $("#saatRozet").textContent = saatStr(simdi())+" · demo saati"; }, 30000);
 
 ciz();
