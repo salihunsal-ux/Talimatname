@@ -20,6 +20,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.2}
 .wrap{max-width:1180px;margin:0 auto;padding:0 14px 48px}
 .bar{position:sticky;top:0;z-index:30;background:var(--yuzey);border-bottom:1px solid var(--cizgi)}
 .bar-in{max-width:1180px;margin:0 auto;padding:9px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sekmeler{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
 .wm{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:-.01em}
 .pill{padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--yuzey2);color:var(--ink2);white-space:nowrap}
 .pill.ok{background:var(--markaA);color:var(--marka)} .pill.warn{background:var(--uyariA);color:var(--uyari)}
@@ -81,6 +82,8 @@ tr:last-child td{border-bottom:0}
 }
 @media (max-width:560px){
   .bar-in{padding:7px 12px;gap:6px}
+  .sekmeler{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+  .sekmeler .btn{flex:none}
   .wm{font-size:16px}
   .bar .pill{font-size:11px;padding:2px 8px;max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bar .btn.kucuk{padding:5px 9px;font-size:12.5px}
@@ -101,11 +104,12 @@ tr:last-child td{border-bottom:0}
   <div class="wm"><svg viewBox="0 0 64 64" width="21" height="21"><path d="M14 4 H38 L48 14 V56 A4 4 0 0 1 44 60 H14 A4 4 0 0 1 10 56 V8 A4 4 0 0 1 14 4 Z" fill="#1c2128"/><path d="M38 4 V14 H48 Z" fill="#f7f5ef"/><rect x="17" y="22" width="20" height="4" rx="2" fill="#f7f5ef"/><rect x="17" y="31" width="14" height="4" rx="2" fill="#f7f5ef"/><circle cx="46" cy="46" r="14" fill="#1f6f5b" stroke="#f7f5ef" stroke-width="3"/><path d="M39 46.5 L44 51.5 L53.5 41" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg> talimatname</div>
   <span class="pill gri" id="modRozet">yükleniyor…</span>
   <span class="pill" id="saatRozet"></span>
-  <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap">
+  <div class="sekmeler">
     <button class="btn kucuk" data-git="kiosk" data-uzun="Şube tableti" data-kisa="Tablet">Şube tableti</button>
     <button class="btn kucuk" data-git="ozet" data-uzun="Sabah özeti" data-kisa="Özet">Sabah özeti</button>
     <button class="btn kucuk" data-git="merkez" data-uzun="Merkez panosu" data-kisa="Pano">Merkez panosu</button>
     <button class="btn kucuk" data-git="belge" data-uzun="Belge takvimi" data-kisa="Belge">Belge takvimi</button>
+    <button class="btn kucuk" data-git="urun" data-uzun="Üründe var" data-kisa="Ürün">Üründe var</button>
     <button class="btn kucuk" data-git="ayar" data-uzun="Demo ayarı" data-kisa="Ayar">Demo ayarı</button>
   </div>
 </div></div>
@@ -1045,6 +1049,297 @@ function raporAc(govde, ustMetin){
   kat.scrollTop = 0;
 }
 
+/* ---------------------------------------------------------------- "üründe var, demoda çalışmaz" gösterimi */
+function gosterimRozet(tip){
+  if (tip==="sim")  return el("span",{class:"pill",style:"background:#ece9f3;color:#5b4b86"},"simülasyon · gerçek veriden");
+  if (tip==="yarim")return el("span",{class:"pill warn"},"kısmen çalışır");
+  return el("span",{class:"pill",style:"background:var(--yuzey2);color:var(--sessiz)"},"çalışmaz · gösterim");
+}
+function urunKart(baslik, tip, ozet, maddeler_, acKod){
+  const kart = el("div",{class:"kart",style:"display:flex;flex-direction:column;gap:7px;cursor:pointer",onclick:acKod});
+  kart.append(el("div",{style:"display:flex;align-items:center;gap:9px;flex-wrap:wrap"},
+    el("b",{style:"font-family:var(--serif);font-size:16px"}, baslik), gosterimRozet(tip)));
+  kart.append(el("div",{class:"ss",style:"line-height:1.5"}, ozet));
+  const ul = el("div",{style:"display:flex;flex-direction:column;gap:3px;margin-top:2px"});
+  maddeler_.forEach(m=> ul.append(el("div",{style:"display:flex;gap:7px;align-items:flex-start;font-size:12.5px;color:var(--ink2)"},
+    el("span",{style:"width:5px;height:5px;border-radius:50%;background:var(--marka);margin-top:6px;flex:none"}), el("span",{},m))));
+  kart.append(ul, el("div",{style:"font-size:12.5px;color:var(--marka);font-weight:600;margin-top:3px"},"Ekranı gör →"));
+  return kart;
+}
+
+function urunCiz(app){
+  app.append(el("div",{style:"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 8px"},
+    el("h1",{style:"font-size:26px"},"Üründe var, demoda çalışmıyor"),
+    el("div",{class:"ss"},"v1 kapsamının sunucu gerektiren kısmı")));
+  app.append(el("div",{class:"uyari-bant", html:
+    "Bu sekmedeki ekranlar <b>gösterim amaçlıdır</b>: tasarım ve kural gerçektir, ama demoda bildirim gitmez, kimlik doğrulanmaz, veri sunucuya yazılmaz. "+
+    "Pilotta teslim edilecek sürümde hepsi çalışır; sözleşmede bağlayıcı olan kapsam budur."}));
+
+  const g = el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px;margin-top:10px"});
+  g.append(
+    urunKart("Bildirim ve eskalasyon", "sim",
+      "Kuralların bu gece kime, ne zaman, hangi kanaldan bildirim göndereceğini demodaki gerçek kayıtlardan hesaplar — ama göndermez.",
+      ["Kritik madde başarısız → şube ve bölge müdürüne anında push, 10 dk içinde okunmazsa SMS",
+       "Kaçırılan liste → şube müdürüne anında, bölge müdürüne 07:00 özetinde",
+       "Sessiz saat 23:00–07:00; gece yalnızca kritik bildirim"], ()=>bildirimKutusu()),
+    urunKart("Kurulum sihirbazı ve Excel", "yarim",
+      "Dört adımlı kurulum: marka ve şubeler, şablon, plan, personel. Tıklanabilir; kaydetmez.",
+      ["25 satırlık şube dosyası tek seferde, hatalı satırlar rapor olarak döner",
+       "Pencere saatleri şubenin çalışma saatinden hesaplanır",
+       "Kurulum ~1 saat; ilk liste aynı gece açılır"], ()=>sihirbazGosterim()),
+    urunKart("Şablon kütüphanesi (8 şablon)", "yarim",
+      "v1 sekiz hazır şablonla gelir; bu demoda ikisi (açılış, kapanış) gerçekten çalışır, diğerleri listelenir.",
+      ["Kapanış 15 madde · açılış 9 · saatlik hijyen 7 · soğuk zincir 5 ölçüm",
+       "Haftalık derin temizlik, fritöz yağı, kasa devri, teslimat kabul",
+       "Şablon sürümlenir; yayındaki plan bozulmadan düzenlenir"], ()=>sablonGosterim()),
+    urunKart("Giriş, roller ve yetki", "yok",
+      "Telefon + tek kullanımlık kodla giriş ve dört rolün kapsamı. Demoda kimlik doğrulanmaz, PIN'ler ekranda yazar.",
+      ["Personel telefon + OTP, yönetici e-posta + şifre (v1.1'de 2FA)",
+       "Yönetici · bölge müdürü · şube müdürü · personel; herkes yalnız kendi kapsamını görür",
+       "Kişi pasifleştirilince girişi kapanır, geçmiş kanıtı kalır"], ()=>rolGosterim()),
+    urunKart("Çevrimdışı kuyruk", "sim",
+      "Bağlantı kesildiğinde liste cihazda devam eder, kayıtlar 72 saate kadar kuyrukta bekler. Demoda kuyruk simüle edilir.",
+      ["Fotoğraf cihazda sıkıştırılıp kuyrukta saklanır",
+       "Zaman damgası cihaz saatinden değil sunucudan alınır",
+       "Geç ulaşan kayıt işaretlenir, silinmez"], ()=>cevrimdisiGosterim()),
+    urunKart("Denetim izi ve hash zinciri", "sim",
+      "Olaylar ekle-yalnız günlüğe yazılır; her olay bir öncekinin özetini taşır. Zincir burada tarayıcıda hesaplanır, üründe sunucuda tutulur.",
+      ["Tek bir kaydı değiştirmek zinciri kırar ve ekranda görünür",
+       "Günlük kök bağımsız zaman damgası hizmetine onaylatılır",
+       "Kayıt silinmez; düzeltme ayrı olaydır"], ()=>zincirGosterim()),
+    urunKart("KVKK ve saklama", "yok",
+      "Aydınlatma metni, veri sahibi talepleri ve 24 aylık saklama politikası. Demoda hiçbiri işletilmez.",
+      ["Kanıt dosyaları 24 ay, sonra otomatik silinir; iş kaydı kişi maskelenerek kalır",
+       "Talep ekranı: erişim, düzeltme, silme; 30 gün içinde cevap",
+       "Biyometri yok, kişi puanı yok, konum tek nokta"], ()=>kvkkGosterim()),
+    urunKart("Faturalama ve hesap", "yok",
+      "Aktif şube sayacı aylık faturanın tabanıdır. Demoda ücret ve ödeme yoktur.",
+      ["Ay içinde en az bir çalıştırma üreten şube aktif sayılır",
+       "Şube sayısı değişince fatura bir sonraki dönemde düzeltilir",
+       "Fiyat görüşmede belirlenir; demoda tutar gösterilmez"], ()=>faturaGosterim()));
+  app.append(g);
+}
+
+/* --- 1. bildirim kutusu: gerçek kayıtlardan hesaplanan bildirim listesi */
+function bildirimKutusu(){
+  const t = simdi(), out = [];
+  Object.values(S.kosmalar).forEach(k=>{
+    const sube = SUBELER.find(x=>x.id===k.sube), ad = sube?sube.ad:k.sube;
+    maddeler(k.liste).forEach(m=>{
+      const c = k.cevaplar[m.no], d = cevapDurum(m,c);
+      if (d==="basarisiz" && m.k) out.push({t:c.zaman||"", kanal:"push + SMS", kime:"Şube müdürü, bölge müdürü",
+        metin:ad+" · "+m.ad+" kritik maddede başarısız — aksiyon açıldı", acil:true});
+      if (d==="yapilamadi") out.push({t:c.zaman||"", kanal:"push", kime:"Şube müdürü", metin:ad+" · "+m.ad+" yapılamadı ("+c.sebep+")"});
+    });
+    if (k.durum==="gonderildi") out.push({t:k.gonderim?saatStr(new Date(k.gonderim)):"", kanal:"—", kime:"(bildirim yok)",
+      metin:ad+" · "+listeAdi(k.liste).replace(" listesi","")+" gönderildi"+(k.sonuc==="basarisiz"?" · başarısız":"")});
+  });
+  SUBELER.forEach(sube=>{
+    ["acilis","kapanis"].forEach(liste=>{
+      const gun = isGunu(sube.id,t), k = kosmaBul(sube.id,gun,liste);
+      if (durumHesapla(k,t,sube.id,gun,liste)==="kacirildi")
+        out.push({t:saatStr(pencere(sube.id,gun,liste).tol), kanal:"push", kime:"Şube müdürü",
+          metin:sube.ad+" · "+listeAdi(liste).replace(" listesi","")+" kaçırıldı — tolerans doldu", acil:true});
+    });
+  });
+  out.push({t:"07:00", kanal:"push + e-posta", kime:"Bölge müdürü, yönetici", metin:"Sabah özeti · dün gecenin tamamı"});
+  out.sort((a,b)=> a.t < b.t ? -1 : 1);
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Bildirim kutusu"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"),
+      el("span",{class:"ss"},"Kuralların bugün üreteceği bildirimler — demoda gönderilmez")),
+    ...out.map(o=>el("div",{style:"display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--cizgi)"},
+      el("div",{style:"width:46px;flex:none;font:12px var(--mono);color:var(--ink2)"}, o.t),
+      el("div",{style:"flex:1;min-width:0"}, el("div",{style:"font-size:13.5px;line-height:1.35"}, o.metin),
+        el("div",{class:"ss"}, o.kime+" · "+o.kanal)),
+      o.acil? el("span",{class:"pill crit",style:"font-size:10.5px"},"anında") : null)),
+    el("div",{class:"uyari-bant"},"Gerçek üründe bu satırlar push bildirimi, SMS ve e-posta olarak gider; teslim ve okunma durumu kaydedilir. "+
+      "Demoda hiçbiri gönderilmez — liste yalnızca kuralın ne yapacağını gösterir."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- 2. kurulum sihirbazı (tıklanabilir, kaydetmez) */
+function sihirbazGosterim(){
+  let adim = 1;
+  sheetAc(kapat=>{
+    const govde = el("div",{style:"display:flex;flex-direction:column;gap:9px"});
+    const ciz2 = ()=>{
+      govde.innerHTML = "";
+      const basliklar = ["Marka ve şubeler","Kapanış şablonu","Plan ve saatler","Personel ve cihazlar"];
+      govde.append(el("div",{style:"display:grid;grid-template-columns:repeat(4,1fr);gap:6px"},
+        ...basliklar.map((b,i)=>el("div",{style:"border:1.5px solid "+(i+1<=adim?"var(--marka)":"var(--cizgi)")+";background:"+(i+1===adim?"var(--markaA)":"var(--yuzey)")+
+          ";border-radius:9px;padding:7px 8px;font-size:11.5px;line-height:1.3"}, (i+1<adim?"✓ ":"")+(i+1)+" · "+b))));
+      if (adim===1) govde.append(
+        el("div",{class:"ss"},"Excel ile şube yükleme"),
+        el("div",{style:"border:1.5px dashed var(--cizgi);border-radius:11px;padding:14px;text-align:center;color:var(--sessiz);font-size:13px"},"subeler.xlsx · 25 satır"),
+        el("div",{class:"tablo"}, el("table",{}, el("thead",{},el("tr",{},...["Şube","Bölge","Kapanış","Durum"].map(h=>el("th",{},h)))),
+          el("tbody",{}, ...[["Kadıköy","Anadolu","23:00","✓"],["Üsküdar","Anadolu","23:00","✓"],["Bakırköy","Avrupa","22:00","✓"],["Bornova","Ege","—","saat dilimi boş"]]
+            .map(r=>el("tr",{}, ...r.map((c,i)=>el("td",{style:i===3&&c!=="✓"?"color:var(--kritik)":""}, c))))))),
+        el("div",{class:"ss"},"23 kayıt oluşur, 2 hatalı satır rapor edilir. %20 üstü hatada hiçbir kayıt oluşmaz."));
+      if (adim===2) govde.append(el("div",{class:"ss"},"Hazır şablondan seç"),
+        ...["Kapanış (kafe / hızlı servis) · 15 madde · 4 kritik","Açılış · 9 madde · 3 kritik","Soğuk zincir · 5 ölçüm · günde 3 kez"]
+          .map((x,i)=>el("div",{class:"sec"+(i===0?" on":"")}, x)));
+      if (adim===3) govde.append(el("div",{class:"ss"},"Tekrar ve pencere"),
+        el("div",{class:"tablo"}, el("table",{}, el("thead",{},el("tr",{},...["Şube","Kapanış","Pencere","Tolerans"].map(h=>el("th",{},h)))),
+          el("tbody",{}, ...SUBELER.map(s=>el("tr",{}, el("td",{},s.ad), el("td",{},s.kapanis),
+            el("td",{}, saatStr(pencere(s.id,gunStr(simdi()),"kapanis").bas)+" – "+saatStr(pencere(s.id,gunStr(simdi()),"kapanis").bit)), el("td",{},"120 dk")))))),
+        el("div",{class:"ss"},"Pencere şubenin kapanış saatinden hesaplanır; gece yarısını aşan pencere aynı iş gününe yazılır."));
+      if (adim===4) govde.append(el("div",{class:"ss"},"Personel ve cihaz"),
+        ...PERSONEL.map(p=>el("div",{class:"sec"}, p.ad+" · "+(SUBELER.find(s=>s.id===p.sube)||{}).ad+" · PIN atanacak")),
+        el("div",{class:"ss"},"Telefonu olan personele SMS davet, olmayana şube müdürü PIN atar."));
+      govde.append(el("div",{style:"display:flex;gap:9px;margin-top:6px"},
+        el("button",{class:"btn",style:"flex:1",disabled:adim===1?"disabled":null,onclick:()=>{ adim--; ciz2(); }},"← Geri"),
+        adim<4 ? el("button",{class:"btn pri",style:"flex:2",onclick:()=>{ adim++; ciz2(); }},"Devam")
+               : el("button",{class:"btn pri",style:"flex:2",disabled:"disabled"},"Yayınla (demoda kapalı)")));
+    };
+    ciz2();
+    return [el("h3",{style:"font-size:19px;padding-right:40px"},"Kurulum sihirbazı"),
+      el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yarim"),
+        el("span",{class:"ss"},"Adımlar gezilebilir; hiçbir şey kaydedilmez")), govde];
+  });
+}
+
+/* --- 3. şablon kütüphanesi */
+function sablonGosterim(){
+  const sablonlar = [
+    ["Kapanış (kafe / hızlı servis)","15 madde + 1 talimat · 4 kritik · 6–8 dk", true],
+    ["Açılış","9 madde · 3 kritik · 5 dk", true],
+    ["Saatlik tuvalet ve hijyen kontrolü","7 madde · kritik yok · 1–2 dk", false],
+    ["Soğuk zincir sıcaklık kaydı","5 ölçüm + 1 talimat · tamamı kritik · günde 3 kez", false],
+    ["Haftalık derin temizlik","10 madde · 1 kritik · 4 dk kayıt", false],
+    ["Fritöz yağı kontrolü ve değişimi","fritöz başına 3 madde · 1 kritik", false],
+    ["Kasa devri","7 madde · 1 kritik · 4 dk", false],
+    ["Teslimat kabul","9 madde · 3 kritik · 4 dk", false],
+  ];
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Şablon kütüphanesi"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yarim"),
+      el("span",{class:"ss"},"v1 sekiz şablonla gelir; demoda ikisi çalışır")),
+    ...sablonlar.map(([ad,meta,acik])=>el("div",{class:"sec",style:acik?"border-color:var(--marka)":"opacity:.75"},
+      el("div",{style:"flex:1"}, el("div",{style:"font-weight:600;font-size:13.5px"}, ad), el("div",{class:"ss"}, meta)),
+      acik? el("span",{class:"pill ok"},"demoda çalışıyor") : el("span",{class:"pill gri"},"gösterim"))),
+    el("div",{class:"uyari-bant"},"Şablonlar düzenlenebilir ve sürümlenir: yayındaki planı bozmadan yeni sürüm açılır. Demoda şablon editörü yoktur."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- 4. giriş ve roller */
+function rolGosterim(){
+  const rol = (ad, kapsam, gorur)=> el("div",{style:"padding:9px 0;border-bottom:1px solid var(--cizgi)"},
+    el("div",{style:"font-weight:600;font-size:13.5px"}, ad+" · "+kapsam), el("div",{class:"ss"}, gorur));
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Giriş ve roller"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yok"),
+      el("span",{class:"ss"},"Demoda kimlik doğrulanmaz; PIN'ler ekranda yazar")),
+    el("div",{class:"kart",style:"display:flex;flex-direction:column;gap:8px"},
+      el("div",{class:"ss"},"Personel girişi"),
+      el("div",{class:"giris",style:"color:var(--sessiz)"},"+90 5__ ___ __ __"),
+      el("div",{style:"display:flex;gap:8px"}, ...["•","•","•","•","•","•"].map(()=>el("div",{class:"giris",style:"text-align:center;flex:1"},"•"))),
+      el("div",{class:"ss"},"Tek kullanımlık kod SMS ile gelir · 3 denemede kilitlenir"),
+      el("button",{class:"btn",disabled:"disabled"},"Kodu gönder (demoda kapalı)")),
+    el("div",{class:"etiket",style:"margin-top:4px"},"Rol × kapsam"),
+    el("div",{class:"kart"},
+      rol("Yönetici","tüm marka","Panonun tamamı, raporlar, şablon ve plan kurulumu, hesap ayarları"),
+      rol("Bölge müdürü","kendi bölgesi","Bölgesindeki şubelerin listeleri, aksiyonları ve sabah özeti"),
+      rol("Şube müdürü","kendi şubesi","Şubesinin listeleri, aksiyon kapatma, personele PIN atama"),
+      rol("Personel","kendi şubesi · kendi işi","Bugün ekranı, liste, kanıt, sorun bildirme")),
+    el("div",{class:"uyari-bant"},"Üründe her istek rol ve kapsamla doğrulanır; başka şubenin kaydına API ile erişim 403 döner. Demoda böyle bir sınır yoktur."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- 5. çevrimdışı kuyruk (simülasyon) */
+function cevrimdisiGosterim(){
+  sheetAc(kapat=>{
+    const kuyruk = [];
+    const liste = el("div");
+    const ciz2 = ()=>{ liste.innerHTML="";
+      if (!kuyruk.length){ liste.append(el("div",{class:"ss"},"Kuyruk boş.")); return; }
+      kuyruk.forEach(x=> liste.append(el("div",{style:"display:flex;gap:9px;align-items:center;padding:7px 0;border-bottom:1px solid var(--cizgi)"},
+        el("div",{class:"kutucuk un",style:"width:22px;height:22px;border-radius:6px;font-size:12px"},"⟳"),
+        el("div",{style:"flex:1;font-size:13px"}, x.ad, el("div",{class:"ss"}, x.boyut)),
+        el("span",{class:"pill warn",style:"font-size:10.5px"},"bekliyor"))));
+    };
+    ciz2();
+    return [el("h3",{style:"font-size:19px;padding-right:40px"},"Çevrimdışı kuyruk"),
+      el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"),
+        el("span",{class:"ss"},"Gerçek kuyruk mobil uygulamanın işi; burada davranış gösterilir")),
+      el("div",{class:"uyari-bant", html:"Bağlantı kesildiğinde liste cihazda devam eder; cevaplar ve fotoğraflar <b>72 saate kadar</b> kuyrukta bekler, "+
+        "bağlantı gelince sırayla gönderilir. Zaman damgası cihaz saatinden değil sunucudan alınır; geç ulaşan kayıt işaretlenir."}),
+      el("div",{style:"display:flex;gap:9px;flex-wrap:wrap"},
+        el("button",{class:"btn",onclick:()=>{ kuyruk.push({ad:"Madde 4 · sıcaklık cevabı", boyut:"0,4 KB"},{ad:"Madde 4 · kanıt fotoğrafı", boyut:"118 KB"}); ciz2(); }},"Bağlantıyı kes ve iki kayıt ekle"),
+        el("button",{class:"btn pri",onclick:()=>{ kuyruk.length=0; ciz2(); }},"Bağlantı geldi · gönder")),
+      el("div",{class:"etiket",style:"margin-top:4px"},"Kuyruk"), liste,
+      el("button",{class:"btn",onclick:kapat},"Kapat")];
+  });
+}
+
+/* --- 6. denetim izi ve hash zinciri (tarayıcıda hesaplanır) */
+async function zincirGosterim(){
+  const k = Object.values(S.kosmalar).filter(x=>(x.olaylar||[]).length).sort((a,b)=> (b.olaylar||[]).length-(a.olaylar||[]).length)[0];
+  const olaylar = k ? k.olaylar : [];
+  const zincir = [];
+  let onceki = "0".repeat(16);
+  for (const o of olaylar){
+    let ozet = "—";
+    try{
+      const veri = new TextEncoder().encode(onceki + o.t + o.kim + o.ne);
+      const h = await crypto.subtle.digest("SHA-256", veri);
+      ozet = Array.from(new Uint8Array(h)).slice(0,8).map(b=>b.toString(16).padStart(2,"0")).join("");
+    }catch(e){}
+    zincir.push({...o, ozet, onceki}); onceki = ozet;
+  }
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Denetim izi ve hash zinciri"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("sim"),
+      el("span",{class:"ss"}, k ? (SUBELER.find(x=>x.id===k.sube)||{}).ad+" · "+listeAdi(k.liste) : "kayıt yok")),
+    ...zincir.map(z=>el("div",{style:"display:grid;grid-template-columns:52px 1fr;gap:8px;padding:6px 0;border-bottom:1px dotted var(--cizgi)"},
+      el("b",{style:"font:11.5px var(--mono);color:var(--ink2)"}, saatStr(new Date(z.t))),
+      el("div",{}, el("div",{style:"font-size:12.5px;line-height:1.4"}, z.ne+" · "+z.kim),
+        el("div",{style:"font:10.5px var(--mono);color:var(--sessiz)"}, "önceki "+z.onceki.slice(0,8)+" → özet "+z.ozet)))),
+    el("div",{class:"uyari-bant"},"Her olay bir öncekinin özetini taşır; tek bir satırı değiştirmek sonraki tüm özetleri bozar ve ekranda görünür. "+
+      "Özetler burada tarayıcıda hesaplandı; üründe sunucuda tutulur, günlük kök bağımsız bir zaman damgası hizmetine onaylatılır."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- 7. KVKK ve saklama */
+function kvkkGosterim(){
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"KVKK ve saklama"),
+    gosterimRozet("yok"),
+    el("div",{class:"kart"},
+      el("div",{class:"etiket",style:"margin-bottom:4px"},"Personel aydınlatma metni · özet"),
+      el("div",{style:"font-size:12.5px;line-height:1.55;color:var(--ink2)"},
+        "Hangi veriler: ad-soyad, telefon, şube, yaptığınız iş kaydı, çektiğiniz fotoğraflar, maddeyi tamamladığınız andaki konum (izin verirseniz), cihaz bilgisi. "+
+        "Neden: işin yapıldığının kanıtlanması, gıda güvenliği ve iş güvenliği yükümlülüğü. "+
+        "Ne kadar: kanıt dosyaları 24 ay, sonra otomatik silinir; iş kaydı kişi maskelenerek kalır. "+
+        "Yapılmayanlar: biyometrik veri işlenmez, kişi bazlı performans puanı üretilmez, sürekli konum takibi yapılmaz.")),
+    el("div",{class:"kart"},
+      el("div",{class:"etiket",style:"margin-bottom:4px"},"Veri sahibi talebi"),
+      el("div",{style:"display:flex;flex-direction:column;gap:7px"},
+        ...["Verilerime erişmek istiyorum","Düzeltme talep ediyorum","Silinmesini istiyorum"].map(x=>el("div",{class:"sec",style:"opacity:.75"}, x)),
+        el("button",{class:"btn",disabled:"disabled"},"Talep oluştur (demoda kapalı)"),
+        el("div",{class:"ss"},"Üründe talep kaydı açılır, 30 gün içinde cevaplanır ve karşılığı denetim izine yazılır."))),
+    el("div",{class:"uyari-bant", html:"Demodaki veriler <b>Türkiye'de değil</b>; gerçek personel adı ve kişi yüzü içeren fotoğraf girilmemelidir. "+
+      "Üründe barındırma Türkiye'dedir ve alt işleyen listesi sözleşme ekindedir."}),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
+/* --- 8. faturalama */
+function faturaGosterim(){
+  const t = simdi(), ay = t.getFullYear()+"-"+iki(t.getMonth()+1);
+  const aktif = new Set(Object.values(S.kosmalar).filter(k=>k.gun.startsWith(ay)).map(k=>k.sube));
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Faturalama ve hesap"),
+    gosterimRozet("yok"),
+    el("div",{class:"kart"},
+      el("div",{class:"etiket",style:"margin-bottom:4px"},"Aktif şube sayacı · bu ay"),
+      el("div",{style:"font-family:var(--serif);font-size:30px;font-weight:700"}, aktif.size+" / "+SUBELER.length),
+      el("div",{class:"ss"},"Ay içinde en az bir çalıştırma üreten şube aktif sayılır. Fatura bu sayıdan hesaplanır."),
+      el("div",{style:"margin-top:8px;font-size:12.5px;color:var(--ink2);line-height:1.5", html:
+        "Şube başına aylık ücret · <b>görüşmede belirlenir</b><br>Demoda tutar gösterilmez, ödeme alınmaz."})),
+    el("div",{class:"uyari-bant"},"Üründe fatura dönemi kapanınca aktif şube sayısı dondurulur; ay içinde açılan şube oransal eklenir, kapanan şube bir sonraki dönemde düşer."),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
 /* ---------------------------------------------------------------- aksiyonlar (A-6) ve sorun bildirimi (Y-7) */
 const SORUN_KATEGORI = ["Ekipman arızası","Malzeme eksik","Hijyen / haşere","Güvenlik","Diğer"];
 
@@ -1428,7 +1723,7 @@ function ayarCiz(app){
   app.append(kutu2);
 
   const kutu3 = el("div",{class:"kart",style:"margin-top:12px;max-width:620px"});
-  kutu3.append(el("div",{class:"etiket",style:"margin-bottom:6px"},"Bu demoda olmayan (üründe var)"),
+  kutu3.append(el("div",{class:"etiket",style:"margin-bottom:6px"},"Bu demoda olmayan (üründe var) — ekranları “Üründe var” sekmesinde"),
     el("div",{class:"ss",style:"line-height:1.6"},
       "Push bildirimi ve SMS (sabah özeti ekranda hesaplanır, gönderilmez) · gerçek kimlik ve rol güvenliği · 72 saatlik çevrimdışı kuyruk · sunucu tarafı damga ve hash zinciri · yakın kopya (benzer kare) tespiti · konum ve cihaz saati bayrakları · madde kütüphanesi ve 8 şablon (demoda 2 liste) · kurulum sihirbazı ve Excel içe aktarma · eskalasyon merdiveni (aksiyon vadesi hesaplanır ama kimse yukarı taşınmaz)."));
   app.append(kutu3);
@@ -1447,10 +1742,12 @@ function sheetAc(yapici){
 }
 
 /* ---------------------------------------------------------------- çizim */
+const DAR_MQ = matchMedia("(max-width:560px)");
 function barEtiketleri(){
-  const dar = innerWidth < 560;
+  const dar = DAR_MQ.matches;
   document.querySelectorAll("[data-git]").forEach(b=>{ b.textContent = dar ? b.dataset.kisa : b.dataset.uzun; });
 }
+DAR_MQ.addEventListener("change", barEtiketleri);
 addEventListener("resize", barEtiketleri);
 
 function ciz(){
@@ -1466,13 +1763,14 @@ function ciz(){
   else if (S.rol==="merkez") merkezCiz(app);
   else if (S.rol==="ozet") ozetCiz(app);
   else if (S.rol==="belge") belgeCiz(app);
+  else if (S.rol==="urun") urunCiz(app);
   else ayarCiz(app);
 }
 document.querySelectorAll("[data-git]").forEach(b=>b.addEventListener("click",()=>{
   document.querySelector(".sheet")?.remove();          // açık alt sayfa sekme değişince kapanır
   S.rol = b.dataset.git; S.acik = null; location.hash = S.rol; ciz();
 }));
-window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
+window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","belge","urun","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
 setInterval(()=>{ if (S.rol==="merkez"||S.rol==="ozet") ciz(); else $("#saatRozet").textContent = saatStr(simdi())+" · demo saati"; }, 30000);
 
 ciz();
