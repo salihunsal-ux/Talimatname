@@ -22,7 +22,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | Sessiz saat | 23:00–07:00 yönetici push'ları için (kritik hariç) |
 | Aksiyon | durum: açık / kapalı · kapatırken not zorunlu, fotoğraf isteğe bağlı · notlar eklenir, silinmez |
 | Sebep seti (yapılamadı) | malzeme yok · ekipman arızalı · zaman yetmedi · yetkim yok · diğer (not zorunlu) |
-| Sorun kategorisi | ekipman · tedarik · hijyen · diğer |
+| Sorun kategorisi | ekipman · tedarik · hijyen · güvenlik · diğer (UC-11). Güvenlik = fiziksel güvenlik (kapı, kilit, kepenk, alarm, yangın ekipmanı); kişiyle ilgili şikâyet kanalı değildir. Güvenlik ve hijyen sorunundan açılan aksiyon **yüksek** önceliklidir (BR-10: 24 sa), diğerleri orta (72 sa) |
 | Saklama | 24 ay (kanıt dosyaları); olay günlüğü kalıcı |
 | Kütüphane | 8 şablon: kapanış · açılış · saatlik tuvalet/hijyen · soğuk zincir · haftalık derin temizlik · yağ değişimi · kasa devri · teslimat kabul — madde içerikleri: [07-sablon-kutuphanesi.md](07-sablon-kutuphanesi.md) (taslak, sahada doğrulanır) |
 

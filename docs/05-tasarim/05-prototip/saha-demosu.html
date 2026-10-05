@@ -1583,12 +1583,14 @@ function faturaGosterim(){
 }
 
 /* ---------------------------------------------------------------- aksiyonlar (A-6) ve sorun bildirimi (Y-7) */
+/* UC-11 / FR-0806: ekipman · tedarik · hijyen · güvenlik · diğer (etiketler sahada anlaşılır hâliyle) */
 const SORUN_KATEGORI = ["Ekipman arızası","Malzeme eksik","Hijyen / haşere","Güvenlik","Diğer"];
+const ACIL_KATEGORI = ["Güvenlik","Hijyen / haşere"];   // BR-10: yüksek öncelik (24 sa)
 
 function aksiyonVade(a, k){
   if (a.vade) return new Date(a.vade);
   const m = k ? maddeler(k.liste).find(x=>x.no===a.madde) : null;
-  const saat = (m && m.k) ? 4 : 72;                       // kritik madde 4 saat, diğeri 72 saat
+  const saat = (m && m.k) ? 4 : (ACIL_KATEGORI.includes(a.kategori) ? 24 : 72);   // BR-10: kritik 4 sa · güvenlik/hijyen 24 sa · diğeri 72 sa
   return new Date(new Date(a.acildi).getTime() + saat*3600000);
 }
 function tumAksiyonlar(){
@@ -1689,6 +1691,7 @@ function sorunBildir(){
     });
     return [el("h3",{style:"font-size:19px;padding-right:40px"},"Sorun bildir"),
       el("div",{class:"ss"},"Liste dışında bir sorun: ekipman, malzeme, hijyen ya da güvenlik. Şube müdürüne iş olarak düşer."),
+      el("div",{class:"ss"},"Güvenlik = kapı, kilit, kepenk, alarm, yangın ekipmanı. Güvenlik ve hijyen bildirimleri yüksek öncelikli açılır (24 saat), diğerleri 72 saat. Kişiyle ilgili şikâyetler bu kanala yazılmaz."),
       el("div",{style:"display:flex;flex-direction:column;gap:8px"}, ...dugmeler),
       metin, el("div",{style:"display:flex;gap:9px;align-items:center"}, fotoBtn, dosya), onizleme,
       el("div",{style:"display:flex;gap:9px;margin-top:4px"},

@@ -137,8 +137,8 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0803 | "Diğer" seçilirse not zorunlu (≥ 5 karakter). | v1 | UC-10 |
 | FR-0804 | Kritik maddede veya şablon kapatmışsa "Yapılamadı" düğmesi görünmez; madde atlanamaz. | v1 | UC-10 |
 | FR-0805 | Yapılamadı sebepleri raporlanır (şube × sebep × dönem). | v1.1 | UC-15 |
-| FR-0806 | Liste dışı sorun bildirimi: sabit kategori (ekipman, tedarik, hijyen, diğer), 1–3 fotoğraf, not; şube müdürüne push. | v1 | UC-11 |
-| FR-0807 | Şube müdürü sorunu tek dokunuşla aksiyona çevirir (atanan varsayılan kendisi, vade orta) veya not yazarak kapatır. | v1 | UC-11 |
+| FR-0806 | Liste dışı sorun bildirimi: sabit kategori (ekipman, tedarik, hijyen, güvenlik, diğer), 1–3 fotoğraf, not; şube müdürüne push. Güvenlik = fiziksel güvenlik; ekranda “kişiyle ilgili şikâyetler bu kanala yazılmaz” uyarısı bulunur. | v1 | UC-11 |
+| FR-0807 | Şube müdürü sorunu tek dokunuşla aksiyona çevirir (atanan varsayılan kendisi, vade orta; güvenlik ve hijyen kategorilerinde yüksek) veya not yazarak kapatır. | v1 | UC-11 |
 | FR-0808 | Sorun bölge müdürüne yükseltilebilir; yükseltme olay logda. | v1.1 | UC-11 |
 | FR-0809 | Sorun kategorileri hesap düzeyinde düzenlenebilir (varsayılan: ekipman, tedarik, hijyen, güvenlik, diğer). | v1.1 | UC-11 |
 
