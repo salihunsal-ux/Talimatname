@@ -137,7 +137,7 @@ const MADDELER = {
   {no:4, bolum:"A · Bar ve mutfak", ad:"Mutfak buzdolabı sıcaklığı", tur:"sicaklik", z:true, k:true, alt:0, ust:4, bas:3.4},
   {no:5, bolum:"A · Bar ve mutfak", ad:"Dondurucu sıcaklığı", tur:"sicaklik", z:true, k:true, alt:-30, ust:-18, bas:-19.5},
   {no:6, bolum:"A · Bar ve mutfak", ad:"Açık ürünler etiketlendi ve dolaba kaldırıldı", tur:"onay", z:true},
-  {no:7, bolum:"A · Bar ve mutfak", ad:"Fritöz kapatıldı, yağ süzüldü, kapağı kapatıldı", tur:"secim", z:true, secenekler:["Yapıldı","Uygun değil","Yapılamadı"]},
+  {no:7, bolum:"A · Bar ve mutfak", ad:"Fritöz kapatıldı, yağ süzüldü, kapağı kapatıldı", tur:"secim", z:true, secenekler:["Yapıldı","Uygun değil","Yapılamadı"], olumlu:["Yapıldı","Uygun değil"]},
   {no:8, bolum:"B · Salon ve tuvalet", ad:"Masalar, sandalyeler ve servis istasyonu silindi", tur:"onay", z:true},
   {no:9, bolum:"B · Salon ve tuvalet", ad:"Zemin süpürüldü ve paspaslandı", tur:"onay", z:true, f:true},
   {no:10, bolum:"B · Salon ve tuvalet", ad:"Tuvaletler kontrol edildi, sarf malzemesi tamam", tur:"onay", z:true},
@@ -155,7 +155,7 @@ const MADDELER = {
   {no:5, bolum:"B · Hazırlık", ad:"Vitrin ve salon düzeni hazır", tur:"onay", z:true, f:true},
   {no:6, bolum:"B · Hazırlık", ad:"Tuvaletler kontrol edildi, sarf malzemesi tamam", tur:"onay", z:true},
   {no:7, bolum:"C · Açılış", ad:"Kasa açılış bakiyesi sayıldı (₺)", tur:"sayi", z:true, k:true, bas:500},
-  {no:8, bolum:"C · Açılış", ad:"Kapı açılış saatinde açıldı", tur:"secim", z:true, secenekler:["Zamanında","Geç açıldı","Yapılamadı"]},
+  {no:8, bolum:"C · Açılış", ad:"Dış cephe, tabela ve giriş alanı kontrol edildi", tur:"onay", z:true},
   {no:9, bolum:"C · Açılış", ad:"Dün geceden devralınan not", tur:"metin"},
  ],
 };
@@ -317,7 +317,7 @@ function cevapDurum(m, c){
     return "ok";
   }
   if (m.tur==="onay") return c.deger===true ? "ok" : c.deger===false ? "basarisiz" : "bos";
-  if (m.tur==="secim") return c.deger ? (c.deger==="Yapıldı"?"ok":c.deger==="Uygun değil"?"ok":"basarisiz") : "bos";
+  if (m.tur==="secim") return c.deger ? ((m.olumlu||["Yapıldı","Uygun değil"]).includes(c.deger) ? "ok" : "basarisiz") : "bos";
   if (m.tur==="metin") return c.deger ? "ok" : "bos";
   return "bos";
 }
@@ -1072,9 +1072,10 @@ function ciz(){
   else ayarCiz(app);
 }
 document.querySelectorAll("[data-git]").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelector(".sheet")?.remove();          // açık alt sayfa sekme değişince kapanır
   S.rol = b.dataset.git; S.acik = null; location.hash = S.rol; ciz();
 }));
-window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","ayar"].includes(h)){ S.rol=h; ciz(); } });
+window.addEventListener("hashchange",()=>{ const h=location.hash.replace("#",""); if(["kiosk","merkez","ozet","ayar"].includes(h)){ document.querySelector(".sheet")?.remove(); S.rol=h; ciz(); } });
 setInterval(()=>{ if (S.rol==="merkez"||S.rol==="ozet") ciz(); else $("#saatRozet").textContent = saatStr(simdi())+" · demo saati"; }, 30000);
 
 ciz();
