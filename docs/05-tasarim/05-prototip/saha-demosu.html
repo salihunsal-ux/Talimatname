@@ -73,6 +73,11 @@ tr:last-child td{border-bottom:0}
 #rapor .rf{width:160px} #rapor .rf img{width:160px;height:120px;object-fit:cover;border:1px solid var(--cizgi);border-radius:6px;display:block}
 #rapor .rd{font:10px var(--mono);color:#fff;background:rgba(28,33,40,.84);padding:2px 4px;border-radius:0 0 5px 5px}
 #rapor .rkod{margin-top:20px;border-top:1px solid var(--cizgi);padding-top:8px;font:11px var(--mono);color:var(--sessiz)}
+@media screen and (max-width:560px){
+  #rapor .ric{padding:14px 12px 50px;font-size:12.5px}
+  #rapor table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #rapor .rf{width:46%} #rapor .rf img{width:100%}
+}
 @media (max-width:560px){
   .bar-in{padding:7px 12px;gap:6px}
   .wm{font-size:16px}
@@ -96,10 +101,10 @@ tr:last-child td{border-bottom:0}
   <span class="pill gri" id="modRozet">yükleniyor…</span>
   <span class="pill" id="saatRozet"></span>
   <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap">
-    <button class="btn kucuk" data-git="kiosk">Şube tableti</button>
-    <button class="btn kucuk" data-git="ozet">Sabah özeti</button>
-    <button class="btn kucuk" data-git="merkez">Merkez panosu</button>
-    <button class="btn kucuk" data-git="ayar">Demo ayarı</button>
+    <button class="btn kucuk" data-git="kiosk" data-uzun="Şube tableti" data-kisa="Tablet">Şube tableti</button>
+    <button class="btn kucuk" data-git="ozet" data-uzun="Sabah özeti" data-kisa="Özet">Sabah özeti</button>
+    <button class="btn kucuk" data-git="merkez" data-uzun="Merkez panosu" data-kisa="Pano">Merkez panosu</button>
+    <button class="btn kucuk" data-git="ayar" data-uzun="Demo ayarı" data-kisa="Ayar">Demo ayarı</button>
   </div>
 </div></div>
 <div class="wrap" id="app"></div>
@@ -157,8 +162,12 @@ const MADDELER = {
 
 /* ---------------------------------------------------------------- yardımcı */
 const $ = (s,k=document)=>k.querySelector(s);
-const el = (t,a={},...c)=>{const n=document.createElement(t);
-  for(const [k,v] of Object.entries(a)){ if(k==="html") n.innerHTML=v; else if(k.startsWith("on")) n.addEventListener(k.slice(2),v); else if(v!==null&&v!==false&&v!==undefined) n.setAttribute(k,v);}
+const SVG_NS = "http://www.w3.org/2000/svg";
+const SVG_ETIKET = new Set(["svg","path","circle","rect","line","polyline","polygon","g","text"]);
+const el = (t,a={},...c)=>{const n = SVG_ETIKET.has(t) ? document.createElementNS(SVG_NS,t) : document.createElement(t);
+  for(const [k,v] of Object.entries(a)){
+    if(k==="html"){ if(n.namespaceURI===SVG_NS){ const tmp=document.createElementNS(SVG_NS,"svg"); tmp.innerHTML=v; while(tmp.firstChild) n.appendChild(tmp.firstChild); } else n.innerHTML=v; }
+    else if(k.startsWith("on")) n.addEventListener(k.slice(2),v); else if(v!==null&&v!==false&&v!==undefined) n.setAttribute(k,v);}
   c.flat().forEach(x=>{ if(x==null||x===false) return; n.append(x.nodeType?x:document.createTextNode(String(x)));});
   return n;};
 const iki = n => String(n).padStart(2,"0");
@@ -607,7 +616,7 @@ function maddeAc(k, m){
           await Depo.kosmaYaz(k);
           kopyaKutu.append(el("div",{style:"background:var(--kritikA);border:1px solid var(--kritik);border-radius:11px;padding:11px 13px;font-size:13px;line-height:1.45"},
             el("b",{style:"color:var(--kritik)"},"Bu fotoğraf daha önce gönderildi. "),
-            "Madde "+onceki.madde+" · "+saatStr(new Date(onceki.zaman))+" · "+(onceki.kisi||"")+". Yeniden çekin.",
+            "Madde "+onceki.madde+" · "+saatStr(new Date(onceki.zaman))+" · "+(onceki.kisi||"")+" · yeniden çekin.",
             el("div",{class:"ss",style:"margin-top:3px"},"Dosya özeti (SHA-256) eşleşti; deneme olay izine yazıldı.")));
           e.target.value = ""; fotoBtn.disabled = false; yenile(); return;
         }
@@ -1042,8 +1051,15 @@ function sheetAc(yapici){
 }
 
 /* ---------------------------------------------------------------- çizim */
+function barEtiketleri(){
+  const dar = innerWidth < 560;
+  document.querySelectorAll("[data-git]").forEach(b=>{ b.textContent = dar ? b.dataset.kisa : b.dataset.uzun; });
+}
+addEventListener("resize", barEtiketleri);
+
 function ciz(){
   const app = $("#app"); app.innerHTML = "";
+  barEtiketleri();
   $("#saatRozet").textContent = saatStr(simdi())+" · demo saati";
   $("#saatRozet").className = "pill" + (S.kaydirma?" warn":" gri");
   document.querySelectorAll("[data-git]").forEach(b=>{
