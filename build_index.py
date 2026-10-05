@@ -152,10 +152,11 @@ REGISTRY = [
     ]),
     ("06 Test", [
         (D+"06-test/01-test-stratejisi.md", "Test stratejisi", "Katmanlar, kapsam, araçlar, çıkış ölçütleri", []),
-        (D+"06-test/02-kabul-test-senaryolari.md", "Kabul test senaryoları", "TC-001…112; her TC FR ve UC'ye bağlı; sürüm sütunu", []),
+        (D+"06-test/02-kabul-test-senaryolari.md", "Kabul test senaryoları", "TC-001…126; her TC FR ve UC'ye bağlı; sürüm sütunu", []),
         (D+"06-test/03-test-verisi-ve-ortam.md", "Test verisi ve ortam", "Kahve Durağı test zinciri, kullanıcılar, şablonlar, ortamlar", []),
         (D+"06-test/04-cihaz-matrisi.md", "Cihaz matrisi", "Android/iOS sürümleri, tablet ve telefon modelleri, tarayıcılar", []),
         (D+"06-test/05-pilot-uat-plani.md", "Pilot UAT planı", "8 haftalık pilot kabul planı ve K3 ölçümü", []),
+        (D+"06-test/06-demo-kapsam-denetimi.md", "Demo kapsam denetimi", "123 v1 FR'si saha demosuna karşı işaretli: çalışıyor / kısmen / etiketli gösterim / demo dışı", []),
     ]),
     ("07 Geliştirme", [
         (D+"07-gelistirme/00-kodlama-hazirlik-indeksi.md", "Kodlama hazırlık indeksi", "Kodlamaya başlamadan okunacaklar (sıralı) ve hazırlık kontrol listesi", ["kaynak"]),
