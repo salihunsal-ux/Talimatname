@@ -1,0 +1,33 @@
+#!/bin/sh
+# Talimatname · commit öncesi kontrol: belgelerdeki sayılar güncel mi?
+#
+# sayilar.py gereksinim/test/ekran sayılarını belgelerden, broşür-tanıtım-föy
+# sayfa sayılarını üretilmiş HTML'den sayar; markdown'da elle yazılmış bayat bir
+# sayı varsa commit durur. Düzeltme: python sayilar.py --guncelle
+#
+# Kurulum (depo başına bir kez):  git config core.hooksPath .githooks
+# Atlamak için:                   SAYILAR_ATLA=1 git commit …   ya da  git commit --no-verify
+
+[ -n "$SAYILAR_ATLA" ] && exit 0
+
+KOK=$(git rev-parse --show-toplevel)
+[ -f "$KOK/sayilar.py" ] || exit 0          # modül yoksa kontrol de yok
+
+if command -v python >/dev/null 2>&1; then PY=python
+elif command -v py >/dev/null 2>&1;     then PY="py -3"
+elif command -v python3 >/dev/null 2>&1; then PY=python3
+else
+  echo "sayilar kontrolü atlandı: python bulunamadı"
+  exit 0
+fi
+
+CIKTI=$(cd "$KOK" && PYTHONIOENCODING=utf-8 $PY sayilar.py --kontrol 2>&1)
+if [ $? -ne 0 ]; then
+  echo "$CIKTI"
+  echo ""
+  echo "✗ Commit durduruldu: belgelerde bayat sayı var."
+  echo "  Düzelt:  python sayilar.py --guncelle   (sonra düzelen dosyaları git add ile ekle)"
+  echo "  Atla:    SAYILAR_ATLA=1 git commit …"
+  exit 1
+fi
+exit 0
