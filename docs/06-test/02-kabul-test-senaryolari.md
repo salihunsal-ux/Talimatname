@@ -1,6 +1,6 @@
 # Kabul test senaryoları
 
-126 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-120…TC-125 E-11 ve E-12 ile, TC-126 güvenlik kategorisiyle, TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
+127 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-120…TC-125 E-11 ve E-12 ile, TC-126 güvenlik kategorisiyle, TC-127 E-13 ile, TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
 
 ## UC-01 · Hesap kurulumu
 
@@ -226,7 +226,7 @@
 | TC-118 | İstisna görünümü ve "her şey yolunda" | Dün gece 2 sorunlu hücre → pano varsayılanı yalnızca bu satırları listeler, ızgara "tümünü göster" ile açılır; sorunsuz gün → "Dün gece her şey yolunda" durumu; mobil Bölgem listesi aynı kaynaktan | FR-1219, FR-1201 | E | v1 |
 | TC-119 | Aylık tek sayfa özet | Ağustos verisiyle → % zamanında, geç, kaçırıldı, yapılmayacak; başarısız ve yapılamadı sayıları; şube kırılımı; PDF üretilir, doğrulama kodu ve üretim zamanı var; rakamlar hesaplanmış veriyle eşleşir | FR-1220 | A | v1 |
 
-## v1 eklemeleri (E-11 kanıt bütünlüğü, E-12 belge takvimi)
+## Sonradan eklenen satırlar (E-11 kanıt bütünlüğü, E-12 belge takvimi, güvenlik kategorisi, E-13 denetim dosyası)
 
 | TC | Test | Ön koşul → Adımlar → Beklenen | FR/BR | Oto | Sürüm |
 |---|---|---|---|---|---|
@@ -236,4 +236,5 @@
 | TC-123 | Belge kaydı ve dosyası | Yangın tüpü dolum belgesi: şube, geçerlilik bitişi, sorumlu, PDF → kayıt oluşur, dosya damgalanır ve SHA-256'sı bağlanır; geçmiş tarihli bitiş girilirse uyarı ile kaydedilir ve "süresi geçmiş" işaretlenir | FR-0522 | E | v1 |
 | TC-124 | Belge uyarıları ve süresi geçende aksiyon | Bitişe 30 ve 7 gün kala sorumluya ve şube müdürüne push + sabah özeti satırı; tarih geçince yüksek öncelikli aksiyon (7 gün vade) açılır ve şube "belge eksik" işaretlenir; belge yenilenince aksiyon kapanır ve işaret kalkar | FR-0523 | A | v1 |
 | TC-125 | Belge görünümü ve dönem PDF'i | Zincir genelinde "yaklaşanlar ve süresi geçenler" listesi (şube × belge türü) sıralı gelir; dönem PDF'i doğrulama kodu ve üretim zamanı taşır | FR-0524 | E | v1 |
-| TC-126 | Güvenlik kategorili sorun bildirimi | Personel “Sorun bildir” → kategori **güvenlik** (“arka kapı kilitlenmiyor”) + fotoğraf → şube müdürüne push; açılan aksiyon **yüksek öncelikli** (24 sa vade; aynı kural hijyen kategorisinde de geçerli), aksiyon listesinde orta öncelikli sorunların üstünde görünür; ekranda “kişiyle ilgili şikâyetler bu kanala yazılmaz” uyarısı bulunur | FR-0806, FR-0807, BR-10 | UC-11 |
+| TC-126 | Güvenlik kategorili sorun bildirimi | Personel “Sorun bildir” → kategori **güvenlik** (“arka kapı kilitlenmiyor”) + fotoğraf → şube müdürüne push; açılan aksiyon **yüksek öncelikli** (24 sa vade; aynı kural hijyen kategorisinde de geçerli), aksiyon listesinde orta öncelikli sorunların üstünde görünür; ekranda “kişiyle ilgili şikâyetler bu kanala yazılmaz” uyarısı bulunur | FR-0806, FR-0807, BR-10 | E | v1 |
+| TC-127 | Denetim dosyası ve denetçi bağlantısı | Kadıköy · son 90 gün → tek PDF: ölçüm günlüğü, çalıştırma özetleri, belge durumu, kanıt örnekleri, doğrulama kodu. Bağlantı üretilir → hesapsız açılır, personel adı maskeli, 48 saat sonra kapanır; iptal edilince anında kapanır; oluşturma/açılış/iptal olay günlüğünde | FR-1221, FR-1313 | E | v1.1 |

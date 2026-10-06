@@ -134,6 +134,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 |---|---|---|---|
 | U-1 | Değiştirilemez olay günlüğü | Ekle-yalnız, hash zinciri (arka plan). Dış zaman damgası (RFC 3161) | v1 (TSA v1.1) |
 | U-2 | Denetim izi görüntüleyici | PDF'te olay özeti; ekran | v1.1 |
+| E-13 | **Denetim dosyası ve denetçi bağlantısı** | Seçilen dönem için tek PDF: ölçüm günlüğü + ilgili çalıştırmalar + belge takvimi + kanıt örnekleri + doğrulama kodu. Denetçiye ya da franchise merkezine hesap açmadan **süreli, salt-okunur** bağlantı (varsayılan 48 sa, iptal edilebilir, her açılış logda). Büyüme listesinde A21; U-1'in doğrulama kodu ve E-12 belge takvimi üstüne kurulur | **v1.1 adayı** (K1 sinyaline bağlı) |
 | U-3 | KVKK akışı | Aydınlatma metni + konum izni açıklaması v1; dışa aktarma/silme destek betiğiyle; ekran | v1 (ekran v1.1) |
 | U-4 | Saklama politikası | Sabit 24 ay, arka plan silme | v1 |
 | E-11 | Kanıt bütünlüğü bayrakları | Aynı dosyanın (SHA-256) ikinci kez gönderilmesi engellenir ve işaretlenir; galeri / konum şube dışında / cihaz saati farkı / toplu geç senk bayrakları çalıştırma detayında ve PDF'te görünür; şüpheli kanıt filtresi | v1 (yakın kopya tespiti v1.1) |
@@ -156,6 +157,6 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 
 | | v1 | v1.1 | v2 |
 |---|---|---|---|
-| Satır | 43 (34 mevcut + 9 E) | 27 | 6 |
+| Satır | 43 (34 mevcut + 9 E) | 28 (E-13 dahil, aday) | 6 |
 
 v1.1 sıralaması pilot geri bildirimiyle yapılır; aday sıra: duyuru/onay → koşul editörü → herkes tamamlasın → aksiyon yorumları/onayı → raporlar → denetim izi ekranı + TSA → KVKK ekranı → 2FA → ayarlar paneli → Excel/paylaşım → video/imza/barkod → QR → gruplar → varyant → AI taslak.

@@ -215,9 +215,11 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 
 | ID | Gereksinim | Sürüm | UC |
 |---|---|---|---|
+| FR-1221 | Denetim dosyası: seçilen dönem (varsayılan son 90 gün) ve şube için tek PDF — ölçüm günlüğü, dönemdeki çalıştırma özetleri (geç/başarısız/yapılamadı ayrımıyla), belge takvimi durumu, rastgele seçilmiş kanıt örnekleri ve doğrulama kodu; kapak sayfasında dönem, üretim zamanı ve üreten kullanıcı. (E-13) | v1.1 | UC-16 |
 | FR-1301 | Ekle-yalnız olay günlüğü: aktör, olay türü, nesne, önce/sonra özeti, zaman (sunucu), IP, cihaz; her kayıt önceki kaydın hash'ini içerir (zincir); silme/güncelleme yok. | v1 | UC-17 |
 | FR-1302 | Günlük kök özeti her gün 04:00'te RFC 3161 zaman damgası servisine yazılır; damga kaydı saklanır. | v1.1 | UC-17 |
 | FR-1303 | Denetim izi görüntüleyici: çalıştırma/aksiyon/kullanıcı bazında filtre; okunabilir olay metni; PDF eki. | v1.1 | UC-17 |
+| FR-1313 | Denetçi/misafir bağlantısı: FR-1221 dosyasının süreli, salt-okunur, hesap gerektirmeyen bağlantısı — varsayılan 48 saat, tek şube ve tek dönem kapsamı, yetkili tarafından iptal edilebilir; oluşturma, her açılış (IP ve zaman) ve iptal olay günlüğüne yazılır; bağlantı kişisel veri içeren alanları (personel adı) maskeler. (E-13) | v1.1 | UC-16, UC-17 |
 | FR-1304 | Zincir doğrulama komutu (iç araç): seçilen aralıkta hash zinciri yeniden hesaplanır, kırılma raporlanır. Ekran v1.1. | v1 | UC-17 |
 | FR-1305 | Güvenlik: TLS 1.2+; depoda şifreleme; kanıt URL'leri imzalı ve 15 dk süreli; hız sınırlama; yönetici 2FA; OWASP MASVS-L1 / ASVS L1 kontrol listesi. | v1 | UC-03 |
 | FR-1306 | Biyometrik veri işlenmez; kimlik OTP/PIN/şifre. | v1 | UC-03 |
