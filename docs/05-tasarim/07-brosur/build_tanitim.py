@@ -9,6 +9,15 @@ import build_brosur as B
 
 T, SANS, SERIF = B.T, B.SANS, B.SERIF
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def _kok():                                        # sayilarin tek kaynagi: depo kokundeki sayilar.py
+    d = os.path.dirname(os.path.abspath(__file__))
+    while not os.path.exists(os.path.join(d, "sayilar.py")) and os.path.dirname(d) != d:
+        d = os.path.dirname(d)
+    return d
+sys.path.insert(0, _kok())
+import sayilar as SAY
+S = SAY.hepsi()
 OUTDIR = os.path.join(HERE, "tanitim")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 INK_BAND = "#171c21"
@@ -397,7 +406,7 @@ def t8():
                 '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     foy = ('<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:-4px">'
-           'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, 10 sayfa; yol haritası satırlarının tasarım taslakları da orada — denetçi dosyası 8. sayfada).</div>')
+           'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, ' + str(S["foy_sayfa"]) + ' sayfa; yol haritası satırlarının tasarım taslakları da orada — denetçi dosyası 8. sayfada).</div>')
     return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası") + yol + foy + iletisim
                 + foot(8, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=13)
 

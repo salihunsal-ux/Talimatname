@@ -6,6 +6,15 @@ Token’lar 05-tasarim/04-tasarim-sistemi.md’den; marka işareti marka/build_r
 import os, sys, subprocess, tempfile, time, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+def _kok():                                        # sayilarin tek kaynagi: depo kokundeki sayilar.py
+    d = os.path.dirname(os.path.abspath(__file__))
+    while not os.path.exists(os.path.join(d, "sayilar.py")) and os.path.dirname(d) != d:
+        d = os.path.dirname(d)
+    return d
+sys.path.insert(0, _kok())
+import sayilar as SAY
+S = SAY.hepsi()
 T = dict(zemin="#f7f5ef", yuzey="#ffffff", yuzey2="#efece4", ink="#1c2128", ink2="#4b5560", sessiz="#7b8590", cizgi="#d6d9d2",
          marka="#1f6f5b", markaA="#dcebe5", kritik="#b8452f", kritikA="#f3ddd8", uyari="#b7791f", uyariA="#f6ebd2", pasif="#c9ced6")
 SANS = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif'  # tırnaksız: style="..." içinde çift tırnak attribute'u keser
@@ -307,7 +316,7 @@ def page2():
     contact = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'
                '<div style="display:flex;flex-direction:column;gap:3px">' + wordmark(22) +
                '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div>'
-               '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:2px">Her özelliğin açıklaması ve ekranı: <b>özellik föyü</b> (A4, 10 sayfa)</div></div>'
+               '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:2px">Her özelliğin açıklaması ve ekranı: <b>özellik föyü</b> (A4, ' + str(S["foy_sayfa"]) + ' sayfa)</div></div>'
                '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     return sheet(h2("Merkez ne görür", 26)

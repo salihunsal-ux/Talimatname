@@ -37,3 +37,15 @@ Bu depo ürünün **iş analizi ve ürün sahipliği** dokümantasyonunu taşır
 ## Hızlı başlangıç (geliştirici)
 
 `docs/07-gelistirme/00-kodlama-hazirlik-indeksi.md` — kodlamaya başlamadan önce okunacak belgelerin sıralı listesi ve hazırlık kontrol listesi.
+
+## Sayılar tek kaynaktan
+
+Gereksinim, test, ekran, iş kuralı, hikâye ve belge sayfası sayıları elle yazılmaz: **`sayilar.py`** bunları belgelerden ve üretilmiş HTML'den sayar. Üreticiler (`build_index.py`, broşür, tanıtım, özellik föyü, ilan) bu modülü içe aktarır; markdown içindeki elle yazılmış sayılar tek komutla tazelenir.
+
+```bash
+python sayilar.py            # sayıları yazdırır
+python sayilar.py --kontrol  # markdown'daki bayat sayıları listeler (bayat varsa çıkış kodu 1)
+python sayilar.py --guncelle # bayat sayıları düzeltir
+```
+
+Kapsam değiştiren bir işten sonra sıra: ilgili belgeyi güncelle → (broşür/föy/tanıtım/ilan değiştiyse) o üreticiyi çalıştır → `python sayilar.py --guncelle` → `python build_index.py`. Yeni bir sayı metne girecekse `sayilar.py` içindeki `_kurallar()` listesine bir desen eklemek yeterli; aksi hâlde sayı ilk kapsam değişikliğinde bayatlar.

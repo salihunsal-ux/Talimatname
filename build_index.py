@@ -399,11 +399,12 @@ def risks_html():
     return f"<div class=\"tw\"><table class=\"plain\"><thead><tr><th>Risk</th><th>Belirti</th><th>Önlem</th></tr></thead><tbody>{tr}</tbody></table></div>"
 
 def stats():
-    fr_t, fr_v1 = count_versions(D + "04-gereksinimler/01-fonksiyonel-gereksinimler.md", "FR")
-    tc_t, tc_v1 = count_versions(D + "06-test/02-kabul-test-senaryolari.md", "TC")
-    scr_t, scr_v1 = count_versions(D + "05-tasarim/01-ekran-envanteri-ve-navigasyon.md", "SCR")
-    br = len(re.findall(r"^- \*\*BR-\d+", read(D + "04-gereksinimler/03-is-kurallari.md"), flags=re.M))
-    st = len(set(re.findall(r"^\| (ST-\d{3})", read(D + "07-gelistirme/03-backlog-ve-sprint-plani.md"), flags=re.M)))
+    import sayilar as SAY                          # sayilarin tek kaynagi (bkz. sayilar.py)
+    s = SAY.hepsi()
+    fr_t, fr_v1 = s["fr"], s["fr_v1"]
+    tc_t, tc_v1 = s["tc"], s["tc_v1"]
+    scr_t, scr_v1 = s["scr"], s["scr_v1"]
+    br, st = s["br"], s["st"]
     return [
         ("11", "ADR karar kaydı"),
         (str(count_ids(D + "02-urun/04-yetenek-haritasi.md", "CAP")), "yetenek (CAP)"),

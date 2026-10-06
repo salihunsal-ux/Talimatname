@@ -6,6 +6,17 @@ import os, sys, subprocess, tempfile, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 ILETISIM = "[e-posta]"
 
+def _kok():                                        # sayilarin tek kaynagi: depo kokundeki sayilar.py
+    d = os.path.dirname(os.path.abspath(__file__))
+    while not os.path.exists(os.path.join(d, "sayilar.py")) and os.path.dirname(d) != d:
+        d = os.path.dirname(d)
+    return d
+sys.path.insert(0, _kok())
+import sayilar as SAY
+S = SAY.hepsi()
+FR, TC = S["fr"], S["tc"]
+FOY, FOY_TASLAK = S["foy_sayfa"], S["foy_sayfa"] - 4
+
 HTML = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Talimatname — serbest geliştirici ilanı</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet">
@@ -34,7 +45,7 @@ th{{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)
 <div class="wm">Talimatname</div>
 <h1>İki serbest geliştirici arıyoruz: Flutter · Python/FastAPI</h1>
 <p class="lead">Çok şubeli yeme-içme zincirleri için şube talimat listelerini <b>kanıtlı</b> hâle getiren bir ürün: personel açılış/kapanış/hijyen/soğuk zincir listesini şube tabletinden veya telefonundan tamamlar, fotoğraf ve sıcaklık ölçümüyle kanıtlar, yapamadığını sebebiyle bildirir; merkez her sabah yalnızca istisnaları görür ve denetim kaydını doğrulama kodlu PDF olarak alır. WhatsApp gruplarının yerine geçer.</p>
-<p>İlk sürüm bilerek küçük ve net: 4 rol, 6 madde türü, tek sabit kural, sabit eskalasyon, kişi puanı yok. Kapsam, 175 gereksinim, ekranlar, 127 kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler ve örnek raporlar var. Ürünün ne yaptığını tek oturumda görmek için <b>10 sayfalık özellik föyü</b> (her özellik bir ekranla; son altı sayfası yol haritasının tasarım taslakları) başvuranlara gönderilir. İlk sürümün hemen ardındaki sıra da yazılı: v1.1'in ilk adayı <b>denetim dosyası ve denetçiye süreli, salt-okunur bağlantı</b> (E-13; gereksinimleri ve kabul testi hazır) — yani v1 biter bitmez ne yapılacağı belli. Sizden beklediğimiz: 2 haftalık sprintlerle, sağlam bir ilk sürümü <b>Mart 2027'de</b> yayına almak; ilk pilotlar Ocak–Şubat'ta.</p>
+<p>İlk sürüm bilerek küçük ve net: 4 rol, 6 madde türü, tek sabit kural, sabit eskalasyon, kişi puanı yok. Kapsam, {FR} gereksinim, ekranlar, {TC} kabul testi ve 10 sprintlik backlog hazır; tıklanabilir prototipler ve örnek raporlar var. Ürünün ne yaptığını tek oturumda görmek için <b>{FOY} sayfalık özellik föyü</b> (her özellik bir ekranla; son {FOY_TASLAK} sayfası yol haritasının tasarım taslakları) başvuranlara gönderilir. İlk sürümün hemen ardındaki sıra da yazılı: v1.1'in ilk adayı <b>denetim dosyası ve denetçiye süreli, salt-okunur bağlantı</b> (E-13; gereksinimleri ve kabul testi hazır) — yani v1 biter bitmez ne yapılacağı belli. Sizden beklediğimiz: 2 haftalık sprintlerle, sağlam bir ilk sürümü <b>Mart 2027'de</b> yayına almak; ilk pilotlar Ocak–Şubat'ta.</p>
 
 <div class="cols">
 <div class="role"><h3>Backend / web geliştirici</h3>
