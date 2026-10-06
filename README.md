@@ -48,4 +48,12 @@ python sayilar.py --kontrol  # markdown'daki bayat sayıları listeler (bayat va
 python sayilar.py --guncelle # bayat sayıları düzeltir
 ```
 
+**Commit öncesi kanca.** `.githooks/pre-commit`, her commit'te `sayilar.py --kontrol` çalıştırır; bayat sayı varsa commit durur ve düzeltme komutunu yazar. Depoyu yeni klonlayan bir kez şunu çalıştırır (kanca ayarı sürümlenmez):
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Acil durumda `SAYILAR_ATLA=1 git commit …` ya da `git commit --no-verify` ile atlanır.
+
 Kapsam değiştiren bir işten sonra sıra: ilgili belgeyi güncelle → (broşür/föy/tanıtım/ilan değiştiyse) o üreticiyi çalıştır → `python sayilar.py --guncelle` → `python build_index.py`. Yeni bir sayı metne girecekse `sayilar.py` içindeki `_kurallar()` listesine bir desen eklemek yeterli; aksi hâlde sayı ilk kapsam değişikliğinde bayatlar.
