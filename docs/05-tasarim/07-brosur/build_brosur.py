@@ -276,7 +276,7 @@ def pdf_thumb():
 
 def page2():
     ekranlar = ('<div style="display:flex;gap:14px;align-items:flex-start">'
-                + shot(scr_pano(1200, 760), 1200, 760, 0.29, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
+                + shot(scr_pano(1200, 760), 1200, 760, 0.26, "İstisna panosu · merkez", [(1, 22, 34), (2, 50, 60), (3, 84, 85)])
                 + '<div style="flex:1;min-width:0">'
                 + legend([(1, "Altı sayıda gece özeti: zamanında, geç, başarısız, kaçırıldı, yapılamadı, açık aksiyon."),
                           (2, "Yalnızca sorunlu satırlar listelenir — “her şey yolunda” da bir cevaptır."),
@@ -288,30 +288,32 @@ def page2():
                            ["Kanıt aranabilir, değiştirilemez", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["uyari"] + "'>kısmen</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"],
                            ["Denetim kaydı dakikalar içinde", "<span style='color:" + T["sessiz"] + "'>yok</span>", "<span style='color:" + T["uyari"] + "'>kısmen</span>", "<span style='color:" + T["marka"] + ";font-weight:700'>var</span>"]],
                           widths=["40%", "20%", "18%", "22%"])
+    sonraki = ('<div style="background:' + T["yuzey2"] + ';border-radius:11px;padding:8px 13px;font-size:11.5px;line-height:1.5;color:' + T["ink2"] + '">'
+               '<span style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:' + T["sessiz"] + '">Sıradaki sürüm · henüz geliştirilmedi</span> &nbsp;'
+               '<b style="color:' + T["ink"] + '">Denetçiye tek dosya ve süreli bağlantı:</b> dönemin günlükleri, listeleri, belgeleri ve kanıt örnekleri tek PDF; '
+               'hesap açmadan 48 saat açık, salt-okunur bağlantı (adlar maskeli, açılışlar kayıtlı). Ekranı <b>föyün 8. sayfasında</b>; pilot sözleşmesi bugünkü sürümü bağlar.</div>')
     itiraz = ('<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">'
               + qa("“Personel kullanmaz.”", "Üç ekran, iki dokunuş; kioskta PIN’le giriş. Mesaj “seni izliyoruz” değil, “yaptığını kanıtlıyorsun”.")
-              + qa("“KVKK sorun çıkarır mı?”", "Kişi puanı ve biyometri yok, konum tek nokta, veriler Türkiye’de; aydınlatma metni ve veri işleme sözleşmesi hazır.") + '</div>')
+              + qa("“KVKK sorun çıkarır mı?”", "Kişi puanı ve biyometri yok, konum tek nokta; aydınlatma metni ve veri işleme sözleşmesi hazır.") + '</div>')
     kutu = lambda n, l: ('<div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:9px 12px;flex:1;min-width:0">'
                          '<div style="font-family:' + SERIF + ';font-size:20px;font-weight:700;color:#fff">' + n + '</div>'
                          '<div style="font-size:11px;line-height:1.35;color:rgba(255,255,255,.72);margin-top:3px">' + l + '</div></div>')
     pilot = ('<div style="background:' + INK_BAND + ';border-radius:16px;padding:16px 24px;display:flex;flex-direction:column;gap:9px">'
              + label("Sonraki adım", "rgba(255,255,255,.55)") + h1("8 haftalık ücretli pilot", 26, "#fff", "22ch")
-             + mp("Seçtiğiniz 5–15 şubede kapanış ve soğuk zincir listeleriyle başlarız. Yerinde kurulum bir gün: kiosk, PIN’ler, şablon uyarlaması, "
-                  "şube müdürüne 30 dakika ve personele 10 dakika eğitim.", 13, "rgba(255,255,255,.78)", "66ch")
+             + mp("Seçtiğiniz 5–15 şubede kapanış ve soğuk zincir listeleriyle başlarız. Kurulum bir gün: kiosk, PIN’ler, şablon uyarlaması, şube müdürüne 30 dk ve personele 10 dk eğitim.", 13, "rgba(255,255,255,.78)", "92ch")
              + '<div style="display:flex;gap:9px">' + kutu("≥ %80", "liste pencere içinde tamamlanır") + kutu("≥ %95", "fotoğraf zorunlu maddede kanıt")
              + kutu("≥ %80", "kritik aksiyon vadesinde kapanır") + '</div>'
-             + mp("4. hafta sonunda birlikte ölçeriz; ölçütler tutarsa yıllık sözleşmeyi konuşuruz, tutmazsa kalan aylar iade edilir. "
-                  "Şube başına aylık ücret görüşmede belirlenir.", 11.5, "rgba(255,255,255,.62)", "76ch") + '</div>')
+             + mp("4. hafta sonunda birlikte ölçeriz: ölçütler tutarsa yıllık sözleşmeyi konuşuruz, tutmazsa kalan aylar iade edilir. Ücret görüşmede belirlenir.", 11.5, "rgba(255,255,255,.62)", "92ch") + '</div>')
     contact = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'
                '<div style="display:flex;flex-direction:column;gap:3px">' + wordmark(22) +
                '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div>'
-               '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:2px">Her özelliğin açıklaması ve ekranı: <b>özellik föyü</b> (A4, 9 sayfa)</div></div>'
+               '<div style="font-size:11.5px;color:' + T["ink2"] + ';margin-top:2px">Her özelliğin açıklaması ve ekranı: <b>özellik föyü</b> (A4, 10 sayfa)</div></div>'
                '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     return sheet(h2("Merkez ne görür", 26)
                  + mp("07:00’de sabah özeti; panoda yalnızca dikkat isteyen şube × liste hücreleri; her çalıştırma için doğrulama kodlu PDF.")
-                 + ekranlar + label("Alternatifle yan yana") + karsilastirma + itiraz + pilot + contact
-                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=9)
+                 + ekranlar + label("Alternatifle yan yana") + karsilastirma + sonraki + itiraz + pilot + contact
+                 + brosur_foot(2, "Talimatname çalışma adıdır."), gap=8)
 
 # ---------------------------------------------------------------- dosyalar
 HEAD = '<!doctype html>\n<html>\n<head>\n  <meta charset="utf-8">\n  <script src="./support.js"></script>\n</head>\n<body>\n<x-dc>\n<helmet>\n  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">\n  <style>\n    body { margin: 0; background: #e9e6de; }\n    a { color: #1f6f5b; } a:hover { color: #174f41; }\n  </style>\n</helmet>\n'
