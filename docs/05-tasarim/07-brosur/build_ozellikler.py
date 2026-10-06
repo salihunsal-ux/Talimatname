@@ -13,7 +13,7 @@ OUTDIR = os.path.join(HERE, "ozellikler")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 from build_brosur import h1, h2, h3, mp as p, label, table, INK_BAND
 
-SAYFA = 9
+SAYFA = 10
 
 def page(inner, gap=14, bg=None):
     return ('<div style="box-sizing:border-box;width:794px;height:1123px;background:' + (bg or T["zemin"]) + ';font-family:' + SANS + ';color:' + T["ink"] +
@@ -238,7 +238,7 @@ def icindekiler():
             '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 26px">'
             '<div>' + sol + '</div><div>' + sag + '</div></div>'
             '<div style="font-size:11px;color:' + T["sessiz"] + ';margin-top:8px;border-top:1px solid ' + T["cizgi"] + ';padding-top:7px">'
-            'Sayfa 5–9: bugünkü sürümün dışında kalanlar — on bir <b>tasarım taslağı</b> ekranla, neden sıraya alındıklarıyla.</div></div>')
+            'Sayfa 5–10: bugünkü sürümün dışında kalanlar — on iki <b>tasarım taslağı</b> ekranla, neden sıraya alındıklarıyla.</div></div>')
 
 def s1():
     giris = ('<div style="background:' + INK_BAND + ';border-radius:14px;padding:18px 24px;display:flex;flex-direction:column;gap:8px">'
@@ -548,6 +548,34 @@ def scr_izi(W=1000, H=560):
                         'Günlük kök, bağımsız bir zaman damgası hizmetinden onay alır: kaydın o tarihte var olduğu üçüncü tarafça doğrulanabilir. '
                         '<b style="color:' + T["ink"] + '">14.09 08:06</b> · TSA onayı</div>', "padding:11px 13px") + '</div>')
 
+# --- S8 denetim dosyası ve denetçi bağlantısı (E-13)
+def scr_denetimdosyasi(W=1000, H=560):
+    icerik = satir([["<b>Sıcaklık ve ölçüm günlüğü</b>", "90 gün · 268 ölçüm", "4 aralık dışı, hepsi aksiyonla kapatıldı"],
+                    ["<b>Çalıştırma özetleri</b>", "180 liste", "171 zamanında · 6 geç · 3 kaçırıldı"],
+                    ["<b>Belge takvimi</b>", "7 belge", "Yangın tüpü 12 gün sonra doluyor"],
+                    ["<b>Kanıt örnekleri</b>", "24 fotoğraf", "Rastgele seçildi · damgalı"],
+                    ["<b>Olay izi özeti</b>", "doğrulama kodu", "TN-K7F3A-9C2D"]],
+                   ["Bölüm", "Kapsam", "Not"], ["34%", "22%", "44%"], size=12)
+    baglanti = card(lbl("Denetçi bağlantısı")
+                    + '<div style="font:12px ui-monospace,Menlo,Consolas,monospace;background:' + T["yuzey2"] + ';border-radius:8px;padding:7px 9px;color:' + T["ink2"] + '">'
+                      'talimatname.app/d/7F3A-9C2D</div>'
+                    + '<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">' + chip("48 saat kalan: 41 sa", "warn")
+                    + chip("yalnızca Kadıköy · 90 gün", "n") + chip("personel adı maskeli", "ok") + '</div>'
+                    + '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:8px">'
+                      'Hesap açılmaz, indirilemez tek sayfa. İki açılış kayıtlı: <b style="color:' + T["ink"] + '">bugün 10:42</b> ve '
+                      '<b style="color:' + T["ink"] + '">10:55</b>. İstediğiniz an iptal edebilirsiniz.</div>', "padding:11px 13px")
+    ornek = card(lbl("Dosyadan bir sayfa")
+                 + '<div style="display:flex;gap:9px">' + foto("KDK · 13.09 23:20 · aralık dışı", "işaretli", T["kritik"], "33%")
+                 + foto("KDK · 14.09 08:05 · aksiyon kapanışı", None, None, "33%")
+                 + foto("KDK · 15.09 23:11 · kepenk", None, None, "33%") + '</div>', "padding:11px 13px")
+    return ekran(W, H, "Denetim dosyası", "Kadıköy · 16 Haz – 14 Eyl",
+                 '<div style="display:flex;gap:8px;align-items:center">'
+                 '<div style="padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">Şube: Kadıköy ▾</div>'
+                 '<div style="padding:6px 10px;border:1.5px solid ' + T["cizgi"] + ';border-radius:9px;font-size:12.5px;background:' + T["yuzey"] + '">Dönem: son 90 gün ▾</div>'
+                 '<div style="margin-left:auto">' + chip("PDF hazır · 38 sayfa", "ok") + '</div></div>'
+                 + icerik
+                 + '<div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:12px">' + baglanti + ornek + '</div>')
+
 # --- D1 franchise marka kütüphanesi
 def scr_franchise(W=1000, H=560):
     tablo = satir([["Kahve Durağı Kadıköy", "şirket", "v4", "%96", chip("uyumlu", "ok")],
@@ -677,7 +705,7 @@ def s5():
                scaled(scr_mutabakat(1100, 620), 1100, 620, 0.31), "Üretim–satış mutabakatı")
     return page(head("Sıradaki sürüm") + h1("Sonra ne geliyor", 27)
                 + p("Bugün teslim edilen sürüm bilerek dar tutuldu; aşağıdakiler kapsam dışında kaldı ama silinmedi. "
-                    "Bu bölümdeki on bir ekran, o satırların nasıl görüneceğini gösterir.")
+                    "Bu bölümdeki on iki ekran, o satırların nasıl görüneceğini gösterir.")
                 + ilke
                 + taslak_bant("<b>Bu bölümdeki ekranlar tasarım taslağıdır.</b> Özellikler henüz geliştirilmedi; sıraları pilotta sizin "
                               "şubelerinizden çıkan ihtiyaca göre belirlenir. Sözleşme ve pilot ölçütleri yalnızca bugünkü sürümü kapsar.")
@@ -724,6 +752,35 @@ def s7():
                      scaled(scr_izi(1000, 560), 1000, 560, 0.49), "Denetim izi · olay listesi ve zincir doğrulama")
     return page(head("Sıradaki sürüm") + s6k + s7k + foot(7), gap=11)
 
+def s7b():
+    s8k = kart_genis("S8", "Denetçi gelince dosyayı aramazsınız",
+                     "Seçtiğiniz dönem için tek dosya: sıcaklık günlüğü, o dönemin listeleri, belge durumu ve rastgele seçilmiş kanıt örnekleri. "
+                     "Denetçiye ya da marka merkezine, hesap açmadan, <b>48 saat</b> açık kalan salt-okunur bir bağlantı verirsiniz.",
+                     ["Dosyada doğrulama kodu var: kaydın sonradan değişmediği aynı sayfadan kontrol edilir",
+                      "Bağlantı tek şube ve tek dönem; istediğiniz an iptal edersiniz, her açılış kayda geçer",
+                      "Personel adları maskelenir — denetçi işi görür, kişisel veri paylaşılmaz"],
+                     scaled(scr_denetimdosyasi(1000, 560), 1000, 560, 0.49), "Denetim dosyası · içindekiler ve süreli denetçi bağlantısı")
+    adim = lambda n, bas, met: ('<div style="flex:1;min-width:0;background:' + T["yuzey"] + ';border:1px solid ' + T["cizgi"] + ';border-radius:11px;padding:11px 13px">'
+                                '<div style="display:flex;align-items:center;gap:8px"><div style="width:22px;height:22px;border-radius:7px;background:' + T["marka"] +
+                                ';color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none">' + str(n) + '</div>'
+                                '<b style="font-size:13px">' + bas + '</b></div>'
+                                '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:5px">' + met + '</div></div>')
+    akis = ('<div style="display:flex;gap:10px">'
+            + adim(1, "Dönemi seçin", "Şube ve tarih aralığı. Varsayılan son 90 gün; denetçi genelde bu kadarını ister.")
+            + adim(2, "Dosya üretilir", "Günlükler, listeler, belgeler ve kanıt örnekleri tek PDF'te; kapakta doğrulama kodu.")
+            + adim(3, "Bağlantıyı verin", "48 saat açık, salt-okunur. İş bitince iptal edersiniz; kim ne zaman açtı kayıtlıdır.")
+            + '</div>')
+    sinir = ('<div style="background:' + T["yuzey2"] + ';border-radius:12px;padding:11px 14px;font-size:12px;line-height:1.55;color:' + T["ink2"] + '">'
+             '<b style="color:' + T["ink"] + '">Bağlantının sınırları:</b> tek şube ve tek dönem gösterir, indirilemez, arama motorlarına kapalıdır; '
+             'personel adları maskelenir; süre dolunca ya da siz iptal edince aynı dakikada kapanır. Açılışlar (zaman ve IP) olay izine yazılır, '
+             'yani dosyayı kimin gördüğü sonradan da bellidir.</div>')
+    neden = ('<div style="background:' + T["markaA"] + ';border-radius:12px;padding:11px 14px">'
+             '<b style="font-family:' + SERIF + ';font-size:14.5px;color:' + T["marka"] + '">Bugün de verebilirsiniz, ama üç dosya hâlinde</b>'
+             '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:3px;max-width:90ch">'
+             'İlk sürümde sıcaklık günlüğü, çalıştırma PDF\'i ve belge takvimi ayrı ayrı iniyor; denetçinin önüne koymadan önce '
+             'birleştirmek sizin işiniz. Bu adım o işi kaldırır ve dosyayı kapıdan içeri girmeden paylaşılabilir hâle getirir.</div></div>')
+    return page(head("Sıradaki sürüm") + s8k + akis + sinir + neden + foot(8), gap=11)
+
 def s8():
     d1k = kart("D1", "Franchise’ta standart merkezden yayınlanır", "tasarım taslağı", "taslak",
                "Marka merkezi standart listeyi yayınlar; franchise işletmeleri kendi hesabında kullanır, uyum merkezden izlenir. "
@@ -749,7 +806,7 @@ def s8():
     return page(head("Daha sonra") + h1("Büyüyünce gerekecekler", 27)
                 + p("Bu satırlar birkaç yüz şubeye, birden fazla markaya ya da başka bir sektöre geçildiğinde anlamlı olur; "
                     "bugünkü sürümün sahada çalıştığını görmeden sıraya alınmazlar.")
-                + d1k + d2k + d3k + foot(8), gap=11)
+                + d1k + d2k + d3k + foot(9), gap=11)
 
 def s9():
     d4k = kart_genis("D4", "Beyana değil ölçüme dayanan sayaç",
@@ -773,16 +830,17 @@ def s9():
                 '<div style="font-size:13px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     return page(head("Daha sonra") + d4k + siralama + kapanis + iletisim
-                + foot(9, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=11)
+                + foot(10, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=11)
 
 # ---------------------------------------------------------------- üretim
 PAGES = {"Main.dc.html": s1, "O2.dc.html": s2, "O3.dc.html": s3, "O4.dc.html": s4,
-         "O5.dc.html": s5, "O6.dc.html": s6, "O7.dc.html": s7, "O8.dc.html": s8, "O9.dc.html": s9}
+         "O5.dc.html": s5, "O6.dc.html": s6, "O7.dc.html": s7, "O7b.dc.html": s7b, "O8.dc.html": s8, "O9.dc.html": s9}
 SCREENS = {"Sablonlar.dc.html": scr_sablon, "Cevrimdisi.dc.html": scr_offline, "Bayraklar.dc.html": scr_bayrak, "BelgeTakvimi.dc.html": scr_belge,
            "Kutuphane.dc.html": scr_kutuphane, "Mutabakat.dc.html": scr_mutabakat, "BenzerKanit.dc.html": scr_benzer,
            "Duyuru.dc.html": scr_duyuru, "KosulluMadde.dc.html": scr_kosul, "Raporlar.dc.html": scr_raporlar,
            "DenetimIzi.dc.html": scr_izi, "Franchise.dc.html": scr_franchise, "SektorPaketleri.dc.html": scr_paketler,
-           "Entegrasyon.dc.html": scr_entegrasyon, "KameraSayim.dc.html": scr_kamera}
+           "Entegrasyon.dc.html": scr_entegrasyon, "KameraSayim.dc.html": scr_kamera,
+           "DenetimDosyasi.dc.html": scr_denetimdosyasi}
 
 def main():
     os.makedirs(OUTDIR, exist_ok=True)
@@ -802,6 +860,7 @@ def main():
                                         ("SektorPaketleri.dc.html", "Taslak · sektör paketleri", 900, 500),
                                         ("Entegrasyon.dc.html", "Taslak · POS ve İK entegrasyonları", 900, 520),
                                         ("KameraSayim.dc.html", "Taslak · kamera ile üretim sayımı", 1000, 560),
+                                        ("DenetimDosyasi.dc.html", "Taslak · denetim dosyası ve denetçi bağlantısı (E-13)", 1000, 560),
                                         ("Cevrimdisi.dc.html", "Ekran · çevrimdışı (mobil)", 390, 844),
                                         ("Bayraklar.dc.html", "Ekran · kanıt bayrakları (web)", 900, 520),
                                         ("BelgeTakvimi.dc.html", "Ekran · belge takvimi (web, SCR-W-14)", 1200, 760)]):

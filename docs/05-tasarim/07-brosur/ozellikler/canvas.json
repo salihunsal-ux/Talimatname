@@ -64,7 +64,7 @@
       "print": "fixed"
     },
     {
-      "file": "O8.dc.html",
+      "file": "O7b.dc.html",
       "title": "Özellik föyü · sayfa 8",
       "x": 6160,
       "y": 0,
@@ -73,9 +73,18 @@
       "print": "fixed"
     },
     {
-      "file": "O9.dc.html",
+      "file": "O8.dc.html",
       "title": "Özellik föyü · sayfa 9",
       "x": 7040,
+      "y": 0,
+      "w": 794,
+      "h": 1123,
+      "print": "fixed"
+    },
+    {
+      "file": "O9.dc.html",
+      "title": "Özellik föyü · sayfa 10",
+      "x": 7920,
       "y": 0,
       "w": 794,
       "h": 1123,
@@ -178,9 +187,17 @@
       "h": 560
     },
     {
+      "file": "DenetimDosyasi.dc.html",
+      "title": "Taslak · denetim dosyası ve denetçi bağlantısı (E-13)",
+      "x": 15840,
+      "y": 1280,
+      "w": 1000,
+      "h": 560
+    },
+    {
       "file": "Cevrimdisi.dc.html",
       "title": "Ekran · çevrimdışı (mobil)",
-      "x": 15840,
+      "x": 17160,
       "y": 1280,
       "w": 390,
       "h": 844
@@ -188,7 +205,7 @@
     {
       "file": "Bayraklar.dc.html",
       "title": "Ekran · kanıt bayrakları (web)",
-      "x": 17160,
+      "x": 18480,
       "y": 1280,
       "w": 900,
       "h": 520
@@ -196,7 +213,7 @@
     {
       "file": "BelgeTakvimi.dc.html",
       "title": "Ekran · belge takvimi (web, SCR-W-14)",
-      "x": 18480,
+      "x": 19800,
       "y": 1280,
       "w": 1200,
       "h": 760
