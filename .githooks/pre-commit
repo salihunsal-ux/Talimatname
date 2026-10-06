@@ -61,6 +61,34 @@ if [ -f "$KOK/uretim_kontrol.py" ]; then
   fi
 fi
 
+# ---------------------------------------------------------------- 4) sayfa tasmasi
+# Yazdirma belgelerinde icerik A4'u asarsa alttan sessizce kirpilir; PDF sayfa
+# sayisi degismedigi icin fark edilmez. Olcum Edge gerektirdiginden (~8 sn/belge)
+# yalnizca ilgili belgeler commit'e girdiginde calisir.
+TASMA_HEDEF=""
+TASMA_CALIS=0
+if [ -f "$KOK/tasma_kontrol.py" ]; then
+  STAGED=$(git diff --cached --name-only)
+  if echo "$STAGED" | grep -qE '^docs/05-tasarim/07-brosur/build_.*\.py$'; then
+    TASMA_CALIS=1                                   # uretici degisti: uc belgeyi de olc
+  else
+    TASMA_HEDEF=$(echo "$STAGED" | grep -E '^docs/05-tasarim/07-brosur/talimatname-(brosur|tanitim|ozellikler)\.html$' || true)
+    [ -n "$TASMA_HEDEF" ] && TASMA_CALIS=1
+  fi
+fi
+if [ "$TASMA_CALIS" = "1" ]; then
+  TS=$(cd "$KOK" && PYTHONIOENCODING=utf-8 $PY tasma_kontrol.py --kontrol $TASMA_HEDEF 2>&1)
+  if [ $? -ne 0 ]; then
+    echo "$TS"
+    echo ""
+    echo "✗ Commit durduruldu: yazdirma belgesinde sayfa tasmasi var."
+    echo "  Olc:     python tasma_kontrol.py"
+    echo "  Atla:    SAYILAR_ATLA=1 git commit …"
+    exit 1
+  fi
+  echo "$TS" | sed 's/^/  /'
+fi
+
 # gecti: tek satir onay (kancanin calistigi gorunsun)
 echo "✓ kanca: sayılar güncel · $(echo "$JS" | tail -1) · $(echo "$UR" | tail -1)"
 exit 0
