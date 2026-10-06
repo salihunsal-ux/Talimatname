@@ -18,6 +18,15 @@ def _kok():                                        # sayilarin tek kaynagi: depo
 sys.path.insert(0, _kok())
 import sayilar as SAY
 S = SAY.hepsi()
+
+def _damga(metin):
+    """Ciktiya uretici kaynak ozeti; bayat HTML'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    for yol in UK.HARITA:
+        if os.path.basename(yol) == ad:
+            return UK.damgala(metin, ad, UK.ozet(yol))
+    return metin
 OUTDIR = os.path.join(HERE, "tanitim")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 INK_BAND = "#171c21"
@@ -432,7 +441,7 @@ def main():
             '<style>' + css + '</style></head><body>'
             + "".join('<div class="sheet">' + fn() + '</div>' for fn in PAGES.values()) + '</body></html>')
     out = os.path.join(HERE, "talimatname-tanitim.html")
-    open(out, "w", encoding="utf-8").write(html)
+    open(out, "w", encoding="utf-8").write(_damga(html))
 
     css2 = ("body{margin:0;background:#e9e6de;font-family:" + SANS + "}"
             ".page{width:100%;display:flex;justify-content:center;padding:14px 8px}"
@@ -446,7 +455,7 @@ def main():
              '<title>Talimatname Tanıtım Dosyası</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap">'
              '<style>' + css2 + '</style>'
              + "".join('<div class="page"><div class="box">' + fn() + '</div></div>' for fn in PAGES.values()) + js)
-    open(os.path.join(HERE, "talimatname-tanitim-sayfa.html"), "w", encoding="utf-8").write(html2)
+    open(os.path.join(HERE, "talimatname-tanitim-sayfa.html"), "w", encoding="utf-8").write(_damga(html2))
     print("ok:", len(PAGES), "sayfa,", len(SCREENS), "ekran")
 
     if "--pdf" in sys.argv:

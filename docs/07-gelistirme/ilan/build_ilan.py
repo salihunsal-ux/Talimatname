@@ -17,6 +17,15 @@ S = SAY.hepsi()
 FR, TC = S["fr"], S["tc"]
 FOY, FOY_TASLAK = S["foy_sayfa"], S["foy_sayfa"] - 4
 
+def _damga(metin):
+    """Ciktiya uretici kaynak ozeti; bayat HTML'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    for yol in UK.HARITA:
+        if os.path.basename(yol) == ad:
+            return UK.damgala(metin, ad, UK.ozet(yol))
+    return metin
+
 HTML = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Talimatname — serbest geliştirici ilanı</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet">
@@ -80,7 +89,7 @@ th{{font-size:8pt;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)
 
 def main():
     out = os.path.join(HERE, "serbest-gelistirici-ilani.html")
-    open(out, "w", encoding="utf-8").write(HTML); print(out)
+    open(out, "w", encoding="utf-8").write(_damga(HTML)); print(out)
     if "--pdf" in sys.argv:
         edge = next((p for p in [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"] if os.path.exists(p)), None)
         if not edge: print("Edge yok; tarayıcıdan yazdırın"); return

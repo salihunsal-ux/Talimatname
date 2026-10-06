@@ -15,6 +15,15 @@ def _kok():                                        # sayilarin tek kaynagi: depo
 sys.path.insert(0, _kok())
 import sayilar as SAY
 S = SAY.hepsi()
+
+def _damga(metin):
+    """Ciktiya uretici kaynak ozeti; bayat HTML'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    for yol in UK.HARITA:
+        if os.path.basename(yol) == ad:
+            return UK.damgala(metin, ad, UK.ozet(yol))
+    return metin
 T = dict(zemin="#f7f5ef", yuzey="#ffffff", yuzey2="#efece4", ink="#1c2128", ink2="#4b5560", sessiz="#7b8590", cizgi="#d6d9d2",
          marka="#1f6f5b", markaA="#dcebe5", kritik="#b8452f", kritikA="#f3ddd8", uyari="#b7791f", uyariA="#f6ebd2", pasif="#c9ced6")
 SANS = '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif'  # tırnaksız: style="..." içinde çift tırnak attribute'u keser
@@ -349,7 +358,7 @@ def main():
     html = (f'<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Talimatname tanıtım broşürü</title>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap"><style>{css}</style></head><body>'
             f'<div class="sheet" style="width:794px">{page1()}</div><div class="sheet" style="width:794px">{page2()}</div></body></html>')
-    out = os.path.join(HERE, "talimatname-brosur.html"); open(out, "w", encoding="utf-8").write(html)
+    out = os.path.join(HERE, "talimatname-brosur.html"); open(out, "w", encoding="utf-8").write(_damga(html))
     print("ok:", ", ".join(files), "canvas.json, talimatname-brosur.html")
     if "--pdf" in sys.argv:
         edge = next((p for p in [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"] if os.path.exists(p)), None)

@@ -19,7 +19,9 @@ import sys
 import tempfile
 
 KOK = os.path.dirname(os.path.abspath(__file__))
-VARSAYILAN = ["docs/05-tasarim/05-prototip/*.html"]
+VARSAYILAN = ["docs/05-tasarim/05-prototip/*.html",      # prototipler: binlerce satir JS
+              "docs/05-tasarim/07-brosur/talimatname-*.html",  # brosur/tanitim/foy (sayfa surumlerinde kucuk script)
+              "index.html"]                               # urun dosyasi: arama ve filtre
 BLOK = re.compile(r"<script(?P<oz>[^>]*)>(?P<kod>.*?)</script>", re.S | re.I)
 
 
@@ -47,8 +49,12 @@ def kontrol(yol, node):
     metin = io.open(yol, encoding="utf-8").read()
     hatalar = []
     for i, m in enumerate(BLOK.finditer(metin)):
-        if "src=" in m.group("oz"):
+        oz = m.group("oz")
+        if "src=" in oz:
             continue                                   # dış dosya; ayrı yüklenir
+        tur = re.search(r'type\s*=\s*["\']([^"\']+)', oz)
+        if tur and not re.search(r"javascript|module|ecmascript", tur.group(1), re.I):
+            continue                                   # application/json, text/template… JS değil
         kod = m.group("kod")
         if not kod.strip():
             continue
@@ -57,10 +63,12 @@ def kontrol(yol, node):
         gecici.write(kod)
         gecici.close()
         try:
-            p = subprocess.run([node, "--check", gecici.name], capture_output=True, text=True, timeout=90)
+            p = subprocess.run([node, "--check", gecici.name], capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=90)   # node ciktisi UTF-8; cp1254 ile cozulemez
             if p.returncode != 0:
                 ciktilar = (p.stderr or p.stdout or "").strip().split("\n")
                 ozet = next((l for l in ciktilar if "Error" in l or "error" in l), ciktilar[0] if ciktilar else "sözdizimi hatası")
+                ozet = ozet.strip()[:160]              # node bazen tüm satırı basar; rapor kısa kalsın
                 satir = re.search(r":(\d+)\s*$", ciktilar[0]) if ciktilar else None
                 yer = (" · HTML satırı ~%d" % (baslangic_satiri + int(satir.group(1)) - 1)) if satir else ""
                 hatalar.append("%s · script #%d%s: %s" % (os.path.relpath(yol, KOK), i + 1, yer, ozet.strip()))

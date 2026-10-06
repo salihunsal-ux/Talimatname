@@ -46,6 +46,21 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# ---------------------------------------------------------------- 3) uretilmis belgeler guncel mi
+# Brosur/tanitim/foy/ilan elle yazilmaz; uretici script degisip cikti yeniden
+# uretilmezse depoya bayat HTML girer. Damga karsilastirmasi bunu yakalar.
+if [ -f "$KOK/uretim_kontrol.py" ]; then
+  UR=$(cd "$KOK" && PYTHONIOENCODING=utf-8 $PY uretim_kontrol.py --kontrol 2>&1)
+  if [ $? -ne 0 ]; then
+    echo "$UR"
+    echo ""
+    echo "✗ Commit durduruldu: uretilmis belge bayat."
+    echo "  Ilgili build_*.py dosyasini calistirip ciktiyi yeniden ekleyin."
+    echo "  Atla:    SAYILAR_ATLA=1 git commit …"
+    exit 1
+  fi
+fi
+
 # gecti: tek satir onay (kancanin calistigi gorunsun)
 echo "✓ kanca: sayılar güncel · $(echo "$JS" | tail -1)"
 exit 0

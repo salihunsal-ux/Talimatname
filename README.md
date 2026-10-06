@@ -48,7 +48,9 @@ python sayilar.py --kontrol  # markdown'daki bayat sayıları listeler (bayat va
 python sayilar.py --guncelle # bayat sayıları düzeltir
 ```
 
-**Commit öncesi kanca.** `.githooks/pre-commit` iki kontrol yapar: (1) `sayilar.py --kontrol` — bayat sayı varsa commit durur; (2) `js_kontrol.py` — tek dosyalık prototiplerin (saha demosu, Blok 8, yönetici paneli) gömülü JavaScript'i `node --check` ile doğrulanır, hata varsa HTML satır numarasıyla bildirilir ve commit durur. Sayfayı sessizce boş bırakan bir virgül hatası depoya girmez. Node ya da Python yoksa ilgili kontrol atlanır, commit kilitlenmez. Depoyu yeni klonlayan bir kez şunu çalıştırır (kanca ayarı sürümlenmez):
+**Commit öncesi kanca.** `.githooks/pre-commit` iki kontrol yapar: (1) `sayilar.py --kontrol` — bayat sayı varsa commit durur; (2) `js_kontrol.py` — tek dosyalık prototiplerin (saha demosu, Blok 8, yönetici paneli) gömülü JavaScript'i `node --check` ile doğrulanır, hata varsa HTML satır numarasıyla bildirilir ve commit durur. Sayfayı sessizce boş bırakan bir virgül hatası depoya girmez. (3) `uretim_kontrol.py` — broşür, tanıtım dosyası, özellik föyü ve ilan elle yazılmaz; üretici script değişip çıktı yeniden üretilmezse depoya bayat HTML girer. Her çıktı üreticisinin kaynak özetini damgalar (`<!-- uretici: build_x.py@ab12cd34 -->`), damga tutmazsa commit durur. Özellik föyü broşür ve tanıtım bileşenlerini kullandığı için onlar değişince de bayat sayılır. Node ya da Python yoksa ilgili kontrol atlanır, commit kilitlenmez.
+
+> Yazdırma belgelerinde asıl sessiz hata **sayfa taşmasıdır** (içerik 1123 px'i aşınca alttan kırpılır); bunu ölçmek düzen motoru gerektirdiği için kanca yapamaz. Broşür/föy/tanıtım değiştiren her işten sonra sayfalar tarayıcıda ölçülmelidir: kökün `height` değerini `auto`, `overflow` değerini `visible` yapıp çocuklara `flexShrink:0` vererek gerçek yükseklik okunur. Depoyu yeni klonlayan bir kez şunu çalıştırır (kanca ayarı sürümlenmez):
 
 ```bash
 git config core.hooksPath .githooks
