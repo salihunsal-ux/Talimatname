@@ -32,6 +32,15 @@ MARK = ('<svg viewBox="0 0 64 64" width="{s}" height="{s}" style="flex:none"><pa
         '<path d="M38 4 V14 H48 Z" fill="#f7f5ef"></path><rect x="17" y="22" width="20" height="4" rx="2" fill="#f7f5ef"></rect><rect x="17" y="31" width="14" height="4" rx="2" fill="#f7f5ef"></rect>'
         '<circle cx="46" cy="46" r="14" fill="#1f6f5b" stroke="#f7f5ef" stroke-width="3"></circle><path d="M39 46.5 L44 51.5 L53.5 41" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>')
 
+def _pdf_damga(pdf_yolu):
+    """PDF üretilince yan damga dosyası: bayat PDF'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    kaynak = next((y for y in UK.PDF_HARITA if os.path.basename(y) == ad), None)
+    if kaynak and os.path.exists(pdf_yolu):
+        UK.pdf_damgala(pdf_yolu, ad, UK.ozet(kaynak))
+
+
 def mark(s=28): return MARK.format(s=s)
 def wordmark(size=22, color=T["ink"]):
     return f'<div style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex">{mark(int(size*1.15))}</span><span style="font-family:{SERIF};font-weight:700;font-size:{size}px;letter-spacing:-0.01em;color:{color}">talimatname</span></div>'
@@ -370,6 +379,7 @@ def main():
         for _ in range(120):
             if os.path.exists(pdf) and os.path.getsize(pdf) > 10_000: break
             time.sleep(0.5)
+        _pdf_damga(pdf)
         print(pdf, "ok" if os.path.exists(pdf) else "HATA")
 
 if __name__ == "__main__":

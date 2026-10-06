@@ -26,6 +26,15 @@ def _damga(metin):
             return UK.damgala(metin, ad, UK.ozet(yol))
     return metin
 
+def _pdf_damga(pdf_yolu):
+    """PDF üretilince yan damga dosyası: bayat PDF'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    kaynak = next((y for y in UK.PDF_HARITA if os.path.basename(y) == ad), None)
+    if kaynak and os.path.exists(pdf_yolu):
+        UK.pdf_damgala(pdf_yolu, ad, UK.ozet(kaynak))
+
+
 HTML = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Talimatname — serbest geliştirici ilanı</title>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet">
@@ -100,6 +109,7 @@ def main():
         for _ in range(120):
             if os.path.exists(pdf) and os.path.getsize(pdf) > 10_000: break
             time.sleep(0.5)
+        _pdf_damga(pdf)
         print(pdf, "ok" if os.path.exists(pdf) else "HATA")
 
 if __name__ == "__main__":

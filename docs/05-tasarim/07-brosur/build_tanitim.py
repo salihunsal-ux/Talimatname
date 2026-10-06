@@ -31,6 +31,15 @@ OUTDIR = os.path.join(HERE, "tanitim")
 w, card, chip, box, phone, scaled = B.wordmark, B.card, B.chip, B.box, B.phone, B.scaled
 INK_BAND = "#171c21"
 
+def _pdf_damga(pdf_yolu):
+    """PDF üretilince yan damga dosyası: bayat PDF'i uretim_kontrol.py yakalar."""
+    import uretim_kontrol as UK
+    ad = os.path.basename(os.path.abspath(__file__))
+    kaynak = next((y for y in UK.PDF_HARITA if os.path.basename(y) == ad), None)
+    if kaynak and os.path.exists(pdf_yolu):
+        UK.pdf_damgala(pdf_yolu, ad, UK.ozet(kaynak))
+
+
 # ---------------------------------------------------------------- tipografi (ortak bileşenler build_brosur'dan)
 from build_brosur import h1, h2, h3, mp as p, label, pin, shot, legend, stat, table, quote, check, qa, INK_BAND
 
@@ -473,6 +482,7 @@ def main():
             if os.path.exists(pdf) and os.path.getsize(pdf) > 10_000:
                 break
             time.sleep(0.5)
+        _pdf_damga(pdf)
         print(pdf, "ok" if os.path.exists(pdf) else "HATA")
 
 if __name__ == "__main__":

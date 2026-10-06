@@ -35,6 +35,29 @@ HARITA = {
 }
 DAMGA = re.compile(r"<!-- uretici: (?P<ad>[\w.\-]+)@(?P<ozet>[0-9a-f]{8}) -->")
 
+# üretici → ürettiği PDF'ler. PDF'e yorum gömülemediği için damga yan dosyada durur:
+#   <pdf>.damga → "build_x.py@<ozet> · pdf <sha1-8> · <tarih>"
+PDF_HARITA = {
+    "docs/05-tasarim/07-brosur/build_brosur.py": ["docs/05-tasarim/07-brosur/talimatname-brosur.pdf"],
+    "docs/05-tasarim/07-brosur/build_tanitim.py": ["docs/05-tasarim/07-brosur/talimatname-tanitim.pdf"],
+    "docs/05-tasarim/07-brosur/build_ozellikler.py": ["docs/05-tasarim/07-brosur/talimatname-ozellikler.pdf"],
+    "docs/07-gelistirme/ilan/build_ilan.py": ["docs/07-gelistirme/ilan/serbest-gelistirici-ilani.pdf"],
+}
+PDF_DAMGA = re.compile(r"^(?P<ad>[\w.\-]+)@(?P<ozet>[0-9a-f]{8}) · pdf (?P<pdf>[0-9a-f]{8})")
+
+
+def dosya_ozeti(tam):
+    return hashlib.sha1(io.open(tam, "rb").read()).hexdigest()[:8]
+
+
+def pdf_damgala(pdf_yolu, uretici_adi, uretici_ozeti):
+    """PDF üretildikten sonra yan damga dosyasını yazar; üretici bunu çağırır."""
+    import datetime
+    satir = "%s@%s · pdf %s · %s\n" % (uretici_adi, uretici_ozeti, dosya_ozeti(pdf_yolu),
+                                        datetime.date.today().isoformat())
+    io.open(pdf_yolu + ".damga", "w", encoding="utf-8", newline="").write(satir)
+    return satir.strip()
+
 
 def yol(p):
     return os.path.join(KOK, p.replace("/", os.sep))
@@ -47,6 +70,12 @@ def ozet(dosya):
         tam = yol(p)
         if os.path.exists(tam):
             h.update(io.open(tam, "rb").read())
+    try:                                           # sayılar da girdi: FR/TC değişince metin değişir
+        sys.path.insert(0, KOK)
+        import sayilar as SAY
+        h.update(repr(sorted(SAY.hepsi().items())).encode("utf-8"))
+    except Exception:
+        pass
     return h.hexdigest()[:8]
 
 
@@ -84,6 +113,28 @@ def tara():
                 bulgular.append((c, "damga yok — %s çalıştırın" % ad))
             elif m.group("ozet") != oz:
                 bulgular.append((c, "bayat (%s ≠ %s) — %s çalıştırın" % (m.group("ozet"), oz, ad)))
+
+    for uretici, pdfler in PDF_HARITA.items():
+        if not os.path.exists(yol(uretici)):
+            continue
+        oz = ozet(uretici)
+        ad = os.path.basename(uretici)
+        for pdf in pdfler:
+            tam = yol(pdf)
+            if not os.path.exists(tam):
+                bulgular.append((pdf, "PDF yok — %s --pdf çalıştırın" % ad))
+                continue
+            dmg = tam + ".damga"
+            if not os.path.exists(dmg):
+                bulgular.append((pdf, "damga yok — %s --pdf çalıştırın" % ad))
+                continue
+            m = PDF_DAMGA.match(io.open(dmg, encoding="utf-8").read().strip())
+            if not m:
+                bulgular.append((pdf, "damga okunamadı — %s --pdf çalıştırın" % ad))
+            elif m.group("ozet") != oz:
+                bulgular.append((pdf, "bayat (%s ≠ %s) — %s --pdf çalıştırın" % (m.group("ozet"), oz, ad)))
+            elif m.group("pdf") != dosya_ozeti(tam):
+                bulgular.append((pdf, "PDF dosyası damgasıyla uyuşmuyor — %s --pdf çalıştırın" % ad))
     return bulgular
 
 
@@ -93,4 +144,5 @@ if __name__ == "__main__":
         for dosya, neden in bulgular:
             print("  BAYAT ÇIKTI %s: %s" % (dosya, neden))
         sys.exit(1 if "--kontrol" in sys.argv else 0)
-    print("üretilmiş belgeler güncel (%d çıktı)" % sum(len(v) for v in HARITA.values()))
+    print("üretilmiş belgeler güncel (%d HTML + %d PDF)" % (sum(len(v) for v in HARITA.values()),
+                                                          sum(len(v) for v in PDF_HARITA.values())))
