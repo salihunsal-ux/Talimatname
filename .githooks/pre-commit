@@ -30,4 +30,20 @@ if [ $? -ne 0 ]; then
   echo "  Atla:    SAYILAR_ATLA=1 git commit …"
   exit 1
 fi
+
+# ---------------------------------------------------------------- 2) prototip JS sozdizimi
+# Tek dosyalik prototipler binlerce satir JS tasiyor; bir virgul hatasi sayfayi
+# sessizce bos birakir. node yoksa kontrol atlanir.
+[ -f "$KOK/js_kontrol.py" ] || exit 0
+
+JS=$(cd "$KOK" && PYTHONIOENCODING=utf-8 $PY js_kontrol.py 2>&1)
+if [ $? -ne 0 ]; then
+  echo "$JS"
+  echo ""
+  echo "✗ Commit durduruldu: prototipte JS sözdizimi hatası var."
+  echo "  Denetle: python js_kontrol.py"
+  echo "  Atla:    SAYILAR_ATLA=1 git commit …"
+  exit 1
+fi
+
 exit 0
