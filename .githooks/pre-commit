@@ -46,4 +46,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# gecti: tek satir onay (kancanin calistigi gorunsun)
+echo "✓ kanca: sayılar güncel · $(echo "$JS" | tail -1)"
 exit 0
