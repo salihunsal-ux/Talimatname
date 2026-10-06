@@ -1,4 +1,4 @@
-# Tanıtım belgeleri: 2 sayfalık broşür + 8 sayfalık tanıtım dosyası + 9 sayfalık özellik föyü
+# Tanıtım belgeleri: 2 sayfalık broşür + 8 sayfalık tanıtım dosyası + 10 sayfalık özellik föyü
 
 Ne zaman kullanılır: **Blok 8'den sonra** (görüşme rehberi kuralı: ürün ilk 40 dakika anlatılmaz), LOI turunda karar vericiye, tanıştıran kişi "bir şey gönder" dediğinde ve aday geliştiricilere. Ulaşım mesajlarına eklenmez.
 
