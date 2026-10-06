@@ -388,7 +388,7 @@ def t8():
                    widths=["22%", "78%"])
     yol = table(["Sürüm", "İçerik"],
                 [["<b>v1</b>", "4 rol · 6 madde türü · tek kural · 8 hazır şablon · kiosk ve çevrimdışı · sabit eskalasyon ve 07:00 özeti · istisna panosu · aylık özet · sıcaklık günlüğü · belge ve periyodik bakım takvimi · kanıt bütünlüğü bayrakları · doğrulama kodlu PDF"],
-                 ["<b>v1.1</b>", "Madde kütüphanesi ve işletme türü paketleri · yakın kopya fotoğraf tespiti · üretim–satış mutabakatı · duyuru ve okundu onayı · koşul editörü · ayrıntılı raporlar · denetim izi ekranı"],
+                 ["<b>v1.1</b>", "<b>Denetçiye tek dosya ve süreli bağlantı</b> · madde kütüphanesi ve işletme türü paketleri · yakın kopya fotoğraf tespiti · üretim–satış mutabakatı · duyuru ve okundu onayı · koşul editörü · ayrıntılı raporlar · denetim izi ekranı"],
                  ["<b>v2</b>", "Franchise marka kütüphanesi · başka sektör paketleri · POS ve İK entegrasyonları · kamera ile üretim sayımı"]],
                 widths=["12%", "88%"])
     iletisim = ('<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid ' + T["cizgi"] + ';padding-top:12px">'
@@ -397,7 +397,7 @@ def t8():
                 '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
     foy = ('<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:-4px">'
-           'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, 9 sayfa; yol haritası satırlarının tasarım taslakları da orada).</div>')
+           'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, 10 sayfa; yol haritası satırlarının tasarım taslakları da orada — denetçi dosyası 8. sayfada).</div>')
     return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası") + yol + foy + iletisim
                 + foot(8, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=13)
 
