@@ -692,7 +692,7 @@ def taslak_bant(metin):
 def kart_genis(no, baslik, ozet, liste, gorsel, cap):
     bas = ('<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">'
            '<span style="font-family:' + SERIF + ';font-size:19px;font-weight:700;color:' + T["marka"] + ';line-height:1">' + str(no) + '</span>'
-           '<span style="font-family:' + SERIF + ';font-size:16.5px;font-weight:700;line-height:1.2">' + baslik + '</span>' + rozet("tasarım taslağı", "taslak") + '</div>')
+           '<span style="font-family:' + SERIF + ';font-size:16.5px;font-weight:700;line-height:1.2">' + baslik + '</span>' + rozet("yol haritası · v1'de yok", "taslak") + '</div>')
     alt = ('<div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;margin-top:8px">'
            '<div style="font-size:13px;line-height:1.5;color:' + T["ink2"] + '">' + ozet + '</div>'
            '<div>' + bullets(liste).replace('margin-top:7px', 'margin-top:0') + '</div></div>')
@@ -707,21 +707,21 @@ def s5():
             'Bir özellik ancak şu üç sorudan birini geçerse bugünkü sürüme girdi: personel görmese liste tamamlanmaz mı, '
             'yönetici görmese kaçırılan iş görünmez mi, bu olmadan denetimde kanıt verilemez mi. '
             'Geri kalanı silinmedi — tasarlandı, sıraya alındı.</div></div>')
-    s1k = kart("S1", "Liste yazmak yerine kütüphaneden seçmek", "tasarım taslağı", "taslak",
+    s1k = kart("S1", "Liste yazmak yerine kütüphaneden seçmek", "yol haritası · v1'de yok", "taslak",
                "İşletme türünüze göre hazır madde paketleri gelir; kütüphaneden seçip şubenize uyarlarsınız. "
                "Yeni şube açtığınızda ya da menü değiştiğinde listeyi baştan kurmazsınız.",
                ["Kafe, fırın, hızlı servis, lokanta paketleri — her biri liste ve madde seti",
                 "Kütüphanedeki madde güncellenince kopyanız bozulmaz, “güncelleme var” uyarısı alır",
                 "Kendi maddenizi eklersiniz; kütüphane maddesini şubeye göre değiştirebilirsiniz"],
                scaled(scr_kutuphane(1100, 620), 1100, 620, 0.31), "Madde kütüphanesi ve paketler")
-    s2k = kart("S2", "Üretilen ile satılan karşılaştırılır", "tasarım taslağı", "taslak",
+    s2k = kart("S2", "Üretilen ile satılan karşılaştırılır", "yol haritası · v1'de yok", "taslak",
                "Kapanışta girilen üretim adedi kasa satışıyla karşılaştırılır; aradaki <b>açıklanamayan fark</b> sebepleriyle raporlanır. "
                "Amaç kimseyi yakalamak değil, farkı ölçülebilir hâle getirmek.",
                ["Fire, personel yemeği, ikram, kasaya geç giriş gibi sebepler seçilir; açıklama girilmeden kayıt kapanmaz",
                 "Rapor şube ve vardiya düzeyinde: kişi adı, kişi puanı ve biyometri yok",
                 "“Açıklanamıyor” cevabı bölge müdürüne yükselir"],
                scaled(scr_mutabakat(1100, 620), 1100, 620, 0.31), "Üretim–satış mutabakatı")
-    return page(head("Sıradaki sürüm") + h1("Sonra ne geliyor", 27)
+    return page(head("Sıradaki sürüm · v1 kapsamı dışı, sözleşme bağlamaz") + h1("Sonra ne geliyor", 27)
                 + p("Bugün teslim edilen sürüm bilerek dar tutuldu; aşağıdakiler kapsam dışında kaldı ama silinmedi. "
                     "Bu bölümdeki on iki ekran, o satırların nasıl görüneceğini gösterir.")
                 + ilke
@@ -730,28 +730,28 @@ def s5():
                 + s1k + s2k + foot(5), gap=11)
 
 def s6():
-    s3k = kart("S3", "Neredeyse aynı iki fotoğraf işaretlenir", "tasarım taslağı", "taslak",
+    s3k = kart("S3", "Neredeyse aynı iki fotoğraf işaretlenir", "yol haritası · v1'de yok", "taslak",
                "Aynı dosyanın ikinci kez gönderilmesi bugün de engelleniyor. Bu adımda, dosya farklı olsa bile "
                "birkaç saniye arayla aynı açıdan çekilmiş kareler “benzer kanıt” olarak işaretlenir.",
                ["Gönderim engellenmez; kayıt incelenmek üzere panoya düşer",
                 "Benzerlik eşiği ayarlanır — gereksiz uyarı istemezsiniz",
                 "Karar insanda kalır: sistem yalnızca “şuna bakın” der"],
                scaled(scr_benzer(760, 430), 760, 430, 0.45), "Benzer kanıt uyarısı")
-    s4k = kart("S4", "Duyuruyu kimin okuduğu kayda geçer", "tasarım taslağı", "taslak",
+    s4k = kart("S4", "Duyuruyu kimin okuduğu kayda geçer", "yol haritası · v1'de yok", "taslak",
                "Merkez duyurusu şubelere düşer; kimin okuduğu ve onayladığı rapor olur. "
                "“Gruba yazdım, gördü mü” sorusu sayıya dönüşür.",
                ["Ek dosya eklenir: fiyat listesi, mevzuat yazısı, görsel standart",
                 "Okumayana otomatik hatırlatma gider",
                 "Onay istenen duyuruda kişi “okudum” değil “uygulayacağım” der"],
                scaled(scr_duyuru(900, 520), 900, 520, 0.38), "Duyuru ve okundu raporu")
-    s5k = kart("S5", "Liste yalnızca gerektiğinde uzar", "tasarım taslağı", "taslak",
+    s5k = kart("S5", "Liste yalnızca gerektiğinde uzar", "yol haritası · v1'de yok", "taslak",
                "Cevaba göre ek madde açılır: “Hayır” denince sebep ve fotoğraf, “ekipman arızalı” denince servis sorusu. "
                "Bugünkü sürümde kural tek ve sabittir; bu adımda şablona özel kural tanımlanır.",
                ["Normal gecede liste kısa kalır, sorun çıkınca derinleşir",
                 "Aralık dışı ölçümde 30 dakika sonra ikinci ölçüm maddesi açılabilir",
                 "Kurallar şablonda tanımlanır; personel tarafında görünmez"],
                scaled(scr_kosul(900, 520), 900, 520, 0.38), "Koşullu madde kuralları")
-    return page(head("Sıradaki sürüm") + s3k + s4k + s5k + foot(6), gap=11)
+    return page(head("Sıradaki sürüm · v1 kapsamı dışı, sözleşme bağlamaz") + s3k + s4k + s5k + foot(6), gap=11)
 
 def s7():
     s6k = kart_genis("S6", "Tek seferlik soruların cevabı raporda",
@@ -768,7 +768,7 @@ def s7():
                       "Zincir doğrulama: tek bir kaydı değiştirmek zinciri kırar ve sayfada görünür",
                       "Zaman damgası: kaydın o tarihte var olduğunu üçüncü taraf doğrular"],
                      scaled(scr_izi(1000, 560), 1000, 560, 0.49), "Denetim izi · olay listesi ve zincir doğrulama")
-    return page(head("Sıradaki sürüm") + s6k + s7k + foot(7), gap=11)
+    return page(head("Sıradaki sürüm · v1 kapsamı dışı, sözleşme bağlamaz") + s6k + s7k + foot(7), gap=11)
 
 def s7b():
     s8k = kart_genis("S8", "Denetçi gelince dosyayı aramazsınız",
@@ -797,31 +797,31 @@ def s7b():
              '<div style="font-size:12px;line-height:1.5;color:' + T["ink2"] + ';margin-top:3px;max-width:90ch">'
              'İlk sürümde sıcaklık günlüğü, çalıştırma PDF\'i ve belge takvimi ayrı ayrı iniyor; denetçinin önüne koymadan önce '
              'birleştirmek sizin işiniz. Bu adım o işi kaldırır ve dosyayı kapıdan içeri girmeden paylaşılabilir hâle getirir.</div></div>')
-    return page(head("Sıradaki sürüm") + s8k + akis + sinir + neden + foot(8), gap=11)
+    return page(head("Sıradaki sürüm · v1 kapsamı dışı, sözleşme bağlamaz") + s8k + akis + sinir + neden + foot(8), gap=11)
 
 def s8():
-    d1k = kart("D1", "Franchise’ta standart merkezden yayınlanır", "tasarım taslağı", "taslak",
+    d1k = kart("D1", "Franchise’ta standart merkezden yayınlanır", "yol haritası · v1'de yok", "taslak",
                "Marka merkezi standart listeyi yayınlar; franchise işletmeleri kendi hesabında kullanır, uyum merkezden izlenir. "
                "Marka standardı ile işletmenin kendi verisi birbirine karışmaz.",
                ["Franchise standart maddeyi silemez, kendi maddesini ekleyebilir",
                 "Merkez uyum oranını ve liste sürümünü görür; personel verisini görmez",
                 "Yeni sürüm yayınlanınca eski sürümde kalan işletmeler işaretlenir"],
                scaled(scr_franchise(1000, 560), 1000, 560, 0.34), "Marka kütüphanesi ve uyum tablosu")
-    d2k = kart("D2", "Aynı çekirdek, başka sektörler", "tasarım taslağı", "taslak",
+    d2k = kart("D2", "Aynı çekirdek, başka sektörler", "yol haritası · v1'de yok", "taslak",
                "Perakende zinciri, otel, akaryakıt istasyonu ve üretim için hazır şablon setleri. "
                "Zincirinizin birden fazla işi varsa hepsi tek hesapta yürür.",
                ["Değişen yalnızca maddeler, ölçüm aralıkları ve mevzuat notları",
                 "Tekrarlı liste, kanıt, aksiyon ve denetim PDF’i aynı kalır",
                 "Bir paketle başlar, kendi maddelerinizle devam edersiniz"],
                scaled(scr_paketler(900, 500), 900, 500, 0.38), "Sektör paketleri")
-    d3k = kart("D3", "Kasadan ve İK’dan veri kendiliğinden gelir", "tasarım taslağı", "taslak",
+    d3k = kart("D3", "Kasadan ve İK’dan veri kendiliğinden gelir", "yol haritası · v1'de yok", "taslak",
                "Satış verisi kasadan, personel ve vardiya bilgisi İK sisteminden alınır; atamalar ve mutabakat "
                "elle veri girişi olmadan çalışır.",
                ["Bağlantı tek yönlü: veri okunur, karşı sisteme yazılmaz",
                 "Şube ↔ kasa eşlemesi kurulumda bir kez yapılır",
                 "Hangi alanların alındığı sözleşme ekinde listelenir"],
                scaled(scr_entegrasyon(900, 520), 900, 520, 0.38), "Entegrasyon ayarları ve eşleme")
-    return page(head("Daha sonra") + h1("Büyüyünce gerekecekler", 27)
+    return page(head("Daha sonra · v1 kapsamı dışı, sözleşme bağlamaz") + h1("Büyüyünce gerekecekler", 27)
                 + p("Bu satırlar birkaç yüz şubeye, birden fazla markaya ya da başka bir sektöre geçildiğinde anlamlı olur; "
                     "bugünkü sürümün sahada çalıştığını görmeden sıraya alınmazlar.")
                 + d1k + d2k + d3k + foot(9), gap=11)
@@ -847,7 +847,7 @@ def s9():
                 '<div style="font-size:11.5px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
                 '<div style="font-size:13px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
-    return page(head("Daha sonra") + d4k + siralama + kapanis + iletisim
+    return page(head("Daha sonra · v1 kapsamı dışı, sözleşme bağlamaz") + d4k + siralama + kapanis + iletisim
                 + foot(10, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=11)
 
 # ---------------------------------------------------------------- üretim

@@ -423,9 +423,12 @@ def t8():
                 '<div style="font-size:12px;color:' + T["sessiz"] + '">Şube operasyonları, kanıtıyla.</div></div>'
                 '<div style="font-size:13.5px;color:' + T["ink"] + ';text-align:right;line-height:1.55">'
                 '<b>[Ad Soyad]</b> · [telefon]<br><span style="color:' + T["ink2"] + '">[e-posta] · [alan adı]</span></div></div>')
+    yol_not = ('<div style="font-size:11.5px;color:' + T["ink2"] + ';background:' + T["uyariA"] + ';border-radius:9px;padding:7px 11px;margin-top:-2px">'
+               '<b>v1.1 ve v2 satırları yol haritasıdır:</b> henüz geliştirilmediler, pilot ölçütleri ve sözleşme yalnızca <b>v1</b> satırını kapsar. '
+               'Sıraları pilotta sizin şubelerinizden çıkan ihtiyaca göre belirlenir.</div>')
     foy = ('<div style="font-size:11.5px;color:' + T["sessiz"] + ';margin-top:-4px">'
            'Her satırın kısa açıklaması ve ekranı ayrı bir belgede: <b style="color:' + T["ink2"] + '">özellik föyü</b> (A4, ' + str(S["foy_sayfa"]) + ' sayfa; yol haritası satırlarının tasarım taslakları da orada — denetçi dosyası 8. sayfada).</div>')
-    return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası") + yol + foy + iletisim
+    return page(head(8, "Pilot ve sonraki adım") + pilot + takvim + label("Yol haritası · v1 dışındaki satırlar sözleşme kapsamına girmez") + yol + yol_not + foy + iletisim
                 + foot(8, "Talimatname çalışma adıdır; ekranlardaki veriler örnektir."), gap=13)
 
 # ---------------------------------------------------------------- üretim
