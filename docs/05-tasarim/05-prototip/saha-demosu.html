@@ -1286,6 +1286,48 @@ function sablonOnizle(ad, meta){
     el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
 }
 
+/* --- E-13 denetim dosyası: yol haritası satırı, demoda yalnızca ne içereceğini gösterir */
+function denetimDosyasiGosterim(){
+  const t = simdi(), sinir = new Date(t.getTime() - 90*86400000);
+  const kosmalar = Object.values(S.kosmalar).filter(k=>new Date(k.gun+"T12:00:00") >= sinir);
+  const gonderilen = kosmalar.filter(k=>k.durum==="gonderildi");
+  const olcum = olcumSatirlari(90).length;
+  const disi = olcumSatirlari(90).filter(x=>x.disi).length;
+  const kanit = kosmalar.reduce((n,k)=> n + Object.values(k.cevaplar||{}).filter(c=>c.kanit).length, 0);
+  const belge = Object.keys(S.belgeler||{}).length;
+  const satir = (ad, deger, not) => el("div",{style:"display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--cizgi)"},
+    el("div",{style:"flex:1;min-width:0;font-size:13.5px"}, ad),
+    el("b",{style:"font-size:13.5px;white-space:nowrap"}, deger),
+    el("div",{class:"ss",style:"width:42%;min-width:0"}, not));
+  sheetAc(kapat=>[
+    el("h3",{style:"font-size:19px;padding-right:40px"},"Denetim dosyası ve denetçi bağlantısı"),
+    el("div",{style:"display:flex;gap:8px;align-items:center;flex-wrap:wrap"}, gosterimRozet("yol"),
+      el("span",{class:"ss"},"kapsam belgesinde E-13 · v1.1 adayı")),
+    el("div",{class:"uyari-bant",style:"margin:0"},
+      "Bu özellik geliştirilmedi: aşağıdaki sayılar demodaki kayıtlardan sayıldı, dosya üretilmez ve bağlantı oluşturulmaz. "+
+      "Ekran taslağı özellik föyünün 8. sayfasındadır."),
+    el("div",{class:"kart"},
+      el("div",{class:"etiket",style:"margin-bottom:4px"},"Son 90 günde dosyaya girecek olan"),
+      satir("Ölçüm günlüğü", olcum+" ölçüm", disi+" aralık dışı"),
+      satir("Çalıştırma özetleri", gonderilen.length+" / "+kosmalar.length, "geç ve başarısız ayrımıyla"),
+      satir("Belge takvimi", belge+" belge", "bitiş tarihleri ve sorumlusu"),
+      satir("Kanıt örnekleri", kanit+" fotoğraf", "damgalı, rastgele seçilir"),
+      satir("Doğrulama kodu", kod("denetim_"+gunStr(t)), "kaydın değişmediğini gösterir"),
+      (olcum+kosmalar.length+belge+kanit)===0
+        ? el("div",{class:"ss",style:"margin-top:7px"},"Demoda henüz kayıt yok; liste doldurup belge ekledikçe bu sayılar dolar.") : null),
+    el("div",{class:"kart"},
+      el("div",{class:"etiket",style:"margin-bottom:4px"},"Denetçi bağlantısı (örnek)"),
+      el("div",{style:"font:12.5px var(--mono);background:var(--yuzey2);border-radius:8px;padding:7px 9px;color:var(--ink2)"},
+        "talimatname.app/d/7F3A-9C2D"),
+      el("div",{style:"display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"},
+        el("span",{class:"pill warn"},"48 saat"), el("span",{class:"pill gri"},"tek şube · tek dönem"),
+        el("span",{class:"pill ok"},"personel adı maskeli")),
+      el("div",{class:"ss",style:"margin-top:7px;line-height:1.5"},
+        "Hesap açılmaz, indirilemez tek sayfa; her açılış (zaman ve IP) olay izine yazılır, istenince iptal edilir. "+
+        "Demoda bağlantı üretilmez.")),
+    el("button",{class:"btn pri",onclick:kapat},"Kapat")]);
+}
+
 /* --- KVKK talebi (simülasyon) */
 function kvkkTalep(){
   sheetAc(kapat=>{
@@ -1360,6 +1402,7 @@ async function zinciriBoz(zincir, kutu){
 
 /* ---------------------------------------------------------------- "üründe var, demoda çalışmaz" gösterimi */
 function gosterimRozet(tip){
+  if (tip==="yol")  return el("span",{class:"pill",style:"background:var(--uyariA);color:var(--uyari);font-weight:700"},"yol haritası · v1'de yok");
   if (tip==="sim")  return el("span",{class:"pill",style:"background:#ece9f3;color:#5b4b86"},"simülasyon · gerçek veriden");
   if (tip==="yarim")return el("span",{class:"pill warn"},"kısmen çalışır");
   return el("span",{class:"pill",style:"background:var(--yuzey2);color:var(--sessiz)"},"çalışmaz · gösterim");
@@ -1379,7 +1422,7 @@ function urunKart(baslik, tip, ozet, maddeler_, acKod){
 function urunCiz(app){
   app.append(el("div",{style:"display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:16px 0 8px"},
     el("h1",{style:"font-size:26px"},"Üründe var, demoda çalışmıyor"),
-    el("div",{class:"ss"},"v1 kapsamının sunucu gerektiren kısmı")));
+    el("div",{class:"ss"},"v1 kapsamının sunucu gerektiren kısmı · altta bir de yol haritası satırı")));
   app.append(el("div",{class:"uyari-bant", html:
     "Bu sekmedeki ekranlar <b>gösterim amaçlıdır</b>: tasarım ve kural gerçektir, ama demoda bildirim gitmez, kimlik doğrulanmaz, veri sunucuya yazılmaz. "+
     "Pilotta teslim edilecek sürümde hepsi çalışır; sözleşmede bağlayıcı olan kapsam budur."}));
@@ -1427,6 +1470,22 @@ function urunCiz(app){
        "Şube sayısı değişince fatura bir sonraki dönemde düzeltilir",
        "Fiyat görüşmede belirlenir; demoda tutar gösterilmez"], ()=>faturaGosterim()));
   app.append(g);
+
+  /* Yol haritası satırı: v1 kapsamında DEĞİL. Yukarıdaki kartlarla karışmasın diye
+     ayrı başlık, ayrı rozet ve kendi uyarı bandıyla duruyor. */
+  app.append(el("div",{style:"display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:18px 0 6px"},
+    el("div",{class:"etiket"},"Yol haritasından"),
+    el("span",{class:"pill gri"},"v1 kapsamı dışı · sözleşme bağlamaz")));
+  app.append(el("div",{class:"uyari-bant",style:"margin-bottom:8px"},
+    "Aşağıdaki satır bugünkü sürümde yok ve pilot sözleşmesinin kapsamına girmez; kapsam belgesinde “v1.1 adayı” olarak durur "+
+    "ve sıraya girmesi pilot sinyaline bağlıdır. Yukarıdaki sekiz kart ise v1'de vardır, yalnızca bu demoda çalışmaz."));
+  const g2 = el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px"});
+  g2.append(urunKart("Denetim dosyası ve denetçi bağlantısı (E-13)", "yol",
+    "Seçilen dönemin kayıtları tek dosyada; denetçiye hesap açmadan verilen süreli bağlantı. Tasarlandı, geliştirilmedi.",
+    ["Ölçüm günlüğü + çalıştırma özetleri + belge durumu + kanıt örnekleri tek PDF",
+     "Bağlantı 48 saat açık, tek şube ve dönem, iptal edilebilir, her açılış kayıtlı",
+     "Personel adları maskeli — denetçi işi görür, kişisel veri paylaşılmaz"], ()=>denetimDosyasiGosterim()));
+  app.append(g2);
 }
 
 /* --- 1. bildirim kutusu: gerçek kayıtlardan hesaplanan bildirim listesi */
