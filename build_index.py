@@ -183,6 +183,7 @@ REGISTRY = [
         (D+"adr/0007-kisi-skoru-yok.md", "ADR-0007 Kişi skoru yok", "Skor şube düzeyinde", []),
         (D+"adr/0008-v1-cekirdek.md", "ADR-0008 v1 çekirdek", "Basit, ilk gün kullanılabilir çekirdek; K1–K21, E1–E7", []),
         (D+"adr/0009-ekip-modeli-serbest-gelistirici.md", "ADR-0009 Ekip modeli: iki serbest geliştirici", "Seçenek A; Sprint 2 sonu devam/dur kapısı; hedef başlangıç 5 Ekim", []),
+        (D+"adr/0012-barindirma-saglayici-ve-ortamlar.md", "ADR-0012 Barındırma: sağlayıcı ve ortamlar", "Üretim TR; geliştirme ücretsiz/AB; taşınabilirlik şartı ve maliyet", []),
         (D+"adr/0011-uretim-satis-mutabakati.md", "ADR-0011 Üretim–satış mutabakatı (kayıt dışı satış)", "Çıktı suçlama değil açıklanamayan fark; L0 sayım → L1 tüketim mutabakatı → L2 kamera sayımı → L3 POS eşleştirme; doğrulama kapıları ve KVKK sınırları", []),
         (D+"adr/0010-madde-kutuphanesi-v1-1.md", "ADR-0010 Madde kütüphanesi ve paketler: v1.1", "v1 değişmez; madde kütüphanesi, kaynak takibi, işletme türü paketleri v1.1 ilk epic; başka dikeyler ve marka kütüphanesi v2", []),
     ]),
@@ -404,9 +405,9 @@ def stats():
     fr_t, fr_v1 = s["fr"], s["fr_v1"]
     tc_t, tc_v1 = s["tc"], s["tc_v1"]
     scr_t, scr_v1 = s["scr"], s["scr_v1"]
-    br, st = s["br"], s["st"]
+    br, st, adr = s["br"], s["st"], s["adr"]
     return [
-        ("11", "ADR karar kaydı"),
+        (str(adr), "ADR karar kaydı"),
         (str(count_ids(D + "02-urun/04-yetenek-haritasi.md", "CAP")), "yetenek (CAP)"),
         (str(count_ids(D + "03-analiz/02-usecase-katalogu.md", "UC")), "use case"),
         (str(len(re.findall(r"^## S-\d+", read(D + "03-analiz/04-senaryolar.md"), flags=re.M))), "uçtan uca senaryo"),

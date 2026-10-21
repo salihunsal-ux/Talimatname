@@ -43,6 +43,9 @@ PDF_HARITA = {
     "docs/05-tasarim/07-brosur/build_ozellikler.py": ["docs/05-tasarim/07-brosur/talimatname-ozellikler.pdf"],
     "docs/07-gelistirme/ilan/build_ilan.py": ["docs/07-gelistirme/ilan/serbest-gelistirici-ilani.pdf"],
 }
+# Damgaya giren sayilar: yalnizca uretilen belgelerin METNINDE gecenler. Buraya yeni bir
+# alan eklemek, o sayi degisince ilgili ciktilarin yeniden uretilmesini zorunlu kilar.
+DAMGA_ALANLARI = ["fr", "tc", "brosur_sayfa", "tanitim_sayfa", "foy_sayfa"]
 PDF_DAMGA = re.compile(r"^(?P<ad>[\w.\-]+)@(?P<ozet>[0-9a-f]{8}) · pdf (?P<pdf>[0-9a-f]{8})")
 
 
@@ -70,10 +73,11 @@ def ozet(dosya):
         tam = yol(p)
         if os.path.exists(tam):
             h.update(io.open(tam, "rb").read())
-    try:                                           # sayılar da girdi: FR/TC değişince metin değişir
+    try:                                           # yalnızca ÜRETİLEN METİNDE geçen sayılar girdi olur
         sys.path.insert(0, KOK)
         import sayilar as SAY
-        h.update(repr(sorted(SAY.hepsi().items())).encode("utf-8"))
+        s = SAY.hepsi()
+        h.update(repr([(k, s[k]) for k in DAMGA_ALANLARI if k in s]).encode("utf-8"))
     except Exception:
         pass
     return h.hexdigest()[:8]

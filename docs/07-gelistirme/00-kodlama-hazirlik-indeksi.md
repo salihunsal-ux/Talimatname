@@ -36,7 +36,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 
 ### Kararlar (pilot görüşmelerinden beklenen)
 - [ ] Kiosk modu Must kalıyor mu (tablet oranı)
-- [ ] Barındırma: TR bulut vs AB + standart sözleşme
+- [x] Barındırma: üretim TR, geliştirme ortamları ücretsiz/AB (gerçek veri yok) — [ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md); sağlayıcı seçimi pilot öncesi
 - [ ] Franchise sahibi rolü
 - [ ] Sıcaklık probu (Could → Should?)
 - [ ] Kesin marka adı

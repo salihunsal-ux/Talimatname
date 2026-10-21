@@ -1,6 +1,6 @@
 # Görüşme özeti ve kapı sayacı
 
-Üretim: 2026-10-05 · `puanla.py` · 0 görüşme notu (ornek=true olanlar hariç) · 0 şube gözlemi · 0 kiosk denemesi
+Üretim: 2026-10-21 · `puanla.py` · 0 görüşme notu (ornek=true olanlar hariç) · 0 şube gözlemi · 0 kiosk denemesi
 
 | # | Tarih | Zincir | Şube | Kutu | Format | Model | Tür | Acı | Liste | Cihaz | Yetki | Ödeme | Taahhüt | Engel | Toplam /16 | K1 | LOI | İsim |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|

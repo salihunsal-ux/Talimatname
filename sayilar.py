@@ -56,10 +56,11 @@ def hepsi():
     scr_t, scr_v1, _ = surum_say(oku("docs", "05-tasarim", "01-ekran-envanteri-ve-navigasyon.md"), "SCR")
     br = len(re.findall(r"^- \*\*BR-\d+", oku("docs", "04-gereksinimler", "03-is-kurallari.md"), flags=re.M))
     st = len(set(re.findall(r"^\| (ST-\d{3})", oku("docs", "07-gelistirme", "03-backlog-ve-sprint-plani.md"), flags=re.M)))
+    adr = len([x for x in os.listdir(os.path.join(KOK, "docs", "adr")) if re.match(r"^\d{4}-.*\.md$", x)])
     return {
         "fr": fr_t, "fr_v1": fr_v1, "fr_v11": fr_v11,
         "tc": tc_t, "tc_v1": tc_v1, "tc_v11": tc_v11,
-        "scr": scr_t, "scr_v1": scr_v1, "br": br, "st": st,
+        "scr": scr_t, "scr_v1": scr_v1, "br": br, "st": st, "adr": adr,
         "brosur_sayfa": sayfa_say("docs", "05-tasarim", "07-brosur", "talimatname-brosur.html") or 2,
         "tanitim_sayfa": sayfa_say("docs", "05-tasarim", "07-brosur", "talimatname-tanitim.html") or 8,
         "foy_sayfa": sayfa_say("docs", "05-tasarim", "07-brosur", "talimatname-ozellikler.html") or 10,
@@ -118,8 +119,8 @@ def tara(yaz=False):
 if __name__ == "__main__":
     guncelle = "--guncelle" in sys.argv
     s, bulgular = tara(yaz=guncelle)
-    print("FR %d (v1 %d / v1.1 %d) · TC %d (v1 %d / v1.1 %d) · SCR %d · BR %d · ST %d" %
-          (s["fr"], s["fr_v1"], s["fr_v11"], s["tc"], s["tc_v1"], s["tc_v11"], s["scr"], s["br"], s["st"]))
+    print("FR %d (v1 %d / v1.1 %d) · TC %d (v1 %d / v1.1 %d) · SCR %d · BR %d · ST %d · ADR %d" %
+          (s["fr"], s["fr_v1"], s["fr_v11"], s["tc"], s["tc_v1"], s["tc_v11"], s["scr"], s["br"], s["st"], s["adr"]))
     print("Sayfa: broşür %d · tanıtım %d · föy %d" % (s["brosur_sayfa"], s["tanitim_sayfa"], s["foy_sayfa"]))
     if bulgular:
         for dosya, eski, yeni in bulgular:
