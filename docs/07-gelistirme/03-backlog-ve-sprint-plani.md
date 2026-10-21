@@ -34,7 +34,7 @@ ADR-0008 ile yeniden çizildi (13 Eylül 2026). Epic = yetenek (CAP). Hikâye = 
 Biçim: ST · hikâye · FR · TC · boyut. Kabul kriteri = bağlı TC'ler (v1 sürüm etiketli) + kart notları.
 
 ### S0 — Altyapı (02-repo kontrol listesi)
-Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, tasarım token'ları kodda, tohum v0, spesifikasyon fikstürleri (pencere/durum, puan, sabit kural), backlog aracı.
+Depolar, CI, dev compose, staging (ücretsiz/AB altyapı yeterli; yalnızca fikstür verisi — ADR-0012), taşınabilirlik kontrolü (sağlayıcıya özel hizmet yok), günlük yedek + geri yükleme provası, üretim TR sağlayıcı kısa listesi (karar Sprint 2 sonu), sağlayıcı test hesapları, tasarım token'ları kodda, tohum v0, spesifikasyon fikstürleri (pencere/durum, puan, sabit kural), backlog aracı.
 
 ### S1 — Temel: hesap, hiyerarşi, OTP, 4 rol
 | ST | Hikâye | FR | TC | Boyut |

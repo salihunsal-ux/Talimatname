@@ -31,6 +31,8 @@ Kişi adları ve fotoğraflar gerçek kişi içermez; şube adları semt adları
 | staging | Üretim benzeri; pilot UAT; performans testi | Gerçek test hesapları (SMS, push, TSA test uç noktası) | Tohum + pilot zincir verisi (pilot sözleşmesiyle) | Ekip + pilot kullanıcıları |
 | prod | Üretim | Gerçek | Gerçek | Müşteriler |
 
+**Altyapı ([ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md)):** dev ve test ortamları ücretsiz ya da AB altyapıda olabilir — verileri tohum ve fikstürdür. Staging de Sprint 0–2'de böyle kurulur; **pilot zincir verisi girmeden önce (Sprint 2 sonu) Türkiye'deki üretim sağlayıcısına taşınır**, çünkü gerçek kişisel veri ücretsiz katmanda ve Türkiye dışında tutulmaz. Prod her zaman Türkiye'de (ADR-0003).
+
 Staging'de "zaman ilerlet" yönetici aracı: zamanlayıcı testleri için sunucu saatini ileri alır (yalnızca staging; prod'da derlenmez).
 
 ## Sahte sağlayıcılar (test ve dev)

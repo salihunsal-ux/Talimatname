@@ -19,6 +19,7 @@ Eylül planı ilanın 17 Eylül'de çıkmasını ve Sprint 0'ın 5 Ekim'de başl
 | **K1 kapısı** (≥ 12/20 görüşme) | **26 Ekim** (doğrulama haftası 4) | |
 | **Devam/dur kapısı** (K1 raporu + Sprint 2 sonu) | **27 Kasım** | K1 geçmezse geliştirme durur; iki sprintlik iş iskelet + spike olarak kalır |
 | K2 kapısı (≥ 5 LOI) | 23 Kasım (hafta 8) | |
+| **Üretim ortamı Türkiye'de kuruldu** | **Sprint 2 sonu (27 Kasım)** | ADR-0012: gerçek veri ücretsiz/AB katmanda durmaz; Sprint 0'da ortam değişkenleriyle hazırlanır |
 | **Alfa (S6)** | **22 Ocak 2027** | Pilot kurulumu burada başlar |
 | **Beta (S8)** | **19 Şubat 2027** | 3 pilot zincir, 30+ şube |
 | **GA (S10)** | **19 Mart 2027** | 89 v1 kabul testi %100, pilot UAT imzası |
@@ -45,9 +46,9 @@ Ne olursa olsun Sprint 0'da gereken profil: Python/FastAPI + PostgreSQL bilen bi
 |---|---|---|---|
 | 1–2 | Depolar, CI iskeleti, dev compose, sahte servisler | Flutter iskelet, tema token'ları (05-tasarim/04), Riverpod + Drift | Backlog aracı; DoR/DoD; kural fikstürü formatı |
 | 3–5 | **Spike B** (RRULE pencere motoru) | **Spike A** (çevrimdışı kuyruk + idempotent senk) | Fikstürler: pencere/durum, puan, sabit kural |
-| 6–7 | **Spike D** (push → SMS teslim izi, sahte sağlayıcı) | **Spike C** (kamera → damga → SHA-256, galeri kapalı) | Staging (TR bölgesi) sağlayıcı seçimi |
-| 8–9 | `audit.emit()` + RLS iskeleti; OpenAPI yayını; tohum v0 | Üretilmiş istemci; giriş ekranı iskeleti | Spike sonuçları → ADR notları |
-| 10 | Sprint 0 gözden geçirme: DoD kontrolü, Sprint 1 planlama | | Devam/dur kapısı hazırlığı (Sprint 2 sonu) |
+| 6–7 | **Spike D** (push → SMS teslim izi, sahte sağlayıcı) | **Spike C** (kamera → damga → SHA-256, galeri kapalı) | Staging ayağa kalkıyor (ücretsiz/AB yeterli, yalnızca fikstür verisi) + üretim TR sağlayıcı kısa listesi — ADR-0012 |
+| 8–9 | `audit.emit()` + RLS iskeleti; OpenAPI yayını; tohum v0 | Üretilmiş istemci; giriş ekranı iskeleti | Spike sonuçları → ADR notları; günlük yedek açılır + geri yükleme provası (1. koşu) |
+| 10 | Sprint 0 gözden geçirme: DoD kontrolü, Sprint 1 planlama | | Geri yükleme provası (2. koşu, süre ölçülür); devam/dur kapısı hazırlığı (Sprint 2 sonu) |
 
 ## 4. Spike'lar
 
@@ -87,7 +88,9 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 - Dört spike'ın sonucu yazılı (geçti / geçmedi + ne değişecek); ADR-0004/0005'e uygulama notu; Spike A/C kabul ölçütleri TC-051/054/055 ve TC-039…044'e fikstür olarak bağlı.
 - Tasarım token'ları kodda (Flutter `ThemeData`, web CSS değişkenleri) ve tel-çerçevedeki iki ekran (kiosk kilit, kapanış listesi) iskelet olarak derleniyor.
 - Tohum v0 (hesap, 3 şube, 5 kullanıcı, 1 şablon, 1 plan) ve backlog aracında S1–S2 hikâyeleri hazır (DoR).
-- Staging ortamı TR bölgesinde ayakta; sağlayıcı hesapları (nesne depo, SMS, push) test modunda.
+- Staging ayakta ve içinde yalnızca tohum/fikstür verisi var; altyapısı ücretsiz ya da AB olabilir ([ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md) md.2). Sağlayıcı hesapları (nesne depo, SMS, push) test modunda.
+- Taşınabilirlik şartı kanıtlı: dev ve staging aynı compose/imajdan kalkıyor, fark yalnızca ortam değişkeni; sağlayıcıya özel hizmet yok (ADR-0012 md.4).
+- Günlük yedek açık ve geri yükleme betiği iki kez koşturulup süresi yazılı (NFR-13); üretim TR sağlayıcı kısa listesi ölçüt tablosuyla hazır — **karar Sprint 2 sonunda, gerçek veri girmeden önce**.
 
 ## 6. Karar noktaları
 
@@ -96,4 +99,5 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 | ~~Ekip seçeneği~~ A seçildi; ilan **2 Ekim**, seçim 15 Ekim, Sprint 0 **19 Ekim** | Kurucu | İlan bu hafta; 15 Ekim teklif |
 | Spike sonuçlarına göre ADR güncellemeleri | Ekip + PO | Sprint 0 gün 9 |
 | Devam/dur kapısı: K1 raporu + Sprint 2 sonu | Kurucu | 27 Kasım (K1: 26 Ekim) |
-| Sağlayıcı seçimleri (TR bulut, SMS, push) | Backend + PO | Sprint 0 gün 7 |
+| Staging altyapısı (ücretsiz/AB) + SMS, push, nesne depo test hesapları | Backend + PO | Sprint 0 gün 7 |
+| **Üretim TR sağlayıcı kararı** — kısa liste Sprint 0'da, karar gerçek veriden önce (ADR-0012) | Kurucu + Backend | Sprint 2 sonu, 27 Kasım |

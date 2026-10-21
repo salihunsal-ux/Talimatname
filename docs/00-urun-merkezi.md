@@ -27,7 +27,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; Sprint 2 sonu devam/dur kapısı (27 Kasım); Sprint 0 başlangıcı **19 Ekim** | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
 | Kayıt dışı satış | Ürün çıktısı suçlama değil “açıklanamayan fark”; dört kademe (L0 sayım listesi — v1 araçlarıyla · L1 tüketim mutabakatı — v1.1 adayı · L2 kamera sayımı · L3 POS–kamera eşleştirme — v2); kimlik ve biyometri yok | [ADR-0011](adr/0011-uretim-satis-mutabakati.md), [S-11](03-analiz/04-senaryolar.md) |
 | Madde kütüphanesi | v1'de şablon düzeyinde kütüphane (8 şablon, kopyala-düzenle); madde kütüphanesi + işletme türü paketleri v1.1'in ilk epic'i; başka dikeyler ve marka kütüphanesi v2 | [ADR-0010](adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi](02-urun/08-madde-kutuphanesi.md) |
-| Barındırma | Türkiye'de yerel bulut (pilot BT şartlarına göre AB + standart sözleşme seçeneği) | [ADR-0003](adr/0003-veri-tr-barindirma.md) |
+| Barındırma | Üretim Türkiye'de; geliştirme, CI ve staging ücretsiz/AB altyapıda olabilir (gerçek kişisel veri yokken) | [ADR-0003](adr/0003-veri-tr-barindirma.md) · [ADR-0012](adr/0012-barindirma-saglayici-ve-ortamlar.md) |
 | Kanıt bütünlüğü | Sunucu zamanı, dosya hash'i, ekle-yalnız olay günlüğü (hash zinciri) | [ADR-0004](adr/0004-kanit-butunlugu-hash-zinciri.md) |
 | Tekrar kuralları | RRULE (RFC 5545) + pencere kavramı; gece yarısını aşan pencere aynı iş günü | [ADR-0005](adr/0005-tekrar-kurallari-rrule.md) |
 | Biyometri | Yok (KVKK 2026/921); kimlik OTP ve PIN | [KVKK ve güvenlik](04-gereksinimler/06-kvkk-ve-guvenlik.md) |
@@ -37,7 +37,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 1. Ortak cihaz (kiosk) modunun Must kalıp kalmayacağı — şubelerde tablet oranı + 3 şubede saha kiosk denemesi ([karar kuralı](01-strateji/dogrulama-sprinti/07-kiosk-saha-denemesi.md))
 2. Tekil işletme self-servisi (v1.x?)
 3. Franchise sahibi rolü: Gözlemci mi, şube müdürü yetkisi mi
-4. Barındırma: TR bulut vs AB + standart sözleşme (pilotların BT şartı)
+4. ~~Barındırma: TR bulut vs AB~~ — karar: üretim TR, geliştirme ortamları ücretsiz/AB (gerçek veri yokken) ([ADR-0012](adr/0012-barindirma-saglayici-ve-ortamlar.md)); açık kalan: **üretim sağlayıcısının seçimi** (kısa liste Sprint 0, karar Sprint 2 sonu)
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
 7. ~~Geliştirme ekibi~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)); açık kalan: seçim (ilan 2 Ekim → teklif 15 Ekim) ve Sprint 2 sonu devam/dur kapısı (27 Kasım)

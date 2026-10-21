@@ -13,7 +13,7 @@ Talimatname, çok şubeli yeme-içme zincirlerinin şubelere verdiği tekrarlı 
 - [ ] GitHub organizasyonu `talimatname`: `Talimatname` (bu depo, okuma), `talimatname-api`, `talimatname-mobile`, `talimatname-web`, `talimatname-infra` (boş, dal koruması açık); iki geliştirici davet edilmiş
 - [ ] GitHub Projects panosu: S0 kontrol listesi + S1–S2 hikâyeleri (03-backlog) kart olarak yüklü
 - [ ] Sözleşme + NDA + KVKK taahhüdü imzalı (07 §7); mini görev ücretleri ödenmiş
-- [ ] Sağlayıcı hesapları: TR bulut deneme hesabı, SMS sağlayıcı test hesabı, Firebase projesi, Apple Developer ve Google Play (şirket adına — başvuru günler sürer, erken başlayın), e-posta gönderim servisi
+- [ ] Sağlayıcı hesapları: staging için ücretsiz ya da AB altyapı hesabı (ADR-0012 — gerçek veri yok), SMS sağlayıcı test hesabı, Firebase projesi, Apple Developer ve Google Play (şirket adına — başvuru günler sürer, erken başlayın), e-posta gönderim servisi. **Üretim TR sağlayıcısı Sprint 0'da seçilmez**, kısa listesi çıkarılır (karar Sprint 2 sonu)
 - [ ] Alan adı alınmış (`talimatname.app` → `staging.talimatname.app`) — 03-isim-ve-marka bekleyen iş
 - [ ] Takvim davetleri: her gün 10:00 15 dk; **19 Ekim** 11:00 Sprint 0 açılışı (1 saat); **30 Ekim** Sprint 0 gözden geçirme
 - [ ] Bu paketi e-postayla gönder (aşağıdaki şablon) — cuma, ilk günden önce
@@ -66,7 +66,8 @@ Spike'ların her biri için brief [05 §4](05-sprint0-ve-teknik-spike.md)'te: so
 
 | Soru | Karar veren | Ne zaman |
 |---|---|---|
-| Türkiye'de bulut sağlayıcı (VM + yönetilen PostgreSQL var mı, S3 uyumlu depo, TR bölgesi) | Backend + PO | Gün 7 |
+| Staging altyapısı: ücretsiz/AB yeterli (ADR-0012), tek şart gerçek veri olmaması | Backend + PO | Gün 7 |
+| Üretim TR sağlayıcı **kısa listesi** (yönetilen PostgreSQL var mı, S3 uyumlu depo, DPA belgesi, yedek) | Backend + PO | Kısa liste gün 7; karar Sprint 2 sonu |
 | SMS sağlayıcı (OTP + kritik bildirim; teslim raporu API'si şart) | Backend | Gün 7 |
 | Push: FCM/APNs kurulumu; içerik asgari (KVKK) | Mobil | Spike D ile |
 | Hata izleme / performans (Sentry vb.; kişisel veri maskeleme) | Backend | Gün 9 |

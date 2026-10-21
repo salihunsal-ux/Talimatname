@@ -49,23 +49,31 @@ OpenAPI sözleşmesi `talimatname-api` içinde üretilir ve sürüm etiketiyle y
 
 Gizli anahtarlar depoda yok; `.env.example` var; kasa (sağlayıcı KMS veya Vault).
 
+Ortamlar arasındaki fark **yalnızca bu tablodur**: sağlayıcı değişmek, `DATABASE_URL`, `REDIS_URL` ve `OBJECT_STORE_*` değerlerinin değişmesi demektir — kod değişmez. [ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md) md.4'ün taşınabilirlik şartı budur ve ortam değişikliğinin bir haftalık iş kalması buna bağlıdır. Sağlayıcıya özel SDK, kuyruk ya da kimlik servisi eklenmez; eklenmesi ADR değişikliği gerektirir.
+
 ## Sprint 0 kontrol listesi (2 hafta)
 
-Takvim, ekip kararı ve teknik spike'lar: [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md).
+Takvim, ekip kararı ve teknik spike'lar: [05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md). Ortam ve sağlayıcı maddeleri [ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md)'ye göre yazılmıştır: **üretim Türkiye'de**; geliştirme, CI ve staging ücretsiz ya da AB altyapıda olabilir — tek şart **gerçek kişisel veri olmaması**.
 
 - [ ] Depolar açıldı, dal koruması, CODEOWNERS, PR şablonu (DoD kontrol listesi)
 - [ ] `talimatname-api`: iskelet (FastAPI, Alembic, pytest), `audit.emit()` altyapısı, RLS politikası, OpenAPI yayını
 - [ ] `talimatname-mobile`: iskelet (Riverpod, Drift, üretilmiş istemci, tema token'ları 05-tasarim/04)
 - [ ] `talimatname-web`: iskelet (Vite, yönlendirme, tema token'ları, üretilmiş istemci, oturum)
-- [ ] `talimatname-infra`: dev compose, sahte servisler, CI iş akışları, staging ortamı (TR bölgesi), izleme temel
+- [ ] `talimatname-infra`: dev compose, sahte servisler, CI iş akışları, izleme temel
+- [ ] **Staging ayakta — ücretsiz ya da AB altyapı yeterli**, içinde yalnızca tohum/fikstür verisi var (ADR-0012 md.2); `staging.talimatname.app` bağlı
+- [ ] **Taşınabilirlik kontrolü** (ADR-0012 md.4): standart PostgreSQL 16, S3 uyumlu nesne depolama, Redis; sağlayıcıya özel hizmet (özel kuyruk/kimlik/fonksiyon) yok; dev ile staging aynı compose ve imajdan kalkıyor, aradaki tek fark ortam değişkeni
+- [ ] **Üretim TR sağlayıcı kısa listesi**: 2–3 aday, ölçüt tablosuyla (KVKK/DPA belgeleri → yedek ve kurtarma → destek süresi → fiyat). Karar Sprint 2 sonuna kadar, **gerçek veri girmeden önce**
+- [ ] **Yedek ve geri yükleme**: günlük otomatik veritabanı yedeği + nesne depoda sürümleme açık; geri yükleme betiği yazıldı ve Sprint 0'da **iki kez** (haftada bir) boş ortama koşturulup süresi ölçüldü — RTO 4 sa hedefi (NFR-13)
+- [ ] **Gerçek veri yasağı denetlenebilir**: üretim dışı ortamlara gerçek kişisel veri kopyalanmaz; tohum betiği dışında veri yükleme yolu yok (06-test/03), üretim yedeğinden staging'e geri yükleme kapalı
 - [ ] Tohum betiği v0 (hesap, 3 şube, 5 kullanıcı, 1 şablon, 1 plan) — tam set Sprint 3'e kadar
 - [ ] Kural motoru spesifikasyon fikstürleri (puan, pencere/durum, koşullu mantık) — backend ve mobil ortak
-- [ ] Sağlayıcı seçimleri (nesne depo, SMS, TSA) ve test hesapları
+- [ ] Sağlayıcı test hesapları: SMS (test), push (FCM/APNs), TSA (yerel sahte), nesne depolama (dev MinIO + staging kovası)
 - [ ] Tasarım token'ları kodda (Flutter ThemeData, CSS değişkenleri)
 - [ ] Hata takibi ve backlog aracı (GitHub Projects) — 03-backlog hikâyeleri yüklü
 
 ## Erişim ve güvenlik
 
 - Prod erişimi yalnızca 2 kişi; MFA zorunlu; üretim veritabanına doğrudan erişim yok (bastion + denetimli oturum).
-- Yedekler ayrı hesapta; geri yükleme tatbikatı aylık (NFR-13).
+- Yedekler ayrı hesapta (mümkünse ayrı sağlayıcıda); geri yükleme tatbikatı **Sprint 0'da haftalık** (betiğin gerçekten çalıştığını görmek için iki koşu), sonrasında CI gece işiyle aylık otomatik, yılda 2 kez kayda geçen tam tatbikat — NFR-13'ün istediği budur.
+- Üretim gizli anahtarları yalnızca Türkiye'deki üretim ortamının kasasında; staging ve CI ayrı anahtar setiyle çalışır, üretim anahtarı ücretsiz/AB ortama hiç inmez (ADR-0012).
 - Bağımlılık güncellemeleri haftalık (Dependabot); kritik CVE 48 saat.

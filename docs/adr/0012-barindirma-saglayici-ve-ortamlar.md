@@ -30,11 +30,11 @@ Bilgi sınırı: hiper ölçekleyicilerin (AWS/Google/Azure) Türkiye bölgesi d
 2. **Geliştirme, CI ve demo ortamları ücretsiz ya da AB altyapısında olabilir** — tek şart: **gerçek kişisel veri yok**. Tohum ve fikstür verisi kullanılır (`docs/06-test/03-test-verisi-ve-ortam.md`). Bu, Sprint 0–2'yi sıfıra yakın maliyetle başlatır.
 3. **Pilot verisi ücretsiz katmanda durmaz.** Gerekçe teknik değil sözleşmesel: ücretsiz katmanda veri işleme sözleşmesi imzalanamaz, SLA ve yedek garantisi yoktur, servisler uykuya geçebilir (saatlik zamanlayıcı ve bildirim bununla uyuşmaz).
 4. **Taşınabilirlik şartı (bağlayıcı):** PostgreSQL standart sürüm, dosyalar **S3 uyumlu API** üzerinden, kuyruk Redis, her şey Docker Compose ile ayağa kalkar. Sağlayıcıya özel hizmet (özel kuyruk, özel kimlik, özel fonksiyon) kullanılmaz. Ortam değişikliği bir haftalık iş olmalıdır.
-5. **Yedekleme:** günlük veritabanı yedeği + nesne depolama sürümleme, haftalık geri yükleme provası (Sprint 0 kontrol listesine girer). Yerli sağlayıcıda yönetilen yedek yoksa bu bizim işimizdir — karar maliyetinin görünmeyen kısmı budur.
+5. **Yedekleme:** günlük veritabanı yedeği + nesne depolama sürümleme; geri yükleme provası **Sprint 0'da haftalık** (iki koşu, betiğin çalıştığını ve süresini görmek için), sonrasında CI gece işiyle aylık otomatik ve NFR-13 gereği yılda 2 kez kayda geçen tam tatbikat. Yerli sağlayıcıda yönetilen yedek yoksa bu bizim işimizdir — karar maliyetinin görünmeyen kısmı budur.
 
 ## Sonuçlar
 
-- Hazırlık listesindeki "Barındırma" maddesi kapanır; Sprint 0 depo/CI/staging işine engel kalmaz.
+- Hazırlık listesindeki "Barındırma" maddesi kapanır; Sprint 0 depo/CI/staging işine engel kalmaz. Karar [Sprint 0 kontrol listesine](../07-gelistirme/02-repo-ve-ortam-kurulumu.md) altı madde olarak girdi: staging (ücretsiz/AB, fikstür verisi), taşınabilirlik kontrolü, üretim TR sağlayıcı kısa listesi, yedek + geri yükleme provası, gerçek veri yasağının denetlenebilirliği, sağlayıcı test hesapları.
 - Broşür, tanıtım dosyası ve aydınlatma metnindeki "veriler Türkiye'de" ifadesi doğruluğunu korur; **B'ye geçilirse üçü birden güncellenmek zorundadır** (ayrıca Kurul bildirimi ve müşteri bilgilendirmesi).
 - Ücretsiz katman kullanımı geliştirme hızını artırır ama **pilot öncesi geçiş** bir iş kalemidir; Sprint 2 sonuna kadar yapılır, Sprint 0'da ortam değişkenleriyle hazırlanır.
 - Maliyet, fizibilite modelinde anlamlı bir kalem değil (pilot ölçeğinde aylık birkaç bin lira); karar fiyatla değil, satış ve uyum gerekçesiyle alınmıştır.

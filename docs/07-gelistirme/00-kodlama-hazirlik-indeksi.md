@@ -42,7 +42,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [ ] Kesin marka adı
 
 ### Sprint 0 (02-repo kontrol listesi)
-- [ ] Depolar, CI, dev compose, staging (TR), sağlayıcı hesapları, token'lar kodda, tohum v0, spesifikasyon fikstürleri, backlog aracı
+- [ ] Depolar, CI, dev compose, staging (ücretsiz/AB yeterli — yalnızca fikstür verisi, ADR-0012), taşınabilirlik kontrolü, günlük yedek + geri yükleme provası, üretim TR sağlayıcı kısa listesi, sağlayıcı test hesapları, token'lar kodda, tohum v0, spesifikasyon fikstürleri, backlog aracı
 
 ## Sık sorulan geliştirici soruları
 
