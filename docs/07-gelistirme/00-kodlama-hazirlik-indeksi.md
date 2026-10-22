@@ -41,7 +41,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [ ] Sıcaklık probu (Could → Should?)
 - [ ] Kesin marka adı
 
-### Sprint 0 (02-repo kontrol listesi)
+### Sprint 0 (02-repo kontrol listesi) · Faz A, tek kişi (ADR-0013)
 - [ ] Depolar, CI, dev compose, staging (ücretsiz/AB yeterli — yalnızca fikstür verisi, ADR-0012), taşınabilirlik kontrolü, günlük yedek + geri yükleme provası, üretim TR sağlayıcı kısa listesi, sağlayıcı test hesapları, token'lar kodda, tohum v0, spesifikasyon fikstürleri, backlog aracı
 
 ## Sık sorulan geliştirici soruları

@@ -11,6 +11,45 @@ ADR-0008 ile yeniden çizildi (13 Eylül 2026). Epic = yetenek (CAP). Hikâye = 
 | S10 sonu | **GA** | v1 satırlarının tamamı; 104 v1 kabul testi %100; pilot UAT imzası |
 | S11–S12 | Tampon / v1.1 başlangıcı | Pilot bulguları; v1.1 sırasının ilk maddeleri |
 
+## Faz planı (ADR-0013)
+
+İş iki hatta bölünür: **Faz A** panel ve arka uç (tek geliştiriciyle hemen başlar), **Faz B** mobil (ikinci geliştirici Faz A'nın 6.–8. haftasında katılır). Sprint tabloları bağımlılık sırasını koruduğu için olduğu gibi duruyor; her hikâyenin hangi hatta olduğu **Faz** kolonundadır.
+
+| Hat | Hikâye | Gün | İçerik |
+|---|---|---|---|
+| **A · panel + arka uç** | 82 | **244** | Hesap/RLS/olay izi, hiyerarşi, OTP ve roller, personel, şablon editörü, plan ve çalıştırma motoru, kanıt sunucu tarafı, bildirim servisi, pano ve raporlar, PDF'ler, hash zinciri, KVKK süreçleri, tohum ve içerik, Spike B ve D |
+| **B · mobil** | 25 | **74** | Giriş, kabuk ve Bugün, liste çalıştırma, madde bileşenleri, kamera ve kanıt, çevrimdışı kuyruk ve senk, yapılamadı, aksiyonlarım, kiosk, Bölgem, erişilebilirlik, cihaz matrisi, mağaza, Spike A ve C |
+| **A+B · ortak** | 11 | **40** | İki istemciyi birlikte etkileyen işler (çalıştırma kilidi, sabit kural, kanıt bayrakları, dün gece bloğu, PIN atama) + Alfa/Beta/GA hazırlıkları ve düzeltmeleri |
+
+Ortağı yarı yarıya saydığımızda **A ≈ 264 gün, B ≈ 94 gün** — yani iş **2,8 kat asimetrik**. Bunun iki sonucu var ve ikisi de ADR-0013'te yazılı: mobil geliştirici kuyruğunu bitirince web hattına geçer; üçüncü geliştirici gerekirse **web** geliştiricisi olur, mobil değil.
+
+### Hat kapasitesi ve takvim
+
+Tek geliştirici sprint başına ~9 gün (2 hafta × 5 iş günü, tören ve saha günü düşülmüş).
+
+| | İş | Tek kişiyle | İki kişiyle |
+|---|---|---|---|
+| Faz A | 264 gün | ~29 sprint (~14 ay) | ~15 sprint (~7 ay) |
+| Faz B | 94 gün | ~10 sprint (~5 ay) | — |
+
+Tabloyu okumanın doğru yolu: **darboğaz A hattıdır.** İki kişi (1 panel + 1 mobil) çalıştığında mobil 5. ayda biter, panel 14. ayda — yani takvimi mobil değil panel belirler. Kapasite kaldıracı kararı (bkz. kapasite notu) bu yüzden "üçüncü geliştirici **web**" yönünde ağırlaşmıştır.
+
+### Devir kapısı: mobil başlamadan önce yazılı olacak üç sözleşme
+
+Faz A'nın bitti tanımına eklenir; yazılmazsa Faz B, Faz A'yı söker (API panelin çevrimiçi istek-cevap şekline oturur):
+
+1. **Cevap yazma idempotent** — cihazda üretilen UUID anahtarıyla `PUT`, tekrar gönderimde aynı kayıt (ST-030, FR-0602/0607).
+2. **Kanıt yükleme akışı** — ön imzalı URL → tamamlama → sunucu damgası + SHA-256 doğrulaması (ST-039/040, FR-0606).
+3. **Senk uç noktaları taslağı** — `/sync/manifest` ve `/sync/batch` şekli ve zaman düzeltmesi OpenAPI'de (ST-054, FR-0704); uygulanması Faz B'de.
+
+### Faz B'nin ilk iki haftası
+
+Ekran değil **spike**: Spike A (çevrimdışı kuyruk + idempotent senk) ve Spike C (kamera → damga → SHA-256), stub API ile. Gerekçe: planın en riskli iki maddesi bunlar; sona bırakılırsa kötü haber projenin sonunda gelir ([05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md) §4).
+
+### Pilot taahhüdü
+
+Alfa, pilot kurulumu ve K3 ölçümü **mobil olmadan yapılamaz**. Pilot zincirlere tarih verilirken Faz B'nin başlangıcından en az 10 hafta sayılır; bu tarih ikinci geliştiricinin bulunma tarihine bağlıdır, Faz A'nın hızına değil.
+
 ## Epic listesi
 
 | EP | Epic | CAP | Sprint |
@@ -33,173 +72,173 @@ ADR-0008 ile yeniden çizildi (13 Eylül 2026). Epic = yetenek (CAP). Hikâye = 
 
 Biçim: ST · hikâye · FR · TC · boyut. Kabul kriteri = bağlı TC'ler (v1 sürüm etiketli) + kart notları.
 
-### S0 — Altyapı (02-repo kontrol listesi)
-Depolar, CI, dev compose, staging (ücretsiz/AB altyapı yeterli; yalnızca fikstür verisi — ADR-0012), taşınabilirlik kontrolü (sağlayıcıya özel hizmet yok), günlük yedek + geri yükleme provası, üretim TR sağlayıcı kısa listesi (karar Sprint 2 sonu), sağlayıcı test hesapları, tasarım token'ları kodda, tohum v0, spesifikasyon fikstürleri (pencere/durum, puan, sabit kural), backlog aracı.
+### S0 — Altyapı (02-repo kontrol listesi) · **Faz A, tek kişi**
+Mobil iskelet ve Spike A/C bu listeden çıktı, Faz B'nin ilk haftasına geçti (ADR-0013). Depolar, CI, dev compose, staging (ücretsiz/AB altyapı yeterli; yalnızca fikstür verisi — ADR-0012), taşınabilirlik kontrolü (sağlayıcıya özel hizmet yok), günlük yedek + geri yükleme provası, üretim TR sağlayıcı kısa listesi (karar Sprint 2 sonu), sağlayıcı test hesapları, tasarım token'ları kodda, tohum v0, spesifikasyon fikstürleri (pencere/durum, puan, sabit kural), backlog aracı.
 
 ### S1 — Temel: hesap, hiyerarşi, OTP, 4 rol
 
 **Sprint hedefi (izleyici kurşun):** bir yönetici web'den girip şube ağacını kurabiliyor; bir personel mobilden OTP ile girip (henüz boş) Bugün ekranına ulaşıyor. Gösterimde bu iki yol uçtan uca çalışır — yarım kalan bir giriş ekranı sprint hedefi değildir.
 
-**Dağılım:** ST-001…005 backend geliştiricide; **ST-006…008 (web) mobil geliştiricide**. Gerekçe: mobil ekranların tamamı S2'deki API'leri bekliyor, yani mobil kapasite S1'de boşta; web ise tek kişinin (backend) üstünde kalırsa sprint baştan taşar.
+**Dağılım (ADR-0013):** S1'in tamamı **Faz A**, yani tek kişide — ST-001…008 aynı geliştiricinin işi. **ST-009 (mobil giriş) Faz B'ye düşer**, mobil geliştirici katılınca ilk ekran işi olarak yapılır; S1 onsuz kapanabilir, çünkü sprint hedefinin mobil yarısı Faz B'nin ilk haftalarına taşındı. Tek kişiyle S1'in yükü (ST-009 hariç ≈ 31 gün) sprint kapasitesinin üç katıdır: S1 takvimde ~3 sprinte yayılır ya da esnek maddeler düşer (aşağıda).
 
-**Sıra ve bağımlılık:** ST-001 → ST-002 → (ST-004 ∥ ST-007) → ST-005. Bu zincir seri olduğu için backend tarafı sprintin kritik yoludur. **ST-003 ve ST-008 esnektir:** sprint taşarsa S2'ye düşerler (sihirbazın 3.–4. adımı zaten S2'de, ST-021; Excel içe aktarma ilk olarak sihirbazda gerekir).
+**Sıra ve bağımlılık:** ST-001 → ST-002 → ST-004 → ST-007 → ST-005; tek kişide paralellik yok, zincirin tamamı seridir. **ST-003 ve ST-008 esnektir:** sprint taşarsa S2'ye düşerler (sihirbazın 3.–4. adımı zaten S2'de, ST-021; Excel içe aktarma ilk olarak sihirbazda gerekir).
 
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-001 | Backend: hesap/kiracı modeli, RLS, `audit.emit()` altyapısı | FR-0101, FR-1301 | TC-011, TC-100 | M |
-| ST-002 | Backend: hiyerarşi (bölge, şube, istasyon, takvim) CRUD | FR-0102…0104, FR-0515 | TC-001 | M |
-| ST-003 | Backend: Excel içe aktarma (şube/istasyon) + doğrulama raporu | FR-0105, FR-0106 | TC-001…003 | M |
-| ST-004 | Backend: OTP giriş, belirteçler, oturum yönetimi, hız sınırı | FR-0201, 0203, 0204 | TC-009 | M |
-| ST-005 | Backend: 4 rol × kapsam yetki katmanı (bağımlılık) | FR-0205 | TC-006, 010 | M |
-| ST-006 | Web: giriş (e-posta/şifre, şifre politikası), kabuk (menü, rol kapsamı); arayüz metinleri kaynak dosyada (i18n) | FR-0202, 1803 | TC-128 | S |
-| ST-007 | Web: şubeler sayfası (ağaç + detay + takvim) | FR-0102, 0103 | TC-001 | M |
-| ST-008 | Web: kurulum sihirbazı adım 1–2 (marka + şubeler) | FR-1401 | TC-004 | M |
-| ST-009 | Mobil: giriş (OTP), aydınlatma, konum izni ekranları | FR-0201, 1307, 1308 | TC-012 | M |
-| ST-010 | Tohum betiği v0 + CI E2E iskeleti | — | — (DoD: S1 hikâyelerinin TC'leri CI'da koşar) | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-001 | Backend: hesap/kiracı modeli, RLS, `audit.emit()` altyapısı | FR-0101, FR-1301 | TC-011, TC-100 | M | A |
+| ST-002 | Backend: hiyerarşi (bölge, şube, istasyon, takvim) CRUD | FR-0102…0104, FR-0515 | TC-001 | M | A |
+| ST-003 | Backend: Excel içe aktarma (şube/istasyon) + doğrulama raporu | FR-0105, FR-0106 | TC-001…003 | M | A |
+| ST-004 | Backend: OTP giriş, belirteçler, oturum yönetimi, hız sınırı | FR-0201, 0203, 0204 | TC-009 | M | A |
+| ST-005 | Backend: 4 rol × kapsam yetki katmanı (bağımlılık) | FR-0205 | TC-006, 010 | M | A |
+| ST-006 | Web: giriş (e-posta/şifre, şifre politikası), kabuk (menü, rol kapsamı); arayüz metinleri kaynak dosyada (i18n) | FR-0202, 1803 | TC-128 | S | A |
+| ST-007 | Web: şubeler sayfası (ağaç + detay + takvim) | FR-0102, 0103 | TC-001 | M | A |
+| ST-008 | Web: kurulum sihirbazı adım 1–2 (marka + şubeler) | FR-1401 | TC-004 | M | A |
+| ST-009 | Mobil: giriş (OTP), aydınlatma, konum izni ekranları | FR-0201, 1307, 1308 | TC-012 | M | B |
+| ST-010 | Tohum betiği v0 + CI E2E iskeleti | — | — (DoD: S1 hikâyelerinin TC'leri CI'da koşar) | S | A |
 
 ### S2 — Personel, basit şablon editörü, mobil Bugün
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-011 | Backend: kullanıcı CRUD, davet SMS'i, pasifleştirme; maskeleme destek betiği | FR-0107…0110 | TC-005, 007, 104 | M |
-| ST-013 | Web: personel sayfası, rol/kapsam, davet (v1: grup yok) | FR-0107, 0205 | TC-005…007 | M |
-| ST-014 | Backend: şablon/sürüm/bölüm/madde modeli ve yayın doğrulaması (v1: 6 tür, 3 ayar) | FR-0301…0304, 0312 | TC-021, 022 | M |
-| ST-015 | Backend: yüzde puan + kritik kuralı saf fonksiyonu, fikstürler | FR-0306, 0307 | TC-020 | S |
-| ST-016 | Web: şablon listesi ve basit editör (madde listesi, tür, 3 kutu, sıcaklık aralığı) | FR-0302…0305 | TC-018 | M |
-| ST-017 | Web: yayın (hemen) ve sürüm görünümü | FR-0301 | TC-021 | S |
-| ST-018 | Mobil: kabuk, sekmeler, tema token'ları, Bugün ekranı (çevrimiçi); arayüz metinleri kaynak dosyada (i18n) | FR-0601, 1803 | TC-039 | M |
-| ST-019 | Mobil: üretilmiş API istemcisi, oturum yenileme | FR-0203 | — | S |
-| ST-021 | Web: kurulum sihirbazı adım 3–4 (kapanış şablonu + plan önerisi + personel), yayın | FR-1401 | TC-004 | M |
-| ST-024 | Sentetik fotoğraf üreteci (tohum) | — | — | S |
-| ST-153 | Altyapı: üretim ortamı Türkiye'de kurulur (dağıtım hattı, kasa, günlük yedek, geri yükleme provası) — [ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md); staging bu ortama taşınır, gerçek veriden önce biter | NFR-10, NFR-13 | — (DoD: geri yükleme provası kaydı) | M |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-011 | Backend: kullanıcı CRUD, davet SMS'i, pasifleştirme; maskeleme destek betiği | FR-0107…0110 | TC-005, 007, 104 | M | A |
+| ST-013 | Web: personel sayfası, rol/kapsam, davet (v1: grup yok) | FR-0107, 0205 | TC-005…007 | M | A |
+| ST-014 | Backend: şablon/sürüm/bölüm/madde modeli ve yayın doğrulaması (v1: 6 tür, 3 ayar) | FR-0301…0304, 0312 | TC-021, 022 | M | A |
+| ST-015 | Backend: yüzde puan + kritik kuralı saf fonksiyonu, fikstürler | FR-0306, 0307 | TC-020 | S | A |
+| ST-016 | Web: şablon listesi ve basit editör (madde listesi, tür, 3 kutu, sıcaklık aralığı) | FR-0302…0305 | TC-018 | M | A |
+| ST-017 | Web: yayın (hemen) ve sürüm görünümü | FR-0301 | TC-021 | S | A |
+| ST-018 | Mobil: kabuk, sekmeler, tema token'ları, Bugün ekranı (çevrimiçi); arayüz metinleri kaynak dosyada (i18n) | FR-0601, 1803 | TC-039 | M | B |
+| ST-019 | Mobil: üretilmiş API istemcisi, oturum yenileme | FR-0203 | — | S | B |
+| ST-021 | Web: kurulum sihirbazı adım 3–4 (kapanış şablonu + plan önerisi + personel), yayın | FR-1401 | TC-004 | M | A |
+| ST-024 | Sentetik fotoğraf üreteci (tohum) | — | — | S | A |
+| ST-153 | Altyapı: üretim ortamı Türkiye'de kurulur (dağıtım hattı, kasa, günlük yedek, geri yükleme provası) — [ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md); staging bu ortama taşınır, gerçek veriden önce biter | NFR-10, NFR-13 | — (DoD: geri yükleme provası kaydı) | M | A |
 
 ### S3 — Plan ve çalıştırma motoru; madde cevaplama
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-025 | Backend: plan modeli, RRULE, pencere/tolerans, gece yarısı, DST | FR-0501…0507 | TC-025…028, 032 | L→2 |
-| ST-026 | Backend: çalıştırma üretimi (7 gün, benzersiz), kapalı gün | FR-0513, 0515 | TC-030, 033 | M |
-| ST-027 | Backend: durum makinesi (tablo güdümlü), zamanlayıcı geçişleri | FR-0514 | TC-034 | M |
-| ST-028 | Backend: atama modeli (v1: rol/kişi/şubedeki herkes, biri tamamlasın) | FR-0508 | — | S |
-| ST-139 | Backend + mobil: çalıştırma kilidi — ilk açan alır, "X yapıyor" rozeti, kilit yenileme/bırakma, şube müdürü kaldırır (E-2) | FR-0521, BR-26 | TC-039, 115 | M |
-| ST-029 | Web: plan editörü (kapsam, tekrar, pencere, atama; sabit hatırlatma/eskalasyon bilgisi) + 7 gün önizleme | FR-0501…0512 | TC-030, 031 | M |
-| ST-030 | Backend: cevap yazma (idempotent), gönderim, puan/durum | FR-0602, 0607 | TC-040 | M |
-| ST-031 | Mobil: liste çalıştırma ekranı (bölümler, ilerleme, geri sayım) | FR-0601, 0603, 0610 | TC-039, 048 | M |
-| ST-032 | Mobil: madde bileşenleri (onay, seçim, sayı, sıcaklık, metin, talimat) | FR-0303, 0305 | TC-018, 019 | M |
-| ST-033 | Mobil: gönderim kilidi ve sonuç | FR-0607 | TC-040 | S |
-| ST-034 | Spesifikasyon fikstürleri: pencere/durum | — | TC-025, 034 | S |
-| ST-035 | Backend: plan değişikliği yeniden hesap; çakışma engeli | FR-0516, 0517 | TC-031, 037 | S |
-| ST-037 | Backend: tek seferlik liste | FR-0512 | — | S |
-| ST-038 | Tohum: 25 şube, 8 plan, 30 gün geçmiş | — | — | M |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-025 | Backend: plan modeli, RRULE, pencere/tolerans, gece yarısı, DST | FR-0501…0507 | TC-025…028, 032 | L→2 | A |
+| ST-026 | Backend: çalıştırma üretimi (7 gün, benzersiz), kapalı gün | FR-0513, 0515 | TC-030, 033 | M | A |
+| ST-027 | Backend: durum makinesi (tablo güdümlü), zamanlayıcı geçişleri | FR-0514 | TC-034 | M | A |
+| ST-028 | Backend: atama modeli (v1: rol/kişi/şubedeki herkes, biri tamamlasın) | FR-0508 | — | S | A |
+| ST-139 | Backend + mobil: çalıştırma kilidi — ilk açan alır, "X yapıyor" rozeti, kilit yenileme/bırakma, şube müdürü kaldırır (E-2) | FR-0521, BR-26 | TC-039, 115 | M | A+B |
+| ST-029 | Web: plan editörü (kapsam, tekrar, pencere, atama; sabit hatırlatma/eskalasyon bilgisi) + 7 gün önizleme | FR-0501…0512 | TC-030, 031 | M | A |
+| ST-030 | Backend: cevap yazma (idempotent), gönderim, puan/durum | FR-0602, 0607 | TC-040 | M | A |
+| ST-031 | Mobil: liste çalıştırma ekranı (bölümler, ilerleme, geri sayım) | FR-0601, 0603, 0610 | TC-039, 048 | M | B |
+| ST-032 | Mobil: madde bileşenleri (onay, seçim, sayı, sıcaklık, metin, talimat) | FR-0303, 0305 | TC-018, 019 | M | B |
+| ST-033 | Mobil: gönderim kilidi ve sonuç | FR-0607 | TC-040 | S | B |
+| ST-034 | Spesifikasyon fikstürleri: pencere/durum | — | TC-025, 034 | S | A |
+| ST-035 | Backend: plan değişikliği yeniden hesap; çakışma engeli | FR-0516, 0517 | TC-031, 037 | S | A |
+| ST-037 | Backend: tek seferlik liste | FR-0512 | — | S | A |
+| ST-038 | Tohum: 25 şube, 8 plan, 30 gün geçmiş | — | — | M | A |
 
 ### S4 — Kanıt, damga, sabit kural, push
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-039 | Backend: ön imzalı yükleme, tamamlama, hash doğrulama | FR-0606 | TC-043 | M |
-| ST-040 | İşçi: damgalama ve küçük resim | FR-0606 | TC-043 | M |
-| ST-041 | Mobil: kamera doğrudan açılır (2 dokunuş), yalnızca kamera, 1–3 fotoğraf, sıkıştırma | FR-0604, 0605 | TC-041, 042 | M |
-| ST-043 | Mobil: konum yakalama ve bayraklar | FR-0606, BR-15 | TC-044 | S |
-| ST-147 | Backend + mobil: kanıt tekilliği (aynı SHA-256 reddi, olay kaydı) ve kanıt bayrakları (galeri · şube dışı konum · cihaz saati · geç senk) (E-11) | FR-0614, 0615 | TC-120, 121 | M |
-| ST-140 | Backend + mobil: sabit kural — başarısız cevapta fotoğraf + not; kritik → aksiyon; ortak fikstürler (E-… FR-0405) | FR-0405, BR-06, BR-08 | TC-019, 023, 046, 114 | M |
-| ST-044 | Backend: bildirim servisi (kanal-bağımsız), push sürücüsü, teslimat izi | FR-1001, 1005…1007 | TC-035 | M |
-| ST-045 | Backend: sabit iki hatırlatma (açılış, −30 dk) | FR-0509 | TC-035 | S |
-| ST-046 | Mobil: push alma, derin bağlantı | FR-1001 | TC-035 | S |
-| ST-048 | Web: çalıştırma detayı v1 (cevaplar, kanıt) | FR-1202 | TC-087 | M |
-| ST-049 | Backend: imzalı süreli kanıt URL'leri | FR-1305 | TC-087 | S |
-| ST-050 | Performans ölçüm protokolü ilk koşu (Galaxy A05) | NFR-02 | — | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-039 | Backend: ön imzalı yükleme, tamamlama, hash doğrulama | FR-0606 | TC-043 | M | A |
+| ST-040 | İşçi: damgalama ve küçük resim | FR-0606 | TC-043 | M | A |
+| ST-041 | Mobil: kamera doğrudan açılır (2 dokunuş), yalnızca kamera, 1–3 fotoğraf, sıkıştırma | FR-0604, 0605 | TC-041, 042 | M | B |
+| ST-043 | Mobil: konum yakalama ve bayraklar | FR-0606, BR-15 | TC-044 | S | B |
+| ST-147 | Backend + mobil: kanıt tekilliği (aynı SHA-256 reddi, olay kaydı) ve kanıt bayrakları (galeri · şube dışı konum · cihaz saati · geç senk) (E-11) | FR-0614, 0615 | TC-120, 121 | M | A+B |
+| ST-140 | Backend + mobil: sabit kural — başarısız cevapta fotoğraf + not; kritik → aksiyon; ortak fikstürler (E-… FR-0405) | FR-0405, BR-06, BR-08 | TC-019, 023, 046, 114 | M | A+B |
+| ST-044 | Backend: bildirim servisi (kanal-bağımsız), push sürücüsü, teslimat izi | FR-1001, 1005…1007 | TC-035 | M | A |
+| ST-045 | Backend: sabit iki hatırlatma (açılış, −30 dk) | FR-0509 | TC-035 | S | A |
+| ST-046 | Mobil: push alma, derin bağlantı | FR-1001 | TC-035 | S | B |
+| ST-048 | Web: çalıştırma detayı v1 (cevaplar, kanıt) | FR-1202 | TC-087 | M | A |
+| ST-049 | Backend: imzalı süreli kanıt URL'leri | FR-1305 | TC-087 | S | A |
+| ST-050 | Performans ölçüm protokolü ilk koşu (Galaxy A05) | NFR-02 | — | S | B |
 
 ### S5 — Çevrimdışı; yapılamadı; dün gece özeti
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-051 | Mobil: yerel veritabanı (şifreli), önbellek manifesti | FR-0701 | TC-051 | M |
-| ST-052 | Mobil: yazma kuyruğu (cevap + kanıt), "bekliyor" rozeti | FR-0702 | TC-051 | M |
-| ST-053 | Mobil: arka plan senk servisi, üstel yeniden deneme | FR-0703, 0707 | TC-051, 053 | L→2 |
-| ST-054 | Backend: `/sync/manifest`, `/sync/batch`, zaman düzeltmesi | FR-0704 | TC-052, 053 | M |
-| ST-057 | Mobil: yapılamadı alt sayfası (sabit sebep seti, kritikte yok) | FR-0801, 0803, 0804 | TC-057…060 | M |
-| ST-059 | Mobil: senk durumu ekranı | FR-0708 | TC-056 | S |
-| ST-060 | Backend: kuyruk sınırları ve geç senk bayrağı | FR-0706 | TC-054 | S |
-| ST-061 | Mobil: kaldığı yerden devam (tek kullanıcı) | FR-0603 | TC-048 | S |
-| ST-141 | Backend + mobil: açılış listesinde "dün gece" bloğu (E-3) | FR-0613 | TC-039, TC-116 | S |
-| ST-062 | Web: pano hücre → detay, durum lejantı | FR-1201 | TC-085 | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-051 | Mobil: yerel veritabanı (şifreli), önbellek manifesti | FR-0701 | TC-051 | M | B |
+| ST-052 | Mobil: yazma kuyruğu (cevap + kanıt), "bekliyor" rozeti | FR-0702 | TC-051 | M | B |
+| ST-053 | Mobil: arka plan senk servisi, üstel yeniden deneme | FR-0703, 0707 | TC-051, 053 | L→2 | B |
+| ST-054 | Backend: `/sync/manifest`, `/sync/batch`, zaman düzeltmesi | FR-0704 | TC-052, 053 | M | A |
+| ST-057 | Mobil: yapılamadı alt sayfası (sabit sebep seti, kritikte yok) | FR-0801, 0803, 0804 | TC-057…060 | M | B |
+| ST-059 | Mobil: senk durumu ekranı | FR-0708 | TC-056 | S | B |
+| ST-060 | Backend: kuyruk sınırları ve geç senk bayrağı | FR-0706 | TC-054 | S | A |
+| ST-061 | Mobil: kaldığı yerden devam (tek kullanıcı) | FR-0603 | TC-048 | S | B |
+| ST-141 | Backend + mobil: açılış listesinde "dün gece" bloğu (E-3) | FR-0613 | TC-039, TC-116 | S | A+B |
+| ST-062 | Web: pano hücre → detay, durum lejantı | FR-1201 | TC-085 | S | A |
 
 ### S6 — Senk dayanıklılığı; aksiyon (açık/kapalı); sabit eskalasyon; kiosk; sabah özeti → Alfa
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-063 | Backend: senk çakışma kuralı ve 100 tekrar dayanıklılık testi | FR-0705 | TC-055 | M |
-| ST-064 | Backend: aksiyon modeli (açık/kapalı), otomatik oluşturma (idempotent), sabit vadeler | FR-0901…0903 | TC-065, 069, 070 | M |
-| ST-065 | Backend: kapatma (not zorunlu), not ekleme | FR-0904, 0905 | TC-066, 067 | S |
-| ST-152 | Backend + web: elle aksiyon oluşturma (yetkili roller; şube, sorumlu, vade, öncelik) | FR-0908 | TC-065 | S |
-| ST-066 | Backend: sabit eskalasyon kuralı (kaçırıldı → şube müdürü anında; kritik → anında + SMS gecikmesi; sabah özetine biriktirme) | FR-0911…0915, FR-1008 | TC-073…077 | M |
-| ST-143 | Backend + e-posta: sabah özeti 07:00 (bölge müdürü, yönetici) push + e-posta (E-5) | FR-1212, BR-27 | TC-074 | M |
-| ST-067 | Backend: SMS sürücüsü (OTP + kritik yedek), sabit sessiz saat | FR-1002, 1004 | TC-036, 078, 117 | S |
-| ST-068 | Mobil: aksiyonlarım listesi ve detay (açık/kapalı, not, kapatma) | FR-0907, 0905 | TC-065…067 | M |
-| ST-069 | Web: aksiyonlar sayfası (basit) | FR-0907 | TC-065, 072 | S |
-| ST-070 | Backend: kiosk cihaz kaydı (QR), PIN, kısa ömürlü belirteç | FR-0207, 0208, 0210 | TC-008, 013, 015 | M |
-| ST-071 | Mobil: kiosk kilit ekranı, hareketsizlik, PIN sıfırlama | FR-0208…0210 | TC-013…016 | M |
-| ST-142 | Backend + mobil: şube müdürü personele başlangıç PIN'i atar (E-1) | FR-0211 | TC-013, TC-113 | S |
-| ST-072 | Web: cihaz yönetimi (kiosk QR, kaldırma) | FR-0207 | TC-008 | S |
-| ST-073 | Backend: yapılmayacak akışı | BR-04, FR-0914 | TC-038 | S |
-| ST-075 | Backend: aksiyon bildirimleri (atandı anında; gecikti sabah özetinde) | FR-0910 | TC-071 | S |
-| ST-076 | Alfa hazırlığı: tasarım ortağı hesabı, 5 şube, kapanış şablonu, kiosk kurulumu | — | — | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-063 | Backend: senk çakışma kuralı ve 100 tekrar dayanıklılık testi | FR-0705 | TC-055 | M | A |
+| ST-064 | Backend: aksiyon modeli (açık/kapalı), otomatik oluşturma (idempotent), sabit vadeler | FR-0901…0903 | TC-065, 069, 070 | M | A |
+| ST-065 | Backend: kapatma (not zorunlu), not ekleme | FR-0904, 0905 | TC-066, 067 | S | A |
+| ST-152 | Backend + web: elle aksiyon oluşturma (yetkili roller; şube, sorumlu, vade, öncelik) | FR-0908 | TC-065 | S | A |
+| ST-066 | Backend: sabit eskalasyon kuralı (kaçırıldı → şube müdürü anında; kritik → anında + SMS gecikmesi; sabah özetine biriktirme) | FR-0911…0915, FR-1008 | TC-073…077 | M | A |
+| ST-143 | Backend + e-posta: sabah özeti 07:00 (bölge müdürü, yönetici) push + e-posta (E-5) | FR-1212, BR-27 | TC-074 | M | A |
+| ST-067 | Backend: SMS sürücüsü (OTP + kritik yedek), sabit sessiz saat | FR-1002, 1004 | TC-036, 078, 117 | S | A |
+| ST-068 | Mobil: aksiyonlarım listesi ve detay (açık/kapalı, not, kapatma) | FR-0907, 0905 | TC-065…067 | M | B |
+| ST-069 | Web: aksiyonlar sayfası (basit) | FR-0907 | TC-065, 072 | S | A |
+| ST-070 | Backend: kiosk cihaz kaydı (QR), PIN, kısa ömürlü belirteç | FR-0207, 0208, 0210 | TC-008, 013, 015 | M | A |
+| ST-071 | Mobil: kiosk kilit ekranı, hareketsizlik, PIN sıfırlama | FR-0208…0210 | TC-013…016 | M | B |
+| ST-142 | Backend + mobil: şube müdürü personele başlangıç PIN'i atar (E-1) | FR-0211 | TC-013, TC-113 | S | A+B |
+| ST-072 | Web: cihaz yönetimi (kiosk QR, kaldırma) | FR-0207 | TC-008 | S | A |
+| ST-073 | Backend: yapılmayacak akışı | BR-04, FR-0914 | TC-038 | S | A |
+| ST-075 | Backend: aksiyon bildirimleri (atandı anında; gecikti sabah özetinde) | FR-0910 | TC-071 | S | A |
+| ST-076 | Alfa hazırlığı: tasarım ortağı hesabı, 5 şube, kapanış şablonu, kiosk kurulumu | — | — | S | A+B |
 
 ### S7 — İstisna odaklı pano, detay, galeri, Bölgem
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-077 | Backend: ızgara sorgusu (gün, filtre, istisna görünümü), 60 sn yenileme, performans | FR-1201, 1219, NFR-03 | TC-085, 086 | M |
-| ST-078 | Web: pano (istisna odaklı varsayılan, "her şey yolunda", tümünü göster, KPI) | FR-1201, 1219 | TC-085, 118 | M |
-| ST-079 | Web: çalıştırma detayı tam (kanıt tam boy, damga meta, aksiyonlar, olay izi özeti) | FR-1202 | TC-087 | M |
-| ST-080 | Backend + web: kanıt galerisi (şube + tarih) | FR-1208 | TC-092 | S |
-| ST-081 | Backend: günlük yeniden atama | FR-0519, 0520 | TC-108, 109, 110 | S |
-| ST-149 | Backend: belge kaydı ve dosyası; 30/7 gün uyarıları, süresi geçende yüksek öncelikli aksiyon ve "belge eksik" işareti (E-12) | FR-0522, 0523 | TC-123, 124 | M |
-| ST-144 | Mobil: "Bölgem/Şubem" listesi (şube × dün gece durumu → detay) + şube müdürü günlük atama | FR-1211, 0519 | TC-094, 108 | M |
-| ST-083 | Web: günlük atama (pano) | FR-0519 | TC-108 | S |
-| ST-148 | Web: çalıştırma detayında kanıt bayrakları ve panoda "şüpheli kanıt" filtresi (E-11) | FR-0615 | TC-121, 122 | S |
-| ST-084 | Alfa geri bildirim düzeltmeleri | — | — | M |
-| ST-086 | Mobil: sorun bildir (sabit kategori: güvenlik dâhil) | FR-0806 | TC-062, 126 | S |
-| ST-093 | Backend + web: sorun → aksiyona çevir / kapat | FR-0807 | TC-063 | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-077 | Backend: ızgara sorgusu (gün, filtre, istisna görünümü), 60 sn yenileme, performans | FR-1201, 1219, NFR-03 | TC-085, 086 | M | A |
+| ST-078 | Web: pano (istisna odaklı varsayılan, "her şey yolunda", tümünü göster, KPI) | FR-1201, 1219 | TC-085, 118 | M | A |
+| ST-079 | Web: çalıştırma detayı tam (kanıt tam boy, damga meta, aksiyonlar, olay izi özeti) | FR-1202 | TC-087 | M | A |
+| ST-080 | Backend + web: kanıt galerisi (şube + tarih) | FR-1208 | TC-092 | S | A |
+| ST-081 | Backend: günlük yeniden atama | FR-0519, 0520 | TC-108, 109, 110 | S | A |
+| ST-149 | Backend: belge kaydı ve dosyası; 30/7 gün uyarıları, süresi geçende yüksek öncelikli aksiyon ve "belge eksik" işareti (E-12) | FR-0522, 0523 | TC-123, 124 | M | A |
+| ST-144 | Mobil: "Bölgem/Şubem" listesi (şube × dün gece durumu → detay) + şube müdürü günlük atama | FR-1211, 0519 | TC-094, 108 | M | B |
+| ST-083 | Web: günlük atama (pano) | FR-0519 | TC-108 | S | A |
+| ST-148 | Web: çalıştırma detayında kanıt bayrakları ve panoda "şüpheli kanıt" filtresi (E-11) | FR-0615 | TC-121, 122 | S | A |
+| ST-084 | Alfa geri bildirim düzeltmeleri | — | — | M | A+B |
+| ST-086 | Mobil: sorun bildir (sabit kategori: güvenlik dâhil) | FR-0806 | TC-062, 126 | S | B |
+| ST-093 | Backend + web: sorun → aksiyona çevir / kapat | FR-0807 | TC-063 | S | A |
 
 ### S8 — Sıcaklık günlüğü, PDF'ler, aylık özet → Beta
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-088 | Backend: ölçüm günlüğü sorgusu (ekipman zaman serisi, aralık dışı) | FR-1207 | TC-091 | M |
-| ST-091 | İşçi: çalıştırma PDF'i (markalı, doğrulama kodu) | FR-1213, 1218 | TC-095 | M |
-| ST-092 | İşçi: dönem PDF'i (sıcaklık günlüğü), arka plan üretim | FR-1214, 1217 | TC-096, 099 | M |
-| ST-145 | Backend + web: aylık tek sayfa özet (E-7) + PDF | FR-1220 | TC-088, TC-119 | M |
-| ST-090 | Web: raporlar sayfası (aylık özet, sıcaklık günlüğü, galeri) | FR-1207, 1208, 1220 | TC-088, 091, 092 | M |
-| ST-150 | Web + işçi: belge takvimi ekranı (SCR-W-14, yaklaşan ve süresi geçen) + dönem PDF'i (E-12) | FR-0524 | TC-125 | M |
-| ST-094 | Web: personel oturum sonlandırma; hesap sayfası (marka, tatil takvimi, aydınlatma metni) | FR-0203, 1402 (minimal) | TC-007 | S |
-| ST-097 | Mobil: erişilebilirlik geçişi (44 px, etiketler, %130) | FR-0611 | TC-050 | S |
-| ST-098 | Cihaz matrisi otomasyonu (Firebase Test Lab gece) | NFR-06 | — | S |
-| ST-106 | Beta hazırlığı: 3 pilot hesabı, veri işleme sözleşmesi, staging zaman aracı | — | — | M |
-| ST-107 | Backend: personel Excel içe aktarma | FR-0105 | TC-005 | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-088 | Backend: ölçüm günlüğü sorgusu (ekipman zaman serisi, aralık dışı) | FR-1207 | TC-091 | M | A |
+| ST-091 | İşçi: çalıştırma PDF'i (markalı, doğrulama kodu) | FR-1213, 1218 | TC-095 | M | A |
+| ST-092 | İşçi: dönem PDF'i (sıcaklık günlüğü), arka plan üretim | FR-1214, 1217 | TC-096, 099 | M | A |
+| ST-145 | Backend + web: aylık tek sayfa özet (E-7) + PDF | FR-1220 | TC-088, TC-119 | M | A |
+| ST-090 | Web: raporlar sayfası (aylık özet, sıcaklık günlüğü, galeri) | FR-1207, 1208, 1220 | TC-088, 091, 092 | M | A |
+| ST-150 | Web + işçi: belge takvimi ekranı (SCR-W-14, yaklaşan ve süresi geçen) + dönem PDF'i (E-12) | FR-0524 | TC-125 | M | A |
+| ST-094 | Web: personel oturum sonlandırma; hesap sayfası (marka, tatil takvimi, aydınlatma metni) | FR-0203, 1402 (minimal) | TC-007 | S | A |
+| ST-097 | Mobil: erişilebilirlik geçişi (44 px, etiketler, %130) | FR-0611 | TC-050 | S | B |
+| ST-098 | Cihaz matrisi otomasyonu (Firebase Test Lab gece) | NFR-06 | — | S | B |
+| ST-106 | Beta hazırlığı: 3 pilot hesabı, veri işleme sözleşmesi, staging zaman aracı | — | — | M | A+B |
+| ST-107 | Backend: personel Excel içe aktarma | FR-0105 | TC-005 | S | A |
 
 ### S9 — Hash zinciri, 8 şablon, KVKK süreçleri, güvenlik
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-099 | Backend: hash zinciri ve günlük kök (TSA v1.1) | FR-1301 | TC-100, 101 | M |
-| ST-100 | Backend: zincir doğrulama komutu (iç araç) | FR-1304 | TC-101 | S |
-| ST-102 | İçerik: 8 Türkçe yeme-içme şablonu (kalite incelemeli) | FR-0311 | TC-017 | M (PO + danışman) |
-| ST-103 | Backend + web: kütüphane kopyalama, merkezî güncelleme | FR-0311 | TC-017 | S |
-| ST-104 | Web: şablon editörü — şablon ayarları (yalnızca kamera, başarısızda kanıt), önizleme, doğrulama tam | FR-0308, 0309, 0312 | TC-022 | M |
-| ST-105 | Mobil: tolerans/kilit davranışları, geç gönderim | FR-0610, BR-02/03 | TC-045 | S |
-| ST-109 | Backend: aydınlatma sürümleri, yeniden onay; aydınlatma ve veri işleme sözleşmesi şablonları ürün içinden indirilebilir | FR-1307, 1312 | TC-107 | S |
-| ST-112 | Zamanlayıcı: saklama silme (sabit 24 ay) ve rapor | FR-1311 | TC-105 | M |
-| ST-118 | Güvenlik: ASVS/MASVS kontrol listesi, bağımlılık taraması, hız sınırları | NFR-09 | — | M |
-| ST-119 | Backend: faturalama sayacı | FR-1403 | — | S |
-| ST-108 | Beta düzeltmeleri | — | — | M |
-| ST-146 | Destek betiği: KVKK dışa aktarma / maskeleme (süreç belgesiyle) | FR-1309, 1310 | TC-104, 106 | S |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-099 | Backend: hash zinciri ve günlük kök (TSA v1.1) | FR-1301 | TC-100, 101 | M | A |
+| ST-100 | Backend: zincir doğrulama komutu (iç araç) | FR-1304 | TC-101 | S | A |
+| ST-102 | İçerik: 8 Türkçe yeme-içme şablonu (kalite incelemeli) | FR-0311 | TC-017 | M (PO + danışman) | A |
+| ST-103 | Backend + web: kütüphane kopyalama, merkezî güncelleme | FR-0311 | TC-017 | S | A |
+| ST-104 | Web: şablon editörü — şablon ayarları (yalnızca kamera, başarısızda kanıt), önizleme, doğrulama tam | FR-0308, 0309, 0312 | TC-022 | M | A |
+| ST-105 | Mobil: tolerans/kilit davranışları, geç gönderim | FR-0610, BR-02/03 | TC-045 | S | B |
+| ST-109 | Backend: aydınlatma sürümleri, yeniden onay; aydınlatma ve veri işleme sözleşmesi şablonları ürün içinden indirilebilir | FR-1307, 1312 | TC-107 | S | A |
+| ST-112 | Zamanlayıcı: saklama silme (sabit 24 ay) ve rapor | FR-1311 | TC-105 | M | A |
+| ST-118 | Güvenlik: ASVS/MASVS kontrol listesi, bağımlılık taraması, hız sınırları | NFR-09 | — | M | A |
+| ST-119 | Backend: faturalama sayacı | FR-1403 | — | S | A |
+| ST-108 | Beta düzeltmeleri | — | — | M | A+B |
+| ST-146 | Destek betiği: KVKK dışa aktarma / maskeleme (süreç belgesiyle) | FR-1309, 1310 | TC-104, 106 | S | A |
 
 ### S10 — Sertleştirme ve GA
-| ST | Hikâye | FR | TC | Boyut |
-|---|---|---|---|---|
-| ST-126 | Performans: ızgara 100 şube, PDF < 30 sn, k6 yük profili (22:00–01:00) | NFR-03, 04 | TC-086 | M |
-| ST-129 | Mobil: düşük cihaz optimizasyonu (soğuk açılış < 3 sn) | NFR-02 | — | M |
-| ST-131 | Dış sızma testi bulgularının kapatılması | NFR-09 | — | M |
-| ST-132 | Kurtarma tatbikatı (yedekten geri yükleme), RPO/RTO doğrulama | NFR-13 | — | S |
-| ST-133 | v1 kabul testleri (104) %100 koşusu ve hata kapanışı | — | — | L |
-| ST-134 | Mağaza yayın hazırlığı (gizlilik etiketleri, ekran görüntüleri, sürüm notları) | — | — | S |
-| ST-135 | Uyum kontrol listesi (06-kvkk) kapanışı; biyometri kullanılmadığının kod ve mağaza beyanıyla doğrulanması | NFR-10, FR-1306 | — | S |
-| ST-136 | İzleme ve uyarılar üretim ayarı; çalışma kitapları | NFR-12 | — | M |
-| ST-137 | Onboarding oyun kitabı ve destek SSS | NFR-16 | — | S |
-| ST-120 | Beta/pilot düzeltmeleri | — | — | M |
+| ST | Hikâye | FR | TC | Boyut | Faz |
+|---|---|---|---|---|---|
+| ST-126 | Performans: ızgara 100 şube, PDF < 30 sn, k6 yük profili (22:00–01:00) | NFR-03, 04 | TC-086 | M | A |
+| ST-129 | Mobil: düşük cihaz optimizasyonu (soğuk açılış < 3 sn) | NFR-02 | — | M | B |
+| ST-131 | Dış sızma testi bulgularının kapatılması | NFR-09 | — | M | A |
+| ST-132 | Kurtarma tatbikatı (yedekten geri yükleme), RPO/RTO doğrulama | NFR-13 | — | S | A |
+| ST-133 | v1 kabul testleri (104) %100 koşusu ve hata kapanışı | — | — | L | A+B |
+| ST-134 | Mağaza yayın hazırlığı (gizlilik etiketleri, ekran görüntüleri, sürüm notları) | — | — | S | B |
+| ST-135 | Uyum kontrol listesi (06-kvkk) kapanışı; biyometri kullanılmadığının kod ve mağaza beyanıyla doğrulanması | NFR-10, FR-1306 | — | S | A |
+| ST-136 | İzleme ve uyarılar üretim ayarı; çalışma kitapları | NFR-12 | — | M | A |
+| ST-137 | Onboarding oyun kitabı ve destek SSS | NFR-16 | — | S | A |
+| ST-120 | Beta/pilot düzeltmeleri | — | — | M | A+B |
 
 ### S11–S12 — Tampon ve v1.1 başlangıcı
 Pilot bulguları önce. Kalan kapasite v1.1 sırasına göre (aşağıdaki liste).

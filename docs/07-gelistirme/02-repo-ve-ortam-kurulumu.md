@@ -57,7 +57,7 @@ Takvim, ekip kararı ve teknik spike'lar: [05-sprint0-ve-teknik-spike.md](05-spr
 
 - [ ] Depolar açıldı, dal koruması, CODEOWNERS, PR şablonu (DoD kontrol listesi)
 - [ ] `talimatname-api`: iskelet (FastAPI, Alembic, pytest), `audit.emit()` altyapısı, RLS politikası, OpenAPI yayını
-- [ ] `talimatname-mobile`: iskelet (Riverpod, Drift, üretilmiş istemci, tema token'ları 05-tasarim/04)
+- [ ] ~~`talimatname-mobile`: iskelet~~ → **Faz B'nin 1. haftası** (ADR-0013); Sprint 0'da yalnızca boş depo ve dal koruması açılır
 - [ ] `talimatname-web`: iskelet (Vite, yönlendirme, tema token'ları, üretilmiş istemci, oturum)
 - [ ] `talimatname-infra`: dev compose, sahte servisler, CI iş akışları, izleme temel
 - [ ] **Staging ayakta — ücretsiz ya da AB altyapı yeterli**, içinde yalnızca tohum/fikstür verisi var (ADR-0012 md.2); `staging.talimatname.app` bağlı

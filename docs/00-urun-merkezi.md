@@ -24,7 +24,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 | WhatsApp | MVP dışı; push + SMS yedek | [ADR-0006](adr/0006-whatsapp-mvp-disi.md) |
 | Kişi skoru | Yok; şube düzeyinde skor, kişi düzeyinde yalnızca gecikme/eksik görünümü | [ADR-0007](adr/0007-kisi-skoru-yok.md) |
 | Teknoloji | Flutter mobil, React web, Python/FastAPI, PostgreSQL, S3 uyumlu depolama | [ADR-0002](adr/0002-mobil-flutter-web-react.md), [Teknik mimari](07-gelistirme/01-teknik-mimari.md) |
-| Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; Sprint 2 sonu devam/dur kapısı (27 Kasım); Sprint 0 başlangıcı **19 Ekim** | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
+| Ekip | İki serbest geliştirici + yarı zamanlı tasarımcı; **sırayla:** panel/arka uç geliştiricisi önce, mobil 6.–8. haftada; Sprint 2 sonu devam/dur kapısı | [ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md), [ADR-0013](adr/0013-faz-sirasi-panel-once-mobil-sonra.md), [Seçim süreci](07-gelistirme/07-serbest-gelistirici-secimi.md) |
 | Kayıt dışı satış | Ürün çıktısı suçlama değil “açıklanamayan fark”; dört kademe (L0 sayım listesi — v1 araçlarıyla · L1 tüketim mutabakatı — v1.1 adayı · L2 kamera sayımı · L3 POS–kamera eşleştirme — v2); kimlik ve biyometri yok | [ADR-0011](adr/0011-uretim-satis-mutabakati.md), [S-11](03-analiz/04-senaryolar.md) |
 | Madde kütüphanesi | v1'de şablon düzeyinde kütüphane (8 şablon, kopyala-düzenle); madde kütüphanesi + işletme türü paketleri v1.1'in ilk epic'i; başka dikeyler ve marka kütüphanesi v2 | [ADR-0010](adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi](02-urun/08-madde-kutuphanesi.md) |
 | Barındırma | Üretim Türkiye'de; geliştirme, CI ve staging ücretsiz/AB altyapıda olabilir (gerçek kişisel veri yokken) | [ADR-0003](adr/0003-veri-tr-barindirma.md) · [ADR-0012](adr/0012-barindirma-saglayici-ve-ortamlar.md) |
@@ -40,7 +40,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 4. ~~Barındırma: TR bulut vs AB~~ — karar: üretim TR, geliştirme ortamları ücretsiz/AB (gerçek veri yokken) ([ADR-0012](adr/0012-barindirma-saglayici-ve-ortamlar.md)); açık kalan: **üretim sağlayıcısının seçimi** (kısa liste Sprint 0, karar Sprint 2 sonu)
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
-7. ~~Geliştirme ekibi~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)); açık kalan: seçim (ilan 2 Ekim → teklif 15 Ekim) ve Sprint 2 sonu devam/dur kapısı (27 Kasım)
+7. ~~Geliştirme ekibi ve sıra~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)), **panel önce / mobil 6.–8. haftada** ([ADR-0013](adr/0013-faz-sirasi-panel-once-mobil-sonra.md)); açık kalan: ilanın tek pozisyona çevrilip yayınlanması, kapasite kaldıracı (üçüncü geliştirici / kapsam / takvim) ve Sprint 2 sonu devam/dur kapısı
 
 ## Belge navigasyonu (okuma sırası)
 

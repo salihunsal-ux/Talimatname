@@ -1,5 +1,7 @@
 # Serbest geliştirici ilanı ve seçim süreci (ADR-0009, seçenek A)
 
+> **ADR-0013 (22 Ekim):** iki pozisyon **sırayla** aranır. Önce **panel/arka uç** geliştiricisi (Faz A, hemen); mobil geliştirici ilanı Faz A'nın 3.–4. haftasında çıkar, başlangıcı 6.–8. hafta. Aşağıdaki iki rol tanımı ve süreç geçerli; yalnızca eşzamanlılık ve takvim değişti — **ilan metni yayından önce tek pozisyona göre güncellenmeli**.
+
 Hedef takvim (1 Ekim 2026'da yeniden kuruldu): ilan **2 Ekim** → başvuru 9 Ekim → görüşme ve mini görev 10–15 Ekim → sözleşme 16 Ekim → **Sprint 0 başlangıcı 19 Ekim** → Sprint 1 2 Kasım. Aday bulunmazsa bir hafta kaydırılır; Kasım'a sarkarsa pilot ölçümü Mart'a gider ve tampon tükenir (05-sprint0 §1).
 
 Gönderilebilir ilan metni: [ilan/serbest-gelistirici-ilani.html](ilan/serbest-gelistirici-ilani.html) (PDF'i de aynı klasörde). Depo özel olduğu için adaylar bu belgeyi değil ilanı görür; belgeye erişim sözleşmeyle.

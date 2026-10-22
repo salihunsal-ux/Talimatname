@@ -1,6 +1,6 @@
 # Geliştirici ilk gün paketi
 
-Ekip modeli: iki serbest geliştirici (ADR-0009, seçenek A); seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md). Bu belge sözleşme imzalanan iki geliştiriciye Sprint 0'ın ilk günü (hedef **19 Ekim 2026**; takvim 05-sprint0 §1) gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
+Ekip modeli: iki serbest geliştirici (ADR-0009, seçenek A), **sırayla işe alınır** — panel/arka uç geliştiricisi önce, mobil geliştirici 6.–8. haftada ([ADR-0013](../adr/0013-faz-sirasi-panel-once-mobil-sonra.md)). Bu paketin mobil maddeleri (Flutter kurulumu, emülatör, Spike A/C) **ikinci geliştirici için** geçerlidir; ilk gün tek kişiyle yapılır. Seçim süreci [07-serbest-gelistirici-secimi.md](07-serbest-gelistirici-secimi.md). Bu belge sözleşme imzalanan iki geliştiriciye Sprint 0'ın ilk günü (hedef **19 Ekim 2026**; takvim 05-sprint0 §1) gönderilir (backend/web ve mobil için ortak; rol notları işaretli). Amaç: ilk gün sonunda ortam ayakta, ürün anlaşılmış, ilk hafta işi belli. Bu belge yeni bir şey anlatmaz; doğru sırayla doğru belgeye götürür.
 
 ## Hoş geldin: 5 cümlede ürün
 

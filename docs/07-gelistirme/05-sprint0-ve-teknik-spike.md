@@ -40,7 +40,11 @@ Tahminler 2026 İstanbul piyasası için kaba aralıklardır; teklif alınca gü
 
 Ne olursa olsun Sprint 0'da gereken profil: Python/FastAPI + PostgreSQL bilen bir backend geliştirici (RLS, Alembic, kuyruk), Flutter bilen bir mobil geliştirici (çevrimdışı, kamera). Web (React) Sprint 5'e kadar backend geliştiricinin yarı zamanıyla gider (ekip notu, 03-backlog).
 
-## 3. Sprint 0 takvimi (2 hafta, iki kişi)
+## 3. Sprint 0 takvimi (2 hafta)
+
+**ADR-0013 ile değişti:** Sprint 0 tek kişiyle (backend/web) koşar. Aşağıdaki tablonun **Mobil kolonu Faz B'nin ilk haftasına taşındı** — mobil geliştirici Faz A'nın 6.–8. haftasında katılır ve ilk işi Spike A + Spike C olur. Sprint 0'da mobil tarafta yalnızca boş depo ve dal koruması vardır.
+
+### Özgün tablo (iki kişilik kurgu; Mobil kolonu artık Faz B'de)
 
 | Gün | Backend | Mobil | Ortak |
 |---|---|---|---|
@@ -85,8 +89,8 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 ## 5. Sprint 0 bitti tanımı (DoD)
 
 - 02-repo kontrol listesinin tamamı işaretli; `make dev` tek komutla ayağa kalkıyor; CI üç depoda yeşil.
-- Dört spike'ın sonucu yazılı (geçti / geçmedi + ne değişecek); ADR-0004/0005'e uygulama notu; Spike A/C kabul ölçütleri TC-051/054/055 ve TC-039…044'e fikstür olarak bağlı.
-- Tasarım token'ları kodda (Flutter `ThemeData`, web CSS değişkenleri) ve tel-çerçevedeki iki ekran (kiosk kilit, kapanış listesi) iskelet olarak derleniyor.
+- **Spike B ve D'nin** sonucu yazılı (geçti / geçmedi + ne değişecek); ADR-0005'e uygulama notu. **Spike A ve C Faz B'nin ilk iki haftasında** koşar (ADR-0013); kabul ölçütleri TC-051/054/055 ve TC-039…044'e fikstür olarak orada bağlanır.
+- Tasarım token'ları web CSS değişkenlerinde; Flutter `ThemeData` karşılığı ve tel-çerçevedeki iki ekran (kiosk kilit, kapanış listesi) **Faz B'ye** taşındı (ADR-0013).
 - Tohum v0 (hesap, 3 şube, 5 kullanıcı, 1 şablon, 1 plan) ve backlog aracında S1–S2 hikâyeleri hazır (DoR).
 - Staging ayakta ve içinde yalnızca tohum/fikstür verisi var; altyapısı ücretsiz ya da AB olabilir ([ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md) md.2). Sağlayıcı hesapları (nesne depo, SMS, push) test modunda.
 - Taşınabilirlik şartı kanıtlı: dev ve staging aynı compose/imajdan kalkıyor, fark yalnızca ortam değişkeni; sağlayıcıya özel hizmet yok (ADR-0012 md.4).

@@ -25,6 +25,16 @@
 - [ ] Dokümantasyon: bu depoda ilgili FR/BR/ekran/ADR güncellendi (kapsam değiştiyse)
 - [ ] Staging'e dağıtıldı ve PO tarafından kabul edildi
 
+## Faz A'nın bitti tanımı (mobil başlamadan önce — ADR-0013)
+
+Hikâye bazlı DoD'un üstüne, **Faz B'ye devir** için üç sözleşme:
+
+- [ ] **Cevap yazma idempotent:** cihazda üretilen UUID anahtarıyla `PUT`, tekrar gönderimde aynı kayıt; OpenAPI'de yazılı ve sözleşme testi var (ST-030, FR-0602/0607)
+- [ ] **Kanıt yükleme akışı:** ön imzalı URL → tamamlama → sunucu damgası + SHA-256 doğrulaması; ham ve damgalı dosya ayrı (ST-039/040, FR-0606, ADR-0004)
+- [ ] **Senk uç noktalarının taslağı:** `/sync/manifest`, `/sync/batch` ve cihaz saati düzeltmesi OpenAPI'de tanımlı (uygulanması Faz B'de; ST-054, FR-0704)
+
+Gerekçe: bu üçü yazılmazsa API panelin çevrimiçi istek-cevap şekline oturur ve mobil geldiğinde arka ucun bir kısmı yeniden yazılır.
+
 ## Hikâye kartı şablonu
 
 ```
