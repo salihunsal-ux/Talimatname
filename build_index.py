@@ -183,6 +183,7 @@ REGISTRY = [
         (D+"adr/0007-kisi-skoru-yok.md", "ADR-0007 Kişi skoru yok", "Skor şube düzeyinde", []),
         (D+"adr/0008-v1-cekirdek.md", "ADR-0008 v1 çekirdek", "Basit, ilk gün kullanılabilir çekirdek; K1–K21, E1–E7", []),
         (D+"adr/0009-ekip-modeli-serbest-gelistirici.md", "ADR-0009 Ekip modeli: iki serbest geliştirici", "Seçenek A; Sprint 2 sonu devam/dur kapısı; hedef başlangıç 5 Ekim", []),
+        (D+"adr/0014-kod-duzeni-katmanlar-ve-standartlar.md", "ADR-0014 Kod düzeni, katmanlar ve standartlar", "Tek kod deposu; katman kuralları; RLS; idempotency; test kapıları", []),
         (D+"adr/0013-faz-sirasi-panel-once-mobil-sonra.md", "ADR-0013 Faz sırası: panel önce, mobil sonra", "Panel tek kişiyle başlar; mobil geliştirici 6.-8. haftada; devir sözleşmeleri", []),
         (D+"adr/0012-barindirma-saglayici-ve-ortamlar.md", "ADR-0012 Barındırma: sağlayıcı ve ortamlar", "Üretim TR; geliştirme ücretsiz/AB; taşınabilirlik şartı ve maliyet", []),
         (D+"adr/0011-uretim-satis-mutabakati.md", "ADR-0011 Üretim–satış mutabakatı (kayıt dışı satış)", "Çıktı suçlama değil açıklanamayan fark; L0 sayım → L1 tüketim mutabakatı → L2 kamera sayımı → L3 POS eşleştirme; doğrulama kapıları ve KVKK sınırları", []),

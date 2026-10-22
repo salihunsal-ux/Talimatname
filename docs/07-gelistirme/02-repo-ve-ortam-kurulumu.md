@@ -2,6 +2,8 @@
 
 ## Depolar
 
+> **ADR-0014 (22 Ekim):** aşağıdaki beş depo **tek depoya** indirildi: `talimatname-kod` (`api/`, `web/`, `mobile/`, `spec/`, `infra/`). Gerekçe tek geliştirici (ADR-0013): API sözleşmesi, istemci ve ortak fikstür tek commit'te değişiyor. Tablodaki içerik ve araç sütunları klasör bazında geçerli; ayrışma gerekirse `git subtree split` kapısı açık. Ürün dokümantasyonu (`Talimatname`) ayrı kalır.
+
 | Depo | İçerik | Ana araçlar |
 |---|---|---|
 | `Talimatname` (bu depo) | Ürün dokümantasyonu, ADR, tasarım kaynakları | Markdown, HTML |
