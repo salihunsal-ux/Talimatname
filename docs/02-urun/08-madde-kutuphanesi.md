@@ -7,8 +7,8 @@ Karar: [ADR-0010](../adr/0010-madde-kutuphanesi-v1-1.md). Bu belge özelliğin �
 | Kavram | Tanım | v1'de karşılığı |
 |---|---|---|
 | **Kütüphane maddesi** | Talimatname'nin sağladığı, hesaplar arası paylaşılan, sürümlü tek talimat: başlık, tür, önerilen ayarlar (zorunlu / fotoğraf / kritik / sıcaklık aralığı), alan etiketi, ipucu, mevzuat notu | Yok — maddeler şablonun içinde |
-| **Kütüphane şablonu (set)** | Kütüphane maddelerinden kurulmuş sıralı, bölümlü liste (bugünkü 8 şablon) | 8 şablon (FR-0311) |
-| **Paket** | Bir işletme türü için şablon seti + varsayılan planlar (kafe paketi: 8 şablon, 73 madde, planlar) | Yok — sihirbaz tek şablonla başlar |
+| **Kütüphane şablonu (set)** | Kütüphane maddelerinden kurulmuş sıralı, bölümlü liste (bugünkü 9 şablon) | 8 şablon (FR-0311) |
+| **Paket** | Bir işletme türü için şablon seti + varsayılan planlar (kafe paketi: 9 şablon, 89 madde, planlar) | Yok — sihirbaz tek şablonla başlar |
 | **Hesap maddesi / hesap şablonu** | Zincirin kopyası; kaynağını hatırlar (`kaynak_madde_id`, `kaynak_surum`); serbestçe değiştirilir | Kopyala-düzenle (kaynak yalnızca şablon düzeyinde) |
 | **Kendi maddesi** | Zincirin sıfırdan yazdığı madde; kaynağı yok; istenirse hesabın kendi kütüphanesine "kaydet" | Editörde madde ekle (yalnızca o şablonda) |
 
@@ -42,7 +42,7 @@ Personel bu kavramların hiçbirini görmez; listeyi görür. Kütüphane merkez
 
 | Aşama | Kapsam | Ne zaman |
 |---|---|---|
-| v1 (şimdi) | Veri modelinde alanlar (boş); 8 şablon içeriği sahada doğrulanır; etiket şeması belirlenir | Sprint 0–9 |
+| v1 (şimdi) | Veri modelinde alanlar (boş); 9 şablon içeriği sahada doğrulanır; etiket şeması belirlenir | Sprint 0–9 |
 | v1.1 · EP-13 | Kütüphane maddesi varlığı ve tohum; editörde "kütüphaneden ekle" ve "hesap kütüphanesine kaydet"; işletme türü paketleri ve sihirbaz adımı; kaynak güncelleme bandı; 200–300 madde, 4 paket | Pilot geri bildirimi sonrası ilk sıra (S11+) |
 | v2 | Başka dikeyler için paketler (perakende, eczane, spor salonu, otel mutfağı) — her biri kendi doğrulamasıyla; **marka kütüphanesi** (franchise merkezi → bayiler, yerel alanlar hariç kilitli); Ş-8 AI taslak kütüphane maddeleriyle eşleştirme | Franchise sinyaline ve dikey kararına göre |
 

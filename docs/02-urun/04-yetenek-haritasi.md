@@ -6,7 +6,7 @@ Kaynak: [v1 çekirdek kapsamı](06-v1-cekirdek-kapsam.md) (ADR-0008). Yetenek (C
 |---|---|---|---|---|---|
 | CAP-01 | Hesap ve organizasyon | Çok kiracılı hesap; Marka › Bölge › Şube › İstasyon; Excel içe aktarma (şube, personel); pasifleştirme | Kimlik maskeleme ekranı (v1: destek betiği) | v1 | UC-01, UC-02 |
 | CAP-02 | Kimlik ve yetki | 4 rol × kapsam; telefon + OTP; yönetici e-posta + şifre; kiosk cihaz kaydı, PIN, kilit; şube müdürünün PIN ataması (E-1) | 2FA; akıllı gruplar; Gözlemci rolü | v1 | UC-03, UC-04 |
-| CAP-03 | Şablon tasarımı | Sürümlü editör (yayın hemen); 6 madde türü + talimat; zorunlu / fotoğraf zorunlu / kritik; sıcaklık aralığı; yüzde puan; 8 şablon kütüphanesi; yayın doğrulaması | Video/imza/barkod/tarih-saat; ağırlık ve eşik; tarihli yayın; 30 şablon | v1 | UC-05 |
+| CAP-03 | Şablon tasarımı | Sürümlü editör (yayın hemen); 6 madde türü + talimat; zorunlu / fotoğraf zorunlu / kritik; sıcaklık aralığı; yüzde puan; 9 şablon kütüphanesi; yayın doğrulaması | Video/imza/barkod/tarih-saat; ağırlık ve eşik; tarihli yayın; 30 şablon | v1 | UC-05 |
 | CAP-04 | Koşullu mantık | Tek sabit kural: başarısız cevapta fotoğraf + not; kritik → aksiyon | Kural editörü ve altı eylem | v1 sabit | UC-05, UC-08 |
 | CAP-05 | Planlama ve pencereler | RRULE tekrar; pencere ve gece yarısı; tolerans; çalışma saatinden türetme; atama rol/kişi/herkes ("biri tamamlasın", ilk açan alır — E-2); üretim; kapalı gün; tek seferlik liste; sabit iki hatırlatma; günlük yeniden atama | "Herkes tamamlasın"; vardiya bazlı tekrar; hatırlatma ayarları | v1 | UC-06, UC-07, UC-19 |
 | CAP-06 | Mobil yürütme ve kanıt | Bugün; madde tamamlama (tek kullanıcı, kaldığı yerden devam); kamera doğrudan, 1–3 fotoğraf, sıkıştırma, damga, hash; gönderim kilidi; açılışta dün gece özeti (E-3); erişilebilirlik | Ek kayıt; çoklu kullanıcı/madde kilidi; QR ile başlatma; video | v1 | UC-08, UC-09 |
@@ -23,7 +23,7 @@ Kaynak: [v1 çekirdek kapsamı](06-v1-cekirdek-kapsam.md) (ADR-0008). Yetenek (C
 | CAP-17 | Gözden geçirme ve imza | — | Tamamı | v1.1 | UC-20 |
 | CAP-18 | Planlı raporlar ve API | Sabah özeti (E-5, CAP-09'da) | Salt okunur API; webhook | v1.1 | UC-15 |
 | CAP-19 | v2 adayları | — | SSO; formül/kaydırıcı; özel aksiyon tipleri; pano oluşturucu; PDKS/POS/İK | v2 | — |
-| CAP-20 | Madde kütüphanesi ve işletme türü paketleri | Veri modeli alanları (boş); 8 şablon içeriği | Kütüphane maddesi (sürümlü, etiketli), editörde kütüphaneden ekle, hesap kütüphanesi, kaynak güncelleme bandı, işletme türü paketleri, hesap içi set uygulama ([ADR-0010](../adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi.md](08-madde-kutuphanesi.md)); v2: başka dikeyler, marka kütüphanesi (franchise) | v1.1 | UC-05, UC-01 |
+| CAP-20 | Madde kütüphanesi ve işletme türü paketleri | Veri modeli alanları (boş); 9 şablon içeriği | Kütüphane maddesi (sürümlü, etiketli), editörde kütüphaneden ekle, hesap kütüphanesi, kaynak güncelleme bandı, işletme türü paketleri, hesap içi set uygulama ([ADR-0010](../adr/0010-madde-kutuphanesi-v1-1.md), [08-madde-kutuphanesi.md](08-madde-kutuphanesi.md)); v2: başka dikeyler, marka kütüphanesi (franchise) | v1.1 | UC-05, UC-01 |
 
 ## Sürüm dilimi
 

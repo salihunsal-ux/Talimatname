@@ -24,7 +24,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | Sebep seti (yapılamadı) | malzeme yok · ekipman arızalı · zaman yetmedi · yetkim yok · diğer (not zorunlu) |
 | Sorun kategorisi | ekipman · tedarik · hijyen · güvenlik · diğer (UC-11). Güvenlik = fiziksel güvenlik (kapı, kilit, kepenk, alarm, yangın ekipmanı); kişiyle ilgili şikâyet kanalı değildir. Güvenlik ve hijyen sorunundan açılan aksiyon **yüksek** önceliklidir (BR-10: 24 sa), diğerleri orta (72 sa) |
 | Saklama | 24 ay (kanıt dosyaları); olay günlüğü kalıcı |
-| Kütüphane | 8 şablon: kapanış · açılış · saatlik tuvalet/hijyen · soğuk zincir · haftalık derin temizlik · yağ değişimi · kasa devri · teslimat kabul — madde içerikleri: [07-sablon-kutuphanesi.md](07-sablon-kutuphanesi.md) (taslak, sahada doğrulanır) |
+| Kütüphane | 9 şablon: kapanış · açılış · saatlik tuvalet/hijyen · soğuk zincir · haftalık derin temizlik · yağ değişimi · kasa devri · teslimat kabul · bölge müdürü şube denetimi — madde içerikleri: [07-sablon-kutuphanesi.md](07-sablon-kutuphanesi.md) (taslak, sahada doğrulanır) |
 
 ## M1 · Organizasyon, kimlik ve yetki
 
@@ -50,7 +50,7 @@ Merkez kapanış/açılış/hijyen/soğuk zincir listelerini kurar; personel kio
 | Ş-3 | Madde ayarları | zorunlu · fotoğraf zorunlu · kritik · sıcaklık aralığı. Ağırlık, istasyon bağı, ipucu | v1 (diğerleri v1.1) |
 | Ş-4 | Koşullu mantık | Tek sabit kural | v1 sabit; editör v1.1 |
 | Ş-5 | Puanlama | Yüzde; başarısız = kritik | v1 sabit; ağırlık/eşik v1.1 |
-| Ş-6 | Kütüphane | 8 şablon, kopyala-düzenle; maddeler şablonun içinde | v1 (madde kütüphanesi ve paketler v1.1 — E-8/E-9, ADR-0010) |
+| Ş-6 | Kütüphane | 9 şablon, kopyala-düzenle; maddeler şablonun içinde | v1 (madde kütüphanesi ve paketler v1.1 — E-8/E-9, ADR-0010) |
 | Ş-7 | Şube türü varyantı | — | v1.1 |
 | Ş-8 | SOP/PDF'ten AI taslak | — | v1.1 |
 | Ş-9 | Formül, kaydırıcı, tekrarlanan bölüm | — | v2 |

@@ -56,7 +56,7 @@ Alfa, pilot kurulumu ve K3 ölçümü **mobil olmadan yapılamaz**. Pilot zincir
 |---|---|---|---|
 | EP-01 | Hesap, organizasyon, içe aktarma, sihirbaz | CAP-01, CAP-14 | S1–S2 |
 | EP-02 | Kimlik, 4 rol, kiosk | CAP-02 | S1, S6 |
-| EP-03 | Basit şablon editörü, 8 şablon, sabit kural | CAP-03, CAP-04 | S2, S4, S9 |
+| EP-03 | Basit şablon editörü, 9 şablon, sabit kural | CAP-03, CAP-04 | S2, S4, S9 |
 | EP-04 | Planlama ve çalıştırma motoru | CAP-05 | S3 |
 | EP-05 | Mobil yürütme ve kanıt | CAP-06 | S2–S5 |
 | EP-06 | Çevrimdışı senk | CAP-07 | S5–S6 |
@@ -188,7 +188,7 @@ Mobil iskelet ve Spike A/C bu listeden çıktı, Faz B'nin ilk haftasına geçti
 | ST-080 | Backend + web: kanıt galerisi (şube + tarih) | FR-1208 | TC-092 | S | A |
 | ST-081 | Backend: günlük yeniden atama | FR-0519, 0520 | TC-108, 109, 110 | S | A |
 | ST-149 | Backend: belge kaydı ve dosyası; 30/7 gün uyarıları, süresi geçende yüksek öncelikli aksiyon ve "belge eksik" işareti (E-12) | FR-0522, 0523 | TC-123, 124 | M | A |
-| ST-144 | Mobil: "Bölgem/Şubem" listesi (şube × dün gece durumu → detay) + şube müdürü günlük atama | FR-1211, 0519 | TC-094, 108 | M | B |
+| ST-144 | Mobil: "Bölgem/Şubem" listesi (şube × dün gece durumu → detay) + şube müdürü günlük atama; **Bugün ekranında çok şubeli kullanıcı için şube gruplaması** (bölge müdürü denetimi, FR-0601) | FR-1211, 0519, 0601 | TC-094, 108 | M | B |
 | ST-083 | Web: günlük atama (pano) | FR-0519 | TC-108 | S | A |
 | ST-148 | Web: çalıştırma detayında kanıt bayrakları ve panoda "şüpheli kanıt" filtresi (E-11) | FR-0615 | TC-121, 122 | S | A |
 | ST-084 | Alfa geri bildirim düzeltmeleri | — | — | M | A+B |
@@ -210,12 +210,12 @@ Mobil iskelet ve Spike A/C bu listeden çıktı, Faz B'nin ilk haftasına geçti
 | ST-106 | Beta hazırlığı: 3 pilot hesabı, veri işleme sözleşmesi, staging zaman aracı | — | — | M | A+B |
 | ST-107 | Backend: personel Excel içe aktarma | FR-0105 | TC-005 | S | A |
 
-### S9 — Hash zinciri, 8 şablon, KVKK süreçleri, güvenlik
+### S9 — Hash zinciri, 9 şablon, KVKK süreçleri, güvenlik
 | ST | Hikâye | FR | TC | Boyut | Faz |
 |---|---|---|---|---|---|
 | ST-099 | Backend: hash zinciri ve günlük kök (TSA v1.1) | FR-1301 | TC-100, 101 | M | A |
 | ST-100 | Backend: zincir doğrulama komutu (iç araç) | FR-1304 | TC-101 | S | A |
-| ST-102 | İçerik: 8 Türkçe yeme-içme şablonu (kalite incelemeli) | FR-0311 | TC-017 | M (PO + danışman) | A |
+| ST-102 | İçerik: 9 Türkçe yeme-içme şablonu (kalite incelemeli) | FR-0311 | TC-017 | M (PO + danışman) | A |
 | ST-103 | Backend + web: kütüphane kopyalama, merkezî güncelleme | FR-0311 | TC-017 | S | A |
 | ST-104 | Web: şablon editörü — şablon ayarları (yalnızca kamera, başarısızda kanıt), önizleme, doğrulama tam | FR-0308, 0309, 0312 | TC-022 | M | A |
 | ST-105 | Mobil: tolerans/kilit davranışları, geç gönderim | FR-0610, BR-02/03 | TC-045 | S | B |

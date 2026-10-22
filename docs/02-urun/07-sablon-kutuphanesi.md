@@ -1,6 +1,6 @@
-# Şablon kütüphanesi — v1'in 8 şablonu (taslak, sahada doğrulanacak)
+# Şablon kütüphanesi — v1'in 9 şablonu (taslak, sahada doğrulanacak)
 
-Tarih: 15 Eylül 2026. Kapsam belgesi (02-urun/06, Ş-6) v1'de **8 hazır şablon** der; bu belge o şablonların madde madde içeriğidir. Durum: **taslak** — pilot görüşmelerinde (Blok 8 prototipiyle) ve şube ziyaretlerinde (gözlem formu §1–2) düzeltilir; her görüşmede eklenen/silinen maddeler alttaki değişiklik günlüğüne işlenir. Blok 8 prototipindeki kapanış listesi bu belgedeki 1 numaralı şablondur.
+Tarih: 15 Eylül 2026. Kapsam belgesi (02-urun/06, Ş-6) v1'de **9 hazır şablon** der; bu belge o şablonların madde madde içeriğidir. Durum: **taslak** — pilot görüşmelerinde (Blok 8 prototipiyle) ve şube ziyaretlerinde (gözlem formu §1–2) düzeltilir; her görüşmede eklenen/silinen maddeler alttaki değişiklik günlüğüne işlenir. Blok 8 prototipindeki kapanış listesi bu belgedeki 1 numaralı şablondur.
 
 ## Tasarım kuralları
 
@@ -202,6 +202,36 @@ Listenin başında sistem **"Dün gece"** bloğunu gösterir (E-3): dün kapanı
 | 8 | Ürünler 15 dk içinde soğutucuya/depoya yerleştirildi (FIFO) | onay | Z | | | |
 | 9 | Tüm ürünler kabul edildi (red yok) | çoktan seçmeli | Z | | | Hayır → foto + not: reddedilen ürünler ve sebep |
 
+## 9. Bölge müdürü şube denetimi
+
+| | |
+|---|---|
+| Amaç | Bölge müdürünün şube ziyaretinde standart denetim: hijyen, gıda güvenliği, görünüm, belge ve personel; puanlı rapor ve aksiyon. [Rakip denetimi](../01-strateji/05-rakip-ozellik-denetimi.md) §2 ile eklendi — robotPOS Operation Manager'ın sattığı iş |
+| Tekrar | Aylık (ör. ayın ilk 10 günü içinde), pencere iş günü 09:00–19:00; tolerans 0. Plansız ziyaret için tek seferlik liste (FR-0512) |
+| Atama | **Rol: bölge müdürü** — şube personeline görünmez, çalıştırma şubeye bağlıdır |
+| Süre hedefi | 12–15 dk · 16 madde · 6 fotoğraf · 3 kritik |
+
+| # | Madde | Tür | Z | F | K | Not |
+|---|---|---|---|---|---|---|
+| 1 | Giriş, vitrin ve tabela: temiz, aydınlatma çalışıyor, kampanya görseli güncel | fotoğraf (1) | Z | F | | Cepheden |
+| 2 | Salon ve müşteri alanı düzeni (masa, sandalye, servis istasyonu) | fotoğraf (1) | Z | F | | |
+| 3 | Tuvalet: temizlik, sarf malzeme, kontrol çizelgesi dolu | çoktan seçmeli | Z | | | Hayır → foto + not |
+| 4 | Personel kıyafeti, bone/eldiven, kişisel hijyen | çoktan seçmeli | Z | | | |
+| 5 | El yıkama istasyonu: sabun, kâğıt, sıcak su | onay | Z | | | |
+| 6 | Soğutucu sıcaklıkları (örnek 2 dolap) | sıcaklık 0–4 °C | Z | | K | Şubenin kendi kaydıyla karşılaştırılır |
+| 7 | Dondurucu sıcaklığı | sıcaklık −30…−18 °C | Z | | K | |
+| 8 | Açık ürün etiketleme ve SKT kontrolü (rastgele 5 ürün) | çoktan seçmeli | Z | | K | Hayır → foto + not, ürün adıyla |
+| 9 | Depo düzeni ve FIFO; yerden yükseklik | fotoğraf (1) | Z | F | | |
+| 10 | Haşere izi yok; ilaçlama belgesi güncel | çoktan seçmeli | Z | | | Hayır → aksiyon (24 sa) |
+| 11 | Yasal belgeler yerinde ve geçerli (ruhsat, hijyen eğitimi, ilaçlama, yangın tüpü) | çoktan seçmeli | Z | | | Belge takvimiyle (E-12) karşılaştırılır |
+| 12 | Mutfak ekipmanı çalışıyor; davlumbaz ve filtre temiz | fotoğraf (1) | Z | F | | |
+| 13 | Son 7 günün kapanış listeleri tamamlanmış (uygulamadan kontrol) | çoktan seçmeli | Z | | | Hayır → not: hangi gün, sebep |
+| 14 | Kasa ve fiyat kontrolü: menü fiyatları merkez listesiyle aynı | çoktan seçmeli | Z | | | Hayır → foto + not |
+| 15 | Şube müdürüyle görüşme: açık sorunlar ve ihtiyaçlar | metin | Z | | | Serbest not |
+| 16 | Genel değerlendirme fotoğrafı (mutfak genel) | fotoğraf (1) | Z | F | | |
+
+Puan bilgi amaçlıdır (FR-0306); **eşik ve ağırlık v1.1**'dedir. Kritik madde başarısızsa çalıştırma "Başarısız" olur ve aksiyon açılır (FR-0307, FR-0405). Denetim sonunda şube müdürünün imzası v1.1 (CAP-17).
+
 ## Sahada doğrulanacak sorular
 
 - Kapanış listesi gerçek şubede kaç dakika sürüyor; hangi madde "gereksiz", hangisi eksik? (gözlem formu §2)
@@ -210,6 +240,8 @@ Listenin başında sistem **"Dün gece"** bloğunu gösterir (E-3): dün kapanı
 - Yağ ölçümü şeritle mi yapılıyor, hiç yapılmıyor mu? (yapılmıyorsa "sayı" maddesi çıkar, "gün sayısı" kalır)
 - Kasa devri ayrı liste mi, kapanışın parçası mı? Franchise şubelerde merkez nakit görmek istiyor mu?
 - Teslimat günleri sabit mi? Tedarikçi çeşitliliği (merkez depo mu, yerel mi)?
+- Bölge müdürü denetimi bugün nasıl yapılıyor: kâğıt form, Excel, ayrı yazılım? Aylık mı, habersiz mi? Puan/eşik kullanılıyor mu?
+- Denetim sonunda şube müdürünün imzası isteniyor mu (v1.1 kararı buna bağlı)?
 
 ## Değişiklik günlüğü
 

@@ -47,7 +47,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0308 | Şablon ayarları (v1): yalnızca kamera (galeri kapalı, varsayılan açık); başarısız cevapta kanıt iste (varsayılan açık). Tolerans planda; sebep seti sabit. | v1 | UC-05 |
 | FR-0309 | Editörde mobil önizleme (gerçek madde bileşenleriyle). | v1 | UC-05 |
 | FR-0310 | Yayın: hemen veya tarihli; yayınla birlikte hangi planların etkileneceği listelenir. | v1.1 | UC-05 |
-| FR-0311 | Kütüphane (v1): 8 Türkçe yeme-içme şablonu (kapanış, açılış, saatlik tuvalet/hijyen, soğuk zincir, haftalık derin temizlik, yağ değişimi, kasa devri, teslimat kabul); kopyala-düzenle; kütüphane merkezî güncellenir, kopyalar bağımsız. 30'a genişleme v1.1. | v1 | UC-05 |
+| FR-0311 | Kütüphane (v1): 9 Türkçe yeme-içme şablonu (kapanış, açılış, saatlik tuvalet/hijyen, soğuk zincir, haftalık derin temizlik, yağ değişimi, kasa devri, teslimat kabul, bölge müdürü şube denetimi); kopyala-düzenle; kütüphane merkezî güncellenir, kopyalar bağımsız. 30'a genişleme v1.1. | v1 | UC-05 |
 | FR-0312 | Yayın doğrulaması: kritik + yapılamadı izinli çelişkisi, boş bölüm, kanıt zorunlu ama tür fotoğraf/video değil → yayın engellenir, açıklama. | v1 | UC-05 |
 | FR-0313 | Kütüphane maddesi: hesaplar arası paylaşılan, sürümlü, etiketli (alan, işletme türü) madde tanımı; önerilen ayarlarla (zorunlu, fotoğraf, kritik, aralık) gelir; yalnızca içerik ekibi düzenler. (E-8) | v1.1 | UC-05 |
 | FR-0314 | Şablon editöründe "kütüphaneden madde ekle": alan / tür / işletme türü filtresi ve arama; eklenen madde kaynak_madde_id ve kaynak_surum taşır; ayarları değiştirilebilir. (E-8) | v1.1 | UC-05 |
@@ -99,7 +99,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 
 | ID | Gereksinim | Sürüm | UC |
 |---|---|---|---|
-| FR-0601 | Bugün ekranı: kullanıcıya/şubesine atanan bugünkü çalıştırmalar; durum rengi, pencere geri sayımı, ilerleme; tek dokunuşla başlat. | v1 | UC-08 |
+| FR-0601 | Bugün ekranı: kullanıcıya/şubesine atanan bugünkü çalıştırmalar; durum rengi, pencere geri sayımı, ilerleme; tek dokunuşla başlat. **Birden çok şubede çalıştırması olan kullanıcıda (bölge müdürü denetimi) liste şubeye göre gruplanır ve şube adı başlıkta görünür.** | v1 | UC-08 |
 | FR-0602 | Madde cevaplama bileşenleri tür bazında (onay, seçim düğmeleri, sayısal klavye, sıcaklık, metin, kamera, video, imza alanı, barkod tarayıcı, tarih-saat). | v1 | UC-08 |
 | FR-0603 | İlerleme çubuğu; uygulama kapansa da kaldığı yerden devam; cevaplar yerelde anında saklanır. | v1 | UC-08 |
 | FR-0604 | Kanıt yakalama: fotoğraf zorunlu maddede kamera doğrudan açılır, çekim madde cevabını tamamlar (2 dokunuş); şablon 'yalnızca kamera' ise galeri yok; madde başına 1–3 fotoğraf (varsayılan 1). Video v1.1. | v1 | UC-08 |

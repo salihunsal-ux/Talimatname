@@ -4,7 +4,7 @@
 >
 > | UC | v1'de değişen |
 > |---|---|
-> | UC-01 | Sihirbaz 4 adım, tek plan (kapanış); şablon seçimi kütüphanedeki 8 şablondan |
+> | UC-01 | Sihirbaz 4 adım, tek plan (kapanış); şablon seçimi kütüphanedeki 9 şablondan |
 > | UC-02 | Roller 4 (Yönetici, Bölge müdürü, Şube müdürü, Personel); akıllı grup yok; maskeleme destek betiğiyle |
 > | UC-03 | 2FA yok (v1.1); şifre politikası var |
 > | UC-04 | **Ek adım:** şube müdürü kioskta personele başlangıç PIN'i atar (FR-0211) |

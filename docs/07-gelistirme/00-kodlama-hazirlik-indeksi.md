@@ -32,7 +32,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [x] Mimari, depolar/CI/ortamlar, v1 sprint planı (GA 10. sprint + 2 tampon), DoR/DoD, 11 ADR
 - [ ] Hi-fi tasarım (F8) — tel-çerçeve yeterli, Sprint 4'e kadar hi-fi gerekli (kamera ve madde bileşenleri)
 - [ ] Hukuki metinler (aydınlatma, veri işleme sözleşmesi) — taslaklar hazır (04-gereksinimler/hukuki), avukat incelemesi pilot öncesi
-- [x] 8 şablon içeriği (ST-102) — taslak hazır (02-urun/07), sahada doğrulanır; Sprint 9'a kadar kesinleşir
+- [x] 9 şablon içeriği (ST-102) — taslak hazır (02-urun/07), sahada doğrulanır; Sprint 9'a kadar kesinleşir
 
 ### Kararlar (pilot görüşmelerinden beklenen)
 - [ ] Kiosk modu Must kalıyor mu (tablet oranı)

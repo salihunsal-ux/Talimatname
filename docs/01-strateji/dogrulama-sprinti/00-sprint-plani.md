@@ -27,7 +27,7 @@ Karar kuralı: üç kapıdan ikisi tutmazsa proje burada biter (fizibilite §10)
 | 6 | LOI turu | LOI imzaları; fiyat testi analizi (van Westendorp); 3. kiosk denemesi → kiosk kararı (07 karar kuralı); ürün kararlarının güncellenmesi (kiosk, barındırma, prob, franchise) | ≥ 3 LOI; karar güncellemeleri |
 | 7 | LOI + pilot hazırlığı | Kalan LOI'ler; 3 pilot seçimi (uyum puanı + çeşitlilik); veri işleme sözleşmesi; şube/personel Excel'i | ≥ 5 LOI hedefi |
 | 8 | **K2** | K2 sayımı ve kararı; pilot kurulum planı; Alfa/Beta takvimiyle hizalama (S6 Alfa) | K2 raporu; 3 pilot sözleşmesi |
-| 9–12 | Pilot ön hazırlık ve paralel iş | Pilot zincirlerde şablon uyarlaması (8 şablon), tablet envanteri, aydınlatma metni; geliştirme Alfa'ya kadar sürer; isim testi sonucu → kesin isim kararı (ADR) | Pilot hazır; isim kararı |
+| 9–12 | Pilot ön hazırlık ve paralel iş | Pilot zincirlerde şablon uyarlaması (9 şablon), tablet envanteri, aydınlatma metni; geliştirme Alfa'ya kadar sürer; isim testi sonucu → kesin isim kararı (ADR) | Pilot hazır; isim kararı |
 | Pilot (8 hafta, Alfa/Beta ile) | **K3** | 06-test/05 UAT planı | K3 raporu; yıllık sözleşmeler |
 
 Not: K3, yazılım Alfa/Beta'ya ulaşınca ölçülür (S6–S8); sprintin 9–12. haftaları geliştirmeyle paralel hazırlıktır. Görüşmeler geliştirmeyi beklemez.

@@ -56,7 +56,7 @@ Bu belge, çalışan saha demosunun v1 kapsamını ne kadar karşıladığını 
 | FR-0307 | Kritik madde başarısızsa çalıştırma puandan bağımsız "Başarısız" işaretlenir | ✅ çalışıyor | Kritik başarısızsa çalıştırma Başarısız |
 | FR-0308 | Şablon ayarları (v1): yalnızca kamera (galeri kapalı, varsayılan açık) | 🟡 kısmen | Kamera doğrudan açılır; şablon ayar ekranı yok (kural sabit) |
 | FR-0309 | Editörde mobil önizleme (gerçek madde bileşenleriyle) | ⚪ demo dışı | Editör önizlemesi yok |
-| FR-0311 | Kütüphane (v1): 8 Türkçe yeme-içme şablonu (kapanış, açılış, saatlik tuvalet/hijyen, soğuk zincir, haftalık de | 🏷️ etiketli gösterim | 8 şablon listeleniyor; 2'si çalışıyor, 6'sı madde önizlemesi |
+| FR-0311 | Kütüphane (v1): 9 Türkçe yeme-içme şablonu (kapanış, açılış, saatlik tuvalet/hijyen, soğuk zincir, haftalık de | 🏷️ etiketli gösterim | 8 şablon listeleniyor; 2'si çalışıyor, 6'sı madde önizlemesi |
 | FR-0312 | Yayın doğrulaması: kritik + yapılamadı izinli çelişkisi, boş bölüm, kanıt zorunlu ama tür fotoğraf/video değil | ⚪ demo dışı | Yayın doğrulaması editörle gelir |
 
 ### CAP-04 · Koşullu mantık
