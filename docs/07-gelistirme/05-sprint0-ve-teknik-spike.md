@@ -22,7 +22,7 @@ Eylül planı ilanın 17 Eylül'de çıkmasını ve Sprint 0'ın 5 Ekim'de başl
 | **Üretim ortamı Türkiye'de kuruldu** | **Sprint 2 sonu (27 Kasım)** | ADR-0012: gerçek veri ücretsiz/AB katmanda durmaz; Sprint 0'da ortam değişkenleriyle hazırlanır |
 | **Alfa (S6)** | **22 Ocak 2027** | Pilot kurulumu burada başlar |
 | **Beta (S8)** | **19 Şubat 2027** | 3 pilot zincir, 30+ şube |
-| **GA (S10)** | **19 Mart 2027** | 89 v1 kabul testi %100, pilot UAT imzası |
+| **GA (S10)** | **19 Mart 2027** | 104 v1 kabul testi %100, pilot UAT imzası |
 | Tampon S11–S12 | 22 Mart – 16 Nisan | |
 | **K3 ölçümü** (pilot 4. hafta) | **Şubat 2027** | Alfa'dan 4 hafta sonra |
 

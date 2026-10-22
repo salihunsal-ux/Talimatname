@@ -1,6 +1,6 @@
 # Kabul test senaryoları
 
-127 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-120…TC-125 E-11 ve E-12 ile, TC-126 güvenlik kategorisiyle, TC-127 E-13 ile, TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
+128 kabul testi; her biri bir use case'e ve en az bir FR/BR'ye bağlı. TC-120…TC-125 E-11 ve E-12 ile, TC-126 güvenlik kategorisiyle, TC-127 E-13 ile, TC-113…TC-119, ADR-0008 ile eklenen v1 gereksinimlerini (E-1…E-7) kapsar. **Sürüm** sütunu ADR-0008'e göre: v1 (GA kapısı) / v1.1; parantez içi, testin v1'de daraltılmış kapsamını belirtir. Veri seti: "Kahve Durağı" (03-test-verisi-ve-ortam.md). Biçim: **Ön koşul → Adımlar → Beklenen**. Otomasyon sütunu: B = birim, A = API/entegrasyon, E = E2E, M = elle (cihaz/UAT).
 
 ## UC-01 · Hesap kurulumu
 
@@ -28,6 +28,7 @@
 | TC-010 | Yatay yetki | Kadıköy şube müdürü, Üsküdar çalıştırma id'siyle GET → 403; liste uç noktaları yalnızca kapsam döner | FR-0205 | A | v1 |
 | TC-011 | Kiracı yalıtımı | Hesap A belirteciyle hesap B nesne id'leri → 404/403; toplu listelerde sızıntı yok (fuzz) | FR-0101 | A | v1 |
 | TC-012 | Aydınlatma ve konum izni | İlk giriş → aydınlatma gösterilir, onay zaman damgalı; metin sürümü değişince yeniden; konum reddi → uygulama çalışır, kanıt "konum yok" bayrağı | FR-1307, FR-1308 | E | v1 |
+| TC-128 | Web giriş ve şifre politikası | 12 karakterden kısa ya da sızmış parola reddedilir; 5 hatalı denemede hız sınırı; oturum süresi dolunca belirteç yenilenir; kapsam dışı şube kabukta görünmez | FR-0202, FR-0205 | A | v1 |
 
 ## UC-04 · Kiosk PIN
 

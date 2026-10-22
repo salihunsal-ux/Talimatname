@@ -15,4 +15,4 @@ Kullanıcı önerisi: farklı işletme türleri için hazır talimatlar (madde) 
 - Veri modeli v1'de geriye uyumlu hazırlanır: `MADDE.kaynak_madde_id?`, `MADDE.kaynak_surum?`, `SABLON.kutuphane_kaynak_id` (zaten var), `SABLON.isletme_turu?`. v1'de doldurulmaz.
 - 8 şablon belgesi (02-urun/07) kütüphanenin tohumudur; maddeler oradan kütüphaneye taşınır.
 - Personel tarafında hiçbir şey değişmez; kütüphane yalnızca merkezin editöründe görünür.
-- Ayrıntı: [02-urun/08-madde-kutuphanesi.md](../02-urun/08-madde-kutuphanesi.md); FR-0313…0318; EP-13 (ST-147…151).
+- Ayrıntı: [02-urun/08-madde-kutuphanesi.md](../02-urun/08-madde-kutuphanesi.md); FR-0313…0318; EP-13 (ST-154…158).

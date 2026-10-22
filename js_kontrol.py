@@ -18,6 +18,12 @@ import subprocess
 import sys
 import tempfile
 
+# Konsol cp1254 olabilir: bulgu satirlarindaki "→" gibi karakterler
+# UnicodeEncodeError atmasin (hata yollari tam bu satirlardan gecer).
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+
 KOK = os.path.dirname(os.path.abspath(__file__))
 VARSAYILAN = ["docs/05-tasarim/05-prototip/*.html",      # prototipler: binlerce satir JS
               "docs/05-tasarim/07-brosur/talimatname-*.html",  # brosur/tanitim/foy (sayfa surumlerinde kucuk script)

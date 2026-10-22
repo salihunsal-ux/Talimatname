@@ -28,7 +28,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 - [x] 175 fonksiyonel gereksinim (123 v1, 52 v1.1), 16 NFR, 27 iş kuralı (v1 sabit parametre tablosuyla)
 - [x] Veri modeli (ER + alanlar + enum'lar), API taslağı (uç noktalar + senk sözleşmesi + olay sözlüğü)
 - [x] 26 ekran envanteri (v1: 10 mobil + 13 web), 21 tel-çerçeve v1'e göre güncellendi (SCR-W-14 belge takvimi hi-fi aşamasında çizilecek), navigasyon haritası, tasarım token'ları
-- [x] 127 kabul testi (103 v1, 24 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı
+- [x] 128 kabul testi (104 v1, 24 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı
 - [x] Mimari, depolar/CI/ortamlar, v1 sprint planı (GA 10. sprint + 2 tampon), DoR/DoD, 11 ADR
 - [ ] Hi-fi tasarım (F8) — tel-çerçeve yeterli, Sprint 4'e kadar hi-fi gerekli (kamera ve madde bileşenleri)
 - [ ] Hukuki metinler (aydınlatma, veri işleme sözleşmesi) — taslaklar hazır (04-gereksinimler/hukuki), avukat incelemesi pilot öncesi

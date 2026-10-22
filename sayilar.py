@@ -16,6 +16,12 @@ import os
 import re
 import sys
 
+# Konsol cp1254 olabilir: bulgu satirlarindaki "→" gibi karakterler
+# UnicodeEncodeError atmasin (hata yollari tam bu satirlardan gecer).
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+
 KOK = os.path.dirname(os.path.abspath(__file__))
 D = os.path.join(KOK, "docs")
 
@@ -92,6 +98,14 @@ def _kurallar(s):
          r"(\d+) sayfalık tanıtım dosyası", str(s["tanitim_sayfa"])),
         ("docs/05-tasarim/07-brosur/README.md",
          r"(\d+) sayfalık özellik föyü", str(s["foy_sayfa"])),
+        ("docs/06-test/01-test-stratejisi.md",
+         r"v1 etiketli (\d+) kabul testi", str(s["tc_v1"])),
+        ("docs/07-gelistirme/03-backlog-ve-sprint-plani.md",
+         r"tamamı; (\d+) v1 kabul testi", str(s["tc_v1"])),
+        ("docs/07-gelistirme/03-backlog-ve-sprint-plani.md",
+         r"v1 kabul testleri \((\d+)\)", str(s["tc_v1"])),
+        ("docs/07-gelistirme/05-sprint0-ve-teknik-spike.md",
+         r"\| (\d+) v1 kabul testi", str(s["tc_v1"])),
     ]
 
 
