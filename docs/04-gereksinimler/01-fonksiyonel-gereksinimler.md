@@ -113,7 +113,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0612 | İstasyon QR'ı taranınca o istasyonun açık listesi/maddeleri açılır; kanıt istasyona bağlanır. | v1.1 | UC-08 |
 | FR-0613 | Açılış listesinin başında 'dün gece' bloğu: önceki iş gününün kapanış çalıştırmasında yapılamayan ve başarısız maddeler (sebep ve notla); yoksa 'dün gece sorun yok'. (E-3) | v1 | UC-08 |
 | FR-0614 | Kanıt tekilliği: yüklenen dosyanın SHA-256 özeti aynı hesapta daha önce kullanılmışsa yükleme reddedilir; kullanıcıya "bu fotoğraf daha önce gönderildi, yeniden çekin" denir; deneme olay günlüğüne yazılır. Yakın kopya (algısal hash) tespiti v1.1. (E-11) | v1 | UC-08 |
-| FR-0615 | Kanıt bayrakları: galeriden yükleme denemesi, konum şube dışında (> 150 m), konum yok, cihaz saati farkı > 10 dk, 24 saatten geç senk — cevapta saklanır; çalıştırma detayında ve çalıştırma PDF'inde görünür; panoda "şüpheli kanıt" filtresi. Bayrak suçlama değil, incelemeye çağrıdır. (E-11) | v1 | UC-08, UC-15 |
+| FR-0615 | Kanıt bayrakları: galeriden yükleme denemesi, konum şube dışında (> 500 m; BR-15 parametresi), konum yok, cihaz saati farkı > 10 dk (BR-13), 72 saatten geç senk (cihaz kuyruğunun ömrü, FR-0706) — cevapta saklanır; çalıştırma detayında ve çalıştırma PDF'inde görünür; panoda "şüpheli kanıt" filtresi. Bayrak suçlama değil, incelemeye çağrıdır. (E-11) | v1 | UC-08, UC-15 |
 
 ## CAP-07 · Çevrimdışı çalışma
 

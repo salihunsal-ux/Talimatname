@@ -29,9 +29,9 @@
 
 Hikâye bazlı DoD'un üstüne, **Faz B'ye devir** için üç sözleşme:
 
-- [ ] **Cevap yazma idempotent:** cihazda üretilen UUID anahtarıyla `PUT`, tekrar gönderimde aynı kayıt; OpenAPI'de yazılı ve sözleşme testi var (ST-030, FR-0602/0607)
-- [ ] **Kanıt yükleme akışı:** ön imzalı URL → tamamlama → sunucu damgası + SHA-256 doğrulaması; ham ve damgalı dosya ayrı (ST-039/040, FR-0606, ADR-0004)
-- [ ] **Senk uç noktalarının taslağı:** `/sync/manifest`, `/sync/batch` ve cihaz saati düzeltmesi OpenAPI'de tanımlı (uygulanması Faz B'de; ST-054, FR-0704)
+- [x] **Cevap yazma idempotent:** cihazda üretilen UUID anahtarıyla `PUT`, tekrar gönderimde aynı kayıt; OpenAPI'de yazılı ve sözleşme testi var (ST-030, FR-0602/0607) — *24 Ekim 2026*
+- [ ] **Kanıt yükleme akışı:** ön imzalı URL → tamamlama → sunucu damgası + SHA-256 doğrulaması; ham ve damgalı dosya ayrı (ST-039/040, FR-0606, ADR-0004) — *akış ve SHA-256 doğrulaması hazır (24 Ekim 2026); **damga eksik**: `stamped_key`/`thumbnail_key` sütunları duruyor, damgalama işçisi yazılmadı (ST-040). Mobil kamerası bu kutu kapanmadan başlayabilir, ama kutu kapalı sayılmaz.*
+- [x] **Senk uç noktaları:** `/sync/manifest`, `/sync/batch` ve cihaz saati düzeltmesi OpenAPI'de tanımlı **ve uygulandı** (taslaktan ileri gidildi: kısmi başarı, idempotans ve saat düzeltmesi testli; ST-054, FR-0701/0703/0704/0707) — *24 Ekim 2026*
 
 Gerekçe: bu üçü yazılmazsa API panelin çevrimiçi istek-cevap şekline oturur ve mobil geldiğinde arka ucun bir kısmı yeniden yazılır.
 
