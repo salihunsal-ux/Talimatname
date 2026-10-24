@@ -5,6 +5,7 @@ Tarih: 15 Eylül 2026. Kapsam belgesi (02-urun/06, Ş-6) v1'de **9 hazır şablo
 ## Tasarım kuralları
 
 - **Madde türleri (v1):** onay · çoktan seçmeli (Evet / Hayır / Uygun değil) · sayı + birim · sıcaklık (°C, kabul aralığı) · metin · fotoğraf (1–3) · talimat (cevapsız). Ayarlar: zorunlu · fotoğraf zorunlu · kritik (sıcaklıkta min–maks).
+- **Sayı maddesi de aralık ister (uygulamadan gelen not, 24 Ekim 2026).** Yukarıdaki satır aralığı yalnızca sıcaklığa bağlıyor ama yayın doğrulaması (FR-0312) `sayı` türünde de alt/üst sınır arıyor; sınırsız bir sayı puanlanamıyor. Kütüphanede "Kasa açılış tutarı" maddesine bu yüzden geniş bir aralık (0–100.000 ₺) verildi. **Karar gerekiyor:** ya bu satır "sayı ve sıcaklıkta min–maks" olarak düzeltilir, ya FR-0312 sayı türünde aralığı isteğe bağlı sayar.
 - **Tek sabit kural (FR-0405):** "Hayır / Uygun değil / aralık dışı" → fotoğraf + not zorunlu; madde kritikse aksiyon (şube müdürü, 4 saat). Bu yüzden çoktan seçmeli sorular **"Evet" her zaman uygun durum** olacak şekilde yazılır ("Gaz vanası kapatıldı mı?" — evet iyi). "Uygun değil" = madde bu şubede geçerli değil (ekipman yok).
 - **Uzunluk:** kapanış ≤ 16, diğerleri ≤ 12 cevaplı madde; hedef süre kapanış 6–8 dk, saatlik 1–2 dk. Personel listeyi telefonla/tabletle eldiven çıkarmadan bitirebilmeli.
 - **Fotoğraf zorunlu** yalnızca sonradan tartışılan işlerde (çöp, zemin, teşhir, kepenk, Z raporu, irsaliye); liste başına ≤ 4.
