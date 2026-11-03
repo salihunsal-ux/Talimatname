@@ -225,6 +225,7 @@ varsayımı yok.
 | Satır eylemi | `.satir-eylem` | Tablo hücresindeki düğme dizisi, sağa yaslı |
 | Vade | `.vade-metni`, `--gecikmis` | Renk tek başına anlam taşımıyor: metin de "3 saat gecikti" diyor |
 | Durum metni | `.durum-metni`, `Durum.tsx` (`Yukleniyor`, `Hata`) | Yükleniyor sessiz bir satır, hata `.bildiri--hata` kutusu |
+| İskelet | `.iskelet` + `--metin` / `--satir` / `--kutu` / `--ozet-kutu` / `--manset` / `--dar`, `Iskelet.tsx` | Şekli bilinen yerde; gecikmeli ve gerçek ölçüde (aşağıya bakın) |
 | Tehlikeli düğme | `.dugme--tehlike` | Maskeleme, silme: ikincil kalıp, yalnızca yazısı kırmızı |
 | Tema seçici | `.tema-secici`, `src/tema.ts` | Sistem · Açık · Koyu. Üst bantta ve giriş sayfasında; bir eylem değil **ayar** olduğu için açılır liste |
 | Dar sayfa | `.dar-sayfa`, `.dar-kart` | Tek kolonda okunan ekran (sihirbaz) ve tek başına duran kart (doğrulama, sistem durumu) |
@@ -297,6 +298,29 @@ iniş; madde tamamlanınca 150 ms tik; senk rozeti dönen ok.
 `prefers-reduced-motion: reduce` altında geçişler ve basma hareketi kapanır.
 Süslü animasyon yok.
 
+## İskelet yükleme
+
+**Şekli bilinen yerde iskelet, bilinmeyen yerde sessiz satır.** Tablo, liste
+ve kutu ızgarası şeklini biliyor; kurulum sihirbazının adımı bilmiyor —
+orada `Yukleniyor` kalıyor. Uygulandığı yerler: pano, şubeler, personel,
+şablonlar, planlar, aksiyonlar, bildirimler, aylık özet.
+
+İki kural, ikisi de aksi hâlde sessiz kusur üretir:
+
+1. **Gecikmeli.** 250 ms'nin altında yanıtlanan istekte hiçbir şey
+   görünmüyor. Gri kutuların bir an parlayıp kaybolması, hiç
+   göstermemekten kötü. Demo API'si 67–86 ms'de yanıtlıyor, yani orada
+   iskelet doğru çalıştığı için hiç görünmüyor.
+2. **Gerçek ölçüde.** İskelet tablonun sütun sayısını ve satır
+   yüksekliğini taşıyor; veri gelince sayfa zıplamıyor. Ölçüler canlıda
+   ölçüldü (manşet 99 px, pano özet kutusu 79, rapor kutusu 100): ilk
+   yazılan 104 ve 76 değerleri sayfayı tam da önlemeye çalıştığı kadar
+   zıplatıyordu.
+
+Ekran okuyucu için değişen bir şey yok: alan `aria-busy`, içinde aynı
+"Yükleniyor…" cümlesi var, gri kutular `aria-hidden`. Nabız
+`prefers-reduced-motion` altında kapanıyor.
+
 ## Makine metni ekrana çıkmaz
 
 Sistemin kendi biçimleri — RFC 5545 tekrar kuralı, ISO tarih, UUID, durum
@@ -353,5 +377,5 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 | ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
 | ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
 | ~~A-8~~ | ~~Kalan dokuz ekranın satır içi stilleri~~ | **Bitti** — 120 satır içi stil → 2. Kalan ikisi kasıtlı: pano durum hücresi ve `Cip`, rengi veriden hesaplıyor (bkz. A-1) |
-| A-5 | İskelet yükleme (skeleton) | Belgede yazılı, hiç uygulanmadı |
+| ~~A-5~~ | ~~İskelet yükleme (skeleton)~~ | **Bitti** — kural da burada yazıldı: belgede iskeletle ilgili hiçbir şey yokmuş, "belgede yazılı" notu yanlışmış. Panonun hiç yükleme hâli yoktu |
 | A-6 | Marka wordmark | İsim testi sonucuna bağlı (bkz. `01-strateji/03-isim-ve-marka.md`) |
