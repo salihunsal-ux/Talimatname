@@ -54,15 +54,30 @@ alıyordu — aynı ayrışma kapısı, başka kılıkta.
 | `renk.yuzey2` | #efece4 | #262c31 | İkincil zemin, kutu, hover |
 | `renk.murekkep` | #1c2128 | #f1eee6 | Ana metin |
 | `renk.murekkep2` | #4b5560 | #b5bcc4 | İkincil metin |
-| `renk.sessiz` | **#636e79** | #8a9299 | Yardımcı metin, ikon |
+| `renk.sessiz` | **#5b6670** | **#929aa1** | Yardımcı metin, ikon |
 | `renk.cizgi` | #d6d9d2 | #2f373d | Ayırıcı, kenarlık |
-| `renk.marka` | #1f6f5b (defter yeşili) | #3fa98c | **Vurgu**: bağlantı, seçili bölüm, "tamamlandı", odak halkası |
+| `renk.marka` | #1f6f5b (defter yeşili) | **#45b394** | **Vurgu**: bağlantı, seçili bölüm, "tamamlandı", odak halkası |
 | `renk.marka.acik` | #dcebe5 | #173a31 | Vurgu zemini |
-| `renk.kritik` | #b8452f (mühür kızılı) | #e46f5a | Kritik, başarısız, kaçırıldı |
+| `renk.kritik` | **#a63d29** (mühür kızılı) | #e46f5a | Kritik, başarısız, kaçırıldı |
 | `renk.kritik.acik` | #f3ddd8 | #3a201b | |
-| `renk.uyari` | #b7791f | #e0a640 | Geç, tolerans, bekleyen |
+| `renk.uyari` | **#8c5d16** | #e0a640 | Geç, tolerans, bekleyen |
 | `renk.uyari.acik` | #f6ebd2 | #33290f | |
 | `renk.pasif` | #c9ced6 | #3a424a | Kapalı gün, pasif, devre dışı düğme |
+
+Kalın yazılanlar A-1'de koyulaştı. Durum renkleri kendi açık zeminlerinin
+üstünde okunmak zorunda ve beşi birden 4,5:1'in altındaydı: uyarı çipi
+**3,07:1**, kritik 4,11:1, pasif 4,41:1, koyu temada marka 4,31:1 ve pasif
+4,47:1. En kötüsü uyarıydı ve yalnızca çipte değil **her yerde**: beyaz
+üstünde 3,64:1, yani "kaydedilmemiş değişiklik" uyarısı ve kanıt bayrakları
+da okunaksızdı. Sayılar artık `web/src/styles/kontrast.test.ts` ile ölçülüyor
+— yirmi bir çift, iki tema. Elle doğrulamak işe yaramamıştı: renkler
+"yakışıyordu" ve üç çift aylarca altında kaldı.
+
+Durum çifti (metin + zemin) **tek yerde** yazılı: `.durum--marka`,
+`--kritik`, `--uyari`, `--pasif`, `--notr`, `--bos`. Çip (`.cip`) ve pano
+ızgarası (`.izgara-hucre`) bu sınıfları paylaşıyor, biçimleri kendilerinin.
+Önce iki kopya vardı — `Cip.tsx` içindeki `RENKLER` haritası ve panonun
+`HUCRE`'si — ve ikisi de satır içi stil üretiyordu.
 
 ### Koyu çapa yüzeyi
 
@@ -231,6 +246,13 @@ adıyla aynıysa tekrarlanmaz); kanıt küçük resimleri 3 sütun; sıcaklık g
 tablo + mini grafik; renk baskıda siyah-beyaz okunur (durumlar ikonla).
 Uygulama: `api/src/talimatname/services/pdf.py`.
 
+Kâğıdın paleti panelinkiyle **aynı**, ama değerler Python tarafında elle
+yazılı: PDF reportlab ile üretiliyor, CSS token'ını okuyamıyor. Tek kaynak
+yine `tokens.css`; pdf.py'deki beş satır onun yansıması ve her birinin
+yanında token adı yazılı. A-1'e kadar öyle değildi — kâğıdın kendi soğuk
+gri ailesi vardı (#1f2937, #6b7280 …), ürünün parşömen/mürekkep ailesine
+ait değildi ve şeritli satırda soluk metin **4,39:1** veriyordu.
+
 ## Hareket
 
 Yalnızca geçiş ve geri bildirim: düğme hover/odak 120 ms, basılı hâlde 1 px
@@ -287,8 +309,8 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 
 | # | İş | Not |
 |---|---|---|
-| A-1 | Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif) | Yazı rengini koyulaştırmak yetiyor; ama zemin token'ları durum ızgarasında ve PDF'te de kullanıldığı için önce oraya bakılmalı |
-| A-2 | Koyu temayı en az bir ekranda sına | Token'lar tanımlı, hiçbir ekranda açılıp bakılmadı — bugün açılsa ne olacağını bilmiyoruz |
+| ~~A-1~~ | ~~Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif)~~ | **Bitti** — beş çift düzeldi (koyu temadaki ikisi listede bile değildi), durum çifti tek yerde toplandı, `kontrast.test.ts` ölçüyor. PDF'in token kullandığı doğru değilmiş: kendi paleti vardı, o da hizalandı |
+| A-2 | Koyu temayı en az bir ekranda sına | A-1 sırasında panoya bir kez bakıldı: çoğu yerinde duruyor ve kontrastlar geçiyor, ama **koyu çapa yüzeyi işlevini kaybediyor** — `renk.koyu` (#0f1416) ile sayfa zemini (#15191c) arasında 1,05:1 var, yani üst bant, giriş paneli ve pano manşeti zeminden ayrılmıyor. Yön C'nin ağırlık merkezi fikri koyu temada yeniden kurulmalı |
 | A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
 | ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
 | ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
