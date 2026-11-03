@@ -160,7 +160,6 @@ varsayımı yok.
 | Eylem şeridi | `.eylemler` | Bir kartın ya da formun altındaki düğme dizisi |
 | Izgara hücresi | `.izgara-hucre` | Pano ızgarası; tıkla → detay. Seçili hücre **çerçeveden** okunur: zemin durumu anlatıyor |
 | Boş durum | `.bos-durum` | İkon + tek cümle + ilk eylem |
-| Araç çubuğu | `.arac-cubugu`, `--sag` | Başlık satırı + eylemler |
 | Veri listesi | `.veri-liste` (dl) | Ad/değer çiftleri |
 | Bölüm başlığı | `.bolum-basligi` (h2 + p) | `.sayfa-basligi`ın sayfa içindeki karşılığı: başlık + bir satır açıklama |
 | Sekme / adım şeridi | `.sekme-serit` | Sekmede `aria-selected`, sihirbaz adımında `aria-current="step"`; `ol` üzerinde de kullanılır |
@@ -176,7 +175,13 @@ varsayımı yok.
 | Vade | `.vade-metni`, `--gecikmis` | Renk tek başına anlam taşımıyor: metin de "3 saat gecikti" diyor |
 | Durum metni | `.durum-metni`, `Durum.tsx` (`Yukleniyor`, `Hata`) | Yükleniyor sessiz bir satır, hata `.bildiri--hata` kutusu |
 | Tehlikeli düğme | `.dugme--tehlike` | Maskeleme, silme: ikincil kalıp, yalnızca yazısı kırmızı |
-| Dar sayfa | `.dar-sayfa` | Tek kolonda okunan ekran (sihirbaz); satır 860 px'i geçmez |
+| Dar sayfa | `.dar-sayfa`, `.dar-kart` | Tek kolonda okunan ekran (sihirbaz) ve tek başına duran kart (doğrulama, sistem durumu) |
+| Müjde şeridi | `.mujde`, `--temiz`, `-ikon` | "Her şey yolunda" bir hata değil bir sonuç: `.bildiri` ölçüsünde değil |
+| Sade liste | `.sade-liste` | Satırları kendi ayracını taşıyan liste; aralığı `gap` değil satırın üst çizgisi verir |
+| Çıplak alan kümesi | `.alan-kumesi` | `fieldset` yalnızca gruplama için; çerçeveyi `.alan-grubu` çiziyor |
+| Metin rolleri | `.meta`, `.ikincil-metin`, `.durum-metni`, `.hata-metni`, `.uyari-metni`, `.baslik-eki`, `.bag-kucuk` | Ölçü + renk birlikte; `.meta`yı bağlantıya vermek rengini eziyor, `.bag-kucuk` yalnızca ölçü verir |
+| Sayısal | `.sayisal` | Tabular rakam her yerde; sağa yaslama yalnızca tablo sütununda |
+| Kanıt | `.kanit-izgara` / `.kanit-serit`, `-cerceve`, `-gorsel`, `-yer`, `-alt`, `-bayrak`, `.kanit-dugme` | Galeri ızgara, çalıştırma detayı şerit; küçük resmin kendisi düğme |
 
 Düz CSS; yardımcı sınıf (utility) çerçevesi yok. Bileşen katmanı küçük ve
 adları Türkçe, çünkü belgelerle kod aynı sözlüğü kullanıyor.
@@ -188,6 +193,18 @@ taşınırsa hata vermeden etkisizleşir. Bu bir kez başa geldi: dar ekran
 için yazılan çip kuralı, `.secim-cipi` tanımından önceki bir blokta
 kaldığı için hiçbir şey yapmıyordu — testler değil, canlıda ölçmek
 yakaladı (44 bekleniyordu, 36 geldi).
+
+Bu yüzden iki kapı testi var (`web/src/styles/bilesenler.test.ts`):
+**tanımlı her sınıf kullanılıyor** — ölü sınıf ya uygulanmamış bir karar
+ya da ekranın satır içinde ezdiği bir kuraldır — ve **yığın sıfırlaması
+dosyanın son kuralı**. Birincisi daha yazılırken `.arac-cubugu`yu
+yakaladı; yerini `.sayfa-basligi` ile `.suzgec-serit` almıştı, kural
+dosyada duruyordu.
+
+Özgüllük yalnızca sırayla değil seçici türüyle de kazanıyor: bir metin
+sınıfı (`.meta`, 0-1-0) eleman seçicisini (`a`, 0-0-1) eziyor. Bağlantıya
+`.meta` vermek rengini sessiz griye düşürüyordu; ölçü veren ama renge
+dokunmayan `.bag-kucuk` bu yüzden var.
 
 ### Henüz yazılmadı (mobil hedefi)
 
@@ -275,6 +292,6 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 | A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
 | ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
 | ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
-| A-8 | Kalan yedi ekranın satır içi stilleri | Planlar (22) ve Şablonlar (19) A-3'ten artakalan ölçüler; Pano, Bildirimler, Çalıştırma, Kanıtlar, Doğrulama, Giriş, Sistem durumu hiç elden geçmedi — toplam ~120 satır. Sözlük artık hazır, çoğu doğrudan karşılanıyor |
+| ~~A-8~~ | ~~Kalan dokuz ekranın satır içi stilleri~~ | **Bitti** — 120 satır içi stil → 2. Kalan ikisi kasıtlı: pano durum hücresi ve `Cip`, rengi veriden hesaplıyor (bkz. A-1) |
 | A-5 | İskelet yükleme (skeleton) | Belgede yazılı, hiç uygulanmadı |
 | A-6 | Marka wordmark | İsim testi sonucuna bağlı (bkz. `01-strateji/03-isim-ve-marka.md`) |
