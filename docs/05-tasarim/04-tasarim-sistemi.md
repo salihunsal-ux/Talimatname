@@ -38,6 +38,11 @@ satırı `tr:has(.izgara-hucre[aria-pressed='true'])` ile işaretleniyor, yani
 hücrenin kendi ARIA durumundan. İkinci bir "seçili satır" bayrağı tutmak,
 ayrışmayı bir kez daha davet ederdi.
 
+Kutulu denetimlerde kaynak ARIA değil, kutunun kendi hâli:
+`.secim-cipi:has(input:checked)`. Plan formundaki gün ve şube çipleri
+seçili görünümü JS'teki bir listeden hesaplayan bir stil üretecinden
+alıyordu — aynı ayrışma kapısı, başka kılıkta.
+
 ## Renk
 
 ### Tema renkleri
@@ -135,7 +140,9 @@ varsayımı yok.
 | Bileşen | Sınıf / dosya | Kural |
 |---|---|---|
 | Düğme | `.dugme` + `--birincil` / `--ikincil` / `--sessiz` / `--tam` / `--kucuk` | Birincil = `renk.koyu`; seçili hâl ARIA özniteliğinden; devre dışı `renk.pasif` |
-| Alan | `.alan`, `.alan-sarmal`, `.alan-etiket`, `.alan-ipucu`, `.alan--kod` | Etiket her zaman görünür — placeholder etiket yerine geçmez |
+| Alan | `.alan`, `.alan-sarmal`, `.alan-etiket`, `.alan-ipucu`, `.alan--kod`, `--sayi`, `--saat` | Etiket her zaman görünür — placeholder etiket yerine geçmez. Sayı ve saat kutuları içeriği kadar; `.alan` varsayılanı tam genişlik |
+| Alan grubu | `.alan-grubu` (fieldset + legend), `.alan-sirasi` | Uzun form bölümlere ayrılır; grup hem gözle hem ekran okuyucuyla okunan bir sınır. Alanlar **alt** kenarlarından hizalanır |
+| Seçim çipi | `.secim-cipi` | Çoktan seçmeli etiket (gün, şube). Seçili hâl `:has(input:checked)` ile kutunun kendisinden türer; dar ekranda 44 px |
 | Durum çipi | `Cip.tsx` (`marka` / `kritik` / `uyari` / `pasif` / `nötr`) | İkon + metin; renk tek başına anlam taşımaz |
 | Kart | `.kart`, `.kart--yuzen` | Gölge yalnızca yüzen sürümde |
 | Bildiri | `.bildiri` + `--hata` / `--saglam` / `--uyari` | `role="status"` veya `role="alert"` ile |
@@ -144,9 +151,13 @@ varsayımı yok.
 | Giriş | `.giris`, `.giris-panel`, `.giris-form` | İki bölüm: solda koyu panel (ürün ne yapar), sağda form |
 | Marka işareti | `Marka.tsx` | Sayfa + mühür; `koyu` sürümü koyu zemin için |
 | Pano özeti | `.ozet-serit`, `.ozet-manset`, `.ozet-kutu` | Bir manşet (koyu, 44 px) + yan yana küçük sayılar — altı özdeş kutu değil |
-| Tablo | `.tablo`, `td.sayisal`, `.tablo-kaydirma` | Sayısal sütunlar sağa yaslı ve tabular; dolgu sınıftan gelir, satır içi yazılmaz |
+| Tablo | `.tablo`, `td.sayisal`, `td.eylem`, `th[scope=row]`, `.tablo-kaydirma` | Sayısal sütunlar sağa yaslı ve tabular; dolgu sınıftan gelir, satır içi yazılmaz. Satır başlığı **anlamca `th`, ölçüce `td`** |
 | Izgara tablosu | `.tablo--izgara` | Sütunlar içeriği kadar — tam genişlik tablo, iki sütunu sayfanın iki ucuna düşürüp aradaki bağı koparıyordu |
-| Liste satırı | `.liste-satiri` | Satırın tamamı tıklanabilir; seçili hâl `aria-current` |
+| Liste satırı | `.liste-satiri`, `--durgun` | Satırın tamamı tıklanabilir; seçili hâl `aria-current`. `--durgun` aynı ölçüler, hâlleri kapalı |
+| Liste–detay | `.liste-detay`, `-kenar` | Kenarda seçilecekler, gövdede seçilen; ≤ 860 px'te tek sütun |
+| Bölüm etiketi | `.bolum-etiketi` | Küçük, aralıklı, büyük harf: içerik değil, **içeriğin adı** |
+| Madde satırı | `.madde-satiri`, `-ad`, `-eylem` | Şablon editörü; eylemler sağa toplanır, soldakiler maddeyi anlatır |
+| Eylem şeridi | `.eylemler` | Bir kartın ya da formun altındaki düğme dizisi |
 | Izgara hücresi | `.izgara-hucre` | Pano ızgarası; tıkla → detay. Seçili hücre **çerçeveden** okunur: zemin durumu anlatıyor |
 | Boş durum | `.bos-durum` | İkon + tek cümle + ilk eylem |
 | Araç çubuğu | `.arac-cubugu`, `--sag` | Başlık satırı + eylemler |
@@ -187,6 +198,18 @@ iniş; madde tamamlanınca 150 ms tik; senk rozeti dönen ok.
 `prefers-reduced-motion: reduce` altında geçişler ve basma hareketi kapanır.
 Süslü animasyon yok.
 
+## Makine metni ekrana çıkmaz
+
+Sistemin kendi biçimleri — RFC 5545 tekrar kuralı, ISO tarih, UUID, durum
+kodu — ekranda olduğu gibi görünmez. Plan listesi
+`FREQ=WEEKLY;BYDAY=MO,WE` yazıyordu; şube müdürünün okuduğu şey buydu.
+Çeviri `web/src/features/planlar/tekrar.ts` içinde ve **tanımadığı dizgeyi
+olduğu gibi döndürüyor**: uydurulmuş bir cümle, çiğ kuraldan kötüdür —
+plan yanlış okunur ve kimse fark etmez.
+
+Aynı kural tarihe de uzanıyor: çalıştırma detayı `2026-11-03` yerine
+`3 Kasım 2026` yazıyor.
+
 ## Erişilebilirlik
 
 Hedef: metin ≥ 4,5:1, ikon ve kenarlık ≥ 3:1 (NFR-11). Odak halkası görünür
@@ -226,7 +249,8 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 |---|---|---|
 | A-1 | Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif) | Yazı rengini koyulaştırmak yetiyor; ama zemin token'ları durum ızgarasında ve PDF'te de kullanıldığı için önce oraya bakılmalı |
 | A-2 | Koyu temayı en az bir ekranda sına | Token'lar tanımlı, hiçbir ekranda açılıp bakılmadı — bugün açılsa ne olacağını bilmiyoruz |
-| A-3 | Şablon editörü ve plan formuna v1 dilini yay | En yoğun iki ekran, hâlâ ızgarasız |
-| A-4 | Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza | Pano ızgarası sınıf katmanına geçti; kalan tablolar hâlâ kendi satır içi dolgularını yazıyor |
+| A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
+| A-4 | Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza | Pano ızgarası ve plan tablosu sınıf katmanında; şube, personel, aksiyon ve rapor tabloları hâlâ kendi satır içi dolgularını yazıyor |
+| A-7 | Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum | Sayfa başlığı, boş durum ve tablo ritmi hiçbirinde yok |
 | A-5 | İskelet yükleme (skeleton) | Belgede yazılı, hiç uygulanmadı |
 | A-6 | Marka wordmark | İsim testi sonucuna bağlı (bkz. `01-strateji/03-isim-ve-marka.md`) |
