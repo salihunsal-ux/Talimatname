@@ -33,6 +33,11 @@ ikisinin sessizce ayrışmasına açık kapı bırakıyordu — nitekim düğmel
 bileşen katmanına taşınması sırasında beş yerde görsel seçili hâl düşmüş,
 bunu testler değil ekrana bakmak yakalamıştı.
 
+Aynı kural **bağlı vurgulara** da uzanıyor: pano ızgarasında açık detayın
+satırı `tr:has(.izgara-hucre[aria-pressed='true'])` ile işaretleniyor, yani
+hücrenin kendi ARIA durumundan. İkinci bir "seçili satır" bayrağı tutmak,
+ayrışmayı bir kez daha davet ederdi.
+
 ## Renk
 
 ### Tema renkleri
@@ -135,12 +140,14 @@ varsayımı yok.
 | Kart | `.kart`, `.kart--yuzen` | Gölge yalnızca yüzen sürümde |
 | Bildiri | `.bildiri` + `--hata` / `--saglam` / `--uyari` | `role="status"` veya `role="alert"` ile |
 | Kabuk | `.kabuk-bant` (koyu), `.kabuk-menu`, `.kabuk-icerik` | Üst bant yapışkan ve koyu; banttaki ikincil düğme koyu zemine göre yeniden renklenir |
+| Sayfa başlığı | `.sayfa-basligi`, `-alt`, `-denetimler`, `-denetim` | Başlık + alt başlık solda, sayfanın kendi denetimleri sağda ve **etiketleri üstünde**; altında ince ayraç |
 | Giriş | `.giris`, `.giris-panel`, `.giris-form` | İki bölüm: solda koyu panel (ürün ne yapar), sağda form |
 | Marka işareti | `Marka.tsx` | Sayfa + mühür; `koyu` sürümü koyu zemin için |
 | Pano özeti | `.ozet-serit`, `.ozet-manset`, `.ozet-kutu` | Bir manşet (koyu, 44 px) + yan yana küçük sayılar — altı özdeş kutu değil |
-| Tablo | `.tablo`, `td.sayisal` | Sayısal sütunlar sağa yaslı ve tabular |
+| Tablo | `.tablo`, `td.sayisal`, `.tablo-kaydirma` | Sayısal sütunlar sağa yaslı ve tabular; dolgu sınıftan gelir, satır içi yazılmaz |
+| Izgara tablosu | `.tablo--izgara` | Sütunlar içeriği kadar — tam genişlik tablo, iki sütunu sayfanın iki ucuna düşürüp aradaki bağı koparıyordu |
 | Liste satırı | `.liste-satiri` | Satırın tamamı tıklanabilir; seçili hâl `aria-current` |
-| Izgara hücresi | `.izgara-hucre` | Pano ızgarası; tıkla → detay |
+| Izgara hücresi | `.izgara-hucre` | Pano ızgarası; tıkla → detay. Seçili hücre **çerçeveden** okunur: zemin durumu anlatıyor |
 | Boş durum | `.bos-durum` | İkon + tek cümle + ilk eylem |
 | Araç çubuğu | `.arac-cubugu`, `--sag` | Başlık satırı + eylemler |
 | Veri listesi | `.veri-liste` (dl) | Ad/değer çiftleri |
@@ -220,6 +227,6 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 | A-1 | Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif) | Yazı rengini koyulaştırmak yetiyor; ama zemin token'ları durum ızgarasında ve PDF'te de kullanıldığı için önce oraya bakılmalı |
 | A-2 | Koyu temayı en az bir ekranda sına | Token'lar tanımlı, hiçbir ekranda açılıp bakılmadı — bugün açılsa ne olacağını bilmiyoruz |
 | A-3 | Şablon editörü ve plan formuna v1 dilini yay | En yoğun iki ekran, hâlâ ızgarasız |
-| A-4 | Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza | `.tablo` var, kullanımı tutarsız |
+| A-4 | Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza | Pano ızgarası sınıf katmanına geçti; kalan tablolar hâlâ kendi satır içi dolgularını yazıyor |
 | A-5 | İskelet yükleme (skeleton) | Belgede yazılı, hiç uygulanmadı |
 | A-6 | Marka wordmark | İsim testi sonucuna bağlı (bkz. `01-strateji/03-isim-ve-marka.md`) |
