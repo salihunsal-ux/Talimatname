@@ -94,7 +94,7 @@ REGISTRY = [
         (D+"05-tasarim/01-ekran-envanteri-ve-navigasyon.md", "Ekran envanteri ve navigasyon", "SCR-M / SCR-W envanteri, navigasyon haritası, sürüm sütunu", []),
         (D+"05-tasarim/02-mobil-ekranlar.html", "Mobil tel-çerçeveler", "Personel ve yönetici mobil ekranları (v1)", []),
         (D+"05-tasarim/03-web-ekranlar.html", "Web tel-çerçeveler", "Yönetim paneli ekranları (v1)", []),
-        (D+"05-tasarim/04-tasarim-sistemi.md", "Tasarım sistemi", "Renk, tipografi, boşluk, bileşen kuralları, erişilebilirlik (token'lar)", []),
+        (D+"05-tasarim/04-tasarim-sistemi.md", "Tasarım sistemi", "v1: token'lar, bileşen katmanı, kırılma noktaları, ölçülen kontrast, açık işler", []),
         (D+"05-tasarim/ekranlar/build_wireframes.py", "Tel-çerçeve üretici (build_wireframes.py)", "02 ve 03 HTML dosyalarını üretir", ["betik"]),
         (D+"05-tasarim/05-prototip/blok8-prototip.html", "Blok 8 prototipi", "Tıklanabilir: kiosk PIN → kapanış listesi → sabah özeti; isim kartı seçici", ["canlı sayfa", "kit"]),
         (D+"05-tasarim/05-prototip/yonetici-web-prototip.html", "Yönetici web prototipi", "Kurulum sihirbazı (4 adım) → istisna odaklı pano ve ızgara → çalıştırma detayı ve aksiyon → sabah özeti e-postası; LOI turu için", ["kit", "canlı sayfa"]),
