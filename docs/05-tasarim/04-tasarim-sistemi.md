@@ -22,7 +22,8 @@ Dört karar; hepsi çalışan panele bakılarak alındı, maket üstünde değil
 | Karar | Gerekçe |
 |---|---|
 | **Koyu çapa yüzeyi** eklendi (`renk.koyu` ailesi): üst bant, giriş paneli, pano manşeti | Panel baştan sona açık parşömendi; hiyerarşi yoktu ve ürün "operasyon aracı" değil "form sayfası" gibi duruyordu. Zemini değiştirmek yerine sayfanın **ağırlık merkezine** koyu bir yüzey kondu |
-| **Birincil düğme mürekkep rengine** çevrildi (eskiden marka yeşili) | Yeşil hem eylemi hem "tamamlandı" durumunu hem bağlantıyı gösteriyordu; sayfadaki her yeşil tıklanabilir sanılıyordu. Yeşil artık yalnızca **vurgu**: bağlantı, seçili bölüm, başarılı durum |
+| **Birincil düğme mürekkep rengine** çevrildi (eskiden marka yeşili) | Yeşil hem eylemi hem "tamamlandı" durumunu hem bağlantıyı gösteriyordu; sayfadaki her yeşil tıklanabilir sanılıyordu. Yeşil artık yalnızca **vurgu**: bağlantı, seçili bölüm, başarılı durum. Kural "mürekkep" değil **"sayfanın tersi"**: koyu temada krem hap (A-2) |
+| **Devre dışı düğmenin yazısı okunur hâle geldi** | Yazı rengi `renk.yuzey` idi: her iki temada 1,58:1. Kurulum sihirbazında "neyin eksik olduğunu" söyleyen düğme buydu. Şimdi 3,6:1 — metin eşiğinin altında (standart devre dışı denetimi muaf tutuyor) ama okunuyor |
 | `renk.sessiz` koyulaştırıldı (#7b8590 → **#636e79**) | Eski değer parşömen üstünde 3,44:1 veriyordu; NFR-11 metin için 4,5:1 istiyor. Yeni değer 4,77:1 |
 | **Marka işareti** (sayfa + mühür) koda alındı: `Marka.tsx`, koyu zemin sürümüyle | Giriş ekranı ve üst bant isimsiz bir metin satırıyla açılıyordu. İşaret isimden bağımsız çizildi — isim testi hangi sonucu verirse versin işaret kalır, yanındaki yazı değişir |
 
@@ -91,6 +92,23 @@ bu zeminde okunmuyor.
 | `renk.koyu.murekkep` | #f1eee6 | #f1eee6 | Koyu yüzeyde metin |
 | `renk.koyu.sessiz` | #9aa2a8 | #9aa2a8 | Koyu yüzeyde yardımcı metin |
 | `renk.koyu.marka` | #3fa98c | #3fa98c | Koyu yüzeyde vurgu (açık tema yeşili burada okunmuyor) |
+| `renk.koyu.cizgi` | #16201d (= yüzeyin kendisi, görünmez) | **#324039** | Çapanın kenarı |
+| `renk.birincil.zemin` | #16201d | **#f1eee6** | Birincil düğme zemini |
+| `renk.birincil.yazi` | #f1eee6 | **#15191c** | Birincil düğme yazısı |
+
+**Çapa koyu temada yüzeyiyle ayrılamıyor.** Açık temada sayfadan 15,3:1
+uzakta; koyu temada sayfa da koyu olduğu için 1,05:1 kalıyordu — üst bant,
+giriş paneli ve pano manşeti zeminden ayrılmıyordu. Daha koyuya gitmek
+mümkün değil, sayfa zaten siyaha yakın. Ayrım artık **kenardan**: çapa bir
+tık yükseldi (#0f1416 → #1e2a26) ve `renk.koyu.cizgi` ile çevrelendi — açık
+temanın kartları 1,43:1'lik bir çizgiyle ayırmasının aynısı. Kural:
+*çapa, sayfadan ya yüzeyiyle (≥3:1) ya da kenarıyla (≥1,25:1) ayrılır.*
+
+**Birincil düğme sayfanın tersi.** Zemini çapa yüzeyiydi, dolayısıyla koyu
+temada sayfadan 1,05:1 ayrılıyordu: birincil eylemin kutu biçimi yoktu,
+yalnızca yazısı duruyordu. Artık kendi rol token'ı var ve her iki temada
+sayfadan ~15:1 uzakta — açık temada mürekkep hapı (15,31), koyu temada krem
+hap (15,25). Yeşil iki temada da vurgu olarak kalıyor.
 
 Kural: bir ekranda **en fazla bir** koyu çapa alanı — üst bant hariç. İkinci
 bir çapa hiyerarşiyi yok eder; çapanın işi "önce buraya bak" demek.
@@ -310,7 +328,8 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 | # | İş | Not |
 |---|---|---|
 | ~~A-1~~ | ~~Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif)~~ | **Bitti** — beş çift düzeldi (koyu temadaki ikisi listede bile değildi), durum çifti tek yerde toplandı, `kontrast.test.ts` ölçüyor. PDF'in token kullandığı doğru değilmiş: kendi paleti vardı, o da hizalandı |
-| A-2 | Koyu temayı en az bir ekranda sına | A-1 sırasında panoya bir kez bakıldı: çoğu yerinde duruyor ve kontrastlar geçiyor, ama **koyu çapa yüzeyi işlevini kaybediyor** — `renk.koyu` (#0f1416) ile sayfa zemini (#15191c) arasında 1,05:1 var, yani üst bant, giriş paneli ve pano manşeti zeminden ayrılmıyor. Yön C'nin ağırlık merkezi fikri koyu temada yeniden kurulmalı |
+| ~~A-2~~ | ~~Koyu temayı en az bir ekranda sına~~ | **Bitti** — dokuz ekran koyu temada açıldı ve ölçüldü (482 metin öğesi, eşiğin altında olan yalnızca devre dışı düğmeler ve o kasıtlı). Üç kusur çıktı ve düzeldi: çapa yüzeyi, birincil düğme, devre dışı düğme yazısı |
+| A-9 | Tema seçimi yok | `:root[data-tema='koyu']` tanımlı ama hiçbir şey `data-tema` yazmıyor: koyu tema yalnızca işletim sistemi tercihini izliyor. Aydınlık mutfakta koyu cihaz kullanan şube müdürü açık temaya geçemiyor. Üst banda bir seçici + `localStorage` yeterli |
 | A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
 | ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
 | ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
