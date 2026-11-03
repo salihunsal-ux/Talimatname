@@ -110,6 +110,24 @@ yalnızca yazısı duruyordu. Artık kendi rol token'ı var ve her iki temada
 sayfadan ~15:1 uzakta — açık temada mürekkep hapı (15,31), koyu temada krem
 hap (15,25). Yeşil iki temada da vurgu olarak kalıyor.
 
+### Tema nasıl seçiliyor
+
+İki yol var: `prefers-color-scheme` (cihazın tercihi) ve `:root[data-tema]`
+(kullanıcının seçimi, ikincisi birinciyi eziyor). Seçim `localStorage`'da;
+üç değer: `sistem` (kayıt silinir), `acik`, `koyu`.
+
+Üç ayrıntı, üçü de sessiz kusur üretir:
+
+1. **İlk boyamadan önce.** Tema `index.html`'deki küçük bir betikle, React
+   mount olmadan uygulanıyor. Beklenseydi kullanıcı, seçtiği temanın
+   tersini bir an görürdü. Mantık böylece iki yerde yazılı; `tema.test.ts`
+   ikisinin aynı anahtarı okuduğunu kontrol ediyor.
+2. **`color-scheme` de yazılıyor.** Tarayıcının kendi denetimleri — tarih
+   seçici, açılır liste, kaydırma çubuğu — buna bakıyor. Yazılmazsa sayfa
+   açık, içindeki takvim koyu açılır.
+3. **Depolama kapalı olabilir.** Gizli sekmede erişim hata atıyor: seçim o
+   oturumda geçerli olur, kalıcı olmaz, sayfa durmaz.
+
 Kural: bir ekranda **en fazla bir** koyu çapa alanı — üst bant hariç. İkinci
 bir çapa hiyerarşiyi yok eder; çapanın işi "önce buraya bak" demek.
 
@@ -208,6 +226,7 @@ varsayımı yok.
 | Vade | `.vade-metni`, `--gecikmis` | Renk tek başına anlam taşımıyor: metin de "3 saat gecikti" diyor |
 | Durum metni | `.durum-metni`, `Durum.tsx` (`Yukleniyor`, `Hata`) | Yükleniyor sessiz bir satır, hata `.bildiri--hata` kutusu |
 | Tehlikeli düğme | `.dugme--tehlike` | Maskeleme, silme: ikincil kalıp, yalnızca yazısı kırmızı |
+| Tema seçici | `.tema-secici`, `src/tema.ts` | Sistem · Açık · Koyu. Üst bantta ve giriş sayfasında; bir eylem değil **ayar** olduğu için açılır liste |
 | Dar sayfa | `.dar-sayfa`, `.dar-kart` | Tek kolonda okunan ekran (sihirbaz) ve tek başına duran kart (doğrulama, sistem durumu) |
 | Müjde şeridi | `.mujde`, `--temiz`, `-ikon` | "Her şey yolunda" bir hata değil bir sonuç: `.bildiri` ölçüsünde değil |
 | Sade liste | `.sade-liste` | Satırları kendi ayracını taşıyan liste; aralığı `gap` değil satırın üst çizgisi verir |
@@ -329,7 +348,7 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 |---|---|---|
 | ~~A-1~~ | ~~Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif)~~ | **Bitti** — beş çift düzeldi (koyu temadaki ikisi listede bile değildi), durum çifti tek yerde toplandı, `kontrast.test.ts` ölçüyor. PDF'in token kullandığı doğru değilmiş: kendi paleti vardı, o da hizalandı |
 | ~~A-2~~ | ~~Koyu temayı en az bir ekranda sına~~ | **Bitti** — dokuz ekran koyu temada açıldı ve ölçüldü (482 metin öğesi, eşiğin altında olan yalnızca devre dışı düğmeler ve o kasıtlı). Üç kusur çıktı ve düzeldi: çapa yüzeyi, birincil düğme, devre dışı düğme yazısı |
-| A-9 | Tema seçimi yok | `:root[data-tema='koyu']` tanımlı ama hiçbir şey `data-tema` yazmıyor: koyu tema yalnızca işletim sistemi tercihini izliyor. Aydınlık mutfakta koyu cihaz kullanan şube müdürü açık temaya geçemiyor. Üst banda bir seçici + `localStorage` yeterli |
+| ~~A-9~~ | ~~Tema seçimi yok~~ | **Bitti** — üst bantta ve giriş sayfasında seçici; ilk boyamadan önce uygulanıyor, `color-scheme` de yazılıyor. Seçici bandı telefonda kırdı: ≤720 px'te ürün adı ve kullanıcının rolü düşüyor, ad kalıyor (şubede cihaz paylaşılıyor) |
 | A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
 | ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
 | ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
