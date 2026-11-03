@@ -140,7 +140,7 @@ varsayımı yok.
 | Bileşen | Sınıf / dosya | Kural |
 |---|---|---|
 | Düğme | `.dugme` + `--birincil` / `--ikincil` / `--sessiz` / `--tam` / `--kucuk` | Birincil = `renk.koyu`; seçili hâl ARIA özniteliğinden; devre dışı `renk.pasif` |
-| Alan | `.alan`, `.alan-sarmal`, `.alan-etiket`, `.alan-ipucu`, `.alan--kod`, `--sayi`, `--saat` | Etiket her zaman görünür — placeholder etiket yerine geçmez. Sayı ve saat kutuları içeriği kadar; `.alan` varsayılanı tam genişlik |
+| Alan | `.alan`, `.alan-sarmal`, `.alan-etiket`, `.alan-ipucu`, `.alan--kod`, `--sayi`, `--saat`, `--dar`, `--orta`, `--genis` | Etiket her zaman görünür — placeholder etiket yerine geçmez. Sayı ve saat kutuları içeriği kadar; `.alan` varsayılanı tam genişlik |
 | Alan grubu | `.alan-grubu` (fieldset + legend), `.alan-sirasi` | Uzun form bölümlere ayrılır; grup hem gözle hem ekran okuyucuyla okunan bir sınır. Alanlar **alt** kenarlarından hizalanır |
 | Seçim çipi | `.secim-cipi` | Çoktan seçmeli etiket (gün, şube). Seçili hâl `:has(input:checked)` ile kutunun kendisinden türer; dar ekranda 44 px |
 | Durum çipi | `Cip.tsx` (`marka` / `kritik` / `uyari` / `pasif` / `nötr`) | İkon + metin; renk tek başına anlam taşımaz |
@@ -162,9 +162,32 @@ varsayımı yok.
 | Boş durum | `.bos-durum` | İkon + tek cümle + ilk eylem |
 | Araç çubuğu | `.arac-cubugu`, `--sag` | Başlık satırı + eylemler |
 | Veri listesi | `.veri-liste` (dl) | Ad/değer çiftleri |
+| Bölüm başlığı | `.bolum-basligi` (h2 + p) | `.sayfa-basligi`ın sayfa içindeki karşılığı: başlık + bir satır açıklama |
+| Sekme / adım şeridi | `.sekme-serit` | Sekmede `aria-selected`, sihirbaz adımında `aria-current="step"`; `ol` üzerinde de kullanılır |
+| Yığın | `.yigin`, `--dar` | Dikey ritim `gap`ten; çocuğun kendi kenar boşluğu sıfırlanır (kural dosyanın **sonunda** durmalı) |
+| Liste yığını | `.liste-yigin` (ul) | İşaretsiz dikey liste; satırlar `.liste-satiri` ya da `.kart` |
+| Madde listesi | `.madde-listesi` | Gerçek madde işaretli liste (sihirbaz özeti) |
+| Kart şeridi | `.kart-serit`, `-ad` | Çipler + ad + sağdaki durum; `.kart-ustu` künye içindir (metin, taban hizası) |
+| Kutu ızgarası | `.kutu-izgara` + `.kutu` | Sayaç kutuları; pano manşetinden farkı: hepsi eşit ağırlıkta |
+| Kanıt ızgarası | `.kanit-izgara`, `-gorsel`, `-yer`, `-alt`, `-bayrak` | Açılamayan görsel kırık simge değil, ne olduğunu söyleyen kutu |
+| Onay etiketi | `.onay-etiketi` | Kutu + metin; süzgeç satırının sade seçeneği (çerçeveli `.secim-cipi` değil), 44 px |
+| Süzgeç şeridi | `.suzgec-serit` | Başlık altında, sayfanın tamamını süzen denetimler |
+| Satır eylemi | `.satir-eylem` | Tablo hücresindeki düğme dizisi, sağa yaslı |
+| Vade | `.vade-metni`, `--gecikmis` | Renk tek başına anlam taşımıyor: metin de "3 saat gecikti" diyor |
+| Durum metni | `.durum-metni`, `Durum.tsx` (`Yukleniyor`, `Hata`) | Yükleniyor sessiz bir satır, hata `.bildiri--hata` kutusu |
+| Tehlikeli düğme | `.dugme--tehlike` | Maskeleme, silme: ikincil kalıp, yalnızca yazısı kırmızı |
+| Dar sayfa | `.dar-sayfa` | Tek kolonda okunan ekran (sihirbaz); satır 860 px'i geçmez |
 
 Düz CSS; yardımcı sınıf (utility) çerçevesi yok. Bileşen katmanı küçük ve
 adları Türkçe, çünkü belgelerle kod aynı sözlüğü kullanıyor.
+
+**Dosyadaki sıra kuralın parçası.** Aynı özgüllükte sonra gelen tanım
+kazanıyor, dolayısıyla bir bileşenin ölçüsünü ezmesi gereken kural
+(`.yigin > * { margin-block: 0 }`) dosyanın **sonunda** duruyor; yukarı
+taşınırsa hata vermeden etkisizleşir. Bu bir kez başa geldi: dar ekran
+için yazılan çip kuralı, `.secim-cipi` tanımından önceki bir blokta
+kaldığı için hiçbir şey yapmıyordu — testler değil, canlıda ölçmek
+yakaladı (44 bekleniyordu, 36 geldi).
 
 ### Henüz yazılmadı (mobil hedefi)
 
@@ -250,7 +273,8 @@ dışındadır (WCAG 1.4.3, devre dışı denetim istisnası).
 | A-1 | Çip renklerini 4,5:1'e çıkar (uyarı, kritik, pasif) | Yazı rengini koyulaştırmak yetiyor; ama zemin token'ları durum ızgarasında ve PDF'te de kullanıldığı için önce oraya bakılmalı |
 | A-2 | Koyu temayı en az bir ekranda sına | Token'lar tanımlı, hiçbir ekranda açılıp bakılmadı — bugün açılsa ne olacağını bilmiyoruz |
 | A-3 | ~~Şablon editörü ve plan formuna v1 dilini yay~~ | **Bitti.** Editör `.liste-detay`ya, plan formu dört `.alan-grubu`na geçti; `anaDugme` ve `secimCipi()` satır içi stil üreteçleri silindi |
-| A-4 | Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza | Pano ızgarası ve plan tablosu sınıf katmanında; şube, personel, aksiyon ve rapor tabloları hâlâ kendi satır içi dolgularını yazıyor |
-| A-7 | Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum | Sayfa başlığı, boş durum ve tablo ritmi hiçbirinde yok |
+| ~~A-4~~ | ~~Tablo ritmi: satır yüksekliği, ayraç, sayısal hiza~~ | **Bitti** — her tablo `.tablo` + `.sayisal` + `.eylem`; satır içi dolgu kalmadı |
+| ~~A-7~~ | ~~Kalan ekranlar: Şubeler, Personel, Aksiyonlar, Raporlar, Kurulum~~ | **Bitti** — beşinde de sayfa başlığı, boş durum ve sınıf katmanı var; 182 satır içi stil → 0 |
+| A-8 | Kalan yedi ekranın satır içi stilleri | Planlar (22) ve Şablonlar (19) A-3'ten artakalan ölçüler; Pano, Bildirimler, Çalıştırma, Kanıtlar, Doğrulama, Giriş, Sistem durumu hiç elden geçmedi — toplam ~120 satır. Sözlük artık hazır, çoğu doğrudan karşılanıyor |
 | A-5 | İskelet yükleme (skeleton) | Belgede yazılı, hiç uygulanmadı |
 | A-6 | Marka wordmark | İsim testi sonucuna bağlı (bkz. `01-strateji/03-isim-ve-marka.md`) |
