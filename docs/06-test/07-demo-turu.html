@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talimatname Demo Turu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Ürünün kendi paletinden: parşömen zemin, mürekkep metin, defter yeşili
+     vurgu. Başlıklar Bitter (marka wordmark'ının yazı tipi), gövde sistem
+     sans — panelin kendisi de öyle. Tek kolon, 68ch okuma genişliği. */
+  :root {
+    --zemin: #f7f5ef;
+    --yuzey: #ffffff;
+    --yuzey2: #efece4;
+    --murekkep: #1c2128;
+    --murekkep2: #4b5560;
+    --sessiz: #5b6670;
+    --cizgi: #d6d9d2;
+    --marka: #1f6f5b;
+    --marka-acik: #dcebe5;
+    --kritik: #a63d29;
+    --kritik-acik: #f3ddd8;
+    --uyari: #8c5d16;
+    --uyari-acik: #f6ebd2;
+    --koyu: #16201d;
+    --koyu-murekkep: #f1eee6;
+    --baslik: 'Bitter', Georgia, serif;
+    --govde: 'Segoe UI', 'SF Pro Text', Roboto, system-ui, sans-serif;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --zemin: #15191c;
+      --yuzey: #1d2226;
+      --yuzey2: #262c31;
+      --murekkep: #f1eee6;
+      --murekkep2: #b5bcc4;
+      --sessiz: #929aa1;
+      --cizgi: #2f373d;
+      --marka: #45b394;
+      --marka-acik: #173a31;
+      --kritik: #e46f5a;
+      --kritik-acik: #3a201b;
+      --uyari: #e0a640;
+      --uyari-acik: #33290f;
+      --koyu: #1e2a26;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --zemin: #15191c;
+    --yuzey: #1d2226;
+    --yuzey2: #262c31;
+    --murekkep: #f1eee6;
+    --murekkep2: #b5bcc4;
+    --sessiz: #929aa1;
+    --cizgi: #2f373d;
+    --marka: #45b394;
+    --marka-acik: #173a31;
+    --kritik: #e46f5a;
+    --kritik-acik: #3a201b;
+    --uyari: #e0a640;
+    --uyari-acik: #33290f;
+    --koyu: #1e2a26;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--zemin);
+    color: var(--murekkep);
+    font: 16px/1.6 var(--govde);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sayfa {
+    max-width: 68ch;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
+
+  header.ust {
+    background: var(--koyu);
+    color: var(--koyu-murekkep);
+    padding: 40px 16px 32px;
+    margin-bottom: 40px;
+  }
+
+  header.ust .sayfa { padding-bottom: 0; }
+
+  h1 {
+    font-family: var(--baslik);
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  header.ust p {
+    margin: 0;
+    max-width: 58ch;
+    color: #c7cdc9;
+  }
+
+  header.ust a { color: #7fd0b4; }
+
+  h2 {
+    font-family: var(--baslik);
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    margin: 56px 0 4px;
+    text-wrap: balance;
+  }
+
+  h2 + .alt-baslik {
+    margin: 0 0 24px;
+    color: var(--murekkep2);
+    font-size: 15px;
+  }
+
+  h3 {
+    font-family: var(--baslik);
+    font-weight: 500;
+    font-size: 18px;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+
+  a { color: var(--marka); }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88em;
+    background: var(--yuzey2);
+    border-radius: 4px;
+    padding: 1px 5px;
+    overflow-wrap: anywhere;
+  }
+
+  pre {
+    background: var(--koyu);
+    color: var(--koyu-murekkep);
+    border-radius: 10px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  pre code { background: none; padding: 0; color: inherit; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 15px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--cizgi);
+    vertical-align: top;
+  }
+
+  th {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--murekkep2);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  td code { white-space: nowrap; }
+
+  .kaydir { overflow-x: auto; }
+
+  .senaryo {
+    background: var(--yuzey);
+    border: 1px solid var(--cizgi);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+
+  .senaryo-ust {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .no {
+    font-family: var(--baslik);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--marka);
+    background: var(--marka-acik);
+    border-radius: 999px;
+    padding: 3px 11px;
+    white-space: nowrap;
+  }
+
+  .senaryo-ust h3 { margin: 0; flex: 1 1 220px; }
+
+  .senaryo ol, .senaryo ul { margin: 0; padding-left: 20px; }
+  .senaryo li + li { margin-top: 5px; }
+
+  .beklenen {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--marka-acik);
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  .beklenen strong { color: var(--marka); }
+
+  .uyari-kutu {
+    padding: 14px 16px;
+    background: var(--uyari-acik);
+    border-left: 3px solid var(--uyari);
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+
+  .not-kutu {
+    padding: 14px 16px;
+    background: var(--yuzey2);
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+
+  .cip {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+
+  .cip--var { background: var(--marka-acik); color: var(--marka); }
+  .cip--bos { background: var(--uyari-acik); color: var(--uyari); }
+  .cip--yok { background: var(--yuzey2); color: var(--sessiz); }
+
+  .liste-sade { padding-left: 20px; }
+  .liste-sade li + li { margin-top: 8px; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--cizgi);
+    color: var(--sessiz);
+    font-size: 14px;
+  }
+
+  .adim-senaryo { border-left: 3px solid var(--marka); }
+
+  .etiketler {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 0 0 14px;
+  }
+
+  .adimlar {
+    counter-reset: adim;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .adimlar > li {
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 15px;
+  }
+
+  .adimlar > li::before {
+    counter-increment: adim;
+    content: counter(adim);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--yuzey2);
+    color: var(--murekkep2);
+    font-size: 13px;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+  }
+
+  .gor {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--murekkep2);
+  }
+
+  .gor::before {
+    content: "Görmen gereken: ";
+    font-weight: 600;
+    color: var(--marka);
+  }
+
+  .deger {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.88em;
+    background: var(--marka-acik);
+    color: var(--marka);
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  @media (max-width: 480px) {
+    .senaryo { padding: 16px; }
+    header.ust { padding: 28px 16px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="ust">
+  <div class="sayfa">
+    <h1>Talimatname demo turu</h1>
+    <p>
+      Panel <a href="https://demo.talimatname.com">demo.talimatname.com</a> adresinde ayakta.
+      Bu sayfa neyi nasıl deneyeceğini, nereye özellikle bakman gerektiğini ve
+      mobil uygulamanın bu tabloya nerede oturduğunu anlatıyor.
+      Veri uydurma: gerçek şube, çalışan ya da müşteri kaydı yok.
+    </p>
+  </div>
+</header>
+
+<main class="sayfa">
+
+<h2>Giriş</h2>
+<p class="alt-baslik">SMS sağlayıcısı bağlı değil; kod ekranda yazıyor.</p>
+
+<ol class="liste-sade">
+  <li>Telefon kutusuna aşağıdaki numaralardan birini yaz, <strong>Kod iste</strong>.</li>
+  <li>Sarı kutuda çıkan altı haneli kodu gir, <strong>Giriş yap</strong>.</li>
+</ol>
+
+<div class="kaydir">
+<table>
+  <thead>
+    <tr><th>Telefon</th><th>Kim</th><th>Rolü</th><th>Ne görür</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>+905321110001</code></td><td>Cem Yönetici</td><td>Yönetici</td><td>Her şey</td></tr>
+    <tr><td><code>+905321110002</code></td><td>Murat Bölge</td><td>Bölge müdürü</td><td>Yalnızca Anadolu şubeleri</td></tr>
+    <tr><td><code>+905321110004</code></td><td>Deniz Şube</td><td>Şube müdürü</td><td>Yalnızca Beşiktaş; Personel, Bildirimler, Kurulum menüde yok</td></tr>
+    <tr><td><code>+905321110005</code></td><td>Emre Personel</td><td>Personel</td><td>Panelde işi yok; mobil bölümünde kullanılıyor</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="uyari-kutu">
+  Kodun ekranda görünmesi <code>DEMO_SHOW_OTP_CODE</code> ayarıyla açık. Giriş bu hâliyle
+  tek faktöre iniyor ve bu ayar üretimde açılamıyor — panelin <strong>Sistem durumu</strong>
+  ekranı da bunu yazıyor. Demoyu dar tutmak istersen güvenlik duvarında kaynak IP sınırı en ucuz yol.
+</div>
+
+<h2>Ana senaryolar</h2>
+<p class="alt-baslik">Her birinin sonunda ne görmen gerektiği yazılı. Görmediğin şey kusurdur.</p>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">1</span><h3>Rol, menüyü değiştiriyor mu</h3></div>
+  <ol>
+    <li><code>…0001</code> ile gir, soldaki menüyü say.</li>
+    <li>Çık, <code>…0004</code> (şube müdürü) ile gir.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> şube müdüründe Personel, Bildirimler ve Kurulum yok.
+    Asıl denetim sunucuda; arayüz basılamayacak düğmeyi hiç göstermiyor — 403 görmek bilgi değil, sürtünme.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">2</span><h3>Plan kurma ve 7 gün önizleme</h3></div>
+  <ol>
+    <li><strong>Planlar</strong> → aşağıdaki forma bak: dört grup var (Ne yapılacak · Ne zaman · Pencere ve tolerans · Kapsam).</li>
+    <li>Bir ad yaz, şablon seç, tekrarı <em>Haftalık</em> yap ve birkaç gün çipi tıkla, bir iki şube seç.</li>
+    <li><strong>Önizle</strong>'ye bas. Kaydetme.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> 7 günde hangi şubede kaç çalıştırma açılacağı, saatleriyle listeleniyor —
+    <strong>plan kaydedilmeden</strong>. Kuralı yanlış kurduysan bunu plan oluşmadan görüyorsun.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">3</span><h3>Yayımlanan şablon değişmez</h3></div>
+  <ol>
+    <li><strong>Şablonlar</strong> → "Kapanış (kafe)" → yayımlanmış sürüm.</li>
+    <li>Bir maddeyi değiştirmeye çalış.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> düzenleyemiyorsun; kart "yayınlanan sürüm bir daha değişmez,
+    değişiklik yeni bir taslak açar" diyor ve <em>Yeni taslak türet</em> öneriyor.
+    Denetim kâğıdının anlamı bu: altı ay sonra bakıldığında o gün hangi soruların sorulduğu sabit.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">4</span><h3>Kurulum sihirbazı durumu veriden okuyor</h3></div>
+  <ol>
+    <li><strong>Kurulum</strong> → adım çubuğuna bak, hangi adımların ✓ olduğunu not et.</li>
+    <li>Marka adını boş bırak, "Kaydet ve devam et" düğmesine bak.</li>
+    <li>Sekmeyi kapat, yeniden aç, tekrar Kurulum'a gir.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> kaldığın adımda buluyorsun kendini — çünkü saklanan bir "adım" yok,
+    sunucu hangi verinin girildiğini sayıyor. Devre dışı düğmenin yazısı da <strong>okunuyor</strong>
+    (bu hafta düzeltildi; önce beyaz üstüne beyaza yakındı).
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">5</span><h3>Aksiyon notsuz kapanmıyor</h3></div>
+  <ol>
+    <li><strong>Aksiyonlar</strong> → üç kayıt var, hepsi dün kaçırılan listeden kendiliğinden açılmış.</li>
+    <li>Birinde <strong>Kapat</strong>'a bas, not alanını boş bırakıp göndermeyi dene.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> boş notla sunucuya gidilmiyor. "Kapattım" demek yetmiyor,
+    ne yapıldığının yazılması gerekiyor. Bir tanesini gerçekten kapatırsan sayaçlar düşüyor.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">6</span><h3>Kâğıttan kayda: belge doğrulama</h3></div>
+  <ol>
+    <li><strong>Raporlar</strong> → Aylık özet → <strong>PDF indir</strong>.</li>
+    <li>PDF'in alt bilgisindeki doğrulama kodunu kopyala.</li>
+    <li>Çıkış yap. Giriş ekranının altındaki <strong>Belge doğrula</strong> bağlantısına tıkla, kodu yaz.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> sayfa <strong>oturumsuz</strong> çalışıyor — denetçi bir kullanıcı değil, panele giremez.
+    Dönen bilgi kâğıtta zaten yazılı olanlar: belge türü, dönem, şube kodu, üretim zamanı.
+    Puan, madde sonuçları ve kimin ürettiği <em>dönmüyor</em>; kodu eline geçiren herkese iç veri açılmış olurdu.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">7</span><h3>KVKK maskelemesi</h3></div>
+  <ol>
+    <li><strong>Personel</strong> → süzgeç satırındaki <em>Pasif ve maskelileri göster</em>'i aç.</li>
+    <li>"Eski personel #4821" satırını bul.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> ad ve telefon gitmiş, kayıt durmuş. Maskeleme silme değil:
+    kişisel veri siliniyor, o kişinin yaptığı işin izi kalıyor. Geri alınamaz — bu kayıt
+    demoda <em>benim</em> maskeleme denememden kaldı ve bilerek bırakıldı, çünkü özelliği gösteriyor.
+  </div>
+</div>
+
+<div class="senaryo">
+  <div class="senaryo-ust"><span class="no">8</span><h3>Tema, telefon, erişilebilirlik</h3></div>
+  <ol>
+    <li>Bandın sağındaki tema seçicisini <em>Koyu</em> yap. Sayfayı yenile.</li>
+    <li>Tarih kutusunun takvimini aç.</li>
+    <li>Tarayıcıyı telefon genişliğine daralt.</li>
+    <li>Klavyeyle gez: sekme tuşuyla düğmeler arasında dolaş.</li>
+  </ol>
+  <div class="beklenen">
+    <strong>Beklenen:</strong> seçim yenilemeden sonra duruyor ve sayfa <em>açılırken</em> doğru temada geliyor,
+    bir an ters temada parlamıyor. Takvim de koyu açılıyor. Telefonda menü yatay şeride iniyor,
+    tablolar kendi içinde kayıyor, bantta ürün adı düşüyor ama <strong>kullanıcı adı kalıyor</strong> —
+    şubede cihaz paylaşılıyor, "kim olarak girdim" sorusunun cevabı ekranda durmalı.
+    Odaklanan her öğenin görünür bir halkası var.
+  </div>
+</div>
+
+<h2>Özellikle bakılacak yerler</h2>
+<p class="alt-baslik">Son günlerde elden geçen altı şey. Kusur ararken buralara bak.</p>
+
+<ul class="liste-sade">
+  <li><strong>Durum çipleri.</strong> "Yüksek", "Kaçırıldı", "Pasif" gibi çiplerin yazısı zeminine göre
+  okunuyor mu? Hepsi en az 4,5:1 olacak şekilde koyulaştırıldı; en zoru sarı olandı.
+  Renk tek başına anlam taşımıyor: her çipte ikon <em>ve</em> kelime var.</li>
+
+  <li><strong>Makine metni.</strong> Planlar tablosunda tekrar sütunu "Her Pazartesi, Çarşamba" diyor,
+  <code>FREQ=WEEKLY;BYDAY=MO,WE</code> demiyor. Ekranda <code>FREQ=</code>, ham UUID ya da
+  ISO tarih görürsen kusurdur.</li>
+
+  <li><strong>Yükleme.</strong> Ağı yavaşlatırsan (tarayıcı geliştirici araçları → Network → throttling)
+  tablolar gri iskelet kutularıyla doluyor, satır sayısı ve sütun sayısı gerçeğiyle aynı —
+  veri gelince sayfa zıplamıyor. Hızlı yanıtta iskelet <em>hiç</em> görünmüyor; 250 ms altı bekleme için
+  gri kutuların parlayıp kaybolması, hiç göstermemekten kötü.</li>
+
+  <li><strong>Boş durumlar.</strong> Veri olmayan her yerde kesik çizgili bir kutu ve ne yapılacağını
+  söyleyen bir cümle var mı? Sessizce boş kalan bir alan bulursan kusurdur.</li>
+
+  <li><strong>Koyu temada üst bant.</strong> Bandın, giriş panelinin ve pano manşetinin sayfadan
+  ayrıldığını görüyor musun? Koyu temada sayfa da koyu olduğu için ayrım yüzeyden değil
+  <em>kenardan</em> geliyor; bu hafta düzeltildi.</li>
+
+  <li><strong>Birincil düğme.</strong> Açık temada koyu hap, koyu temada krem hap — her iki temada da
+  sayfadan en uzak renk. "Kod iste" düğmesine iki temada da bak.</li>
+</ul>
+
+<h2>Bilerek boş olan yerler</h2>
+<p class="alt-baslik">Kusur değil, eksik veri. Sebebi aynı.</p>
+
+<div class="kaydir">
+<table>
+  <thead><tr><th>Ekran</th><th>Durum</th><th>Neden</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Pano</td>
+      <td><span class="cip cip--bos">boş</span></td>
+      <td>Dün üç şube de "Kaçırıldı", bugün üçü de "Bekleyen", tamamlanma %0. Demoya hiç çalıştırma gönderilmedi.</td>
+    </tr>
+    <tr>
+      <td>Kanıt galerisi</td>
+      <td><span class="cip cip--bos">boş</span></td>
+      <td>Fotoğraf yükleyen bir telefon olmadı.</td>
+    </tr>
+    <tr>
+      <td>Ölçüm günlüğü</td>
+      <td><span class="cip cip--bos">boş</span></td>
+      <td>Sıcaklık girişi mobil ekranda; henüz yok.</td>
+    </tr>
+    <tr>
+      <td>Aylık özet</td>
+      <td><span class="cip cip--var">çalışıyor</span></td>
+      <td>Tablo ve PDF üretiliyor, ama içindeki sayılar sıfır.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  Üçünün de sebebi aynı: <strong>panel kurar, telefon uygular</strong>. Çalıştırmayı kapatan,
+  fotoğrafı çeken, sıcaklığı yazan mobil uygulama. O yazılmadan panelin bu üç ekranı dolmaz.
+  Kodda dünkü çalıştırmaları üç farklı sonuçla kuran bir fikstür var (zamanında geçti / geç ve
+  başarısız / kaçırıldı) ama yalnızca bellek içi adaptörde duruyor; tohum çalıştırma yazmıyor.
+  İstenirse tohuma taşınıp demo panosu doldurulabilir.
+</p>
+
+<h2>Mobil uygulama ile etkileşim</h2>
+<p class="alt-baslik">Uygulama henüz yok. Ama konuşacağı sözleşme ayakta ve bugün denenebilir.</p>
+
+<h3>İş bölümü</h3>
+<p>
+  Bağımlılık tek yönlü: zincir, şube, personel, şablon ve plan <strong>panelden</strong> kurulur;
+  mobil, panelin ürettiği veriyi tüketir. Panel olmadan telefonda gösterilecek tek bir çalıştırma yok.
+  Tersi doğru değil — panel mobil olmadan kurulabiliyor, nitekim demoda öyle duruyor.
+  Bu yüzden panel önce yazıldı, mobil geliştirici 6.–8. haftada katılıyor (ADR-0013).
+</p>
+
+<div class="kaydir">
+<table>
+  <thead><tr><th>Panelde yapılan</th><th>Telefonda karşılığı</th><th>Sonuç panelde nerede görünür</th></tr></thead>
+  <tbody>
+    <tr><td>Şablon yayımlanır</td><td>Maddeler listesi olarak iner</td><td>—</td></tr>
+    <tr><td>Plan kurulur</td><td>"Bugün" ekranında pencere açılır</td><td>Pano ızgarası (Bekleyen)</td></tr>
+    <tr><td>—</td><td>Madde işaretlenir, fotoğraf çekilir</td><td>Pano hücresi + Kanıt galerisi</td></tr>
+    <tr><td>—</td><td>Sıcaklık yazılır</td><td>Ölçüm günlüğü, aralık dışı çipi</td></tr>
+    <tr><td>—</td><td>Pencere kaçırılır</td><td>Kaçırıldı hücresi + kendiliğinden açılan aksiyon</td></tr>
+    <tr><td>Aksiyon kapatılır</td><td>"Aksiyonlarım" listesinden düşer</td><td>Sayaçlar</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Bugün ne var, ne yok</h3>
+<div class="kaydir">
+<table>
+  <thead><tr><th>Parça</th><th>Durum</th><th>Not</th></tr></thead>
+  <tbody>
+    <tr><td>11 mobil ekran tasarımı</td><td><span class="cip cip--var">yazılı</span></td><td>SCR-M-01…11: giriş, kiosk kilit, bugün, liste çalıştırma, madde bileşenleri, yapılamadı, sorun bildir, aksiyonlarım, duyuru, yönetici görünümü, senk ve profil</td></tr>
+    <tr><td>Çevrimdışı önbellek uç noktası</td><td><span class="cip cip--var">çalışıyor</span></td><td><code>GET /sync/manifest</code></td></tr>
+    <tr><td>Kuyruk gönderimi</td><td><span class="cip cip--var">çalışıyor</span></td><td><code>POST /sync/batch</code>, kısmi başarı ve cihaz saati sapması ile</td></tr>
+    <tr><td>Kanıt yükleme üçlüsü</td><td><span class="cip cip--var">çalışıyor</span></td><td>ön imzalı URL → bayt yükleme → tamamlama (damga + SHA-256)</td></tr>
+    <tr><td>Flutter uygulaması</td><td><span class="cip cip--yok">yazılmadı</span></td><td>Faz B; ilk iki hafta yalnızca iki riskli deney, ekran yok</td></tr>
+    <tr><td>Kiosk kilit / PIN</td><td><span class="cip cip--yok">yazılmadı</span></td><td>Paylaşılan cihaz senaryosu; uç nokta da yok</td></tr>
+    <tr><td>Duyuru onayı</td><td><span class="cip cip--yok">yazılmadı</span></td><td>v1.1'e bırakıldı</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Sözleşmeyi kendin dene</h3>
+<p>
+  Uygulama olmadan da telefonun göreceği veriyi görebilirsin. Hepsi okuma; hiçbir şey yazmıyor.
+</p>
+
+<ol class="liste-sade">
+  <li>Panele <code>…0005</code> (Emre Personel, Kadıköy) ile gir.</li>
+  <li>Geliştirici araçları → Console:
+    <pre><code>localStorage.getItem('talimatname.belirtec')</code></pre>
+    Çıkan uzun metni kopyala.</li>
+  <li><a href="https://demo.talimatname.com/api/v1/docs">demo.talimatname.com/api/v1/docs</a> aç →
+    sağ üstte <strong>Authorize</strong> → belirteci yapıştır.</li>
+  <li><code>GET /sync/manifest</code> → <strong>Try it out</strong> → Execute.</li>
+</ol>
+
+<div class="beklenen">
+  <strong>Beklenen:</strong> yalnızca <strong>Kadıköy</strong>'ün çalıştırmaları iniyor, iki tane.
+  Kapsam cihazdan değil <em>kullanıcıdan</em> okunuyor: personel kendi şubesinden başkasını indiremiyor.
+  Aynı çağrıyı <code>…0001</code> (yönetici) belirteciyle yapıp farkı gör.
+</div>
+
+<p style="margin-top:24px">Cihaz saati sapması, telefon olmadan denenebilen ikinci şey:</p>
+
+<pre><code>POST /api/v1/sync/batch
+{ "device_time": "2026-11-04T07:45:00Z", "answers": [], "evidence": [] }</code></pre>
+
+<div class="beklenen">
+  <strong>Beklenen:</strong> yanıtta <code>skew_minutes: 89</code> ve <code>flagged: true</code>.
+  Telefonun saati kaymışsa kanıtın zamanı tartışmalı hâle gelir; sunucu bunu sessizce kabul etmiyor,
+  işaretliyor. Boş kuyruk hiçbir şey yazmıyor, güvenle deneyebilirsin.
+</div>
+
+<div class="not-kutu">
+  <strong>Yazma denemesi yapacaksan.</strong> <code>/sync/batch</code>'e gerçek bir cevap gönderirsen
+  (<code>answer_id</code> cihazda üretilir) aynı kuyruğu <em>ikinci kez</em> göndermek ikinci kayıt
+  açmaz: cevap güncellenir, kanıt "resumed" döner ve yükleme kaldığı yerden devam eder.
+  Asansörde kopan bir yüklemenin çift kayıt üretmemesi bununla sağlanıyor.
+  Deneyeceksen haber ver — demoya yazılan kaydı sonra temizlemek gerekiyor ve
+  denetim izi silinmiyor, yani iz ile veritabanı arasında fark kalıyor.
+</div>
+
+<h2>Kusur bildirirken</h2>
+<p>Üç şey yeterli, ekran görüntüsü varsa daha iyi:</p>
+<ol class="liste-sade">
+  <li>Hangi hesapla girdin, hangi ekrandaydın.</li>
+  <li>Ne bekliyordun, ne oldu.</li>
+  <li>Tarayıcı ve genişlik (telefon mu, masaüstü mü), tema (açık/koyu).</li>
+</ol>
+
+<div class="uyari-kutu">
+  Demo verisi kalıcı: açtığın plan, kapattığın aksiyon, maskelediğin personel kalır.
+  Tohumu yeniden koşturmak çalıştırma ve aksiyonları geri getirmez, onları zamanlayıcı üretiyor.
+  Temizlik gerektirecek bir şey yaptıysan yazmanız yeterli.
+</div>
+
+<h2>Adım adım senaryolar</h2>
+<p class="alt-baslik">
+  Yukarıdakilerin uzun hâli: hangi alana ne yazılacağı ve her adımda ne görülmesi gerektiği.
+  Her senaryonun başında demoya <strong>yazıp yazmadığı</strong> işaretli.
+</p>
+
+<div class="uyari-kutu">
+  <strong>Geri alınamayanlar.</strong> Panelde silme yok. Kurduğun plan durdurulabilir ama kalır;
+  yayımladığın şablon sürümü değişmez; kapattığın aksiyon yeniden açılmaz; maskelediğin personel geri gelmez.
+  Yalnızca okumak istiyorsan D5 ve D6 ile başla, ikisi de hiçbir şey yazmıyor.
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D1</span><h3>Sıfırdan plan kurmak</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--bos">yazar</span>
+    <span class="cip cip--var">durdurulabilir</span>
+    <span class="cip cip--yok">~6 dk</span>
+  </div>
+  <p>Amaç: pencerenin şube çalışma saatinden nasıl türediğini ve önizlemenin ne işe yaradığını görmek.</p>
+  <ol class="adimlar">
+    <li>
+      <code>+905321110001</code> ile gir, soldan <strong>Planlar</strong>.
+      <span class="gor">Tek plan var: “Günlük kapanış”, tekrarı <strong>Her gün</strong> yazıyor.
+      Burada <code>FREQ=DAILY</code> görürsen kusurdur.</span>
+    </li>
+    <li>
+      Sayfanın altındaki <strong>Yeni plan</strong> formuna in. Dört gruba ayrılmış:
+      Ne yapılacak · Ne zaman · Pencere ve tolerans · Kapsam.
+      <span class="gor">Her grubun kendi çerçevesi ve başlığı var; alanlar alt kenarlarından hizalı.</span>
+    </li>
+    <li>
+      <strong>Ne yapılacak</strong>: Plan adı <span class="deger">Deneme · hafta içi açılış</span>,
+      Şablon listesinden <span class="deger">Kapanış (kafe) · Sürüm 1</span>.
+      <span class="gor">Listede yalnızca <em>yayımlanmış</em> sürümler var. Taslak bir sürüme plan bağlanamaz.</span>
+    </li>
+    <li>
+      <strong>Ne zaman</strong>: Tekrar → <span class="deger">Haftanın günleri</span>.
+      Altta çıkan gün çiplerinden <span class="deger">Pzt</span>, <span class="deger">Çar</span>,
+      <span class="deger">Cum</span>.
+      <span class="gor">Seçilen çipler yeşile dönüyor. Çipin seçili hâli kutunun kendi durumundan okunuyor,
+      ayrı bir işaretten değil — ekran okuyucu ile göz aynı kaynağı okuyor.</span>
+    </li>
+    <li>
+      Aynı grupta Başlangıç → <span class="deger">Çalışma saatinden</span>.
+      Çıpa <span class="deger">Açılış</span>, Dakika (±) <span class="deger">30</span>.
+      <span class="gor">“Saat” kutusu kayboldu, yerine Çıpa ve Dakika geldi. Alanlar yeniden dizildiğinde
+      birbirinden kopmuyor, grubun içinde kalıyor.</span>
+    </li>
+    <li>
+      <strong>Pencere ve tolerans</strong>: Pencere (dk) <span class="deger">60</span>,
+      Tolerans (dk) <span class="deger">15</span>.
+      <span class="gor">İki kutu da içeriği kadar dar, satırı boydan boya kaplamıyor.</span>
+    </li>
+    <li>
+      <strong>Kapsam</strong>: <span class="deger">Kadıköy</span> ve <span class="deger">Üsküdar</span> çiplerini seç.
+      <span class="gor">Şube çipleri gün çipleriyle aynı kalıpta.</span>
+    </li>
+    <li>
+      <strong>7 gün önizle</strong>’ye bas. <em>Kaydetme.</em>
+      <span class="gor">Altta bir kart açılıyor: “Önizleme (7 gün): N çalıştırma”.
+      N = önümüzdeki yedi güne düşen Pzt/Çar/Cum sayısı × 2 şube. Satırlar gün, şube ve saat aralığıyla yazılı;
+      saat her şubenin kendi açılışına göre. Plan henüz <strong>yok</strong>.</span>
+    </li>
+    <li>
+      Tekrarı <span class="deger">Aylık</span> → Ayın günü <span class="deger">31</span> yapıp tekrar önizle.
+      <span class="gor">Kuralın kaç çalıştırma ürettiği değişiyor. Hiç üretmezse kart
+      “Bu kuralla çalıştırma üretilmiyor” diyor — sessizce boş kalmıyor.</span>
+    </li>
+    <li>
+      Tekrarı Haftanın günlerine geri al, <strong>Planı kaydet</strong>.
+      <span class="gor">Üstteki tabloda yeni satır; tekrar sütunu “Her Pazartesi, Çarşamba, Cuma”,
+      pencere sütunu “60 dk +15 dk tolerans”.</span>
+    </li>
+    <li>
+      <strong>Temizlik:</strong> yeni planın satırındaki <strong>Durdur</strong>’a bas.
+      <span class="gor">Satırda “Durduruldu” çipi çıkıyor ve bugünün çalıştırmaları listesinden düşüyor.
+      Plan silinmiyor — silme yok; durdurma, yeni çalıştırma üretmeyi kesiyor.</span>
+    </li>
+  </ol>
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D2</span><h3>Şablonu sürümlemek</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--bos">yazar</span>
+    <span class="cip cip--yok">yayımlarsan geri alınamaz</span>
+    <span class="cip cip--yok">~5 dk</span>
+  </div>
+  <p>Amaç: “yayımlanan sürüm değişmez” kuralının nasıl uygulandığını görmek.</p>
+  <ol class="adimlar">
+    <li>
+      <strong>Şablonlar</strong> → solda “Kapanış (kafe)” altındaki <strong>Sürüm 1</strong>.
+      <span class="gor">Sağda kart açılıyor; başlıkta şablon adı, altında sayılar
+      (sürüm no, puanlanan, kritik, fotoğraf) ve yeşil <strong>Yayında</strong> çipi.</span>
+    </li>
+    <li>
+      Madde satırlarına bak, bir şey değiştirmeyi dene.
+      <span class="gor">Düzenleme alanı yok. Kartın üstünde bildiri:
+      “Yayınlanmış sürüm değişmez: ona bağlı çalıştırmalar ve kanıtlar korunur.”
+      Yanında <strong>Yeni taslak türet</strong> düğmesi.</span>
+    </li>
+    <li>
+      <strong>Yeni taslak türet</strong>’e bas.
+      <span class="gor">Solda <strong>Sürüm 2</strong> belirdi, çipi <strong>Taslak</strong>.
+      Sürüm 1 yerinde duruyor — geçmiş çalıştırmalar hâlâ ona bağlı.</span>
+    </li>
+    <li>
+      Taslakta en alta in, <strong>Bölüm başlığı</strong> alanına
+      <span class="deger">Deneme bölümü</span> yaz, <strong>Bölüm ekle</strong>.
+      <span class="gor">Yeni bölüm açıldı ve “Bu bölümde henüz madde yok” diyor.
+      Düğmelerin üstünde “Kaydedilmemiş değişiklik var” uyarısı belirdi.</span>
+    </li>
+    <li>
+      Yeni bölümün altındaki satırda <strong>Madde başlığı</strong>:
+      <span class="deger">Buzdolabı sıcaklığı</span>, Madde türü <span class="deger">Sayı/sıcaklık</span>,
+      <strong>Madde ekle</strong>.
+      <span class="gor">Madde satırı geldi; türü çip olarak yazılı. Eylemler (Sil) sağa toplanmış,
+      maddeyi anlatan bilgiler solda.</span>
+    </li>
+    <li>
+      <strong>Yayınla</strong> düğmesine bak, <em>basma</em>.
+      <span class="gor">Kapalı. Üstüne gelince “Önce taslağı kaydedin” diyor.
+      Yayımla ikincil görünümde: geri alınamaz ama ekranın asıl işi değil —
+      birincil olan, yapılan çalışmayı kaybetmeyen <strong>Taslağı kaydet</strong>.</span>
+    </li>
+    <li>
+      <strong>Taslağı kaydet</strong>.
+      <span class="gor">“Kaydedilmemiş değişiklik var” uyarısı kayboldu, Yayınla düğmesi açıldı.
+      Taslakta yayına engel bir şey varsa (örneğin boş bölüm) kartta sarı bir kutu
+      “Yayına engel olanlar:” diye maddeleri sayıyor.</span>
+    </li>
+    <li>
+      <em>İsteğe bağlı:</em> Yayınla. Bunu yaparsan Sürüm 2 kalıcı olur ve bir daha değişmez.
+      <span class="gor">Sürüm 1 “Arşiv”e, Sürüm 2 “Yayında”ya geçiyor.
+      Planlar formundaki şablon listesinde artık Sürüm 2 çıkıyor.</span>
+    </li>
+  </ol>
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D3</span><h3>Aksiyonu kapatmak</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--bos">yazar</span>
+    <span class="cip cip--yok">geri alınamaz</span>
+    <span class="cip cip--yok">~3 dk</span>
+  </div>
+  <p>Amaç: kapanışın neden not istediğini ve aksiyonun nereden doğduğunu görmek.</p>
+  <ol class="adimlar">
+    <li>
+      <strong>Aksiyonlar</strong>.
+      <span class="gor">Başlığın sağında üç sayaç çipi: açık, gecikmiş, kritik.
+      Üç kart var, hepsinin kaynağı “Kaçırılan liste” — kimse elle açmadı,
+      dün pencere kapanınca zamanlayıcı açtı.</span>
+    </li>
+    <li>
+      Bir kartın sağ üstündeki vade metnine bak.
+      <span class="gor">“N saat gecikti” ya da “N saat kaldı” yazıyor — renk tek başına anlam taşımıyor.
+      Gecikmiş kartın çerçevesi de kırmızı.</span>
+    </li>
+    <li>
+      Süzgeçten <strong>Yalnızca gecikmiş</strong>’i aç, sonra kapat.
+      <span class="gor">Liste süzülüyor; süzgeçle eşleşen yoksa “Bu süzgeçle aksiyon yok” kutusu çıkıyor.</span>
+    </li>
+    <li>
+      Bir kartta <strong>Kapat</strong>’a bas.
+      <span class="gor">Satır içinde bir not alanı açıldı: “Ne yapıldı? (zorunlu)”.
+      Yanında Kapat ve Vazgeç.</span>
+    </li>
+    <li>
+      Alanı boş bırakıp <strong>Kapat</strong>’a bas.
+      <span class="gor">Hiçbir şey olmuyor, sunucuya istek gitmiyor.
+      “Kapattım” demek yetmiyor; ne yapıldığının yazılması zorunlu.</span>
+    </li>
+    <li>
+      <span class="deger">Şube müdürüyle konuşuldu, liste ertesi gün tamamlandı.</span> yaz ve kapat.
+      <span class="gor">Kart “Kapandı” çipine dönüyor, kapanış notu kartın altında yazılı duruyor,
+      üstteki “açık” sayacı bir azaldı.</span>
+    </li>
+  </ol>
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D4</span><h3>Kâğıttan kayda: rapor ve doğrulama</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--var">okur</span>
+    <span class="cip cip--bos">denetim izine bir satır yazar</span>
+    <span class="cip cip--yok">~5 dk</span>
+  </div>
+  <p>Amaç: denetçinin elindeki kâğıdın sistemle bağını kurmak.</p>
+  <ol class="adimlar">
+    <li>
+      <strong>Raporlar</strong> → <strong>Aylık özet</strong> sekmesi. Ay ve yıl kutularını bugüne bırak.
+      <span class="gor">Sekiz sayaç kutusu ve altında şube kırılımı tablosu.
+      Sayılar sıfır, çünkü demoya hiç çalıştırma gönderilmedi — ekran çalışıyor, veri yok.
+      Yüzde ölçülemeyen şube için sıfır değil “ölçülemedi” yazıyor.</span>
+    </li>
+    <li>
+      <strong>PDF indir</strong>.
+      <span class="gor">Düğme “PDF hazırlanıyor…” oluyor, sonra dosya iniyor.
+      Dönem büyükse dosya yerine “arka plana alındı” diyor ve sayfanın altındaki
+      <em>Hazırlanan çıktılar</em> listesinde beliriyor.</span>
+    </li>
+    <li>
+      PDF’i aç, <strong>sayfa altına</strong> bak.
+      <span class="gor">Her sayfada bir doğrulama kodu ve üretim zamanı var.
+      Alt bilgi “zincir · Talimatname · zaman” biçiminde. Kodu kopyala.</span>
+    </li>
+    <li>
+      Panelden <strong>çık</strong>. Giriş ekranının altındaki <strong>Belge doğrula</strong>.
+      <span class="gor">Sayfa oturum istemiyor. Kod alanı harfleri aralıklı ve büyük yazıyor —
+      kâğıttan elle giriliyor.</span>
+    </li>
+    <li>
+      Kodu yapıştır, <strong>Sor</strong>.
+      <span class="gor">Yeşil bir kutu: kaydın özeti tutuyor ve zincire bağlı.
+      Altında kâğıtta <em>zaten yazılı</em> alanlar: belge türü, dönem, şube kodu, üretim zamanı.
+      Puan, madde sonuçları ve kimin ürettiği <strong>yok</strong> — kodu eline geçiren herkese
+      iç veri açılmış olurdu.</span>
+    </li>
+    <li>
+      Kodun son harfini değiştirip tekrar sor.
+      <span class="gor">“Belge bulunamadı” diyor. Uydurma bir kodu doğruluyormuş gibi yapmıyor.</span>
+    </li>
+  </ol>
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D5</span><h3>Mobil sözleşmesini sınamak</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--var">yalnızca okur</span>
+    <span class="cip cip--yok">~8 dk</span>
+  </div>
+  <p>Amaç: telefon uygulaması yazılmadan, telefonun göreceği veriyi görmek.</p>
+  <ol class="adimlar">
+    <li>
+      Panele <code>+905321110005</code> (Emre Personel · Kadıköy) ile gir.
+      <span class="gor">Personel rolünde panelin işi yok; menü dar. Asıl ekranı mobilde olacak.</span>
+    </li>
+    <li>
+      <kbd>F12</kbd> → Console:
+      <pre><code>localStorage.getItem('talimatname.belirtec')</code></pre>
+      Çıkan uzun metni tırnaksız kopyala.
+      <span class="gor">Üç parçalı, noktalarla ayrılmış bir JWT.</span>
+    </li>
+    <li>
+      <a href="https://demo.talimatname.com/api/v1/docs">demo.talimatname.com/api/v1/docs</a> aç →
+      sağ üstte <strong>Authorize</strong> → belirteci yapıştır → Authorize → Close.
+      <span class="gor">Uç noktaların yanındaki kilit simgeleri kapandı.</span>
+    </li>
+    <li>
+      <code>GET /sync/manifest</code> → <strong>Try it out</strong> → <strong>Execute</strong>.
+      <span class="gor"><code>runs</code> dizisinde <strong>2</strong> kayıt,
+      ikisi de <code>"branch_code": "KDK"</code>. Kapsam cihazdan değil <em>kullanıcıdan</em> okunuyor:
+      personel kendi şubesinden başkasını indiremiyor.</span>
+    </li>
+    <li>
+      Yanıtın sonundaki <code>policy</code> bloğuna bak.
+      <span class="gor">Madde başına en çok 3 kanıt, kanıt başına 3 MB, kuyrukta 500 kayıt, 72 saat.
+      Telefon bu sınırları sunucudan öğreniyor; uygulamaya gömülü değil.</span>
+    </li>
+    <li>
+      Panele <code>+905321110001</code> (yönetici) ile gir, belirteci yenile, aynı çağrıyı tekrarla.
+      <span class="gor">Bu kez <strong>6</strong> kayıt, üç şube: BSK, KDK, USK. Fark rolden geliyor.</span>
+    </li>
+    <li>
+      <code>POST /sync/batch</code> → Try it out → gövdeye:
+      <pre><code>{ "device_time": "2026-11-04T07:45:00Z",
+  "answers": [], "evidence": [] }</code></pre>
+      <span class="gor"><code>clock</code> bloğunda <code>skew_minutes: 89</code> ve
+      <code>flagged: true</code>. Telefonun saati kaymışsa kanıtın zamanı tartışmalı hâle gelir;
+      sunucu bunu sessizce kabul etmiyor, işaretliyor. Boş kuyruk hiçbir şey yazmadı:
+      <code>accepted: 0</code>.</span>
+    </li>
+    <li>
+      <code>device_time</code>’ı kendi saatine yakın bir değere çek, tekrar gönder.
+      <span class="gor"><code>flagged: false</code>. Sapma eşiğin altında.</span>
+    </li>
+  </ol>
+  <div class="not-kutu">
+    Gerçek bir cevap göndermek istersen (<code>answers</code> dizisini doldurarak) aynı kuyruğu
+    <strong>ikinci kez</strong> göndermek ikinci kayıt açmaz: <code>answer_id</code> cihazda üretildiği için
+    cevap güncellenir, kanıt “resumed” döner ve yükleme kaldığı yerden devam eder.
+    Asansörde kopan bir yüklemenin çift kayıt üretmemesi bununla sağlanıyor.
+    Bu <em>yazar</em> — demoda temizlik gerektirir, haber vermen yeter.
+  </div>
+</div>
+
+<div class="senaryo adim-senaryo">
+  <div class="senaryo-ust"><span class="no">D6</span><h3>Tema, telefon, klavye</h3></div>
+  <div class="etiketler">
+    <span class="cip cip--var">yalnızca okur</span>
+    <span class="cip cip--yok">~6 dk</span>
+  </div>
+  <p>Amaç: son iki haftanın arayüz işlerini tek turda denetlemek.</p>
+  <ol class="adimlar">
+    <li>
+      Bandın sağındaki tema seçicisini <strong>Koyu</strong> yap.
+      <span class="gor">Sayfa koyuya döndü. Üst bant, sol menü ve pano manşeti zeminden
+      <em>ayrılıyor</em> — koyu temada ayrım yüzeyden değil ince kenardan geliyor.</span>
+    </li>
+    <li>
+      Sayfayı yenile (<kbd>F5</kbd>).
+      <span class="gor">Koyu tema <em>açılırken</em> geliyor; bir an açık temada parlayıp koyuya dönmüyor.</span>
+    </li>
+    <li>
+      Pano’daki <strong>İş günü</strong> kutusunun takvimini aç.
+      <span class="gor">Takvim de koyu. Tarayıcının kendi denetimi; temayı ona da söylemek gerekiyor.</span>
+    </li>
+    <li>
+      Koyu temadayken <strong>Kurulum</strong>’a git, “Kaydet ve devam et” düğmesine bak (marka adı boşken kapalı).
+      <span class="gor">Kapalı ama yazısı <strong>okunuyor</strong>. Sihirbazda neyin eksik olduğunu
+      söyleyen düğme bu; okunmazsa işe yaramıyor.</span>
+    </li>
+    <li>
+      Temayı <strong>Sistem</strong>’e al. Tarayıcıyı telefon genişliğine daralt (~375 px).
+      <span class="gor">Menü yatay kaydırılan şeride indi. Bantta ürün adı düştü, işaret kaldı;
+      kullanıcının adı duruyor, rolü düştü. Bant tek satır. Sayfa yana kaymıyor.</span>
+    </li>
+    <li>
+      Dar ekranda <strong>Personel</strong>’e git, tabloyu yana kaydır.
+      <span class="gor">Tablo kendi kutusu içinde kayıyor, sayfanın tamamı kaymıyor.</span>
+    </li>
+    <li>
+      Dar ekranda <strong>Planlar</strong> formundaki gün çiplerine parmak/işaretçi ile bak.
+      <span class="gor">Çipler 44 px yüksekliğinde; masaüstünde 36. Dokunma hedefi telefonda büyüyor.</span>
+    </li>
+    <li>
+      Masaüstü genişliğine dön, <kbd>Tab</kbd> ile menüden forma kadar gez.
+      <span class="gor">Odaklanan her öğenin çevresinde yeşil bir halka var ve sıra ekrandaki
+      düzeni izliyor. Odak hiçbir noktada kaybolmuyor.</span>
+    </li>
+    <li>
+      Geliştirici araçları → Network → throttling <span class="deger">Slow 3G</span>,
+      sonra <strong>Bildirimler</strong>’e geç.
+      <span class="gor">Tablo yerine gri iskelet satırları; sütun sayısı gerçeğiyle aynı.
+      Veri gelince satırlar <em>yerinde</em> doluyor, sayfa zıplamıyor.
+      Throttling’i kapatıp tekrar geçersen iskelet hiç görünmüyor: 250 ms altı bekleme için
+      gri kutuların parlayıp kaybolması, hiç göstermemekten kötü.</span>
+    </li>
+  </ol>
+</div>
+
+<h2>Sırayla denemek istersen</h2>
+<p>
+  Hiçbir şey yazmadan tam tur: <strong>D5 → D6 → D4</strong> (yalnızca son adımda denetim izine bir satır düşer).
+  Ürünün kurulum tarafını görmek istersen <strong>D1 → D2 → D3</strong>; üçü de demoda iz bırakır,
+  D1’in son adımı kendi temizliğini yapar.
+</p>
+
+<footer>
+  Panel sürümü 4 Kasım 2026 · 174 arayüz testi, dört CI işi yeşil ·
+  Kanıt kovası ve sağlayıcı kararı gerçek veri girdiği gün verilir, demoda uydurma veri olduğu için serbest.
+</footer>
+
+</main>
+</body>
+</html>

@@ -31,6 +31,7 @@ LIVE = {
     "docs/05-tasarim/07-brosur/talimatname-brosur.html": "https://claude.ai/artifact/3LpwvVXZczJMNLqnKrBVn2",
     "docs/05-tasarim/07-brosur/talimatname-tanitim.html": "https://claude.ai/artifact/NDJqDvhikUbqqgtFNTZpQk",
     "docs/05-tasarim/07-brosur/talimatname-ozellikler.html": "https://claude.ai/artifact/JDHxYmF8ZnShvi78khafDD",
+    "docs/06-test/07-demo-turu.html": "https://claude.ai/artifact/WW8MS4PJsDyc7uCFMbY5Vq",
 }
 
 # (yol, başlık, açıklama, etiketler) — tür uzantıdan: .md gömülü, .py/.txt kod, .html çerçeve, diğer bağlantı
@@ -157,6 +158,7 @@ REGISTRY = [
         (D+"06-test/04-cihaz-matrisi.md", "Cihaz matrisi", "Android/iOS sürümleri, tablet ve telefon modelleri, tarayıcılar", []),
         (D+"06-test/05-pilot-uat-plani.md", "Pilot UAT planı", "8 haftalık pilot kabul planı ve K3 ölçümü", []),
         (D+"06-test/06-demo-kapsam-denetimi.md", "Demo kapsam denetimi", "123 v1 FR'si saha demosuna karşı işaretli: çalışıyor / kısmen / etiketli gösterim / demo dışı", []),
+        (D+"06-test/07-demo-turu.html", "Demo turu", "demo.talimatname.com'u denemek için rehber: giriş bilgileri, sekiz hızlı senaryo, özellikle bakılacak yerler, bilerek boş olan ekranlar, mobil sözleşmesi ve D1-D6 adım adım senaryolar", ["canlı sayfa"]),
     ]),
     ("07 Geliştirme", [
         (D+"07-gelistirme/00-kodlama-hazirlik-indeksi.md", "Kodlama hazırlık indeksi", "Kodlamaya başlamadan okunacaklar (sıralı) ve hazırlık kontrol listesi", ["kaynak"]),
