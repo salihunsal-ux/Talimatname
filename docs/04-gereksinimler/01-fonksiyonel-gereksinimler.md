@@ -88,8 +88,8 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0516 | Plan değişince yalnızca "Planlandı" durumundaki gelecek çalıştırmalar yeniden hesaplanır; Açık/Devam olanlar korunur. | v1 | UC-07 |
 | FR-0517 | Aynı şube + şablon + çakışan pencere için ikinci plan kaydedilemez. | v1 | UC-06 |
 | FR-0518 | Vardiya bazlı tekrar: şube vardiya saatleri tanımıyla "her vardiya devrinde" penceresi. | v1.1 | UC-06 |
-| FR-0519 | Şube müdürü günün çalıştırmalarında atananı değiştirebilir; "herkes tamamlasın" listelerinde kişi ekleyip çıkarabilir. | v1 | UC-19 |
-| FR-0520 | Atama değişikliği yeni atanana anında bildirilir; eski atanandan kaldırılır; olay logda. | v1 | UC-19 |
+| FR-0519 | Şube müdürü günün çalıştırmalarında atananı değiştirebilir; "herkes tamamlasın" listelerinde kişi ekleyip çıkarabilir. **Uygulanamıyor: `CALISTIRMA_ATAMA` tablosu tasarımda var, şemada yok ([açık](07-calistirma-atamasi-acigi.md)).** | v1 | UC-19 |
+| FR-0520 | Atama değişikliği yeni atanana anında bildirilir; eski atanandan kaldırılır; olay logda. **FR-0519'a bağlı ([açık](07-calistirma-atamasi-acigi.md)).** | v1 | UC-19 |
 | FR-0521 | Atanmamış çalıştırma şubedeki herkeste görünür; çalıştırmayı ilk açan kullanıcı alır (çalıştırma kilidi, 30 dk'da yenilenir), diğerleri 'X yapıyor' görür; kilit sahibi bırakırsa veya kilit dolarsa liste serbest kalır; şube müdürü kilidi kaldırabilir. (E-2) | v1 | UC-08, UC-19 |
 | FR-0522 | Belge kaydı: ad, tür (yangın tüpü · baca temizliği · su deposu · periyodik elektrik kontrolü · hijyen eğitimi · portör · ruhsat · diğer), şube (ve isteğe bağlı ekipman), düzenlenme ve geçerlilik bitiş tarihi, sorumlu, dosya (PDF/fotoğraf, damgalı), not. Belge dosyası kanıtla aynı bütünlük kurallarına tabidir. (E-12) | v1 | UC-06 |
 | FR-0523 | Belge uyarıları: geçerlilik bitişine 30 ve 7 gün kala sorumluya ve şube müdürüne push + sabah özeti satırı; tarih geçtiğinde aksiyon açılır (yüksek öncelik, 7 gün vade) ve şube "belge eksik" işaretlenir. (E-12) | v1 | UC-12, UC-13 |
