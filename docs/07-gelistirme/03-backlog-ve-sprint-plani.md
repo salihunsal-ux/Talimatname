@@ -46,6 +46,14 @@ Faz A'nın bitti tanımına eklenir; yazılmazsa Faz B, Faz A'yı söker (API pa
 
 Ekran değil **spike**: Spike A (çevrimdışı kuyruk + idempotent senk) ve Spike C (kamera → damga → SHA-256), stub API ile. Gerekçe: planın en riskli iki maddesi bunlar; sona bırakılırsa kötü haber projenin sonunda gelir ([05-sprint0-ve-teknik-spike.md](05-sprint0-ve-teknik-spike.md) §4).
 
+### Faz B'ye eklenen: çalıştırma ataması
+
+`CALISTIRMA_ATAMA` tablosu tasarımda var, Faz A şemasında yok; FR-0519 ve FR-0520
+bu yüzden **Faz A'nın bitti tanımında değil**. Karar 5 Kasım 2026: tablo tasarımda
+yazdığı gibi uygulanacak, ilk tüketici ekranla birlikte (panelin çalıştırma detayı
+ve SCR-M-10). Göç + uç nokta + bildirim dalı + iki ekran
+([not](../04-gereksinimler/07-calistirma-atamasi-acigi.md)).
+
 ### Pilot taahhüdü
 
 Alfa, pilot kurulumu ve K3 ölçümü **mobil olmadan yapılamaz**. Pilot zincirlere tarih verilirken Faz B'nin başlangıcından en az 10 hafta sayılır; bu tarih ikinci geliştiricinin bulunma tarihine bağlıdır, Faz A'nın hızına değil.

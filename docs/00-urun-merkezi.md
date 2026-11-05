@@ -41,7 +41,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 5. Bluetooth sıcaklık probu (Could → Should?)
 6. Kesin marka adı
 7. ~~Geliştirme ekibi ve sıra~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)), **panel önce / mobil 6.–8. haftada** ([ADR-0013](adr/0013-faz-sirasi-panel-once-mobil-sonra.md)); açık kalan: ilanın tek pozisyona çevrilip yayınlanması, kapasite kaldıracı (üçüncü geliştirici / kapsam / takvim) ve Sprint 2 sonu devam/dur kapısı
-8. Çalıştırma ataması: `CALISTIRMA_ATAMA` tablosu v1'de uygulansın mı, yoksa FR-0519 "kilidi devret"e mi daraltılsın — iş şubeye atanıyor, kişi çalışma anında bağlanıyor; tasarımda olan tablo uygulamada yok ([not](04-gereksinimler/07-calistirma-atamasi-acigi.md))
+8. ~~Çalıştırma ataması: `CALISTIRMA_ATAMA` v1'de uygulansın mı, FR-0519 daraltılsın mı~~ — karar: **A, Faz B'de** — tablo tasarımda yazdığı gibi uygulanacak, ilk tüketici ekranla birlikte ([not](04-gereksinimler/07-calistirma-atamasi-acigi.md))
 
 ## Belge navigasyonu (okuma sırası)
 

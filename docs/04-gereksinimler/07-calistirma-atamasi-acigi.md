@@ -1,6 +1,6 @@
 # Çalıştırma ataması: tasarım ile uygulama arasındaki açık
 
-- Tarih: 2026-11-05 · Durum: **karar bekliyor**
+- Tarih: 2026-11-05 · Durum: **karar verildi — A, Faz B'de** (5 Kasım 2026, kullanıcı onayı)
 - İlgili: FR-0508, FR-0519, FR-0520, FR-0521, FR-1211, BR-16, BR-26,
   [veri modeli](04-veri-modeli.md), [ADR-0008](../adr/0008-v1-cekirdek.md)
 
@@ -53,7 +53,13 @@ ataması, FR-0519 çalıştırmanınki; ikisi aynı şey değil.
 | **B** | FR-0519'u daralt: "atananı değiştir" yerine **"kilidi devret"**; tabloyu v1.1'e ertele | Mevcut modele oturuyor, göç gerekmiyor; şube müdürünün asıl ihtiyacı olan "yanlış kişi almış, al bundan" karşılanır | Gereksinimin söylediği şey değil; "herkes tamamlasın" geldiğinde tablo yine gerekir ve kilit mantığı ikinci kez elden geçer; atanmamış bir işe önceden kişi yazılamaz |
 | **C** | Hiçbir şey yapma, açığı FR listesinde işaretle | Maliyet yok | FR-0519/0520 v1 etiketiyle duruyor ama yapılamıyor; "bitti tanımı" yanlış ölçülür |
 
-## Tavsiye
+## Karar
+
+**A, Faz B'de** (5 Kasım 2026). `CALISTIRMA_ATAMA` tasarımda yazdığı gibi
+uygulanacak; iş Faz B'nin kapsamında, ilk tüketici ekranla birlikte.
+Gerekçe aşağıdaki tavsiyeyle aynı.
+
+## Tavsiye (karara esas)
 
 **A, ama Faz B'de** — tabloyu ilk tüketici ekranla birlikte yaz.
 
@@ -66,11 +72,16 @@ Bu arada yapılması gereken: FR-0519/0520'nin **Faz A'nın bitti tanımında ol
 yazılı hale getirmek. Şu an v1 etiketiyle duruyorlar ve panel "bitti" sayılırken
 ikisi de yapılmamış olacak.
 
-## Karar verilince
+## Yapılacaklar (A · Faz B)
 
-- A seçilirse: göç + `CALISTIRMA_ATAMA`, FR-0520 için bildirim dalı ve
-  `audit.emit("calistirma.atama_degisti")`, iki ekranda atama denetimi.
-- B seçilirse: FR-0519 ve FR-0520 yeniden yazılır, FR-1211'in ilgili cümlesi
-  güncellenir, BR-16'ya "v1'de kişi ataması yok, yalnızca kilit devri" notu düşülür.
-- Her iki durumda: planın `assignment` alanının panelde neden görünmediği ayrıca
-  karara bağlanır (form eksik mi, yoksa v1'de bilerek gizli mi).
+1. Göç: `CALISTIRMA_ATAMA` (`calistirma_id, kullanici_id?, rol?, istasyon_id?,
+   tamamladi, gonderim_zamani?`), kiracı yalıtımı ve RLS politikası dâhil.
+2. Uç nokta: çalıştırmanın atananını değiştir (FR-0519); yetki şube müdürü ve üstü.
+3. FR-0520: yeni atanana bildirim, eskisinden kaldırma,
+   `audit.emit("calistirma.atama_degisti")`.
+4. İki ekranda atama denetimi: panelin çalıştırma detayı ve SCR-M-10.
+5. Kilit (`run.locked_by`) ile atamanın ilişkisi yazılır: atama "kim yapmalı",
+   kilit "kim yapıyor" — biri diğerini ezmez.
+
+Ayrıca karara bağlanacak (bu notun kapsamı dışında): planın `assignment` alanı
+panelde neden görünmüyor — form eksik mi, yoksa v1'de bilerek gizli mi.
