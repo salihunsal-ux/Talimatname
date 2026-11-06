@@ -42,6 +42,7 @@ Buradan başla. Bu sayfa ürünün tek sayfalık özeti, karar haritası ve belg
 6. Kesin marka adı
 7. ~~Geliştirme ekibi ve sıra~~ — karar: iki serbest geliştirici ([ADR-0009](adr/0009-ekip-modeli-serbest-gelistirici.md)), **panel önce / mobil 6.–8. haftada** ([ADR-0013](adr/0013-faz-sirasi-panel-once-mobil-sonra.md)); açık kalan: ilanın tek pozisyona çevrilip yayınlanması, kapasite kaldıracı (üçüncü geliştirici / kapsam / takvim) ve Sprint 2 sonu devam/dur kapısı
 8. ~~Çalıştırma ataması: `CALISTIRMA_ATAMA` v1'de uygulansın mı, FR-0519 daraltılsın mı~~ — karar: **A, Faz B'de** — tablo tasarımda yazdığı gibi uygulanacak, ilk tüketici ekranla birlikte ([not](04-gereksinimler/07-calistirma-atamasi-acigi.md))
+9. Oturum süresi: bugün 30 dk ve yenileme belirteci yok; FR-0203 web 12 saat + iptal edilebilir yenileme istiyor. A (uygula) / B (süreyi büyüt) / C (v1.1'e at) — mobil Faz B buna bağlı ([not](04-gereksinimler/08-oturum-suresi-acigi.md))
 
 ## Belge navigasyonu (okuma sırası)
 

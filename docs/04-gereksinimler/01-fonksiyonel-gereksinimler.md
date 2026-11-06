@@ -23,7 +23,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 |---|---|---|---|
 | FR-0201 | Saha kullanıcıları telefon numarası + 6 haneli SMS OTP ile giriş yapar; e-posta zorunlu değildir. | v1 | UC-03 |
 | FR-0202 | Yönetici kullanıcılar e-posta + şifre ile giriş yapar (şifre politikası: ≥ 12 karakter, sızmış parola kontrolü). TOTP 2FA v1.1. | v1 | UC-03 |
-| FR-0203 | Mobil oturum 30 gün yenilenen belirteçle açık kalır; web oturumu 12 saat; cihaz/oturum listesi ve uzaktan sonlandırma. | v1 | UC-03 |
+| FR-0203 | Mobil oturum 30 gün yenilenen belirteçle açık kalır; web oturumu 12 saat; cihaz/oturum listesi ve uzaktan sonlandırma. **Uygulanmadı: oturum 30 dk, yenileme belirteci yok ([açık](08-oturum-suresi-acigi.md)).** | v1 | UC-03 |
 | FR-0204 | OTP: 60 sn'de bir yeniden gönderim; 3 hatalı denemede 15 dk blok; OTP 5 dk geçerli. | v1 | UC-03 |
 | FR-0205 | Roller (v1): Yönetici (merkez), Bölge müdürü, Şube müdürü, Personel. Yetki = rol × kapsam (hesap/bölge/şube); matris 06-kvkk-ve-guvenlik.md'de; her uç nokta sunucu tarafında kapsam denetler. Gözlemci rolü v1.1. | v1 | UC-02 |
 | FR-0206 | Akıllı gruplar: rol, bölge, şube, istasyon ve şube türü kurallarıyla dinamik üyelik; atama ve duyuru hedeflemesinde kullanılır; üyelik her değerlendirmede yeniden hesaplanır. | v1.1 | UC-02, UC-06, UC-14 |

@@ -88,6 +88,7 @@ REGISTRY = [
         (D+"04-gereksinimler/05-api-taslagi.md", "API taslağı", "REST uç noktaları, kimlik, senk, kanıt yükleme, v1.1 işaretleri", []),
         (D+"04-gereksinimler/06-kvkk-ve-guvenlik.md", "KVKK ve güvenlik", "Roller (sorumlu/işleyen), aydınlatma, saklama, biyometri yok, güvenlik kontrolleri", []),
         (D+"04-gereksinimler/07-calistirma-atamasi-acigi.md", "Çalıştırma ataması — açık", "İş şubeye atanıyor, kişi çalışma anında bağlanıyor; CALISTIRMA_ATAMA tasarımda var uygulamada yok, FR-0519/0520 bu yüzden karşılanamıyor — üç seçenek ve tavsiye", ["karar bekliyor"]),
+        (D+"04-gereksinimler/08-oturum-suresi-acigi.md", "Oturum süresi — açık", "Oturum 30 dk, yenileme belirteci yok; FR-0203 web 12 saat + iptal edilebilir yenileme istiyor, TC-128 geçemez — üç seçenek ve tavsiye", ["karar bekliyor"]),
         (D+"04-gereksinimler/hukuki/README.md", "Hukuki metinler — durum ve avukata sorular", "Taslakların durumu, nerede kullanılacağı, sekiz avukat sorusu (m.9 push, hukuki sebep, maskeleme, kiosk onayı, VERBİS, saklama, ihlal süresi)", ["taslak"]),
         (D+"04-gereksinimler/hukuki/01-aydinlatma-metni-personel.md", "Personel aydınlatma metni (taslak)", "KVKK m.10 tam metin + uygulama içi kısa katman + konum, kamera ve kiosk ekran metinleri", ["taslak"]),
         (D+"04-gereksinimler/hukuki/02-veri-isleme-sozlesmesi.md", "Veri işleme sözleşmesi (taslak)", "Veri sorumlusu–veri işleyen sözleşmesi; Ek-1 işleme kapsamı, Ek-2 alt işleyenler, Ek-3 tedbirler", ["taslak"]),
