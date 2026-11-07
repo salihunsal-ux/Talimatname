@@ -183,11 +183,15 @@ aynı kaynaktan.
    çalıştırma detayı okunurken çözülüyor. Ekranda bir eksiklik
    doğurmuyor (istemci zaten tazeliyor) ama şema iki yerde aynı alanı
    farklı dolduruyor.
-3. **Kilit çakışmasında ham kimlik.** 409'un `detail` alanı
-   "Kilit sahibi: 73a8e2ba-…" diyor; istemci bunu isme çeviremiyor.
-   Kişisel veri sızdırmıyor (opak kimlik) ama kullanıcıya "listeyi
-   şu an kim dolduruyor" denemiyor. `claim`/`release` uçları yazıldığında
-   (K01) birlikte düzeltilmeli.
+3. **Kilit çakışmasında ham kimlik — düzeltildi
+   (`talimatname-kod@6af9826`).** 409'un `detail` alanı "Kilit sahibi:
+   73a8e2ba-…" diyordu; artık "Listeyi şu an Emre Personel dolduruyor"
+   diyor ve hem hata (`holder_name`) hem çalıştırma görünümü
+   (`locked_by_name`) adı taşıyor. Aynı turda BR-26'nın yazılmamış üç
+   yarısı da kapandı: `POST /runs/{id}/claim` ile üstlenme,
+   `POST /runs/{id}/release` ile bırakma, müdürün başkasının kilidini
+   kaldırması (ayrı olay türüyle loglanıyor) ve kilit olaylarının
+   günlüğe yazılması. Saha ekranında üç hâlli kilit şeridi var.
 4. **Personel içe aktarma raporu telefonları yanlış alanda
    döndürüyordu — düzeltildi (`talimatname-kod@3ab6008`).**
    `YuklemeRaporu.branches` şemada "Kabul edilen şube kodları" diye
