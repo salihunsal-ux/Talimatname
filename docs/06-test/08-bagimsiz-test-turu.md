@@ -8,16 +8,21 @@
 
 ## Özet
 
-| | Sayı |
-|---|---|
-| Yüksek | 1 |
-| Orta | 3 |
-| Düşük | 5 |
-| Demo kalitesi | 2 |
-| Doğrulanan olumlu | 8 |
+| | Sayı | Durum |
+|---|---|---|
+| Yüksek | 1 | kapandı |
+| Orta | 3 | kapandı |
+| Düşük | 5 | kapandı |
+| Demo kalitesi | 2 | kapandı |
+| Doğrulanan olumlu | 8 | — |
 
-En ciddi bulgu ürünün çekirdek iddiasına dokunuyor: **penceresi açılmamış bir
-liste bugünden doldurulabiliyor.** Geri kalanı düzeltmesi ucuz.
+En ciddi bulgu ürünün çekirdek iddiasına dokunuyordu: **penceresi açılmamış
+bir liste bugünden doldurulabiliyordu.**
+
+> **7 Kasım 2026 · hepsi düzeltildi ve canlıda doğrulandı.** Y-1 için
+> hazırlık payı seçildi (aşağıda). Her bulgunun altında **Düzeltme**
+> notu var; düzeltmeler `talimatname-kod` deposunda, demo sunucuda
+> yayında.
 
 ---
 
@@ -55,6 +60,35 @@ sahibinin vermesi gerekiyor (bkz. [Açık sorular](#açık-sorular)).
 **Kanıt sınırı:** kod okuması + arayüzün listeyi açması. Demoyu kirletmemek
 için pencere öncesi **canlı yazma denemesi yapılmadı**.
 
+### Düzeltme — seçenek (c): hazırlık payı
+
+`_ensure_open`a alt sınır eklendi ve yeni bir hata tipi geldi:
+`pencere-acilmadi` (409, "Pencere henüz açılmadı"). Açılış anı
+`window_start − run_prep_minutes`; ayar varsayılanı **15 dakika**
+(0–120 arası). Pay, vardiya erken başladığında listenin elde olmasını
+sağlıyor; akşamki kapanışın sabahtan işaretlenmesini engelliyor.
+
+`writable_from` üç yüzeye eklendi — çalıştırma listesi, çalıştırma
+detayı ve **senk manifesti** (mobil Faz B bunu okuyacak). Saha
+istemcisi açılmamış listeyi birincil düğmeyle değil "Listeyi gör" ile,
+salt okunur açıyor ve üstte "Pencere henüz açılmadı: N dk sonra
+doldurulabilir" yazıyor.
+
+Canlı doğrulama (7 Kasım):
+
+```
+PUT /runs/{scheduled}/answers/{id}
+→ 409 urn:talimatname:pencere-acilmadi
+  "Açılış: 2026-11-07T20:45:00+00:00"     (pencere 21:00, pay 15 dk)
+arayüz: "Pencere henüz açılmadı: 499 dk sonra doldurulabilir."
+```
+
+**Yan bulgu.** Kural gelince **15 test düştü** ve hepsi fikstür
+hatasıydı: "açık pencere"yi yalnızca üst sınırla tanımlıyorlardı,
+yani sunucu izin verdiği için yanlışlıkları görünmüyordu. Saat ileri
+alınarak düzeltilmedi — kanıt belirtecinin `iat`i geleceğe düşüp
+doğrulanamıyor — pencere oynatıldı.
+
 ---
 
 ## ORTA
@@ -80,8 +114,14 @@ const yonetim = rolVar(useBen(), 'admin', 'region_manager');
 API ölçümü: `GET /notifications` → **403**, `GET /setup` → **403**.
 
 Ürünün kendi ilkesiyle çelişiyor: sunucunun reddedeceği düğme gösterilmemeli.
-Düzeltme menüde — bayrağı ikiye ayırmak (`yonetici` / `yonetim`). Sunucu
-kapısı doğru, gevşetilmemeli.
+
+### Düzeltme
+
+Menüdeki tek bayrak ikiye ayrıldı: `yonetim` (sunucuda `Mudur` —
+yönetici + bölge müdürü) ve `yalnizcaYonetici` (sunucuda `Yonetici`).
+Sunucu kapısına dokunulmadı. `Kabuk.test.tsx` üç rol için menüyü
+sınıyor. Canlı: bölge müdürünün menüsünde artık Bildirimler ve Kurulum
+yok, Personel duruyor.
 
 ### O-2 · Doğrulama hataları kullanıcıya İngilizce gösteriliyor
 
@@ -104,6 +144,19 @@ Sonuç: Türk kullanıcı "İstek doğrulanamadı: Input should be 'passed'…"
 görüyor. Elle yazılan iş hatalarında sorun yok ("Bu şube kodu zaten var") —
 yalnızca şema seviyesindeki hatalar sızıyor.
 
+### Düzeltme
+
+Yeni `api/dogrulama_metni.py`: Pydantic hatasını **tipe göre**
+Türkçeleştiriyor (mesaj metnine bakmıyor ki sürüm değişince bozulmasın),
+tanınmayan tip İngilizceye değil "Değer geçerli değil"e düşüyor.
+Alan doğrulayıcısının kendi Türkçe cümlesi (`value_error`) korunuyor.
+Canlı:
+
+```json
+{"alan": "state",
+ "sebep": "Şunlardan biri olmalı: 'passed', 'failed', 'not_done' ya da 'not_applicable'"}
+```
+
 ### O-3 · Saha ilerleme sayacı talimat satırını cevaplanmış sayıyor
 
 Hiç dokunulmamış listede ekran **"1/8 madde"** yazıyor; sunucuda cevap sayısı
@@ -120,6 +173,11 @@ Talimat satırı hem paydaya hem paya giriyor. Sunucu onu puanlamıyor
 (`execution.py:362`, "talimat satırı cevaplanmaz"), yani payda da sunucunun
 saydığıyla (7) uyuşmuyor. Sonda "8/8" olarak kapanıyor, bu yüzden gözden
 kaçmış; arada her an yanlış.
+
+### Düzeltme
+
+Talimat satırı artık ne paya ne paydaya giriyor. Aynı liste canlıda
+**"0/7 madde"** gösteriyor.
 
 ---
 
@@ -159,20 +217,60 @@ Saha istemcisindeki tek küçük hedef — diğer bütün düğmeler sınırın 
 
 ---
 
+### Düşük bulguların düzeltmeleri
+
+| | Düzeltme |
+|---|---|
+| D-1 | Ekran `error_detail`i yazıyor ("push sürücüsü bağlı değil"); kod `title` özniteliğinde kaldı (destek konuşmasında lazım). Ham kodun göründüğünü doğrulayan test tersine çevrildi. Canlı taramada panelde makine kodu kalmadı. |
+| D-2 | `sayfaBasligi.ts`: başlık ekran adıyla başlıyor ("Raporlar · Talimatname · Yönetim paneli") ve saha kapısı **"Talimatname · Saha"** diyor. |
+| D-3 | Saha eksikler bölümü `h3` → `h2`; atlama kalmadı. |
+| D-4 | `DomainError`a `field` eklendi: alanı olan kural hatası cevaba `errors` koyuyor (`{"alan": "code", …}`). Form `aria-invalid` + `aria-describedby` veriyor, hatayı alanın altına yazıyor ve odağı oraya taşıyor. Alanı olmayan kural hataları `errors` taşımıyor — uydurma alan adı üretilmiyor. |
+| D-5 | `.tema-secici` 44 px'e çıkarıldı; 375 px'te küçük dokunma hedefi kalmadı. |
+
 ## Demo kalitesi (ürün hatası değil)
 
 ### DK-1 · Aylık rapor %3 zamanında tamamlanma gösteriyor
 
 106 çalıştırma · 1 zamanında · 38 kaçırıldı · 67 açık. Sayılar tutarlı ve
 rapor doğru çalışıyor, ama bir zincire gösterilecek demo olarak hikâye kötü:
-"hiçbir şube listesini tamamlamıyor". Demoyu dolduran turda geçmiş günlere
-tamamlanmış çalıştırma yazılması gerekiyor.
+"hiçbir şube listesini tamamlamıyor".
+
+### Düzeltme
+
+Yeni betik: `talimatname.araclar.demo_doldur`. Geçmiş günlere (10 Ekim →
+1 Kasım) çalıştırma üretip **gerçek servislerle** dolduruyor — cevaplar
+`write_answer`, gönderim `submit`; puan, sonuç, kritik aksiyon ve denetim
+izi normal yoldan oluşuyor. Servisin saati çalıştırmanın penceresine
+ayarlanıyor.
+
+İki şeye dikkat edildi:
+
+- **Demonun kendi geçmişine dokunulmuyor.** `--bitis 2026-11-02`
+  sınırının ötesindeki hiçbir kayıt değişmiyor; gezerken kaçırılan liste
+  kaçırılmış kalıyor (BR-03). Sınırın gerisi tohum verisi: hiç
+  yaşanmamış bir geçmiş kuruluyor, var olan kayıt düzeltilmiyor.
+- **Kanıt uydurulmuyor.** Fotoğraf zorunlu maddelere gerçekten bir dosya
+  yükleniyor — belirgin bir yer tutucu görsel, `from_gallery` işaretli.
+  `evidence_count`i elle yazmak "fotoğraf var" demek olurdu ve bu ürünün
+  tam da iddia ettiği şeyi yalanlardı.
+
+Sonuç — **Ekim 2026 raporu**: 66 çalıştırma, 60 zamanında, 6 kaçırıldı,
+4 başarısız, **%91 zamanında tamamlanma**. Kasım ayı demoyu gezen kişiye
+bırakıldı (hâlâ 67 açık liste var).
 
 ### DK-2 · Test turunun bıraktığı kalıntı
 
 Yetki sınaması yöneticiyle `POST /templates` çağırdı ve başarılı oldu:
-demoda **"Yetki denemesi"** adlı boş taslak şablon var. Benim bıraktığım
-kalıntı. API'de şablon silme uç noktası yok, veritabanından düşürülmeli.
+demoda **"Yetki denemesi"** adlı boş taslak şablon kaldı (iki kez — test
+iki kez koşmuş).
+
+### Düzeltme
+
+İkisi de silindi. Öncesinde bağımlılıkları denetlendi: boş taslak, bağlı
+plan ve çalıştırma yok. `audit_event`e **dokunulmadı** (ekle-yalnız):
+şablonun oluşturulduğu olay kaydında duruyor ve durmalı. Kalan şablonlar:
+Kapanış (kafe), Açılış, Açılış (kafe / hızlı servis), Haftalık genel
+temizlik.
 
 ---
 
@@ -217,15 +315,30 @@ Bu bir kesit, tam tur değil. Yapılmayanlar:
 - Çevrimdışı davranış (saha istemcisi zaten desteklemiyor, not düşülmüş)
 - Yük/eşzamanlılık
 
+## Kararlar
+
+**Y-1 → seçenek (c), hazırlık payı.** Ürün sahibi kararı, 7 Kasım 2026.
+Varsayılan 15 dakika. Bu karar şartnamedeki boşluğu da kapatıyor:
+FR-0610 yalnızca üst sınırı anlatıyordu, alt sınır artık yazılı
+(`run_prep_minutes`, BR-02'nin hazırlık payı).
+
+Payın plan başına ayarlanması **v1.1'e** bırakıldı: bugün tek bir hesap
+ayarı, bütün planlar için aynı.
+
+## Şartnamede güncellenmesi gerekenler
+
+Bu tur kodu değiştirdi; aşağıdakiler henüz belgeye işlenmedi:
+
+- **BR-02**'ye hazırlık payı cümlesi: pencere `window_start − N dk`
+  açılır, N hesap ayarı (varsayılan 15).
+- **FR-0610**'a alt sınır: açılmamış listede yazma kapalı, liste okunur.
+- **API taslağı**: `writable_from` üç yüzeyde (çalıştırma listesi,
+  detayı, senk manifesti) ve `pencere-acilmadi` hata tipi.
+- **ADR-0013** devir kapısı: senk sözleşmesine alan eklendi (geriye
+  uyumlu), mobil geliştirici bunu okumalı.
+
 ## Açık sorular
 
-1. **Y-1 kasıtlı mı?** Pencere açılmadan listeyi doldurabilmek bir kolaylık
-   mı (hazırlık), yoksa kapatılmalı mı? Kapatılacaksa üç seçenek var:
-   (a) `_ensure_open`'a alt sınır eklemek — en net, ama "5 dakika erken
-   başladım" durumunu da keser; (b) yazmaya izin verip cevabı "pencere
-   öncesi" diye işaretlemek ve raporda ayırmak; (c) `window_start`'tan N
-   dakika önce açılan bir hazırlık payı. Şartname sessiz olduğu için bu bir
-   ürün kararı, kod kararı değil.
-2. Bulgular backlog'a hikâye olarak girsin mi, yoksa bu belge yeterli mi?
-3. DK-1: demo verisi daha iyi bir hikâyeye çekilsin mi (geçmiş günlere
-   tamamlanmış çalıştırmalar)?
+1. Bulgular backlog'a hikâye olarak da girsin mi, yoksa bu belge yeterli mi?
+2. Hazırlık payı 15 dakika doğru mu? Yeme-içme zincirinde vardiya ne kadar
+   erken başlıyor — pilot öncesi bir şube müdürüne sorulabilir.
