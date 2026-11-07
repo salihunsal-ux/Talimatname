@@ -1,10 +1,41 @@
 # Oturum süresi: yenileme belirteci yok
 
-- Tarih: 2026-11-06 · Durum: **karar bekliyor**
+- Tarih: 2026-11-06 · Durum: **kapandı (8 Kasım 2026, seçenek A)**
 - İlgili: FR-0203, FR-0205, TC-128, [API taslağı](05-api-taslagi.md),
   [teknik mimari](../07-gelistirme/01-teknik-mimari.md), ADR-0013
 
-## Durum
+## Kapanış (8 Kasım 2026)
+
+**Seçenek A uygulandı** (`talimatname-kod@f5d4d43`). Aşağıdaki
+çözümleme olduğu gibi duruyor: kararın gerekçesi, değişen kodun
+kendisinden uzun ömürlü.
+
+Yapılanlar:
+
+1. `user_session` tablosu (göç 0011, satır düzeyi güvenlik + kiracı
+   yalıtımı). Sırrın **özeti** duruyor, kendisi değil: veritabanını
+   okuyabilen biri canlı oturumları ele geçirmesin.
+2. `POST /auth/refresh` **döndürme** yapıyor — her yenileme eskisini
+   iptal eder. Döndürülmüş bir belirteç ikinci kez sunulursa o
+   kullanıcının bütün oturumları düşüyor: belirteç iki elde demektir
+   ve hangisinin gerçek kullanıcı olduğu bilinemez.
+3. `POST /auth/logout` iptal eder; `GET /auth/sessions` cihaz
+   listesini verir; `POST /auth/sessions/{id}/revoke` uzaktan kapatır.
+   Böylece FR-0203'ün ikinci yarısı da karşılandı.
+4. Panel söndürme yaklaşınca sessizce yeniliyor (aynı anda tek istek)
+   ve çıkışta yenileme belirtecini sunucuda da iptal ediyor.
+5. Erişim belirteci varsayılanı 30 → **15 dakika** (API taslağı da 15
+   diyordu). Bu artık oturum ömrü değil, **iptalin gecikmesi**:
+   uzaktan kapatılan bir oturum en fazla bu süre içeride kalır.
+
+Ömürler: web 12 saat, mobil 30 gün (FR-0203). Mobil istemci yazılırken
+tür belirteçten okunacak; bugün `X-Istemci` başlığına bakılıyor ve
+başlık yoksa web sayılıyor.
+
+Kalan: panelde cihaz listesi **ekranı** yok — uç nokta var, arayüz
+yok. Küçük bir iş ve kendi başına duruyor.
+
+## Durum (karar öncesi çözümleme)
 
 Bugün oturum **30 dakika** yaşıyor (`settings.access_token_minutes`,
 varsayılan 30; demo da varsayılanı kullanıyor). Süre dolunca belirteç

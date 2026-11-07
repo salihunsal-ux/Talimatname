@@ -21,7 +21,9 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | POST | /auth/otp/request | Telefon → OTP SMS |
 | POST | /auth/otp/verify | OTP → belirteç çifti (ilk girişte aydınlatma durumu) |
 | POST | /auth/login | E-posta + şifre (+ TOTP) |
-| POST | /auth/refresh · /auth/logout | Yenileme / sonlandırma |
+| POST | /auth/refresh · /auth/logout | Yenileme / sonlandırma. Yenileme **döndürür**: eskisi aynı anda iptal olur, döndürülmüş bir belirteç ikinci kez sunulursa kullanıcının bütün oturumları düşer |
+| GET | /auth/sessions | Açık oturumlar (cihaz listesi, FR-0203). Belirteç ya da özeti dönmez |
+| POST | /auth/sessions/{id}/revoke | Uzaktan sonlandırma (FR-0203); yalnızca kendi oturumu |
 | POST | /devices/register · /devices/{id}/kiosk | Cihaz kaydı (push token), kiosk QR eşleme |
 | POST | /kiosk/switch | PIN ile kullanıcı geçişi → kısa ömürlü belirteç |
 | POST | /me/consent · GET /me | Aydınlatma onayı, profil |

@@ -43,7 +43,7 @@ flowchart LR
 
 | Modül | Sorumluluk | Notlar |
 |---|---|---|
-| `auth` | OTP, şifre/TOTP, belirteçler, cihaz ve kiosk oturumları, hız sınırı | Belirteç: JWT (RS256), kısa ömür; yenileme belirteci DB'de iptal edilebilir |
+| `auth` | OTP, şifre/TOTP, belirteçler, cihaz ve kiosk oturumları, hız sınırı | Belirteç: JWT (RS256), 15 dk; yenileme belirteci `user_session` tablosunda ve iptal edilebilir (web 12 sa / mobil 30 gün). Yenileme **döndürür**; tekrar kullanım zinciri düşürür. Depoda sırrın özeti durur |
 | `org` | Hesap, bölge, şube, istasyon, takvim, kullanıcı, rol, grup, içe aktarma | RLS için `hesap_id` oturum değişkeni |
 | `templates` | Şablon, sürüm, bölüm, madde, kural, yanıt/sebep setleri, kütüphane, doğrulama | Kural motoru saf fonksiyon (istemcide de aynı mantık — paylaşılan spesifikasyon testleri) |
 | `scheduling` | Plan, RRULE değerlendirme, pencere hesabı, çalıştırma üretimi, durum makinesi | `dateutil.rrule` + şube saat dilimi; durum geçişleri tek fonksiyonda (tablo güdümlü testler) |
