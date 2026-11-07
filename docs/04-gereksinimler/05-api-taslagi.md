@@ -53,7 +53,7 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | PATCH | /runs/{id}/assignments | Günlük yeniden atama (FR-0519) |
 | POST | /runs/{id}/claim · /runs/{id}/release | Çalıştırma kilidi al/bırak (FR-0521, BR-26) |
 | GET | /digest/morning?date= | Sabah özeti verisi (FR-1212) |
-| PUT | /runs/{id}/answers/{answerId} | Madde cevabı (idempotent; çevrimdışı kuyruk buradan boşalır). Pencere açılmadan **409 `pencere-acilmadi`**, tolerans bitince **409 `pencere-kapali`** (BR-02a, BR-03) |
+| PUT | /runs/{id}/answers/{answerId} | Madde cevabı (idempotent; çevrimdışı kuyruk buradan boşalır). Pencere açılmadan **409 `pencere-acilmadi`**, tolerans bitince **409 `pencere-kapali`** (BR-02a, BR-03). Ölçüm/seçim maddesinde **durumu sunucu hesaplar**: cevap 200 döner ama `state` düzeltilmiş olabilir; değer okunamazsa **422 `gecersiz-istek`** (`errors[].alan = "value"`) (BR-08a) |
 | POST | /runs/{id}/submit | Gönderim → puan/durum (BR-05…07) |
 | POST | /runs/{id}/wont-do | Yapılmayacak (BR-04) |
 | POST | /runs/{id}/addenda | Ek kayıt (BR-12) — v1.1 |

@@ -25,7 +25,7 @@ Bir geliştiricinin ilk hafta okuması gereken belgeler, sırayla; ardından "ha
 ### Belge tamlığı (BA/PO)
 - [x] v1 çekirdek kapsamı (ADR-0008): 43 satır v1, 27 v1.1, 6 v2; sabitler tablosu; yetenek haritası
 - [x] 14 aktör, 20 use case (ana/alternatif/istisna akışlarıyla), 8 uçtan uca senaryo
-- [x] 175 fonksiyonel gereksinim (123 v1, 52 v1.1), 16 NFR, 27 iş kuralı (v1 sabit parametre tablosuyla)
+- [x] 176 fonksiyonel gereksinim (124 v1, 52 v1.1), 16 NFR, 27 iş kuralı (v1 sabit parametre tablosuyla)
 - [x] Veri modeli (ER + alanlar + enum'lar), API taslağı (uç noktalar + senk sözleşmesi + olay sözlüğü)
 - [x] 26 ekran envanteri (v1: 10 mobil + 13 web), 21 tel-çerçeve v1'e göre güncellendi (SCR-W-14 belge takvimi hi-fi aşamasında çizilecek), navigasyon haritası, tasarım token'ları
 - [x] 128 kabul testi (104 v1, 24 v1.1), test stratejisi, test verisi, cihaz matrisi, UAT planı

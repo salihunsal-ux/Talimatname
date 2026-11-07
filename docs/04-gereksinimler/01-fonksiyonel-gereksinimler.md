@@ -43,6 +43,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0304 | Madde ayarları (v1): zorunlu; fotoğraf zorunlu; kritik (kritik maddede 'yapılamadı' yoktur); sıcaklıkta kabul aralığı. Puan ağırlığı, ipucu, istasyon bağı v1.1. | v1 | UC-05 |
 | FR-0305 | Sıcaklık maddesinde kabul aralığı (min–maks) tanımlanır; aralık dışı değer maddeyi "başarısız" yapar ve koşullu mantık tetiklenebilir. | v1 | UC-05, UC-08 |
 | FR-0306 | Puan = geçen madde sayısı / puanlanan madde sayısı × 100 (bilgi amaçlı; talimat maddeleri puanlanmaz). Ağırlık ve eşik v1.1. | v1 | UC-05 |
+| FR-0307a | Ölçüm ve seçim maddelerinde geçer/geçmez kararını sunucu, çalıştırmaya sabitlenmiş şablon sürümünden verir; istemcinin beyanı bağlayıcı değildir (BR-08a). | v1 | UC-05, UC-08 |
 | FR-0307 | Kritik madde başarısızsa çalıştırma puandan bağımsız "Başarısız" işaretlenir. | v1 | UC-05, UC-08 |
 | FR-0308 | Şablon ayarları (v1): yalnızca kamera (galeri kapalı, varsayılan açık); başarısız cevapta kanıt iste (varsayılan açık). Tolerans planda; sebep seti sabit. | v1 | UC-05 |
 | FR-0309 | Editörde mobil önizleme (gerçek madde bileşenleriyle). | v1 | UC-05 |
