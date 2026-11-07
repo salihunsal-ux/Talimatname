@@ -49,11 +49,11 @@ REST + JSON, OpenAPI 3.1 sözleşmesi geliştirme deposunda üretilir (`openapi.
 | Yöntem | Yol | Amaç |
 |---|---|---|
 | GET | /runs?site=&from=&to= · GET /runs/today | Bugün / dönem çalıştırmaları (önbellek için ETag) |
-| GET | /runs/{id} | Detay (maddeler, cevaplar, kanıt küçük resimleri) |
+| GET | /runs/{id} | Detay (maddeler, cevaplar, kanıt küçük resimleri). Çalıştırma listesi, detayı ve senk manifesti `writable_from` taşır: yazmanın açıldığı an (`window_start − hazırlık payı`); istemci listeyi bundan önce doldurmaya davet etmez |
 | PATCH | /runs/{id}/assignments | Günlük yeniden atama (FR-0519) |
 | POST | /runs/{id}/claim · /runs/{id}/release | Çalıştırma kilidi al/bırak (FR-0521, BR-26) |
 | GET | /digest/morning?date= | Sabah özeti verisi (FR-1212) |
-| PUT | /runs/{id}/answers/{answerId} | Madde cevabı (idempotent; çevrimdışı kuyruk buradan boşalır) |
+| PUT | /runs/{id}/answers/{answerId} | Madde cevabı (idempotent; çevrimdışı kuyruk buradan boşalır). Pencere açılmadan **409 `pencere-acilmadi`**, tolerans bitince **409 `pencere-kapali`** (BR-02a, BR-03) |
 | POST | /runs/{id}/submit | Gönderim → puan/durum (BR-05…07) |
 | POST | /runs/{id}/wont-do | Yapılmayacak (BR-04) |
 | POST | /runs/{id}/addenda | Ek kayıt (BR-12) — v1.1 |

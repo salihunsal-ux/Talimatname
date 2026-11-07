@@ -6,6 +6,7 @@ Kod ve testlerin tek referansı. Her kural tek cümle + kesin parametre. **v1'de
 
 - **BR-01 · İş günü.** Bir çalıştırmanın iş günü = pencere başlangıç tarihi (şube saat diliminde). Gece yarısını aşan pencere (22:00–01:30) önceki güne aittir; raporlar ve ızgara iş gününe göre gruplar.
 - **BR-02 · Tolerans.** Pencere bitişinden sonra `tolerans` (plan ayarı, 0–240 dk, varsayılan kapanış 120 / saatlik 0) içinde gönderilen çalıştırma "Geç tamamlandı" sayılır; zamanındalık raporunda ayrı gösterilir.
+- **BR-02a · Hazırlık payı.** Liste, pencere başlangıcından `hazırlık payı` (hesap ayarı, 0–120 dk, varsayılan **15**) kadar önce yazmaya açılır; **öncesinde cevap yazılamaz** (`pencere-acilmadi`). Pay, vardiya erken başladığında listenin elde olması içindir. Alt sınır olmadan "pencere içi tamamlandı" ölçüsü (BR-02, FR-1203) ölçtüğünü iddia ettiği şeyi ölçmez: akşamki kapanış sabahtan işaretlenebilir. Pay v1'de hesap geneli; plan başına ayarlanması v1.1.
 - **BR-03 · Kaçırıldı kesindir.** Tolerans bitiminde tamamlanmamış çalıştırma "Kaçırıldı" olur; sonradan cevap girilemez, düzenlenemez; yalnızca ek not eklenebilir (logda).
 - **BR-04 · Yapılmayacak.** Yalnızca şube müdürü ve üstü, sebep (seçim + not) girerek "Yapılmayacak" işaretleyebilir; puanlamaya girmez, raporda ayrı sayılır, eskalasyonu durdurur; işaretleme olayı logda.
 - **BR-16 · Tamamlama kuralı.** v1'de tek kural: "biri tamamlasın" — çalıştırmayı ilk açan kullanıcı alır (BR-26), ilk gönderim çalıştırmayı kapatır. "Herkes tamamlasın" (her atanan kendi bölümünü gönderir; eksik atananlar raporlanır) v1.1.
@@ -52,6 +53,7 @@ v1'de tümü sabittir; "Aralık" sütunu v1.1'deki ayar sınırlarıdır.
 | Parametre | v1 sabit değer | Aralık (v1.1) | Kural |
 |---|---|---|---|
 | Tolerans (kapanış / saatlik / haftalık) | 120 / 0 / 240 dk (plan bazında) | 0–240 | BR-02 |
+| Hazırlık payı (pencere öncesi yazma) | 15 dk (hesap geneli) | 0–120 | BR-02a |
 | Puan eşiği | — (yalnızca kritik kuralı) | 50–100 | BR-06, BR-07 |
 | Aksiyon vadeleri (kritik/yüksek/orta) | 4 sa / 24 sa / 72 sa | — | BR-10 |
 | Sabah özeti saati | 07:00 | 05:00–10:00 | BR-27 |

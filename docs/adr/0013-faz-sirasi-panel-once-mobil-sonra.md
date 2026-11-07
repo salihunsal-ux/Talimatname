@@ -36,6 +36,11 @@ Buna karşı duran tek gerçek: **planın en riskli iki deneyi mobildir** (Spike
 2. **Mobil geliştirici Faz A'nın 6.–8. haftasında katılır** — panelin bitmesi beklenmez. Mobilin ilk 3–4 haftalık işi (spike'lar, kabuk, madde bileşenleri) motoru beklemez.
 3. **Faz B'nin ilk iki haftası yalnızca Spike A ve Spike C'dir** (stub API ile). Ekran yok. Gerekçe: riskin erken keşfi.
 4. **Mobil başlamadan önce üç API sözleşmesi yazılı ve testlidir** (Faz A'nın bitti tanımına eklendi): idempotent cevap yazma (cihaz UUID'siyle), kanıt yükleme akışı (ön imzalı URL → tamamlama → damga + SHA-256), senk uç noktalarının taslağı (`/sync/manifest`, `/sync/batch`). Yazılmazsa API panelin çevrimiçi istek-cevap şekline oturur ve Faz B onu söker.
+
+   *7 Kasım 2026 eki.* Bu liste iki şeyi atlamıştı; ikisi de bağımsız test turunda çıktı ve Faz B başlamadan kapatılmalı:
+
+   - **Oturum yenileme.** Dördüncü sözleşme olmalıydı; bkz. [oturum süresi açığı](../04-gereksinimler/08-oturum-suresi-acigi.md). Hâlâ **karar bekliyor**.
+   - **Pencere açılış saati.** Senk manifestine `writable_from` eklendi (geriye uyumlu): cihaz, penceresi açılmamış listeyi önceden indirip gösterebilir ama doldurmaya davet etmemeli — sunucu `pencere-acilmadi` ile reddeder (BR-02a). Mobil geliştirici bu alanı okumalı; okumazsa kullanıcıyı doldurulamayacak bir listeye sokar ve çevrimdışı kuyruk toptan reddedilir.
 5. **Sprint 0'ın mobil maddeleri Faz B'nin 1. haftasına taşındı:** Flutter iskeleti, Flutter tema token'ları, tel-çerçeve iki ekran, Spike A, Spike C. Sprint 0'da mobil tarafta yalnızca boş depo ve dal koruması vardır.
 6. **Mobil kuyruğu bitince mobil geliştirici web hattına geçer** (≈ Faz B'nin 10. sprinti). Hatlar arasındaki 2,8 katlık fark böyle kapanır.
 7. **Pilot, Alfa ve K3 mobil olmadan yapılamaz.** Pilot zincirlere tarih verilirken Faz B'nin başlangıcından en az 10 hafta sayılır; bu tarih **ikinci geliştiricinin bulunma tarihine** bağlıdır, Faz A'nın hızına değil.

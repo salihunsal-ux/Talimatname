@@ -108,7 +108,7 @@ Kimlik: `FR-CCNN` (CC = yetenek numarası, NN = sıra). Sürüm: **v1** ilk sür
 | FR-0607 | Zorunlu maddeler cevaplanmadan gönderim düğmesi pasif; gönderimde puan ve durum hesaplanır; gönderilen çalıştırma salt okunur. | v1 | UC-08 |
 | FR-0608 | Gönderim sonrası düzeltme "ek kayıt" olarak eklenir (yeni cevap + not); eski cevap görünür kalır. | v1.1 | UC-08 |
 | FR-0609 | Aynı çalıştırmada birden çok kullanıcı: madde bazlı kilit (60 sn), çakışmada son yazan kazanır, kanıt silinmez. | v1.1 | UC-08, UC-09 |
-| FR-0610 | Pencere geri sayımı ve tolerans göstergesi; pencere kapanınca "geç" uyarısı; tolerans bitince düzenleme kilidi. | v1 | UC-08 |
+| FR-0610 | Pencere geri sayımı ve tolerans göstergesi; **pencere açılmadan (hazırlık payı dâhil) liste okunur ama yazılamaz** ve açılış saati gösterilir (BR-02a); pencere kapanınca "geç" uyarısı; tolerans bitince düzenleme kilidi. | v1 | UC-08 |
 | FR-0611 | Dokunma hedefleri ≥ 44 px, ikon + kısa etiket, yüksek kontrast, tek elle akış; ekran okuyucu etiketleri. | v1 | UC-08 |
 | FR-0612 | İstasyon QR'ı taranınca o istasyonun açık listesi/maddeleri açılır; kanıt istasyona bağlanır. | v1.1 | UC-08 |
 | FR-0613 | Açılış listesinin başında 'dün gece' bloğu: önceki iş gününün kapanış çalıştırmasında yapılamayan ve başarısız maddeler (sebep ve notla); yoksa 'dün gece sorun yok'. (E-3) | v1 | UC-08 |
