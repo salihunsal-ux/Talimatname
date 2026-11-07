@@ -20,13 +20,13 @@ düzeltmelerinden (`f671a70`) bir commit öncesi. Bu yüzden iki tur kısmen
 | B05 | P1 | "Yapılamadı" aksiyon üretmiyor | **Kapandı** — `from_not_done`, orta öncelik / 72 sa |
 | B06 | P2 | Pencere açılmadan cevap yazılabiliyor | **Kapanmıştı** — iç turun Y-1'i, BR-02a |
 | B07 | P2 | Yönetici cevap detayında ölçüm ve metin değeri yok | **Kapandı** — değer, birim, metin cevabı ve `answered_by` |
-| B08 | P2 | Ayşe demo hesabı kullanılamıyor; hata açıklaması anlamsız | **Açık** — ikiye ayrıldı, aşağıya bakın |
+| B08 | P2 | Ayşe demo hesabı kullanılamıyor; hata açıklaması anlamsız | **Kod yarısı kapandı** — başlık artık ekranda; hesap kararı açık (aşağıya bakın) |
 | B09 | P2 | Düğme işlemden önce "kaydedildi" diyor; boş ölçüm hata gibi | **Kapandı** — `KayitDurumu`, iki hâlli aralık ipucu |
-| B10 | P2 | Saha kartlarında liste adı ve gece yarısı tarihi eksik | **Açık** |
-| B11 | P2 | Pano varsayılan iş günü UTC'den hesaplanıyor | **Açık** — planlar ve raporlar ekranlarında da aynı kesim var |
-| B12 | P2 | PNG dışındaki fotoğraf türleri JPEG diye etiketleniyor | **Açık** |
-| B13 | P3 | Bazı yardımcı dokunma hedefleri 44 px altında | **Yarısı kapalı** — tema seçici 44 px; belge doğrulama bağlantısı açık |
-| B14 | P3 | PDF şube tablosu başlıkları sütuna sığmıyor | **Açık** |
+| B10 | P2 | Saha kartlarında liste adı ve gece yarısı tarihi eksik | **Kapandı** — `plan_name` özette; tarih gece yarısını aşan pencerede |
+| B11 | P2 | Pano varsayılan iş günü UTC'den hesaplanıyor | **Kapandı** — `web/src/tarih.ts` ve `api/.../is_gunu.py`; plan ve rapor ekranları da |
+| B12 | P2 | PNG dışındaki fotoğraf türleri JPEG diye etiketleniyor | **Kapandı** — dönüştürmek yerine reddediliyor; seçici de daraltıldı |
+| B13 | P3 | Bazı yardımcı dokunma hedefleri 44 px altında | **Kapandı** — 375 px'te 44 px altında hedef kalmadı |
+| B14 | P3 | PDF şube tablosu başlıkları sütuna sığmıyor | **Kapandı** — başlık hücreleri Paragraph, sarılıyor |
 
 ## Gereksinimlere giren değişiklikler
 
@@ -37,8 +37,11 @@ düzeltmelerinden (`f671a70`) bir commit öncesi. Bu yüzden iki tur kısmen
 - **BR-26** (ek cümle): kilit hem yazmada hem **gönderimde** denetlenir.
 - **BR-10** (ek cümle): tetik cevabın kaydıdır, gönderim değil; düzeltilen
   cevap aksiyonu geri almaz.
+- **BR-01** (ek cümle): tarih verilmeyen yerlerde "bugün" yerel/hesap saat
+  diliminden hesaplanır, UTC'den değil.
 - **API taslağı**: cevap ucu ölçüm/seçimde düzeltilmiş `state` dönebilir;
   okunamayan değer 422 `gecersiz-istek` (`errors[].alan = "value"`).
+  `CalistirmaOzet` artık `plan_name`, `CevapCiktisi` artık `answered_by` taşıyor.
 
 ## Raporun düzeltilen tespiti
 
@@ -54,10 +57,12 @@ Bu yüzden B08 ikiye ayrıldı:
 1. **Veri işi** — demoya kullanılabilir bir Kadıköy şube müdürü hesabı
    eklenecek mi? Karar bekliyor.
 2. **Kod hatası** — giriş ekranı hata cümlesi olarak `detail` alanını
-   `title`'ın önüne koyuyor (`GirisSayfasi.tsx`), o yüzden kullanıcı
-   "Bu numarayla kayıtlı kullanıcı yok" yerine yalnızca
-   "Telefon: +90…" görüyor. Ayşe'ye özel değil, **her** giriş hatası
-   böyle. Açık.
+   `title`'ın önüne koyuyordu, o yüzden kullanıcı "Bu numarayla kayıtlı
+   kullanıcı yok" yerine yalnızca "Telefon: +90…" görüyordu. Ayşe'ye
+   özel değildi, **her** giriş hatası böyleydi. **Kapandı:** başlık hep
+   duruyor, detay arkasına ekleniyor ("2 hakkınız kaldı" gibi gerçekten
+   kullanıcıya ait olanlar kaybolmasın); `UnknownPhone` da numarayı geri
+   yazmıyor.
 
 ## Raporun kaçırdıkları
 
@@ -65,8 +70,15 @@ Bu yüzden B08 ikiye ayrıldı:
   düzeltilmeden önce aynı veri için çalıştırma "%100 geçti", ölçüm
   günlüğü "aralık dışı" diyordu — tutarsızlık müdürün ekranında
   görünüyordu.
-- B11 yalnızca panoda değil: aynı UTC kesimi plan başlangıç tarihinde ve
-  rapor aralığında da var. Plan başlangıcında etkisi daha ağır.
+- B11 yalnızca panoda değil: aynı UTC kesimi plan başlangıç tarihinde,
+  rapor aralığında **ve sunucuda** (tarih parametresiz `/runs`,
+  `/dashboard`) da vardı. Plan başlangıcında etkisi en ağırı.
+- B14 iki başlıkta değil üçte taşıyordu. Sunucunun yazı tipiyle (DejaVu
+  Sans Bold, 8.5 pt) ölçüldüğünde "Zamanında" 53,3 pt, "Başarısız"
+  43,0 pt ve "Zamanındalık" 64,8 pt; sütunların kullanılabilir genişliği
+  sırayla 47,2 / 42,3 / 52,1 pt. Geliştirme makinesinin yazı tipinde
+  (Segoe UI) hiçbiri taşmıyor — kusur yazı tipine bağlıydı, düzeltme
+  değil.
 - BR-10'un beş tetiğinden kaçırılan çalıştırma zaten yazılmıştı
   (`from_missed_run`); eksik olan tek kapsam-içi tetik "yapılamadı"ydı
   (B05). Sorun bildirimi v1 kapsamında yazılmadı (saha istemcisinin
