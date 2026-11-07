@@ -161,6 +161,7 @@ REGISTRY = [
         (D+"06-test/05-pilot-uat-plani.md", "Pilot UAT planı", "8 haftalık pilot kabul planı ve K3 ölçümü", []),
         (D+"06-test/06-demo-kapsam-denetimi.md", "Demo kapsam denetimi", "123 v1 FR'si saha demosuna karşı işaretli: çalışıyor / kısmen / etiketli gösterim / demo dışı", []),
         (D+"06-test/07-demo-turu.html", "Demo turu", "demo.talimatname.com'u denemek için rehber: giriş bilgileri, sekiz hızlı senaryo, özellikle bakılacak yerler, bilerek boş olan ekranlar, mobil sözleşmesi ve D1-D6 adım adım senaryolar", ["canlı sayfa"]),
+        (D+"06-test/08-bagimsiz-test-turu.md", "Bağımsız test turu", "7 Kasım 2026 canlı dağıtım denetimi: 1 yüksek (pencere öncesi doldurma), 3 orta, 5 düşük bulgu; 8 doğrulanan olumlu; test edilmeyenler ve açık sorular", []),
     ]),
     ("07 Geliştirme", [
         (D+"07-gelistirme/00-kodlama-hazirlik-indeksi.md", "Kodlama hazırlık indeksi", "Kodlamaya başlamadan okunacaklar (sıralı) ve hazırlık kontrol listesi", ["kaynak"]),
