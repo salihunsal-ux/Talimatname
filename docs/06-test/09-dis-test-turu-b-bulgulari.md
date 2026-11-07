@@ -157,14 +157,20 @@ aynı kaynaktan.
    şu an kim dolduruyor" denemiyor. `claim`/`release` uçları yazıldığında
    (K01) birlikte düzeltilmeli.
 4. **Personel içe aktarma raporu telefonları yanlış alanda
-   döndürüyor.** `YuklemeRaporu.branches` şemada "Kabul edilen şube
-   kodları" diye tanımlı ama `_personel_raporu` içine
-   `[satir.phone for satir in rapor.rows]` koyuyor
-   (`routers/setup.py:154`). 200 kişilik bir yüklemede cevap gövdesi,
+   döndürüyordu — düzeltildi (`talimatname-kod@3ab6008`).**
+   `YuklemeRaporu.branches` şemada "Kabul edilen şube kodları" diye
+   tanımlı ama `_personel_raporu` içine
+   `[satir.phone for satir in rapor.rows]` koyuyordu
+   (`routers/setup.py`). 200 kişilik bir yüklemede cevap gövdesi,
    istemcinin şube kodu sanacağı bir alanda 200 telefon numarası
-   taşıyor. Hem sözleşme yanlış hem de numaralar beklenmedik bir yerde
-   (BR-21). Düzeltme API taslağını da değiştirir, o yüzden ayrı
-   kararda.
+   taşıyordu; hem sözleşme yanlıştı hem de numaralar beklenmedik bir
+   yerdeydi (BR-21). Alanı okuyan kimse yok — web istemcisinde
+   yalnızca test mock'larında geçiyor, ekranda `created` / `updated` /
+   `error_rows` sayıları duruyor. Bu yüzden yeni bir alan açmak yerine
+   personel raporunda boş bırakıldı; şube yüklemesinde kod listesi
+   olduğu gibi kaldı ve alan açıklaması bunu söylüyor
+   ("yalnızca şube yüklemesinde dolar"). İki test bekçi: personel
+   cevabında numara geçmiyor, şube cevabında kod geçiyor.
 5. **Seçenek etiketleri çalıştırma detayında yok.** `choice`
    maddelerinde `options` yalnızca sabitlenmiş şablon sürümünde
    duruyor; saha istemcisi ikinci bir istekle alıyor. Tasarım böyle,
