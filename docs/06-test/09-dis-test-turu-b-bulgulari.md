@@ -43,21 +43,48 @@ düzeltmelerinden (`f671a70`) bir commit öncesi. Bu yüzden iki tur kısmen
   okunamayan değer 422 `gecersiz-istek` (`errors[].alan = "value"`).
   `CalistirmaOzet` artık `plan_name`, `CevapCiktisi` artık `answered_by` taşıyor.
 
-## Raporun düzeltilen tespiti
+## Raporun tespiti doğruymuş — benim düzeltmem yanlıştı
 
-**B08'in kök nedeni.** Rapor "kaynak seed verisi Ayşe'yi içeriyor" diyor.
-İçeren dosya `infra/memory.py`, yani testlerin kullandığı **bellek içi**
-depo; canlı Postgres demosunun tohumu değil (depoda böyle bir betik yok,
-demo kullanıcıları elle açılmış). "Eski personel #4821 — Maskeli"
-kaydının Ayşe olduğu da çıkarım: maske sayacı sıralı olduğu için
-etiketten kimlik okunamaz, ki maskelemenin amacı bu (BR-22).
+Bu bölüm önce "raporun düzeltilen tespiti" başlığını taşıyordu ve
+raporun B08 teşhisinin yanlış olduğunu söylüyordu. **Yanlış olan benim
+düzeltmemdi**; 8 Kasım'da tohum koduna bakınca çıktı.
 
-Bu yüzden B08 ikiye ayrıldı:
+Yazdığım şey şuydu: "Ayşe'yi içeren dosya `infra/memory.py`, yani
+testlerin kullandığı bellek içi depo; canlı Postgres demosunun tohumu
+değil." Oysa `seed.py` tam da o dosyadan okuyor
+(`MemoryUserRepository()` → `SqlUserRepository.save_user`). Yani
+**`infra/memory.py` canlı demonun da tohumudur** ve rapor "kaynak seed
+verisi Ayşe'yi içeriyor" derken haklıydı.
+
+"Eski personel #4821 — Maskeli" kaydının Ayşe olduğu da çıkarım
+değilmiş: maskeli kaydın kimliği `cca08763-7cdd-51a0-8ee0-4df6f2c3d0cc`,
+ve `sabit_id("kullanici:+905321110003")` birebir aynı değeri veriyor.
+Demonun Kadıköy şube müdürü Ayşe Şube (`+90 532 111 00 03`) tohumda
+vardı; 2 Kasım'da maskelenmiş, bu yüzden test mühendisi giriş
+yapamamış. Maske etiketinden kimlik okunamaz (BR-22 bunu amaçlıyor) ama
+tohumun kimliği sabit olduğu için koddan hesaplanabiliyor — maskelemenin
+sınırı burada.
+
+Bunun bir sonucu daha var: tohum her koşuşta kullanıcıların üzerine
+yazıyordu, yani maskelenmiş bir kaydı **diriltiyordu**. KVKK silme
+talebiyle silinmiş kişi verisi bir `python -m talimatname.seed` ile geri
+gelebilirdi. Kapatıldı (`talimatname-kod@72def61`): tohum maskeli kaydı
+atlıyor ve kaç tane atladığını yazıyor.
+
+B08 yine de ikiye ayrılıyor:
 
 1. **Veri işi** — **kapandı (7 Kasım).** Demoya Kadıköy kapsamlı bir
    şube müdürü açıldı: **Ayşe Şube · `+90 532 111 00 08`**, rol
    `branch_manager`, kapsam Kadıköy (KDK). Kurgu isim, demo numara
-   aralığından; gerçek kişi verisi yok (ADR-0003). Giriş denendi:
+   aralığından; gerçek kişi verisi yok (ADR-0003).
+
+   Sonradan anlaşıldı ki tohumda aynı rolde bir Ayşe Şube zaten
+   vardı (`+90 532 111 00 03`), yalnızca canlı demoda maskelenmişti —
+   yani bu hesap bir **yedeği**. Maskeleme geri alınamadığı için
+   (BR-22) yenisi duruyor. Demo sıfırlanırsa
+   (`araclar.demo_sifirla`) tohuma dönülür: `…0003` geri gelir,
+   `…0008` düşer. [Demo turu](07-demo-turu.html) tablosu ikisini de
+   yazıyor. Giriş denendi:
    panelde yalnızca Kadıköy'ün iki listesi ve 32 aksiyonu görünüyor,
    menüde Personel / Bildirimler / Kurulum yok — Deniz Şube ile aynı
    kısıtlı profil. Dış raporun "Ayşe" beklentisi böylece gerçek bir
