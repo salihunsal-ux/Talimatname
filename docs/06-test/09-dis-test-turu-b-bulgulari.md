@@ -20,7 +20,7 @@ düzeltmelerinden (`f671a70`) bir commit öncesi. Bu yüzden iki tur kısmen
 | B05 | P1 | "Yapılamadı" aksiyon üretmiyor | **Kapandı** — `from_not_done`, orta öncelik / 72 sa |
 | B06 | P2 | Pencere açılmadan cevap yazılabiliyor | **Kapanmıştı** — iç turun Y-1'i, BR-02a |
 | B07 | P2 | Yönetici cevap detayında ölçüm ve metin değeri yok | **Kapandı** — değer, birim, metin cevabı ve `answered_by` |
-| B08 | P2 | Ayşe demo hesabı kullanılamıyor; hata açıklaması anlamsız | **Kod yarısı kapandı** — başlık artık ekranda; hesap kararı açık (aşağıya bakın) |
+| B08 | P2 | Ayşe demo hesabı kullanılamıyor; hata açıklaması anlamsız | **Kapandı** — başlık ekranda; Kadıköy şube müdürü hesabı açıldı |
 | B09 | P2 | Düğme işlemden önce "kaydedildi" diyor; boş ölçüm hata gibi | **Kapandı** — `KayitDurumu`, iki hâlli aralık ipucu |
 | B10 | P2 | Saha kartlarında liste adı ve gece yarısı tarihi eksik | **Kapandı** — `plan_name` özette; tarih gece yarısını aşan pencerede |
 | B11 | P2 | Pano varsayılan iş günü UTC'den hesaplanıyor | **Kapandı** — `web/src/tarih.ts` ve `api/.../is_gunu.py`; plan ve rapor ekranları da |
@@ -54,8 +54,22 @@ etiketten kimlik okunamaz, ki maskelemenin amacı bu (BR-22).
 
 Bu yüzden B08 ikiye ayrıldı:
 
-1. **Veri işi** — demoya kullanılabilir bir Kadıköy şube müdürü hesabı
-   eklenecek mi? Karar bekliyor.
+1. **Veri işi** — **kapandı (7 Kasım).** Demoya Kadıköy kapsamlı bir
+   şube müdürü açıldı: **Ayşe Şube · `+90 532 111 00 08`**, rol
+   `branch_manager`, kapsam Kadıköy (KDK). Kurgu isim, demo numara
+   aralığından; gerçek kişi verisi yok (ADR-0003). Giriş denendi:
+   panelde yalnızca Kadıköy'ün iki listesi ve 32 aksiyonu görünüyor,
+   menüde Personel / Bildirimler / Kurulum yok — Deniz Şube ile aynı
+   kısıtlı profil. Dış raporun "Ayşe" beklentisi böylece gerçek bir
+   hesaba karşılık geliyor.
+
+   Kayıt, ilk oluşturmada Türkçe harfler olmadan yazıldığı için
+   **personel içe aktarmasıyla** düzeltildi (`/setup/staff/import`
+   telefona göre `full_name` günceller). Tek kullanıcıyı yeniden
+   adlandıran bir uç yok: `/users` yalnızca oluştur, rol değiştir,
+   pasifleştir, maskele diyor. Gerçek bir zincirde yanlış yazılmış
+   bir isim imzalı kayıtlara düşeceği için bu eksik ayrıca not
+   edilmeli.
 2. **Kod hatası** — giriş ekranı hata cümlesi olarak `detail` alanını
    `title`'ın önüne koyuyordu, o yüzden kullanıcı "Bu numarayla kayıtlı
    kullanıcı yok" yerine yalnızca "Telefon: +90…" görüyordu. Ayşe'ye
@@ -142,7 +156,16 @@ aynı kaynaktan.
    Kişisel veri sızdırmıyor (opak kimlik) ama kullanıcıya "listeyi
    şu an kim dolduruyor" denemiyor. `claim`/`release` uçları yazıldığında
    (K01) birlikte düzeltilmeli.
-4. **Seçenek etiketleri çalıştırma detayında yok.** `choice`
+4. **Personel içe aktarma raporu telefonları yanlış alanda
+   döndürüyor.** `YuklemeRaporu.branches` şemada "Kabul edilen şube
+   kodları" diye tanımlı ama `_personel_raporu` içine
+   `[satir.phone for satir in rapor.rows]` koyuyor
+   (`routers/setup.py:154`). 200 kişilik bir yüklemede cevap gövdesi,
+   istemcinin şube kodu sanacağı bir alanda 200 telefon numarası
+   taşıyor. Hem sözleşme yanlış hem de numaralar beklenmedik bir yerde
+   (BR-21). Düzeltme API taslağını da değiştirir, o yüzden ayrı
+   kararda.
+5. **Seçenek etiketleri çalıştırma detayında yok.** `choice`
    maddelerinde `options` yalnızca sabitlenmiş şablon sürümünde
    duruyor; saha istemcisi ikinci bir istekle alıyor. Tasarım böyle,
    kusur değil — ama tek uçtan beslenen bir istemci seçenekleri
