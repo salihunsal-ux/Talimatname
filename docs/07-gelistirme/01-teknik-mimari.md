@@ -90,6 +90,20 @@ flowchart LR
 
 Zamanlayıcı tek örnek (leader election Redis kilidi); işçiler yatay ölçeklenir.
 
+**Ayakta mı, nasıl anlaşılır.** Zamanlayıcı bir HTTP sunucusu değil, "port
+açık mı" diye sorulamaz. Döngü her **başarılı** turdan sonra bir nabız
+dosyasına zaman damgası yazıyor; kabın sağlık kontrolü o dosyanın
+tazeliğine bakıyor
+(`python -m talimatname.scheduler --nabiz-denetle <yol>`). Başarısız tur
+nabız atmadığı için üst üste hata veren ya da takılmış bir döngü de
+sağlıksız görünüyor — yalnızca ölmüş süreç değil.
+
+Bunu yazmanın sebebi gerçek bir olay: zamanlayıcı API ile aynı imajı
+farklı bir komutla koştuğu için imajın `curl :8000` sağlık kontrolünü
+miras almıştı ve **beş gün** kırmızı göründü, oysa turlar dönüyordu
+(14.454 ardışık başarısızlık). Hep kırmızı bir bayrak, bayrak değildir.
+Bu imajı farklı bir komutla koşan her servis kendi kontrolünü yazar.
+
 ## Veri akışı: kanıt yükleme
 
 1. Mobil `POST /evidence/upload-url` → ön imzalı PUT URL (15 dk) + kanıt id.
