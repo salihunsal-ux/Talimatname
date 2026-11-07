@@ -88,10 +88,71 @@ Bu yüzden B08 ikiye ayrıldı:
   (raporun servis probu bu yüzden üretimden zayıf, ki raporda da
   belirtilmiş); yine de satırda doğrulanmamış bir sayı duruyor.
 
+## Canlı doğrulama turu (7 Kasım 2026, 21:47–22:00 TRT)
+
+Düzeltmeler demoda (`demo.talimatname.com` / `saha.talimatname.com`)
+gerçek bir listede denendi: 7 Kasım Kadıköy **Günlük kapanış**
+(pencere 22:00–01:30, hazırlık payı 21:45'ten itibaren yazılabilir).
+Liste gerçekten dolduruldu ve **gönderildi**; demoya iki yeni aksiyon
+ve beş kanıt dosyası yazıldı. Aşağıdaki satırlar o turun çıktısıdır,
+tahmin değil.
+
+| Bulgu | Ne denendi | Ne görüldü |
+|---|---|---|
+| B02 | İstemci `state=passed`, değer 99 (aralık 0–4) | Sunucu `failed` yazdı |
+| B02 | `4,0` / `4,1` | `passed` / `failed` — BR-08 sınırı birebir |
+| B02 | `"altı"`, `1e999`, değer yok | 422 `gecersiz-istek`, `errors[].alan = "value"` |
+| B03 | Emre kilidi tutarken Zeynep **gönderdi** | 409 `urn:talimatname:calistirma-kilitli` |
+| B03 | Aynı anda Zeynep **yazdı** | 409, aynı tip |
+| B04 | Kritik madde başarısız yazıldı | Aksiyon **cevap anında**: kritik, 4 sa, açık 107→108 |
+| B05 | Kritik olmayan maddeye "yapılamadı" | Aksiyon: normal, **72 sa**, açıklamada sebep |
+| B05 | Kritik maddeye "yapılamadı" | 422 `kritik-maddede-yapilamadi-yok` (BR-09) |
+| B01 | Başarısız cevabın altındaki açıklama alanı | Yazıldı, kaydedildi, "not gerekiyor" engeli düştü |
+| B01 | Engel satırına tıklandı | `#madde-<id>` çapasına gitti |
+| B01 | Fotoğraf + kalan maddeler, sonra **Listeyi gönder** | 7/7, engel 0, `submitted`, %71, sonuç `failed` |
+| B07 | Yönetici çalıştırma detayı | "4.1 °C ✕ Geçmedi", "Evet ✓ Geçti", metin cevabı, "Emre Personel · 21:52" |
+| B08 | Kayıtlı olmayan numarayla giriş | "Bu numarayla kayıtlı kullanıcı yok" |
+| B09 | Aralık dışı ölçüm | "Kabul aralığı 0–4°C: bu değer dışarıda, madde başarısız sayılır." |
+| B10 | Saha kartı | "Günlük kapanış · Kadıköy · Pencere: 07/11 22:00–01:30" |
+| B11 | Yönetici detayında saatler | 18:49Z yazma "21:49" göründü |
+| B12 | Seçiciye WebP verildi | "Bu dosya türü yüklenemiyor (image/webp). JPEG ya da PNG bir fotoğraf seçin." |
+
+B13 ve B14 bu turda tekrar denenmedi: ikisi de daha önce ölçümle
+doğrulanmıştı (375 px'te 44 px altı hedef yok; sunucunun yazı tipiyle
+başlık satırı 28 pt'ye sarıyor).
+
+Raporun kaçırdığı tutarsızlık da kapandı: aynı ölçüm için çalıştırma
+"başarısız", ölçüm günlüğü `out_of_range: true` diyor — ikisi artık
+aynı kaynaktan.
+
+### Turda çıkan yan gözlemler
+
+1. **Kanıt tekrarı koruması çalışıyor.** Dört maddeye aynı baytlardan
+   oluşan PNG yüklenince ilki kabul edildi, üçü
+   409 `urn:talimatname:kanit-tekrari` ile döndü ("Bu fotoğraf daha
+   önce gönderildi, yeniden çekin"). Dış raporda geçmiyor; beklenen
+   davranış.
+2. **`answered_by` yazma cevabında boş.** `PUT .../answers/{id}`
+   dönüşündeki `CevapSonucu.answered_by` `null`; isim yalnızca
+   çalıştırma detayı okunurken çözülüyor. Ekranda bir eksiklik
+   doğurmuyor (istemci zaten tazeliyor) ama şema iki yerde aynı alanı
+   farklı dolduruyor.
+3. **Kilit çakışmasında ham kimlik.** 409'un `detail` alanı
+   "Kilit sahibi: 73a8e2ba-…" diyor; istemci bunu isme çeviremiyor.
+   Kişisel veri sızdırmıyor (opak kimlik) ama kullanıcıya "listeyi
+   şu an kim dolduruyor" denemiyor. `claim`/`release` uçları yazıldığında
+   (K01) birlikte düzeltilmeli.
+4. **Seçenek etiketleri çalıştırma detayında yok.** `choice`
+   maddelerinde `options` yalnızca sabitlenmiş şablon sürümünde
+   duruyor; saha istemcisi ikinci bir istekle alıyor. Tasarım böyle,
+   kusur değil — ama tek uçtan beslenen bir istemci seçenekleri
+   göremez.
+
 ## Demoda bırakılan test verisi
 
-7 Kasım Kadıköy Kapanış listesinde test mühendisinin yazdığı
-`Süt dolabı sıcaklığı = 6` ve `QA 2026-11-07: …` notu duruyor; liste
-gönderilmedi. Kaçırılmış bir listeyi geriye dönük doldurmak yasak
-(BR-03) ama bu liste Kasım'da **açık**: ya iptal sebebiyle kapatılır ya
-bırakılır. Karar bekliyor.
+**Kapandı.** 7 Kasım Kadıköy Kapanış listesi, yukarıdaki canlı turda
+pencere açıkken gerçekten doldurulup gönderildi; test mühendisinin
+`Süt dolabı sıcaklığı = 6` ölçümü aynı madde üzerinden 4,1'e
+güncellendi, `QA 2026-11-07: …` notu devreden vardiya notu olarak
+kayıtta kaldı (silinmedi; `audit_event` ekle-yalnız). Liste artık
+`submitted`, sonuç `failed`, %71.
