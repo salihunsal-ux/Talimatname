@@ -64,12 +64,17 @@ Bu yüzden B08 ikiye ayrıldı:
    hesaba karşılık geliyor.
 
    Kayıt, ilk oluşturmada Türkçe harfler olmadan yazıldığı için
-   **personel içe aktarmasıyla** düzeltildi (`/setup/staff/import`
-   telefona göre `full_name` günceller). Tek kullanıcıyı yeniden
-   adlandıran bir uç yok: `/users` yalnızca oluştur, rol değiştir,
-   pasifleştir, maskele diyor. Gerçek bir zincirde yanlış yazılmış
-   bir isim imzalı kayıtlara düşeceği için bu eksik ayrıca not
-   edilmeli.
+   önce **personel içe aktarmasıyla** düzeltildi (`/setup/staff/import`
+   telefona göre `full_name` günceller): tek kullanıcıyı yeniden
+   adlandıran bir uç yoktu, `/users` yalnızca oluştur, rol değiştir,
+   pasifleştir, maskele diyordu. Gerçek bir zincirde yanlış yazılmış
+   bir isim imzalı kayıtlara düşeceği için bu eksik
+   **kapatıldı (`talimatname-kod@b616d4e`)**: `PATCH /users/{user_id}`
+   adı ve e-postayı düzeltiyor, panelde satır içi "Adı düzelt"
+   düğmesiyle. Telefon bu uçtan değişmiyor (numara kişinin kimliği:
+   giriş ve içe aktarma anahtarı), roller ayrı uçtan, maskeli kullanıcı
+   değiştirilemiyor (BR-22 · 409), günlüğe değer değil yalnızca
+   "ad değişti" yazılıyor (BR-21).
 2. **Kod hatası** — giriş ekranı hata cümlesi olarak `detail` alanını
    `title`'ın önüne koyuyordu, o yüzden kullanıcı "Bu numarayla kayıtlı
    kullanıcı yok" yerine yalnızca "Telefon: +90…" görüyordu. Ayşe'ye
