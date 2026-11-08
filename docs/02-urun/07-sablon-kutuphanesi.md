@@ -203,13 +203,14 @@ Listenin başında sistem **"Dün gece"** bloğunu gösterir (E-3): dün kapanı
 | 8 | Ürünler 15 dk içinde soğutucuya/depoya yerleştirildi (FIFO) | onay | Z | | | |
 | 9 | Tüm ürünler kabul edildi (red yok) | çoktan seçmeli | Z | | | Hayır → foto + not: reddedilen ürünler ve sebep |
 
-## 9. Bölge müdürü şube denetimi
+## 9. Şube denetimi (denetçi)
 
 | | |
 |---|---|
 | Amaç | Bölge müdürünün şube ziyaretinde standart denetim: hijyen, gıda güvenliği, görünüm, belge ve personel; puanlı rapor ve aksiyon. [Rakip denetimi](../01-strateji/05-rakip-ozellik-denetimi.md) §2 ile eklendi — robotPOS Operation Manager'ın sattığı iş |
 | Tekrar | Aylık (ör. ayın ilk 10 günü içinde), pencere iş günü 09:00–19:00; tolerans 0. Plansız ziyaret için tek seferlik liste (FR-0512) |
-| Atama | **Rol: bölge müdürü** — şube personeline görünmez, çalıştırma şubeye bağlıdır |
+| Atama | **Rol: denetçi** (A-11) — şube personeline görünmez, çalıştırma şubeye bağlıdır. Bölge müdürü de doldurabilir; denetçi ayrı rol çünkü planı değiştiremez, listeyi iptal edemez (`talimatname-kod@e98d80d`) |
+| Durum | **Yazıldı** — kütüphanede `sube-denetimi`. Listenin başında altı satırlık **denetim protokolü** var (talimat satırı): habersiz gel, önce gözlem, sıra, ölçümü kendin yap, başarısız maddede ne yazılır, kapanış görüşmesi |
 | Süre hedefi | 12–15 dk · 16 madde · 6 fotoğraf · 3 kritik |
 
 | # | Madde | Tür | Z | F | K | Not |

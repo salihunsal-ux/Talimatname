@@ -1,6 +1,6 @@
 # Aktörler
 
-> **v1 notu (ADR-0008):** ilk sürümde dört rol vardır — **Yönetici** (A-01 Hesap yöneticisi + A-02 Operasyon müdürü + A-03 Kalite tek rolde), **Bölge müdürü** (A-04), **Şube müdürü** (A-05), **Personel** (A-06). Gözlemci (A-07) v1.1. Aşağıdaki aktör listesi ve matris tam modeli anlatır; v1'de A-01/A-02/A-03 satırları Yönetici olarak okunur.
+> **v1 notu (ADR-0008):** ilk sürümde **beş** rol vardır — **Yönetici** (A-01 Hesap yöneticisi + A-02 Operasyon müdürü + A-03 Kalite tek rolde), **Bölge müdürü** (A-04), **Denetçi** (A-11), **Şube müdürü** (A-05), **Personel** (A-06). Gözlemci (A-07) v1.1. Aşağıdaki aktör listesi ve matris tam modeli anlatır; v1'de A-01/A-02/A-03 satırları Yönetici olarak okunur.
 
 Aktör = sistemle etkileşen rol (kişi veya dış sistem). Personalar (02-urun/02) aktörlerin somut örnekleridir. Yetki ayrıntısı 04-gereksinimler/01 (FR-CAP02) ve 06 (rol matrisi).
 
@@ -15,6 +15,7 @@ Aktör = sistemle etkileşen rol (kişi veya dış sistem). Personalar (02-urun/
 | A-05 | Şube müdürü / vardiya amiri | Kendi şubesi | Günlük atama, yapılamadı onayı, sorun bildirme, aksiyon kapatma, kiosk cihazı yönetme | Mobil (kiosk + kendi telefonu) |
 | A-06 | Personel | Kendisine/istasyonuna atananlar | Listeyi tamamlamak, kanıt yüklemek, yapılamadı/sorun bildirmek, duyuru onaylamak | Mobil (kiosk PIN veya kendi telefonu) |
 | A-07 | Gözlemci (franchise sahibi vb.) | Atandığı şubeler, salt okunur | Kendi şubesinin durumunu ve kanıtlarını görmek | Web + mobil |
+| A-11 | Denetçi | Atandığı bölge(ler) | Şubeye gidip denetim listesini **kendisi** doldurmak, bulguyu aksiyona çevirmek | Mobil (saha) + web (okuma) |
 | A-09 | Destek uzmanı (Talimatname) | Müşteri hesabı, destek modu (yalnızca teknik izler, kanıt içeriği maskeli) | Bildirim teslimatı, senk ve cihaz sorunlarını çözmek | İç araç |
 
 ## Sistem aktörleri
