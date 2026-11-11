@@ -224,7 +224,7 @@ Listenin başında sistem **"Dün gece"** bloğunu gösterir (E-3): dün kapanı
 | 7 | Dondurucu sıcaklığı | sıcaklık −30…−18 °C | Z | | K | |
 | 8 | Açık ürün etiketleme ve SKT kontrolü (rastgele 5 ürün) | çoktan seçmeli | Z | | K | Hayır → foto + not, ürün adıyla |
 | 9 | Depo düzeni ve FIFO; yerden yükseklik | fotoğraf (1) | Z | F | | |
-| 10 | Haşere izi yok; ilaçlama belgesi güncel | çoktan seçmeli | Z | | | Hayır → aksiyon (24 sa) |
+| 10 | Haşere izi yok; ilaçlama belgesi güncel | çoktan seçmeli | Z | | | Hayır → aksiyon (24 sa). **Yazıldı:** madde `action_priority="high"` (BR-10 takip işareti) |
 | 11 | Yasal belgeler yerinde ve geçerli (ruhsat, hijyen eğitimi, ilaçlama, yangın tüpü) | çoktan seçmeli | Z | | | Belge takvimiyle (E-12) karşılaştırılır |
 | 12 | Mutfak ekipmanı çalışıyor; davlumbaz ve filtre temiz | fotoğraf (1) | Z | F | | |
 | 13 | Son 7 günün kapanış listeleri tamamlanmış (uygulamadan kontrol) | çoktan seçmeli | Z | | | Hayır → not: hangi gün, sebep |

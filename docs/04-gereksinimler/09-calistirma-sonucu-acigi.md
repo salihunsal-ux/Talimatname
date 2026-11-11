@@ -93,7 +93,18 @@ kaçırılan çalıştırma, sorun bildirimi, elle). Kritik olmayan bir
 başarısız cevap aksiyon doğurmuyor.
 
 Bu yüzden 8 Kasım denetiminde ilaçlama belgesi bulgusu kayda geçti ama
-**takip edilecek bir aksiyona dönmedi** — denetçi elle açabilir, kural
-açmıyor. Seçenek: maddeye "başarısızsa aksiyon aç (öncelik, vade)"
-bayrağı eklemek (şablon alanı + BR-10'a tetik). v1.1 işi gibi duruyor;
-v1'de denetçi elle açar.
+takip edilecek bir aksiyona dönmedi. **Kapandı (11 Kasım,
+`talimatname-kod@ff7b44b`):** maddeye `action_priority` işareti
+eklendi (göç 0012). İşaretli, kritik olmayan bir madde başarısız
+cevaplandığında aksiyon açılıyor; önceliği şablon söylüyor, vade
+ondan türüyor. Kritik maddede kullanılmıyor — kritik kuralı zaten
+kendi aksiyonunu açıyor. İşaretsiz maddede davranış değişmedi.
+
+Denetim şablonunda ilaçlama maddesi `high` (24 sa), kaynak belgenin
+istediği gibi. Böylece A'nın bedeli büyük ölçüde kapandı: bulgu
+panoda "açık aksiyon" olarak görünüyor, puan eşiğine gerek kalmadan.
+
+Yolda bir kusur daha çıktı: kütüphane kopyası madde alanlarını tek tek
+yazıyordu ve yeni alanı **sessizce düşürüyordu** — işaret kütüphanede
+duruyor, hesaba kopyalanan şablonda yok oluyordu. Kopya artık alan
+listesi tutmuyor (`replace`) ve test alanları `fields()` ile geziyor.
