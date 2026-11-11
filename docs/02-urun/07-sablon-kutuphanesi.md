@@ -90,6 +90,7 @@ Listenin başında sistem **"Dün gece"** bloğunu gösterir (E-3): dün kapanı
 |---|---|
 | Amaç | Gün içinde müşteri alanının ve el hijyeninin sürekliliği |
 | Tekrar | 10:00–22:00 arası her 2 saat (hızlı serviste her saat); pencere 15 dk; tolerans 0 |
+| Durum | **Yazıldı** — kütüphanede `tuvalet-hijyen`. Gün içi tekrar şube saatine bağlanmıyor: açılış/kapanış günde bir kez olur, saatlik tur sabit saatlerde yürür. Kaçırılan pencereler gün bazında tek aksiyonda toplanıyor (BR-10) |
 | Atama | Rol: salon personeli |
 | Süre hedefi | 1–2 dk · 7 madde · fotoğraf isteğe bağlı · kritik yok |
 
