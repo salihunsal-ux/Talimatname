@@ -213,6 +213,25 @@ aynı kaynaktan.
    kusur değil — ama tek uçtan beslenen bir istemci seçenekleri
    göremez.
 
+## 8 Kasım: denetim turunda çıkan iki konu
+
+Denetçi rolü ve denetim şablonu demoya girilirken iki şey görüldü:
+
+1. **Çalıştırma sonucu.** 16 maddelik denetimde kritik **olmayan** tek
+   bir madde başarısız oldu; sonuç `failed`, puan %94. BR-07 "yalnızca
+   kritik maddeyle" diyor, kod "herhangi bir madde" diyor, kodun kendi
+   açıklaması BR-07'yi tekrarlıyor ve test kodun davranışını
+   kilitliyor. Üçü aynı anda doğru olamaz; karar bekliyor:
+   [09-calistirma-sonucu-acigi](../04-gereksinimler/09-calistirma-sonucu-acigi.md).
+2. **Madde başına aksiyon kuralı yok.** Şablonun kaynağı 10. madde için
+   "Hayır → aksiyon (24 sa)" diyor ama BR-10 aksiyonu yalnızca beş
+   tetikten açıyor. Bulgu kayda geçti, takip edilecek aksiyona
+   dönmedi. Aynı belgede.
+
+Ayrıca iki küçük kusur düzeltildi: tohum yayınlanmış sürümün üzerine
+yazıyordu (BR-18; cevabı olan bir veritabanında yabancı anahtar
+hatasıyla düşüyordu) ve kurulum ekranı aylık şablona "Günlük" diyordu.
+
 ## Demoda bırakılan test verisi
 
 **Kapandı.** 7 Kasım Kadıköy Kapanış listesi, yukarıdaki canlı turda
