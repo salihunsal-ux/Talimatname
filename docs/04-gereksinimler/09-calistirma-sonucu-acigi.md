@@ -1,10 +1,33 @@
 # Çalıştırma sonucu: "Başarısız" ne demek?
 
-- Tarih: 2026-11-11 · Durum: **karar bekliyor**
+- Tarih: 2026-11-11 · Durum: **kapandı (11 Kasım, seçenek A)**
 - İlgili: BR-06, BR-07, FR-0306, FR-0307, BR-10, BR-11
 - Bulunduğu yer: demoya denetim şablonu girilirken (8 Kasım turu)
 
-## Durum
+## Kapanış (11 Kasım 2026)
+
+**Seçenek A uygulandı** (`talimatname-kod@0de53d0`): sonuç yalnızca
+kritik maddeyle belirleniyor, kritik olmayan eksik puana yansıyor.
+`evaluate`'in açıklaması ve `test_tc020_puan_yuzdesi` birlikte
+güncellendi; "yapılamadı" da aynı kurala girdi (puanı düşürür, sonucu
+belirlemez — kritik maddede zaten denenemiyor, BR-09).
+
+Aşağıdaki çözümleme duruyor: kararın gerekçesi, değişen koddan uzun
+ömürlü.
+
+**Sonucu kabul edilen bedel.** Panonun istisna süzgeci `result` ve
+`late`e bakıyor; artık düşük puanlı ama kritiksiz bir çalıştırma
+varsayılan görünümde **işaretlenmiyor**. Puan eşiği bilerek
+eklenmedi: BR-07 eşiği ve ağırlığı v1.1'e bırakıyor, burada uydurmak
+kuralı ikinci kez çatallardı. Seçenek C (üçüncü durum `eksikli`) bu
+boşluğun gerçek cevabı ve v1.1'de açık duruyor.
+
+**Geçmiş kayıtlar yeniden hesaplanmadı.** Eski kuralla kapanmış
+çalıştırmalar `failed` olarak duruyor; sonucu sonradan yeniden yazmak,
+gönderilmiş bir kaydı değiştirmek olurdu. Demodaki 8 Kasım denetimi
+bu yüzden hâlâ "Başarısız" görünüyor.
+
+## Durum (karar öncesi çözümleme)
 
 16 maddelik bir denetim dolduruldu. Bir madde başarısız: *"Haşere izi
 yok; ilaçlama belgesi güncel" → Hayır* (kritik **değil**). Sonuç:
