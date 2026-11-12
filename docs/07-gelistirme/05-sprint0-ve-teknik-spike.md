@@ -65,6 +65,84 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 - **Kabul:** 100 tekrarda sıfır kayıp, sıfır çift kayıt; senk 2 dk içinde; uygulama öldürülüp açılınca kuyruk duruyor; 500 kanıtta yeni fotoğraf engelleniyor ve uyarı veriyor; senk durumu ekranda (bekleyen sayısı).
 - **Çıktı:** kuyruk şeması, senk döngüsü, idempotency sözleşmesi (OpenAPI), TC-051/054/055 fikstürleri. Geçmezse: senk sıklığı/parti boyutu değişir; ikinci seçenek olarak "yalnızca çevrimiçi gönder, çevrimdışı taslak" modeline ADR notu.
 
+#### Spike A sonucu · sunucu yarısı **geçti** (12 Kasım 2026)
+
+Spike Faz B'ye planlanmıştı; **sunucuya bakan yarısı** Flutter'sız,
+Faz A içinde koşuldu (ADR-0013 md.3 eki). Gerekçe: senk sözleşmesinin
+birim testleri vardı ama onu hiçbir istemci çalıştırmamıştı. Kusuru
+Flutter'da keşfetmek mobil geliştiricinin haftalarına mal olurdu.
+
+**Koşum düzeni.** `api/tests/test_spike_a_senk.py` içindeki `Cihaz`
+sınıfı mobil istemcinin sunucuya bakan davranışını yapıyor: çevrimdışı
+kuyruk tutuyor, kayıt kimliklerini **kendisi** üretiyor, bağlantı
+gelince `/sync/batch` ile parti gönderiyor, dönen adrese baytları
+yükleyip `complete` ile kapatıyor. 10 davranış testi + ölçek koşumu
+(`api/tests/spike_a_olcek.py`, süit dışı, elle çalışır).
+
+**Ölçek (ADR kabulü).** Tek şubede 24 yazılabilir çalıştırma, 167 cevap
+ve **500 kanıt**; cihaz saati 72 saat geride:
+
+| Ölçüm | Sonuç |
+|---|---|
+| İlk senk (500 kanıt, 10 parti) | **54,9 sn** — kabul ölçütü 2 dk |
+| Kabul / ret | 167/167 cevap, 500/500 kanıt · ret 0 |
+| Yüklenen + `complete` | 500 |
+| 100 tekrar (iki cihaz dönüşümlü, aynı çalıştırma) | **11,3 sn**, ret 0 |
+| Sunucuda | 167 cevap satırı · 500 depolanmış kanıt · **çift kayıt 0** |
+
+Karşılığı olan senaryolar: TC-051 (sunucu yarısı), TC-052 (saat
+sapması kaydediliyor, reddedilmiyor), TC-053 (idempotentlik),
+TC-055 (çakışma dayanıklılığı). Fikstür olarak bu testler bağlandı.
+
+**Bulgu 1 — parti sınırları söylenmiyordu (düzeltildi).** `/sync/batch`
+istek başına en çok 200 cevap ve 50 kanıt alıyor; aşılınca **bütün
+isteği** `422` ile reddediyor. Oysa uç noktanın tasarım gerekçesi tam
+tersi: "tek bozuk kayıt yüzünden 4xx dönmek, cihazın kuyruğunu sonsuza
+kadar tıkamak olurdu." Sınırlar manifestte **yayınlanmıyordu**, yani
+cihaz onları ancak kodundaki sabitten bilebilirdi. Manifest politikası
+`batch_answer_limit` ve `batch_evidence_limit` ile genişletildi
+(OpenAPI ve panel tipleri yeniden üretildi); 72 saatlik kuyruk bu
+sınırlara göre dilimlenmeli.
+
+**Bulgu 2 — manifest içerik taşımıyor (belgelendi).** Manifestteki
+çalıştırma kaydının alanı `run_id` (`id` değil) ve şablon sürümü
+yalnızca **kimlik** olarak geliyor; maddeler
+`GET /template-versions/{id}` ile alınır. Yayınlanmış sürüm
+değişmediği için (BR-18) cihaz bunu süresiz önbelleğe alabilir. Mobil
+geliştirici bunu bilmezse manifesti tek başına yeterli sanar.
+
+**Bulgu 3 — 500 kanıt sınırı sunucuda zorlanmıyor (açık).**
+`queue_evidence_limit` manifestte **yayınlanıyor** ama sunucu
+uygulamıyor: 500'ü aşan kuyruk reddedilmiyor. TC-054'ün "500 kanıtta
+yeni fotoğraf engellenir ve uyarı verir" maddesi bu yüzden **istemci
+yükümlülüğü** ve Flutter istemcisi yazılana kadar test edilemez. Bu
+spike onu kapsamıyor.
+
+**Kapsam dışı kalan yarı (Faz B, Flutter gerekiyor).** Arka plan
+senkinin uygulama öldürülüp açılınca sürmesi, WorkManager/BGTask
+davranışı, ekrandaki bekleyen sayısı, kamera yolu (Spike C). Yani
+Spike A **bitmedi**; riskin sunucu tarafı kalktı, istemci tarafı
+duruyor.
+
+#### Yan bulgu · deneme betiği geliştirme veritabanına yazdı
+
+Ölçek betiği ilk koşumda `conftest`in `bellek_modu` fixture'ını
+çalıştırmadığı için `.env`deki **geliştirme veritabanına** bağlandı ve
+oraya 12 deneme planı ile çalıştırmalarını yazdı. Betik artık içe
+almadan önce bellek modunu zorluyor ve bunu doğruluyor; düşen planlar
+pasifleştirildi (silinmedi). Demo sunucusu kendi veritabanını
+kullanıyor, etkilenmedi.
+
+O koşumda `POST /plans` **500** döndü:
+`duplicate key value violates unique constraint "notification_pkey"`.
+Bildirim kimliği `sabit_id` ile türetiliyor ve **kiracıdan bağımsız
+küresel**; birincil anahtar yalnızca `id`, kiracı ayrımı RLS'de. Bir
+kiracının yazdığı satır başka kiracıya **görünmediği** için
+"oku-yoksa-yaz" yükseltmesi araya giren satırı görmüyor ve küresel
+anahtara çarpıyor — belgelenmiş `region_pkey` vakasıyla aynı sınıf.
+Kök nedene kadar inilmedi; **açık** olarak duruyor ve yeniden üretimi
+geliştirme veritabanına yazmayı gerektiriyor.
+
 ### Spike B · RRULE pencere motoru ve gece yarısı (Python) — 2 gün
 
 - **Soru:** RRULE + pencere + tolerans + kapalı gün + saat dilimi tek fonksiyonla, mobil ve backend'de aynı sonucu verecek şekilde yazılabilir mi? (ADR-0005, P-1/P-2, FR-0501…0507, TC-025, TC-032)
@@ -89,7 +167,7 @@ Her spike için: soru, deney, kabul ölçütü, süre, çıktı. "Geçmedi" bir 
 ## 5. Sprint 0 bitti tanımı (DoD)
 
 - 02-repo kontrol listesinin tamamı işaretli; `make dev` tek komutla ayağa kalkıyor; CI üç depoda yeşil.
-- **Spike B ve D'nin** sonucu yazılı (geçti / geçmedi + ne değişecek); ADR-0005'e uygulama notu. **Spike A ve C Faz B'nin ilk iki haftasında** koşar (ADR-0013); kabul ölçütleri TC-051/054/055 ve TC-039…044'e fikstür olarak orada bağlanır.
+- **Spike B ve D'nin** sonucu yazılı (geçti / geçmedi + ne değişecek); ADR-0005'e uygulama notu. **Spike A'nın sunucu yarısı 12 Kasım'da koşuldu ve geçti** (§4); istemci yarısı ile **Spike C Faz B'nin ilk iki haftasında** koşar (ADR-0013); kabul ölçütleri TC-051/054/055 ve TC-039…044'e fikstür olarak orada bağlanır.
 - Tasarım token'ları web CSS değişkenlerinde; Flutter `ThemeData` karşılığı ve tel-çerçevedeki iki ekran (kiosk kilit, kapanış listesi) **Faz B'ye** taşındı (ADR-0013).
 - Tohum v0 (hesap, 3 şube, 5 kullanıcı, 1 şablon, 1 plan) ve backlog aracında S1–S2 hikâyeleri hazır (DoR).
 - Staging ayakta ve içinde yalnızca tohum/fikstür verisi var; altyapısı ücretsiz ya da AB olabilir ([ADR-0012](../adr/0012-barindirma-saglayici-ve-ortamlar.md) md.2). Sağlayıcı hesapları (nesne depo, SMS, push) test modunda.
