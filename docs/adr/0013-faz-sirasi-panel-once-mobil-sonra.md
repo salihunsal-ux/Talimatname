@@ -47,6 +47,43 @@ Buna karşı duran tek gerçek: **planın en riskli iki deneyi mobildir** (Spike
 6. **Mobil kuyruğu bitince mobil geliştirici web hattına geçer** (≈ Faz B'nin 10. sprinti). Hatlar arasındaki 2,8 katlık fark böyle kapanır.
 7. **Pilot, Alfa ve K3 mobil olmadan yapılamaz.** Pilot zincirlere tarih verilirken Faz B'nin başlangıcından en az 10 hafta sayılır; bu tarih **ikinci geliştiricinin bulunma tarihine** bağlıdır, Faz A'nın hızına değil.
 
+## 12 Kasım 2026 eki · mobil geliştirici tutulmuyor, Flutter'ı Claude yazıyor
+
+Bu ADR'nin **merkezî varsayımı düştü**: "mobil geliştirici Faz A'nın
+6.–8. haftasında katılır" (md.2) ve "pilot tarihi ikinci geliştiricinin
+bulunma tarihine bağlıdır" (md.7). Karar: Flutter uygulamasını Claude
+yazıyor, ikinci geliştirici tutulmuyor. Başlangıç bu akşam.
+
+Takvim ve maliyet satırları bu yüzden **yeniden kurulmalı** ve henüz
+kurulmadı; aşağısı yalnızca kararın bugün bilinen sonuçlarıdır. Kendi
+başına yeni bir ADR hak ediyor; plan çıkınca yazılacak.
+
+**Kalkan kısıtlar.** İkinci işe alım beklemiyor: Faz B mobil işi
+takvimden bağımsız başlayabilir. "8. haftaya kadar bulunamazsa" gözden
+geçirme tetikleyicisi geçersiz. ADR-0009'un iki kişilik aylık tahmini
+(₺250–400 bin) mobil bacağı için geçerliliğini yitiriyor.
+
+**Yerine gelen kısıtlar** — ikisi de işin yapılabilirliğini doğrudan
+kesiyor:
+
+1. **iOS derlemesi Windows'ta mümkün değil.** Bu makinede Flutter,
+   Dart, JDK ve Android SDK'nın hiçbiri kurulu değil (12 Kasım
+   kontrolü); kurulanlar Android'i çözer, iOS'u çözmez. iOS için
+   macOS gerekir: bir Mac ya da bulut Mac derleyici. Yani uygulama
+   **Android öncelikli** çıkar ve iOS kararı ayrı verilir. Pilot
+   zincirde iPhone kullanan personel varsa bu kapsam sorusudur,
+   araç sorusu değil.
+2. **Mağaza hesaplarını Claude açamaz.** Apple Developer (yıllık
+   ücretli) ve Google Play Console hesabını kullanıcı kendi açar;
+   imzalama anahtarları ve yükleme de ona bağlı. Pilotta mağaza
+   gerekmez — Android için doğrudan APK dağıtımı ya da dahili test
+   kanalı yeterli — ama Alfa'dan önce bu açılmalı.
+
+**Değişmeyen şey:** md.3 ve md.4, yani mobil başlamadan önce
+sözleşmelerin yazılı ve testli olması. Spike A'nın sunucu yarısı tam
+bu yüzden önceden koşuldu ve iki sözleşme kusuru çıkardı
+([05-sprint0 §4](../07-gelistirme/05-sprint0-ve-teknik-spike.md)).
+
 ## Sonuçlar
 
 - **Takvim:** darboğaz A hattıdır — iki kişiyle mobil ~5. ayda, panel ~14. ayda biter. Kademeli başlangıç bu tabloyu kötüleştirmez; paralel plandan farkı ikinci kişinin 6–8 hafta sonra gelmesidir (≈ 4–6 hafta).
